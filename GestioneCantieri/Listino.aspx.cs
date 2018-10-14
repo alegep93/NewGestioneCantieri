@@ -56,5 +56,26 @@ namespace GestioneCantieri
             txtDescriCodArt3.Text = "";
             BindGrid();
         }
+
+        protected void btn_ImportaListinoDaDBF_Click(object sender, EventArgs e)
+        {
+            string pathFile = @"C:\MEF\ORDINI\";
+
+            // Genero una lista a partire dai dati contenuti nel nuovo file DBF
+            List<Mamg0ForDBF> mamgoList = Mamg0DAO.GetListinoFromDBF(pathFile);
+
+            if(mamgoList != null && mamgoList.Count > 0)
+            {
+                Mamg0DAO.EliminaListino();
+            }
+
+            foreach (Mamg0ForDBF mmg in mamgoList)
+            {
+                // Inserisco i nuovi DDT
+                Mamg0DAO.InserisciListino(mmg);
+            }
+
+            BindGrid();
+        }
     }
 }

@@ -216,6 +216,7 @@
     <Compile Include="DAO\SpeseDAO.cs" />
     <Compile Include="DAO\StampeDAO.cs" />
     <Compile Include="Data\DDTFornitori.cs" />
+    <Compile Include="Data\Mamg0ForDBF.cs" />
     <Compile Include="Data\StampaValoriCantieriConOpzioni.cs" />
     <Compile Include="Data\DDTMefObject.cs" />
     <Compile Include="Data\MaterialiCantieri.cs" />

@@ -2,14 +2,24 @@
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
     <title>Listino Mef</title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#body_spinnerImg").hide();
+        });
+
+        function ShowHideLoader() {
+            $("#body_spinnerImg").show();
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
     <h1>Listino Mef</h1>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
-                <div class="col-md-offset-3 col-md-6">
-                    <h1 id="filterToggle" class="btn btn-default btn-lg"></h1>
+                <div class="col-md-offset-4 col-md-4">
+                    <%--<h1 id="filterToggle" class="btn btn-default btn-lg"></h1>--%>
+                    <asp:Button ID="btn_ImportaListinoDaDBF" class="btn btn-info btn-lg" OnClick="btn_ImportaListinoDaDBF_Click" OnClientClick="javascript:ShowHideLoader()" Text="Importa Listino da DBF" runat="server" />
                 </div>
             </div>
             <div id="filterContainer">
