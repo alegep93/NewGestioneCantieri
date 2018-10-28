@@ -708,16 +708,16 @@ namespace GestioneCantieri
                     string[] partiMatCant = ddlScegliMatCant.SelectedItem.Text.Split('|');
                     maxQtaRientro = Convert.ToDecimal(partiMatCant[2].Trim());
 
-                    if (Convert.ToInt32(txtQta.Text) <= maxQtaRientro)
-                    {
+                    //if (Convert.ToInt32(txtQta.Text) <= maxQtaRientro)
+                    //{
                         isInserito = MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
-                    }
-                    else
-                    {
-                        lblIsRecordInserito.Text = "La quantità non deve superare quella specificata nel record di materiale cantiere";
-                        lblIsRecordInserito.ForeColor = Color.Red;
-                        return;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    lblIsRecordInserito.Text = "La quantità non deve superare quella specificata nel record di materiale cantiere";
+                    //    lblIsRecordInserito.ForeColor = Color.Red;
+                    //    return;
+                    //}
                 }
 
                 if (isInserito)
