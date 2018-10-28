@@ -578,7 +578,7 @@ namespace GestioneCantieri
                 txtFiltroDescriCodArtGrdMatCant.Text, txtFiltroProtocolloGrdMatCant.Text, txtFiltroFornitoreGrdMatCant.Text, "MATERIALE");
             grdMatCant.DataSource = mcList;
             grdMatCant.DataBind();
-            CalcolaTotaleValore(mcList);
+            CalcolaTotaleValore(mcList, grdMatCant);
         }
         protected void BindGridRientro()
         {
@@ -586,15 +586,15 @@ namespace GestioneCantieri
                 txtFiltroDescriCodArtGrdMatCant.Text, txtFiltroProtocolloGrdMatCant.Text, txtFiltroFornitoreGrdMatCant.Text, "RIENTRO");
             grdRientro.DataSource = mcList;
             grdRientro.DataBind();
-            CalcolaTotaleValore(mcList);
+            CalcolaTotaleValore(mcList, grdRientro);
         }
-        private void CalcolaTotaleValore(List<MaterialiCantieri> mcList)
+        private void CalcolaTotaleValore(List<MaterialiCantieri> mcList, GridView grid)
         {
             double valore = 0;
 
-            for (int i = 0; i < mcList.Count; i++)
+            for (int i = 0; i < grid.Rows.Count; i++)
             {
-                valore += Convert.ToDouble(grdMatCant.Rows[i].Cells[5].Text) * Convert.ToDouble(grdMatCant.Rows[i].Cells[6].Text);
+                valore += Convert.ToDouble(grid.Rows[i].Cells[5].Text) * Convert.ToDouble(grid.Rows[i].Cells[6].Text);
             }
 
             lblTotaleValoreMatCant_Rientro.Text = "Totale Valore: " + valore.ToString("N2") + "€";
