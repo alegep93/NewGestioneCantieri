@@ -115,6 +115,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Preventivi.aspx" />
     <Content Include="ResocontoOperaio.aspx" />
     <Content Include="RicalcoloConti.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -213,9 +214,11 @@
     <Compile Include="DAO\DDTMefDAO.cs" />
     <Compile Include="DAO\GruppiFruttiDAO.cs" />
     <Compile Include="DAO\PagamentiDAO.cs" />
+    <Compile Include="DAO\PreventiviDAO.cs" />
     <Compile Include="DAO\SpeseDAO.cs" />
     <Compile Include="DAO\StampeDAO.cs" />
     <Compile Include="Data\DDTFornitori.cs" />
+    <Compile Include="Data\Preventivo.cs" />
     <Compile Include="Data\Mamg0ForDBF.cs" />
     <Compile Include="Data\StampaValoriCantieriConOpzioni.cs" />
     <Compile Include="Data\DDTMefObject.cs" />
@@ -258,6 +261,13 @@
     </Compile>
     <Compile Include="GestionePagamenti.aspx.designer.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Preventivi.aspx.cs">
+      <DependentUpon>Preventivi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Preventivi.aspx.designer.cs">
+      <DependentUpon>Preventivi.aspx</DependentUpon>
     </Compile>
     <Compile Include="ResocontoOperaio.aspx.cs">
       <DependentUpon>ResocontoOperaio.aspx</DependentUpon>

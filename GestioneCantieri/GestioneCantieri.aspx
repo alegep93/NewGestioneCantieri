@@ -151,6 +151,7 @@
                             <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-default" Text="Materiali da DDT" />
                             <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-default" Text="Materiali Cantieri" />
                             <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-default" Text="Rientro Materiali" />
+                            <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-default" Text="Accrediti" />
                             <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-default" Text="Manodopera" />
                             <asp:Button ID="btnGestOper" runat="server" OnClick="btnGestOper_Click" CssClass="btn btn-lg btn-default" Text="Gest. Operaio" />
                             <asp:Button ID="btnGestArrot" runat="server" OnClick="btnGestArrot_Click" CssClass="btn btn-lg btn-default" Text="Gest. Arrotond." />
@@ -388,6 +389,132 @@
                         </Columns>
                     </asp:GridView>
                 </div>
+            </asp:Panel>
+
+            <!-- Maschera Accrediti -->
+            <asp:Panel ID="pnlMascheraAccrediti" CssClass="col-md-12" runat="server">
+                <div class="row">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblCodArtAccrediti" Text="Codice Articolo" runat="server" />
+                        <asp:TextBox ID="txtCodArtAccrediti" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtCodArtAccrediti_TextChanged" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblDescrCodArtAccrediti" Text="Descrizione Codice Articolo" runat="server" />
+                        <asp:TextBox ID="txtDescrCodArtAccrediti" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtDescrCodArtAccrediti_TextChanged" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblDescrMatAccrediti" Text="Descrizione Materiale" runat="server" />
+                        <asp:TextBox ID="txtDescrMatAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-3">
+                        <asp:Label ID="lblNoteAccrediti" Text="Note" runat="server" />
+                        <asp:TextBox ID="txtNoteAccrediti" TextMode="MultiLine" Rows="2" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-3">
+                        <asp:Label ID="lblNote2Accrediti" Text="Note 2" runat="server" />
+                        <asp:TextBox ID="txtNote2Accrediti" TextMode="MultiLine" Rows="2" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblQtaAccrediti" Text="Quantità" runat="server" />
+                        <asp:TextBox ID="txtQtaAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblPrezzoNettoAccrediti" Text="Prezzo Netto Mef" runat="server" />
+                        <asp:TextBox ID="txtPrezzoNettoAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Button ID="btnCalcolaPrezzoAccrediti" OnClick="btnCalcolaPrezzoUnit_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Calcola Prezzo Unitario" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Button ID="btnInserisciAccrediti" OnClick="btnInserisciAccrediti_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Accredito" />
+                        <asp:Button ID="btnModificaAccrediti" OnClick="btnModificaAccrediti_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Modifica Accredito" />
+                    </div>
+                    <div class="col-md-4">
+                        <asp:Label ID="lblMsgAccrediti" Text="" CssClass="pull-right" runat="server" />
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblPrezzoUniAccrediti" Text="Prezzo Unitario" runat="server" />
+                        <asp:TextBox ID="txtPrezzoUniAccrediti" Text="0.00" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblPrezzoFinAccrediti" Text="Prezzo Finale Cliente" runat="server" />
+                        <asp:TextBox ID="txtPrezzoFinAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+
+                    <div class="col-md-1">
+                        <asp:Label ID="lblVisibileAccrediti" Text="Visibile" runat="server" />
+                        <asp:CheckBox ID="chkVisibileAccrediti" CssClass="form-control" Checked="true" runat="server" />
+                    </div>
+                    <div class="col-md-1">
+                        <asp:Label ID="lblRicalcoloAccrediti" Text="Ricalcolo" runat="server" />
+                        <asp:CheckBox ID="chkRicalcoloAccrediti" CssClass="form-control" Checked="true" runat="server" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblRicaricoAccrediti" Text="Ricarico Si/No" runat="server" />
+                        <asp:CheckBox ID="chkRicaricoAccrediti" CssClass="form-control" Checked="true" runat="server" />
+                    </div>
+                </div>
+
+                <asp:HiddenField ID="hfIdAccrediti" runat="server" />
+
+                <asp:Panel ID="pnlFiltriAccrediti" CssClass="col-md-12" Style="margin-top: 20px;" runat="server">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <asp:Label ID="lblFiltroCodArtAccrediti" runat="server" Text="Filtro Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroCodArtAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Label ID="lblFiltroDescrAcrrediti" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroDescrAcrrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Label ID="lblFiltroProtAccrediti" runat="server" Text="Filtro Protocollo"></asp:Label>
+                            <asp:TextBox ID="txtFiltroProtAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Label ID="lblFiltroFornAccrediti" runat="server" Text="Filtro Fornitore"></asp:Label>
+                            <asp:TextBox ID="txtFiltroFornAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-md-4">
+                            <asp:Button ID="btnFiltraAccrediti" OnClick="btnFiltraAccrediti_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Record" />
+                            <asp:Label ID="lblTotValAccrediti" CssClass="pull-right" Style="color: blue; font-size: 30px;" runat="server"></asp:Label>
+                        </div>
+                    </div>
+                </asp:Panel>
+
+                <asp:GridView ID="grdAccrediti" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdAccrediti_RowCommand" CssClass="table table-striped text-center" runat="server">
+                        <Columns>
+                            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
+                            <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
+                            <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" />
+                            <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
+                            <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
+                            <asp:BoundField DataField="Qta" HeaderText="Quantità" />
+                            <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="btnVisualRientro" CommandName="VisualAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" CssClass="btn btn-lg btn-default" runat="server" Text="Visualizza" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="btnModRientro" CommandName="ModAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" CssClass="btn btn-lg btn-default" runat="server" Text="Modifica" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="btnElimRientro" CommandName="ElimAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                        CssClass="btn btn-lg btn-default" runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
             </asp:Panel>
 
             <!-- Maschera manodopera -->
