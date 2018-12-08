@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="Preventivi.aspx.cs" Inherits="GestioneCantieri.Preventivi" %>
 
 <asp:Content ID="Head" ContentPlaceHolderID="title" runat="server">
-    <title>Inserimento Dati</title>
+    <title>Gestione Preventivi</title>
     <style>
         h1 {
             margin-bottom: 20px;

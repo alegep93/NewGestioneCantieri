@@ -666,6 +666,8 @@ namespace GestioneCantieri
             grdMatCant.Visible = true;
             grdRientro.Visible = false;
             btnModMatCant.Visible = false;
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
+            ddlScegliDDTMef.SelectedIndex = 0;
             BindGridMatCant();
             EnableDisableControls(true, pnlMascheraGestCant);
             SvuotaCampi(pnlMascheraGestCant);
@@ -703,7 +705,7 @@ namespace GestioneCantieri
         }
         protected void ddlScegliMatCant_TextChanged(object sender, EventArgs e)
         {
-            if (ddlScegliListino.SelectedIndex != -1)
+            if (ddlScegliMatCant.SelectedIndex != -1)
             {
                 string[] partiMatCant = ddlScegliMatCant.SelectedItem.Text.Split('|');
                 txtCodArt.Text = partiMatCant[0].Trim();

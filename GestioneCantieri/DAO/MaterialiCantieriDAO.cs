@@ -180,11 +180,16 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT A.Data,C.NomeOp,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
+                sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
                       "LEFT JOIN TblOperaio AS C ON (A.Acquirente = C.IdOperaio) " +
-                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND A.IdTblOperaio LIKE @pIdOper AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) ";
+                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) ";
+
+                if(idOperaio != "-1")
+                {
+                    sql += "AND A.Acquirente = @pIdOper";
+                }
 
                 return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio }).ToList();
             }
@@ -203,12 +208,17 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT A.Data,C.NomeOp,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
+                sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
                       "LEFT JOIN TblOperaio AS C ON (A.Acquirente = C.IdOperaio) " +
-                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND A.IdTblOperaio LIKE @pIdOper " +
+                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) " +
                       "AND B.CodCant LIKE @codCant AND (A.OperaioPagato = @isOperaioPagato OR A.OperaioPagato IS NULL)  ";
+
+                if(idOperaio != "-1")
+                {
+                    sql += "AND A.Acquirente = @pIdOper ";
+                }
 
                 return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio, isOperaioPagato, codCant }).ToList();
             }
