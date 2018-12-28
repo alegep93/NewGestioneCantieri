@@ -145,15 +145,15 @@ namespace GestioneCantieri
         }
         protected void txtFiltroFrutti1_TextChanged(object sender, EventArgs e)
         {
-            MostraListaFruttiInseriti();
+            FillDdlFrutti();
         }
         protected void txtFiltroFrutti2_TextChanged(object sender, EventArgs e)
         {
-            MostraListaFruttiInseriti();
+            FillDdlFrutti();
         }
         protected void txtFiltroFrutti3_TextChanged(object sender, EventArgs e)
         {
-            MostraListaFruttiInseriti();
+            FillDdlFrutti();
         }
         protected void ddlDelFrutto_TextChanged(object sender, EventArgs e)
         {
@@ -168,7 +168,11 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillDdlFrutti()
         {
-            List<Frutti> listFrutti = FruttiDAO.getFrutti();
+            string filtro1 = pnlModifica.Visible == true ? txtFiltroFruttiMod1.Text : txtFiltroFruttiDel1.Text;
+            string filtro2 = pnlModifica.Visible == true ? txtFiltroFruttiMod2.Text : txtFiltroFruttiDel2.Text;
+            string filtro3 = pnlModifica.Visible == true ? txtFiltroFruttiMod3.Text : txtFiltroFruttiDel3.Text;
+
+            List<Frutti> listFrutti = FruttiDAO.getFrutti(filtro1, filtro2, filtro3);
             ddlModScegliFrutto.Items.Clear();
             ddlDelFrutto.Items.Clear();
 
@@ -185,7 +189,10 @@ namespace GestioneCantieri
         }
         protected void MostraListaFruttiInseriti()
         {
-            fruttiList = FruttiDAO.getFruttiWithSearch(txtFiltroFrutti1.Text, txtFiltroFrutti2.Text, txtFiltroFrutti3.Text);
+            string filtro1 = pnlModifica.Visible == true ? txtFiltroFruttiMod1.Text : txtFiltroFruttiDel1.Text;
+            string filtro2 = pnlModifica.Visible == true ? txtFiltroFruttiMod2.Text : txtFiltroFruttiDel2.Text;
+            string filtro3 = pnlModifica.Visible == true ? txtFiltroFruttiMod3.Text : txtFiltroFruttiDel3.Text;
+            fruttiList = FruttiDAO.getFruttiWithSearch(filtro1, filtro2, filtro3);
         }
     }
 }

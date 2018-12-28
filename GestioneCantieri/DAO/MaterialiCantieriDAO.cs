@@ -183,13 +183,15 @@ namespace GestioneCantieri.DAO
                 sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                      "LEFT JOIN TblOperaio AS C ON (A.Acquirente = C.IdOperaio) " +
-                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) ";
+                      "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
+                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) AND A.idTblOperaio IS NOT NULL ";
 
                 if(idOperaio != "-1")
                 {
-                    sql += "AND A.Acquirente = @pIdOper";
+                    sql += "AND A.IdTblOperaio = @pIdOper";
                 }
+
+                sql += "ORDER BY A.Data ";
 
                 return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio }).ToList();
             }
@@ -211,14 +213,25 @@ namespace GestioneCantieri.DAO
                 sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                      "LEFT JOIN TblOperaio AS C ON (A.Acquirente = C.IdOperaio) " +
+                      "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
                       "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) " +
-                      "AND B.CodCant LIKE @codCant AND (A.OperaioPagato = @isOperaioPagato OR A.OperaioPagato IS NULL)  ";
+                      "AND B.CodCant LIKE @codCant AND A.idTblOperaio IS NOT NULL ";
+
+                if (isOperaioPagato)
+                {
+                    sql += "AND A.OperaioPagato = @isOperaioPagato ";
+                }
+                else
+                {
+                    sql += "AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) ";
+                }
 
                 if(idOperaio != "-1")
                 {
-                    sql += "AND A.Acquirente = @pIdOper ";
+                    sql += "AND A.IdTblOperaio = @pIdOper ";
                 }
+
+                sql += "ORDER BY A.Data ";
 
                 return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio, isOperaioPagato, codCant }).ToList();
             }

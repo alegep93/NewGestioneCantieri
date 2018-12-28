@@ -37,17 +37,22 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
-        public static List<Frutti> getFrutti()
+        public static List<Frutti> getFrutti(string f1, string f2, string f3)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
 
+            f1 = "%" + f1 + "%";
+            f2 = "%" + f2 + "%";
+            f3 = "%" + f3 + "%";
+
             try
             {
                 sql = "SELECT ID1 AS 'Id', descr001 AS 'Descr' FROM TblFrutti " +
+                      "WHERE descr001 LIKE @pF1 AND descr001 LIKE @pF2 AND descr001 LIKE @pF3 " +
                       "ORDER BY descr001 ASC ";
 
-                return cn.Query<Frutti>(sql).ToList();
+                return cn.Query<Frutti>(sql, new { pF1 = f1, pF2 = f2, pF3 = f3 }).ToList();
             }
             catch (Exception ex)
             {

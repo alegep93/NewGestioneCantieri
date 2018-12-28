@@ -136,6 +136,11 @@ namespace GestioneCantieri
                 }
                 i++;
             }
+
+            if(nomeFornitore == "")
+            {
+                ddlScegliFornit.SelectedIndex = 0;
+            }
         }
         protected void BindAllGrid()
         {
@@ -149,7 +154,7 @@ namespace GestioneCantieri
         protected void HideMessageLabels()
         {
             lblIsRecordInserito.Text = lblIsManodopInserita.Text = lblIsOperInserita.Text =
-               lblIsArrotondInserito.Text = lblIsSpesaInserita.Text = lblIsAChiamInserita.Text = "";
+               lblIsArrotondInserito.Text = lblIsSpesaInserita.Text = lblIsAChiamInserita.Text = lblInsMatDaDDT.Text = "";
         }
 
         //Fill Ddl
@@ -519,9 +524,9 @@ namespace GestioneCantieri
             mc.Note2 = txtNote_2.Text;
 
             if (mc.Tipologia == "MATERIALE")
-                mc.Qta = Convert.ToDouble(txtQta.Text);
+                mc.Qta = txtQta.Text != "" ? Convert.ToDouble(txtQta.Text) : 0;
             else if (mc.Tipologia == "RIENTRO")
-                mc.Qta = (Convert.ToDouble(txtQta.Text)) * (-1);
+                mc.Qta = txtQta.Text != "" ? (Convert.ToDouble(txtQta.Text)) * (-1) : 0;
 
             if (txtFascia.Text != "")
                 mc.Fascia = Convert.ToInt32(txtFascia.Text);
@@ -595,7 +600,7 @@ namespace GestioneCantieri
             MaterialiCantieri mc = new MaterialiCantieri();
             FillMatCant(mc);
 
-            if ((Convert.ToDecimal(txtQta.Text) > 0 && txtQta.Text != "") && Convert.ToDecimal(txtPzzoUnit.Text) > 0)
+            if ((txtQta.Text != "" && Convert.ToDecimal(txtQta.Text) > 0) && Convert.ToDecimal(txtPzzoUnit.Text) > 0)
             {
                 if (ddlScegliDDTMef.SelectedItem == null || ddlScegliDDTMef.SelectedItem.Text == "")
                 {
@@ -667,11 +672,39 @@ namespace GestioneCantieri
             grdRientro.Visible = false;
             btnModMatCant.Visible = false;
             txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
-            ddlScegliDDTMef.SelectedIndex = 0;
+
+            if (ddlScegliDDTMef.SelectedValue != "")
+            {
+                ddlScegliDDTMef.SelectedIndex = 0;
+            }
+
             BindGridMatCant();
             EnableDisableControls(true, pnlMascheraGestCant);
             SvuotaCampi(pnlMascheraGestCant);
             ChooseFornitore("Mef");
+            HideMessageLabels();
+        }
+
+        protected void btnMatCantAltriFornitori_Click(object sender, EventArgs e)
+        {
+            lblTitoloMaschera.Text = "Inserisci Materiali Cantieri Altri Fornitori";
+            txtTipDatCant.Text = "MATERIALE";
+            ShowForMatCant();
+            ShowPanels(false, true, false, false, false, false, false, false);
+            grdMatCant.Visible = true;
+            grdRientro.Visible = false;
+            btnModMatCant.Visible = false;
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
+
+            if (ddlScegliDDTMef.SelectedValue != "")
+            {
+                ddlScegliDDTMef.SelectedIndex = 0;
+            }
+
+            BindGridMatCant();
+            EnableDisableControls(true, pnlMascheraGestCant);
+            SvuotaCampi(pnlMascheraGestCant);
+            ChooseFornitore("");
             HideMessageLabels();
         }
 

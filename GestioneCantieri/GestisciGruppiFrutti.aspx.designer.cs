@@ -49,33 +49,6 @@ namespace GestioneCantieri {
         protected global::System.Web.UI.WebControls.Label lblTitle;
         
         /// <summary>
-        /// Controllo txtFiltroGruppi1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppi1;
-        
-        /// <summary>
-        /// Controllo txtFiltroGruppi2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppi2;
-        
-        /// <summary>
-        /// Controllo txtFiltroGruppi3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppi3;
-        
-        /// <summary>
         /// Controllo pnlInserisci.
         /// </summary>
         /// <remarks>
@@ -146,6 +119,33 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInsGruppiInseritiList;
+        
+        /// <summary>
+        /// Controllo txtFiltroGruppi1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppi1;
+        
+        /// <summary>
+        /// Controllo txtFiltroGruppi2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppi2;
+        
+        /// <summary>
+        /// Controllo txtFiltroGruppi3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppi3;
         
         /// <summary>
         /// Controllo lblElencoGruppi.
@@ -265,6 +265,24 @@ namespace GestioneCantieri {
         protected global::System.Web.UI.WebControls.Label lblQtaDescr;
         
         /// <summary>
+        /// Controllo btnClonaGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClonaGruppo;
+        
+        /// <summary>
+        /// Controllo lblClonaGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClonaGruppo;
+        
+        /// <summary>
         /// Controllo pnlModifica.
         /// </summary>
         /// <remarks>
@@ -272,6 +290,33 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlModifica;
+        
+        /// <summary>
+        /// Controllo txtFiltroMod1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMod1;
+        
+        /// <summary>
+        /// Controllo txtFiltroMod2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMod2;
+        
+        /// <summary>
+        /// Controllo txtFiltroMod3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMod3;
         
         /// <summary>
         /// Controllo lblScegliGruppo.
@@ -389,6 +434,33 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlElimina;
+        
+        /// <summary>
+        /// Controllo txtFiltroDel1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroDel1;
+        
+        /// <summary>
+        /// Controllo txtFiltroDel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroDel2;
+        
+        /// <summary>
+        /// Controllo txtFiltroDel3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroDel3;
         
         /// <summary>
         /// Controllo lblDelGruppo.

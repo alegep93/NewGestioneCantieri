@@ -17,7 +17,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT CGF.Id, F.descr001 'NomeFrutto', Qta " +
+                sql = "SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto AS IdFrutto, Qta " +
                       "FROM TblCompGruppoFrut AS CGF " +
                       "JOIN TblFrutti AS F ON (CGF.IdTblFrutto = F.ID1) " +
                       "WHERE IdTblGruppo = @IdTblGruppo " +

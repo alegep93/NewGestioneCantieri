@@ -27,19 +27,6 @@
                 <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label>
             </h1>
             <!-- Fine Titolo Pagina -->
-
-            <div class="col-md-6"></div>
-            <div class="col-md-6">
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtFiltroFrutti1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtFiltroFrutti2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtFiltroFrutti3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-            </div>
         </div>
 
         <asp:Panel ID="pnlInserisci" runat="server">
@@ -91,6 +78,16 @@
                             <h3 class="panel-title">Modifica Frutto</h3>
                         </div>
                         <div class="panel-body">
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroFruttiMod1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroFruttiMod2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroFruttiMod3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
                             <asp:Label ID="lblModScegliFrutto" runat="server" Text="Scegli Frutto"></asp:Label>
                             <asp:DropDownList ID="ddlModScegliFrutto" CssClass="form-control" runat="server" OnTextChanged="ddlModScegliFrutto_TextChanged" AutoPostBack="true"></asp:DropDownList>
 
@@ -135,6 +132,16 @@
                             <h3 class="panel-title">Elimina Frutto</h3>
                         </div>
                         <div class="panel-body">
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroFruttiDel1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroFruttiDel2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroFruttiDel3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
                             <asp:Label ID="lblDelFrutto" runat="server" Text="Nome Frutto"></asp:Label>
                             <asp:DropDownList ID="ddlDelFrutto" OnTextChanged="ddlDelFrutto_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
 

@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-2">
                     <asp:Label ID="lblInsArticolo" Text="Articolo" runat="server"></asp:Label>
-                    <asp:TextBox ID="txtInsArticolo" TextMode="Number" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtInsArticolo" MaxLength="50" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-2">
                     <asp:Label ID="lblInsDescrForn" Text="Descr. Fornitore" runat="server"></asp:Label>

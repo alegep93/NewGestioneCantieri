@@ -391,6 +391,15 @@ namespace GestioneCantieri {
         protected global::System.Web.UI.WebControls.Button btnMatCant;
         
         /// <summary>
+        /// Controllo btnMatCantAltriFornitori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMatCantAltriFornitori;
+        
+        /// <summary>
         /// Controllo btnRientro.
         /// </summary>
         /// <remarks>

@@ -31,17 +31,41 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
-        public static List<GruppiFrutti> getGruppi()
+        public static int InserisciGruppo(string nomeGruppo, string descr)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
 
             try
             {
+                sql = "IF NOT EXISTS(SELECT NomeGruppo FROM TblGruppiFrutti WHERE NomeGruppo = @pNomeGruppo) " +
+                      "INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@pNomeGruppo,@pDescr,0) " +
+                      "SELECT CAST(scope_identity() AS int) ";
+
+                return cn.Query<int>(sql, new { pNomeGruppo = nomeGruppo, pDescr = descr }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la creazione di un nuovo gruppo", ex);
+            }
+            finally { CloseResouces(cn, null); }
+        }
+        public static List<GruppiFrutti> getGruppi(string filter1, string filter2, string filter3)
+        {
+            SqlConnection cn = GetConnection();
+            string sql = "";
+
+            filter1 = "%" + filter1 + "%";
+            filter2 = "%" + filter2 + "%";
+            filter3 = "%" + filter3 + "%";
+
+            try
+            {
                 sql = "SELECT Id,NomeGruppo,Descrizione FROM TblGruppiFrutti " +
+                      "WHERE NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3" +
                       "ORDER BY NomeGruppo ASC ";
 
-                return cn.Query<GruppiFrutti>(sql).ToList();
+                return cn.Query<GruppiFrutti>(sql, new { pFilter1 = filter1, pFilter2 = filter2, pFilter3 = filter3 }).ToList();
             }
             catch (Exception ex)
             {
@@ -49,18 +73,22 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
-        public static List<GruppiFrutti> getGruppiNonCompletati()
+        public static List<GruppiFrutti> getGruppiNonCompletati(string filter1, string filter2, string filter3)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
 
+            filter1 = "%" + filter1 + "%";
+            filter2 = "%" + filter2 + "%";
+            filter3 = "%" + filter3 + "%";
+
             try
             {
                 sql = "SELECT Id,NomeGruppo,Descrizione FROM TblGruppiFrutti " +
-                      "WHERE Completato = 0 " +
+                      "WHERE Completato = 0 AND NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3 " +
                       "ORDER BY NomeGruppo ASC ";
 
-                return cn.Query<GruppiFrutti>(sql).ToList();
+                return cn.Query<GruppiFrutti>(sql, new { pFilter1 = filter1, pFilter2 = filter2, pFilter3 = filter3 }).ToList();
             }
             catch (Exception ex)
             {
@@ -145,6 +173,23 @@ namespace GestioneCantieri.DAO
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero del nome del gruppo", ex);
+            }
+            finally { CloseResouces(cn, null); }
+        }
+        public static GruppiFrutti GetGruppo(int idGruppo)
+        {
+            SqlConnection cn = GetConnection();
+            string sql = "";
+
+            try
+            {
+                sql = "SELECT Id, NomeGruppo, Descrizione AS Descr FROM TblGruppiFrutti WHERE Id = @idGruppo ";
+
+                return cn.Query<GruppiFrutti>(sql, new { idGruppo }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero del singolo gruppo", ex);
             }
             finally { CloseResouces(cn, null); }
         }
@@ -293,6 +338,7 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, dr); }
         }
+
         public static bool UpdateFlagControllato(int idGruppo)
         {
             SqlConnection cn = GetConnection();

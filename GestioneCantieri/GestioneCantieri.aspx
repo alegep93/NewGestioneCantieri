@@ -150,6 +150,7 @@
                         <div class="col-md-offset-1 col-md-10 text-center" style="padding: 20px 0;">
                             <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-default" Text="Materiali da DDT" />
                             <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-default" Text="Materiali Cantieri" />
+                            <asp:Button ID="btnMatCantAltriFornitori" runat="server" OnClick="btnMatCantAltriFornitori_Click" CssClass="btn btn-lg btn-default" Text="Materiali Cantieri Altri Fornitori" />
                             <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-default" Text="Rientro Materiali" />
                             <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-default" Text="Accrediti" />
                             <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-default" Text="Manodopera" />

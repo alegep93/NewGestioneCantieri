@@ -81,7 +81,7 @@
                 <asp:GridView ID="grdResocontoOperaio" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped text-center">
                     <Columns>
                         <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-                        <asp:BoundField DataField="Acquirente" HeaderText="Acquirente" />
+                        <asp:BoundField DataField="Acquirente" HeaderText="Operaio" />
                         <asp:BoundField DataField="CodCant" HeaderText="CodCant" />
                         <asp:BoundField DataField="DescriCodCant" HeaderText="DescriCodCant" />
                         <asp:BoundField DataField="Qta" HeaderText="Qta" />

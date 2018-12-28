@@ -2,6 +2,9 @@
 using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using System.Web.UI;
 
 namespace GestioneCantieri
@@ -61,19 +64,8 @@ namespace GestioneCantieri
         {
             string pathFile = @"C:\MEF\ORDINI\";
 
-            // Genero una lista a partire dai dati contenuti nel nuovo file DBF
-            List<Mamg0ForDBF> mamgoList = Mamg0DAO.GetListinoFromDBF(pathFile);
-
-            if(mamgoList != null && mamgoList.Count > 0)
-            {
-                Mamg0DAO.EliminaListino();
-            }
-
-            foreach (Mamg0ForDBF mmg in mamgoList)
-            {
-                // Inserisco i nuovi DDT
-                Mamg0DAO.InserisciListino(mmg);
-            }
+            Mamg0DAO.EliminaListino();
+            Mamg0DAO.InsertIntoDBF(pathFile);
 
             BindGrid();
         }

@@ -18,22 +18,6 @@
             <h1>
                 <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label></h1>
             <!-- Fine Titolo Pagina -->
-
-            <!-- Filtri sulla lista di gruppi -->
-            <div class="col-md-3"></div>
-            <div class="col-md-3">
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtFiltroGruppi1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppi1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtFiltroGruppi2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppi2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtFiltroGruppi3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppi3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-            </div>
-            <div class="col-md-6"></div>
-            <!-- Fine Filtri sulla lista di gruppi -->
         </div>
 
         <asp:Panel ID="pnlInserisci" runat="server">
@@ -84,6 +68,17 @@
                             <h3 class="panel-title">Aggiungi Frutto a Gruppo</h3>
                         </div>
                         <div class="panel-body">
+                            <%-- Filtri --%>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroGruppi1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppi1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroGruppi2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppi2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroGruppi3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppi3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
                             <asp:Label ID="lblElencoGruppi" runat="server" Text="Gruppi"></asp:Label>
                             <asp:DropDownList ID="ddlGruppi" CssClass="form-control" runat="server" OnTextChanged="ddlGruppi_TextChanged" AutoPostBack="true"></asp:DropDownList>
 
@@ -120,6 +115,8 @@
                                 <li class="list-group-item"><%= item.Qta + " - " + item.NomeFrutto %></li>
                                 <%} %>
                             </ul>
+                            <asp:Button ID="btnClonaGruppo" OnClick="btnClonaGruppo_Click" runat="server" Text="Clona Gruppo Selezionato" />
+                            <asp:Label ID="lblClonaGruppo" runat="server"></asp:Label>
                         </div>
                     </div>
                 </div>
@@ -135,7 +132,18 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Modifica Gruppo</h3>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body">                            
+                            <%-- Filtri --%>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroMod1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppi1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroMod2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppi2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroMod3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppi3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
                             <asp:Label ID="lblScegliGruppo" runat="server" Text="Nome Gruppo"></asp:Label>
                             <asp:DropDownList ID="ddlModScegliGruppo" CssClass="form-control" runat="server" OnTextChanged="ddlModMostraGruppi_TextChanged" AutoPostBack="true"></asp:DropDownList>
 
@@ -204,6 +212,17 @@
                             <h3 class="panel-title">Elimina Gruppo</h3>
                         </div>
                         <div class="panel-body">
+                            <%-- Filtri --%>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroDel1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppi1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroDel2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppi2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFiltroDel3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppi3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+
                             <asp:Label ID="lblDelGruppo" runat="server" Text="Nome Gruppo"></asp:Label>
                             <asp:DropDownList ID="ddlDelGruppo" OnTextChanged="ddlDelGruppo_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
 
