@@ -21,7 +21,9 @@ namespace GestioneCantieri
                 btnModCliente.Visible = btnModFornit.Visible = false;
                 btnModOper.Visible = btnModCantiere.Visible = false;
                 btnModSpesa.Visible = false;
-                PopolaCodCantAnnoNumero();
+
+                string annoCantiere = txtAnnoCant.Text != "" ? txtAnnoCant.Text : DateTime.Now.Year.ToString();
+                PopolaCodCantAnnoNumero(annoCantiere);
             }
 
             Page.MaintainScrollPositionOnPostBack = true;
@@ -68,7 +70,7 @@ namespace GestioneCantieri
             FillDdlClienti();
             ResettaCampi(pnlTxtBoxCantContainer);
             txtAnnoCant.Text = DateTime.Now.Year.ToString();
-            PopolaCodCantAnnoNumero();
+            PopolaCodCantAnnoNumero(txtAnnoCant.Text);
             txtCodCant.Enabled = false;
             btnModCantiere.Visible = false;
             btnInsCantiere.Visible = true;
@@ -322,7 +324,7 @@ namespace GestioneCantieri
 
                 BindGridCantieri();
                 ResettaCampi(pnlTxtBoxCantContainer);
-                PopolaCodCantAnnoNumero();
+                PopolaCodCantAnnoNumero(txtAnnoCant.Text != "" ? txtAnnoCant.Text : DateTime.Now.Year.ToString());
             }
             else
             {
@@ -388,7 +390,7 @@ namespace GestioneCantieri
                 BindGridCantieri();
 
             ResettaCampi(pnlTxtBoxCantContainer);
-            PopolaCodCantAnnoNumero();
+            PopolaCodCantAnnoNumero(txtAnnoCant.Text != "" ? txtAnnoCant.Text : DateTime.Now.Year.ToString());
             btnModCantiere.Visible = false;
             btnInsCantiere.Visible = true;
         }
@@ -830,19 +832,22 @@ namespace GestioneCantieri
             chkDiviso.Checked = cant.Diviso;
             chkFatturato.Checked = cant.Fatturato;
         }
-        protected void PopolaCodCantAnnoNumero(string num = "")
+        protected void PopolaCodCantAnnoNumero(string anno, string num = "")
         {
             string numCant = "";
             if (num == "")
             {
-                txtNumeroCant.Text = CantieriDAO.GetLastNumCantForYear(DateTime.Now.Year.ToString());
+                txtNumeroCant.Text = CantieriDAO.GetLastNumCantForYear(anno);
+                if(txtNumeroCant.Text == "")
+                {
+                    txtNumeroCant.Text = "001";
+                }
                 numCant = txtNumeroCant.Text;
             }
             else
                 numCant = num;
 
-            DateTime date = DateTime.Now;
-            string year = date.ToString("yy");
+            string year = anno.Substring(2,2);
             string suffisso = "Ma";
             if (numCant.Length == 1)
                 txtCodCant.Text = year + "00" + numCant + suffisso;
@@ -994,7 +999,7 @@ namespace GestioneCantieri
         }
         protected void txtAnnoCant_TextChanged(object sender, EventArgs e)
         {
-            PopolaCodCantAnnoNumero();
+            PopolaCodCantAnnoNumero(txtAnnoCant.Text);
         }
     }
 }
