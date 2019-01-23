@@ -456,6 +456,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlMascheraMaterialiDaDDT);
             ChooseFornitore("Mef");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
 
             if (grdMostraDDTDaInserire.Rows.Count == 0)
             {
@@ -953,6 +954,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlMascheraGestCant);
             ChooseFornitore("Rientro");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
         protected void btnModRientro_Click(object sender, EventArgs e)
         {
@@ -1141,6 +1143,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlMascheraGestCant);
             ChooseFornitore("Rientro");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
         protected void txtCodArtAccrediti_TextChanged(object sender, EventArgs e)
         {
@@ -1378,6 +1381,16 @@ namespace GestioneCantieri
             else if (e.CommandName == "ElimAccrediti")
                 EliminaAccrediti(idMatCant);
         }
+        protected void btnCalcolaPrezzoAccrediti_Click(object sender, EventArgs e)
+        {
+            if (txtPrezzoNettoAccrediti.Text != "")
+                txtPrezzoUniAccrediti.Text = Math.Round(Convert.ToDecimal(txtPrezzoNettoAccrediti.Text.Replace(".", ",")), 2).ToString();
+            else
+            {
+                lblMsgAccrediti.Text = "Inserire un valore nella casella 'Prezzo Netto Mef' per calcolare il 'Prezzo Unitario'";
+                lblMsgAccrediti.ForeColor = Color.Red;
+            }
+        }
         #endregion
 
         #region Manodopera
@@ -1475,6 +1488,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlManodopera);
             ChooseFornitore("Manodopera");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
 
             //Popolo il campo PzzoManodopera a partire dal prezzo scritto nella tabella Cantieri
             Cantieri c = CantieriDAO.GetCantiere(ddlScegliCant.SelectedItem.Value);
@@ -1756,6 +1770,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlGestioneOperaio);
             ChooseFornitore("Operaio");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
 
         /* EVENTI TEXT-CHANGED */
@@ -2020,6 +2035,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlGestArrotond);
             ChooseFornitore("Arrotondamento");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
 
         /* EVENTI PER IL ROWCOMMAND */
@@ -2226,6 +2242,8 @@ namespace GestioneCantieri
             chkChiamVisibile.Checked = mc.Visibile;
             chkChiamRicalcolo.Checked = mc.Ricalcolo;
             chkChiamRicaricoSiNo.Checked = mc.RicaricoSiNo;
+            txtChiamNote.Text = mc.Note;
+            txtChiamNote2.Text = mc.Note2;
         }
         private void PopolaObjChiamata(MaterialiCantieri mc)
         {
@@ -2340,6 +2358,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlGestChiamata);
             ChooseFornitore("A Chiamata");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
 
         /* Eventi Per il RowCommand */
@@ -2554,6 +2573,7 @@ namespace GestioneCantieri
             SvuotaCampi(pnlGestSpese);
             ChooseFornitore("Spese");
             HideMessageLabels();
+            txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
         protected void btnFiltraGrdSpese_Click(object sender, EventArgs e)
         {

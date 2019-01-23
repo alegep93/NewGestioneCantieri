@@ -188,7 +188,7 @@ namespace GestioneCantieri.DAO
 
                 if(idOperaio != "-1")
                 {
-                    sql += "AND A.IdTblOperaio = @pIdOper";
+                    sql += "AND A.IdTblOperaio = @pIdOper ";
                 }
 
                 sql += "ORDER BY A.Data ";

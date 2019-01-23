@@ -67,6 +67,7 @@ namespace GestioneCantieri
         {
             BindGrid(false);
             btnPagaOperaio.Visible = true;
+            CheckToEnablePagaOperaio();
         }
         protected void btnPagaOperaio_Click(object sender, EventArgs e)
         {
@@ -89,6 +90,23 @@ namespace GestioneCantieri
         protected void btnFiltra_Click(object sender, EventArgs e)
         {
             BindGrid(true);
+        }
+
+        protected void ddlScegliOperaio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckToEnablePagaOperaio();
+        }
+
+        private void CheckToEnablePagaOperaio()
+        {
+            if (ddlScegliOperaio.SelectedIndex == 0)
+            {
+                btnPagaOperaio.Enabled = false;
+            }
+            else
+            {
+                btnPagaOperaio.Enabled = true;
+            }
         }
     }
 }

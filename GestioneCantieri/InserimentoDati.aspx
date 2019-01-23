@@ -384,7 +384,7 @@
                     </div>
                     <div class="col-md-2 form-group">
                         <asp:Label ID="lblNumeroCant" runat="server" Text="Numero" />
-                        <asp:TextBox ID="txtNumeroCant" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtNumeroCant_TextChanged" MaxLength="5" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtNumeroCant" CssClass="form-control" ReadOnly="true" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-2 form-group">
                         <asp:Label ID="lblValPrevCant" runat="server" Text="Valore Preventivo Cantiere" />

@@ -426,7 +426,7 @@
                         <asp:TextBox ID="txtPrezzoNettoAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
-                        <asp:Button ID="btnCalcolaPrezzoAccrediti" OnClick="btnCalcolaPrezzoUnit_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Calcola Prezzo Unitario" />
+                        <asp:Button ID="btnCalcolaPrezzoAccrediti" OnClick="btnCalcolaPrezzoAccrediti_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Calcola Prezzo Unitario" />
                     </div>
                     <div class="col-md-2">
                         <asp:Button ID="btnInserisciAccrediti" OnClick="btnInserisciAccrediti_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Accredito" />

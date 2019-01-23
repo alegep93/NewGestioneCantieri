@@ -62,7 +62,7 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "SELECT Id,NomeGruppo,Descrizione FROM TblGruppiFrutti " +
-                      "WHERE NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3" +
+                      "WHERE NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3 " +
                       "ORDER BY NomeGruppo ASC ";
 
                 return cn.Query<GruppiFrutti>(sql, new { pFilter1 = filter1, pFilter2 = filter2, pFilter3 = filter3 }).ToList();

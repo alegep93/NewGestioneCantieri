@@ -16,6 +16,7 @@ namespace GestioneCantieri
             if (!IsPostBack)
             {
                 SvuotaCampi();
+                txtCodArt1.Focus();
             }
         }
 

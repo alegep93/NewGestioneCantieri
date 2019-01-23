@@ -993,10 +993,6 @@ namespace GestioneCantieri
         }
 
         /* EVENTI TEXT-CHANGED */
-        protected void txtNumeroCant_TextChanged(object sender, EventArgs e)
-        {
-            PopolaCodCantAnnoNumero(txtNumeroCant.Text);
-        }
         protected void txtAnnoCant_TextChanged(object sender, EventArgs e)
         {
             PopolaCodCantAnnoNumero(txtAnnoCant.Text);

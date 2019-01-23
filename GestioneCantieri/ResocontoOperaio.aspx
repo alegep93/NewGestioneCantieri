@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-4">
                     <asp:Label ID="lblScegliOperaio" runat="server" Text="Scegli Operaio"></asp:Label>
-                    <asp:DropDownList ID="ddlScegliOperaio" CssClass="form-control" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlScegliOperaio" OnSelectedIndexChanged="ddlScegliOperaio_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
                 <div class="col-md-12">
                     <asp:Button ID="btnStampaResoconto" CssClass="btn btn-lg btn-primary pull-right" OnClick="btnStampaResoconto_Click" runat="server" Text="Stampa Resoconto" />
