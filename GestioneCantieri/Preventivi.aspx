@@ -70,7 +70,11 @@
                     <asp:TextBox ID="txtConcatenazione" CssClass="form-control" ReadOnly="true" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="col-md-12 form-group">
+                <div class="col-md-2">
+                    <asp:Label ID="lblAnno" runat="server" Text="Concatenazione" />
+                    <asp:TextBox ID="txtAnno" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtAnno_TextChanged" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-md-10 form-group">
                     <asp:Button ID="btnInsPreventivo" OnClick="btnInsPreventivo_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Preventivo" />
                     <asp:Button ID="btnModPreventivo" OnClick="btnModPreventivo_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Modifica Preventivo" />
                     <asp:Label ID="lblMessaggio" CssClass="pull-right labelConferma" runat="server" Text=""></asp:Label>

@@ -56,6 +56,7 @@ namespace GestioneCantieri
         {
             txtFiltroAnno.Text = txtFiltroNumero.Text = txtFiltroDescr.Text = "";
             txtNumeroPreventivo.Text = txtData.Text = txtDescrizione.Text = txtConcatenazione.Text = lblMessaggio.Text = "";
+            txtAnno.Text = DateTime.Now.Year.ToString();
             ddlScegliOperaio.SelectedIndex = 0;
             btnInsPreventivo.Visible = true;
             btnModPreventivo.Visible = false;
@@ -63,16 +64,27 @@ namespace GestioneCantieri
             txtConcatenazione.ReadOnly = true;
             ddlScegliOperaio.Enabled = true;
 
-            long numeroPrev = PreventiviDAO.GetLastNumber();
-            txtNumeroPreventivo.Text = numeroPrev.ToString().Substring(0, 2) == DateTime.Today.Year.ToString().Substring(2, 2) ? numeroPrev.ToString().Substring(2, 3) : numeroPrev.ToString();
-
+            SetNumPrev();
             FillDdlScegliOperaio();
+        }
+
+        private void SetNumPrev()
+        {
+            long numeroPrev = PreventiviDAO.GetLastNumber(txtAnno.Text != "" ? Convert.ToInt32(txtAnno.Text) : DateTime.Now.Year);
+            if (numeroPrev == 0)
+            {
+                txtNumeroPreventivo.Text = "001";
+            }
+            else
+            {
+                txtNumeroPreventivo.Text = numeroPrev.ToString().Substring(0, 2) == txtAnno.Text.Substring(2, 2) ? numeroPrev.ToString().Substring(2, 3) : numeroPrev.ToString();
+            }
         }
 
         private Preventivo PopolaPreventivoObj(bool isUpdate)
         {
             Preventivo p = new Preventivo();
-            p.Anno = DateTime.Now.Year;
+            p.Anno = Convert.ToInt32(txtAnno.Text);
             p.Data = Convert.ToDateTime(txtData.Text);
             p.Descrizione = txtDescrizione.Text;
             p.IdOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedValue);
@@ -210,6 +222,11 @@ namespace GestioneCantieri
         protected void btnSvuotaFiltri_Click(object sender, EventArgs e)
         {
             ResetToInitial();
+        }
+
+        protected void txtAnno_TextChanged(object sender, EventArgs e)
+        {
+            SetNumPrev();
         }
     }
 }

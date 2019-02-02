@@ -96,6 +96,12 @@ namespace GestioneCantieri
 
             //Reimposto il DDLScegliOperaio del pannello GestioneOperaio
             ddlScegliOperaio.SelectedIndex = 0;
+
+            //Reimposto il ddlScegliDDTMef dell'intestazione
+            if (ddlScegliDDTMef.SelectedIndex != -1)
+            {
+                ddlScegliDDTMef.SelectedIndex = 0;
+            }
         }
         protected void EnableDisableControls(bool enableControls, Panel panelName)
         {
@@ -137,7 +143,7 @@ namespace GestioneCantieri
                 i++;
             }
 
-            if(nomeFornitore == "")
+            if (nomeFornitore == "")
             {
                 ddlScegliFornit.SelectedIndex = 0;
             }
@@ -705,7 +711,7 @@ namespace GestioneCantieri
             BindGridMatCant();
             EnableDisableControls(true, pnlMascheraGestCant);
             SvuotaCampi(pnlMascheraGestCant);
-            ChooseFornitore("");
+            ChooseFornitore("Magazzino");
             HideMessageLabels();
         }
 

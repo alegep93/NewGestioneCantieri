@@ -324,7 +324,8 @@ namespace GestioneCantieri
 
                 BindGridCantieri();
                 ResettaCampi(pnlTxtBoxCantContainer);
-                PopolaCodCantAnnoNumero(txtAnnoCant.Text != "" ? txtAnnoCant.Text : DateTime.Now.Year.ToString());
+                txtAnnoCant.Text = txtAnnoCant.Text != "" ? txtAnnoCant.Text : DateTime.Now.Year.ToString();
+                PopolaCodCantAnnoNumero(txtAnnoCant.Text);
             }
             else
             {

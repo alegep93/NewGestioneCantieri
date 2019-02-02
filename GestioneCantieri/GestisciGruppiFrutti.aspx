@@ -115,8 +115,6 @@
                                 <li class="list-group-item"><%= item.Qta + " - " + item.NomeFrutto %></li>
                                 <%} %>
                             </ul>
-                            <asp:Button ID="btnClonaGruppo" OnClick="btnClonaGruppo_Click" runat="server" Text="Clona Gruppo Selezionato" />
-                            <asp:Label ID="lblClonaGruppo" runat="server"></asp:Label>
                         </div>
                     </div>
                 </div>
@@ -132,16 +130,16 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Modifica Gruppo</h3>
                         </div>
-                        <div class="panel-body">                            
+                        <div class="panel-body">
                             <%-- Filtri --%>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtFiltroMod1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppi1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtFiltroMod1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppiMod1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtFiltroMod2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppi2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtFiltroMod2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppiMod2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtFiltroMod3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppi3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtFiltroMod3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppiMod3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
 
                             <asp:Label ID="lblScegliGruppo" runat="server" Text="Nome Gruppo"></asp:Label>
@@ -196,6 +194,8 @@
                                 <li class="list-group-item"><%= item.Qta + " - " + item.NomeFrutto %></li>
                                 <%} %>
                             </ul>
+                            <asp:Button ID="btnClonaGruppo" OnClick="btnClonaGruppo_Click" CssClass="btn-lg btn-primary" runat="server" Text="Clona Gruppo Selezionato" /> <br />
+                            <asp:Label ID="lblClonaGruppo" runat="server"></asp:Label>
                         </div>
                     </div>
                 </div>

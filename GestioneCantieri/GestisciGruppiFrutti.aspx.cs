@@ -226,7 +226,7 @@ namespace GestioneCantieri
         {
             try
             {
-                int idGruppo = Convert.ToInt32(ddlGruppi.SelectedItem.Value);
+                int idGruppo = Convert.ToInt32(ddlModScegliGruppo.SelectedItem.Value);
                 GruppiFrutti gf = GruppiFruttiDAO.GetGruppo(idGruppo);
                 int idGruppoCopia = GruppiFruttiDAO.InserisciGruppo("Copia" + gf.NomeGruppo, gf.Descr);
                 compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
@@ -259,6 +259,20 @@ namespace GestioneCantieri
         {
             FillDdlGruppiNonCompletati();
         }
+
+        protected void txtFiltroGruppiMod1_TextChanged(object sender, EventArgs e)
+        {
+            FillDdlGruppi();
+        }
+        protected void txtFiltroGruppiMod2_TextChanged(object sender, EventArgs e)
+        {
+            FillDdlGruppi();
+        }
+        protected void txtFiltroGruppiMod3_TextChanged(object sender, EventArgs e)
+        {
+            FillDdlGruppi();
+        }
+
         protected void ddlGruppi_TextChanged(object sender, EventArgs e)
         {
             if (ddlGruppi.SelectedItem.Text == "")

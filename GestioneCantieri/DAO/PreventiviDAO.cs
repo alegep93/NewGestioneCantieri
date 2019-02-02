@@ -39,16 +39,16 @@ namespace GestioneCantieri.DAO
             finally { CloseResouces(cn, null); }
         }
 
-        internal static long GetLastNumber()
+        internal static long GetLastNumber(int anno)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
 
             try
             {
-                sql = "SELECT MAX(Numero)+1 FROM TblPreventivi";
+                sql = "SELECT ISNULL(MAX(Numero)+1, 0) FROM TblPreventivi WHERE Anno = @anno ";
 
-                return cn.Query<long>(sql).FirstOrDefault();
+                return cn.Query<long>(sql, new { anno }).FirstOrDefault();
             }
             catch (Exception ex)
             {

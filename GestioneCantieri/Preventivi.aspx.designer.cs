@@ -112,6 +112,24 @@ namespace GestioneCantieri {
         protected global::System.Web.UI.WebControls.TextBox txtConcatenazione;
         
         /// <summary>
+        /// Controllo lblAnno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAnno;
+        
+        /// <summary>
+        /// Controllo txtAnno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAnno;
+        
+        /// <summary>
         /// Controllo btnInsPreventivo.
         /// </summary>
         /// <remarks>
