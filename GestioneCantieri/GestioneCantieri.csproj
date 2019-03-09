@@ -211,6 +211,7 @@
     <Compile Include="DAO\LocaliDAO.cs" />
     <Compile Include="DAO\Mamg0DAO.cs" />
     <Compile Include="DAO\MaterialiCantieriDAO.cs" />
+    <Compile Include="DAO\MatOrdFrutGroupDAO.cs" />
     <Compile Include="DAO\OperaiDAO.cs" />
     <Compile Include="DAO\OrdineFruttiDAO.cs" />
     <Compile Include="DAO\DDTMefDAO.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="DAO\SpeseDAO.cs" />
     <Compile Include="DAO\StampeDAO.cs" />
     <Compile Include="Data\DDTFornitori.cs" />
+    <Compile Include="Data\MatOrdFrutGroup.cs" />
     <Compile Include="Data\Preventivo.cs" />
     <Compile Include="Data\Mamg0ForDBF.cs" />
     <Compile Include="Data\StampaValoriCantieriConOpzioni.cs" />

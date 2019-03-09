@@ -27,6 +27,25 @@
             </div>
         </div>
         <div class="row">
+            <!-- Scegli Gruppo a cui associare l'ordine -->
+            <div class="col-md-offset-3 col-md-6">
+                <div class="col-md-4">
+                    <asp:Label ID="lblScegliGruppoOrdine" runat="server" Text="Scegli uno dei gruppi già creati"></asp:Label>
+                    <asp:DropDownList ID="ddlScegliGruppoOrdine" OnSelectedIndexChanged="ddlScegliGruppoOrdine_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
+                </div>
+                <asp:Panel ID="pnlInserisciNuovoGruppoOrdine" Visible="true" CssClass="col-md-8" DefaultButton="btnCreaNuovoGruppoOrdine" runat="server">
+                    <div class="col-md-8">
+                        <asp:Label ID="lblNomeGruppoOrdine" runat="server" Text="Inserisci un nome per creare un nuovo gruppo"></asp:Label>
+                        <asp:TextBox ID="txtNomeGruppoOrdine" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:Button ID="btnCreaNuovoGruppoOrdine" CssClass="btn btn-primary pull-right" Text="Crea nuovo gruppo" OnClick="btnCreaNuovoGruppoOrdine_Click" style="margin-top:19px;" runat="server" />
+                        <asp:Label ID="lblNuovoGruppoOrdine" CssClass="pull-right" runat="server"></asp:Label>
+                    </div>
+                </asp:Panel>
+            </div>
+        </div>
+        <div class="row">
             <asp:Panel ID="pnlInserisciDati" runat="server">
                 <!-- Scegli Locale -->
                 <div class="col-md-offset-3 col-md-6">
@@ -143,6 +162,7 @@
                         <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />
                         <asp:BoundField DataField="NomeFrutto" HeaderText="Nome Frutto" />
                         <asp:BoundField DataField="QtaFrutti" HeaderText="Quantità Frutti" />
+                        <asp:BoundField DataField="DescrizioneGruppoOrdine" HeaderText="Gruppo Ordine" />
                         <%--<asp:TemplateField>
                             <ItemTemplate>
                                 <asp:Button ID="btnVisualMatCant" CommandName="VisualMatCant" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" CssClass="btn btn-lg btn-default" runat="server" Text="Visualizza" />

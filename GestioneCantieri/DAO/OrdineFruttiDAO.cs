@@ -10,17 +10,17 @@ namespace GestioneCantieri.DAO
 {
     public class OrdineFruttiDAO : BaseDAO
     {
-        public static bool InserisciGruppo(string idCantiere, string idGruppoFrutto, string idLocale)
+        public static bool InserisciGruppo(string idCantiere, string idGruppoFrutto, string idLocale, int? idTblMatOrdFrutGroup)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
 
             try
             {
-                sql = "INSERT INTO TblMatOrdFrut(IdCantiere,IdGruppiFrutti,IdLocale) " +
-                      "VALUES (@IdCantiere,@IdGruppiFrutti,@IdLocale) ";
+                sql = "INSERT INTO TblMatOrdFrut(IdCantiere,IdGruppiFrutti,IdLocale,IdTblMatOrdFrutGroup) " +
+                      "VALUES (@IdCantiere,@IdGruppiFrutti,@IdLocale,@idTblMatOrdFrutGroup) ";
 
-                int rows = cn.Execute(sql, new { IdCantiere = idCantiere, IdGruppiFrutti = idGruppoFrutto, IdLocale = idLocale });
+                int rows = cn.Execute(sql, new { IdCantiere = idCantiere, IdGruppiFrutti = idGruppoFrutto, IdLocale = idLocale, idTblMatOrdFrutGroup });
 
                 if (rows > 0)
                     return true;
@@ -36,17 +36,17 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
-        public static bool InserisciFruttoNonInGruppo(string idCantiere, string idLocale, string idFrutto, string qtaFrutti)
+        public static bool InserisciFruttoNonInGruppo(string idCantiere, string idLocale, string idFrutto, string qtaFrutti, int? idTblMatOrdFrutGroup)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
 
             try
             {
-                sql = "INSERT INTO TblMatOrdFrut(IdCantiere,IdLocale,IdFrutto,QtaFrutti) " +
-                      "VALUES (@IdCantiere,@IdLocale,@IdFrutto,@QtaFrutti) ";
+                sql = "INSERT INTO TblMatOrdFrut(IdCantiere,IdLocale,IdFrutto,QtaFrutti,IdTblMatOrdFrutGroup) " +
+                      "VALUES (@IdCantiere,@IdLocale,@IdFrutto,@QtaFrutti,@idTblMatOrdFrutGroup) ";
 
-                int rows = cn.Execute(sql, new { IdCantiere = idCantiere, IdLocale = idLocale, IdFrutto = idFrutto, QtaFrutti = qtaFrutti });
+                int rows = cn.Execute(sql, new { IdCantiere = idCantiere, IdLocale = idLocale, IdFrutto = idFrutto, QtaFrutti = qtaFrutti, idTblMatOrdFrutGroup });
 
                 if (rows > 0)
                     return true;
@@ -161,10 +161,11 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                string sql = "SELECT L.NomeLocale, GF.NomeGruppo, COUNT(Gf.NomeGruppo) AS 'Qta' " +
+                string sql = "SELECT L.NomeLocale, GF.NomeGruppo, COUNT(Gf.NomeGruppo) AS 'Qta', MIN(MOFG.Descrizione) AS DescrizioneGruppoOrdine " +
                              "FROM TblMatOrdFrut AS MOF " +
                              "JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali) " +
                              "JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id) " +
+                             "LEFT JOIN TblMatOrdFrutGroup AS MOFG ON MOF.IdTblMatOrdFrutGroup = MOFG.IdMatOrdFrutGroup " +
                              "WHERE IdCantiere = @IdCantiere " +
                              "GROUP BY L.NomeLocale, GF.NomeGruppo " +
                              "ORDER BY NomeLocale ASC ";
@@ -311,13 +312,14 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                string sql = "SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo, E.descr001 'NomeFrutto', A.QtaFrutti " +
+                string sql = "SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo, E.descr001 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine " +
                              "FROM TblMatOrdFrut AS A " +
                              "LEFT JOIN TblCantieri AS B ON A.IdCantiere = B.IdCantieri " +
                              "LEFT JOIN TblLocali AS C ON A.IdLocale = C.IdLocali " +
                              "LEFT JOIN TblGruppiFrutti AS D ON A.IdGruppiFrutti = D.Id " +
                              "LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.ID1 " +
-                             "WHERE B.IdCantieri = @IdCantieri AND C.IdLocali = @IdLocali";
+                             "LEFT JOIN TblMatOrdFrutGroup AS F ON A.IdTblMatOrdFrutGroup = F.IdMatOrdFrutGroup " +
+                             "WHERE B.IdCantieri = @IdCantieri AND C.IdLocali = @IdLocali ";
 
                 return cn.Query<MatOrdFrut>(sql, new { IdCantieri = idCant, IdLocali = idLocale }).ToList();
             }

@@ -20,5 +20,7 @@ namespace GestioneCantieri.Data
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public string DescrCant { get => descrCant; set => descrCant = value; }
         public string NomeFrutto { get => nomeFrutto; set => nomeFrutto = value; }
+        public int IdTblMatOrdFrutGroup { get; set; } = 0;
+        public string DescrizioneGruppoOrdine { get; set; } = "";
     }
 }

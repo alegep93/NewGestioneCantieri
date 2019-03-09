@@ -10,5 +10,6 @@ namespace GestioneCantieri.Data
         public string Descr001 { get => descr001; set => descr001 = value; }
         public string NomeLocale { get => nomeLocale; set => nomeLocale = value; }
         public string NomeGruppo { get => nomeGruppo; set => nomeGruppo = value; }
+        public string DescrizioneGruppoOrdine { get; set; } = "";
     }
 }

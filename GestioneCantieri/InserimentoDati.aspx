@@ -129,7 +129,7 @@
                     <asp:Label ID="lblIsClienteInserito" CssClass="pull-right labelConferma" runat="server" Text=""></asp:Label>
                 </div>
 
-                <asp:Panel ID="pnlFiltriCliente" CssClass="col-md-12" runat="server" Style="margin-top: 20px;">
+                <asp:Panel ID="pnlFiltriCliente" DefaultButton="btnFiltraClienti" CssClass="col-md-12" runat="server" Style="margin-top: 20px;">
                     <div class="col-md-2">
                         <asp:Label ID="lblFiltroRagSocCli" runat="server" Text="Ragione Sociale Cliente"></asp:Label>
                         <asp:TextBox ID="txtFiltroRagSocCli" CssClass="form-control" runat="server"></asp:TextBox>
@@ -395,7 +395,7 @@
                         <asp:TextBox ID="txtIvaCant" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
 
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-2 form-group">
                         <asp:Label ID="lblAnnoCant" runat="server" Text="Anno" />
                         <asp:TextBox ID="txtAnnoCant" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtAnnoCant_TextChanged" runat="server"></asp:TextBox>
                     </div>
@@ -415,9 +415,13 @@
                         <asp:Label ID="lblFatturato" runat="server" Text="Fatturato" />
                         <asp:CheckBox ID="chkFatturato" CssClass="form-control" Checked="false" runat="server" />
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-2 form-group">
                         <asp:Label ID="lblFasciaCant" runat="server" Text="Fascia Cantiere" />
                         <asp:TextBox ID="txtFasciaCant" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <asp:Label ID="lblConcatenazioneCant" runat="server" Text="Concatenazione Cantiere" />
+                        <asp:TextBox ID="txtConcatenazioneCant" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
 
                     <asp:HiddenField ID="hidIdCant" runat="server" />

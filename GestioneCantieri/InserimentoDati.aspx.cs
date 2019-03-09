@@ -824,6 +824,7 @@ namespace GestioneCantieri
             txtIvaCant.Text = cant.Iva.ToString();
             txtAnnoCant.Text = cant.Anno.ToString();
             txtFasciaCant.Text = cant.FasciaTblCantieri.ToString();
+            txtConcatenazioneCant.Text = cant.CodCant + "-" + cant.DescriCodCAnt;
 
             //Spunto i checkbox se necessario
             chkCantChiuso.Checked = cant.Chiuso;

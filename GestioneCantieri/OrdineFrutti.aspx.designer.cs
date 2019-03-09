@@ -31,6 +31,69 @@ namespace GestioneCantieri {
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliCantiere;
         
         /// <summary>
+        /// Controllo lblScegliGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliGruppoOrdine;
+        
+        /// <summary>
+        /// Controllo ddlScegliGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliGruppoOrdine;
+        
+        /// <summary>
+        /// Controllo pnlInserisciNuovoGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlInserisciNuovoGruppoOrdine;
+        
+        /// <summary>
+        /// Controllo lblNomeGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNomeGruppoOrdine;
+        
+        /// <summary>
+        /// Controllo txtNomeGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNomeGruppoOrdine;
+        
+        /// <summary>
+        /// Controllo btnCreaNuovoGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCreaNuovoGruppoOrdine;
+        
+        /// <summary>
+        /// Controllo lblNuovoGruppoOrdine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNuovoGruppoOrdine;
+        
+        /// <summary>
         /// Controllo pnlInserisciDati.
         /// </summary>
         /// <remarks>

@@ -35,6 +35,7 @@
                         <asp:BoundField HeaderText="Nome Locale" DataField="NomeLocale" />
                         <asp:BoundField HeaderText="Nome Locale / Gruppi Contenuti" DataField="NomeGruppo" />
                         <asp:BoundField HeaderText="Quantità" DataField="Qta" />
+                        <asp:BoundField HeaderText="Gruppo Ordine" DataField="DescrizioneGruppoOrdine" />
                     </Columns>
                 </asp:GridView>
             </div>
