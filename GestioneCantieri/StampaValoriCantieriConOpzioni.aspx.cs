@@ -30,7 +30,7 @@ namespace GestioneCantieri
                 ddlScegliCliente.Items.Add(new System.Web.UI.WebControls.ListItem(c.RagSocCli, c.IdCliente.ToString()));
             }
         }
-        protected void CompilaCampi(string idCantiere, MaterialiCantieri mc, ref List<Data.StampaValoriCantieriConOpzioni> listForGridview)
+        protected void CompilaCampi(string idCantiere, MaterialiCantieri mc, ref List<Data.StampaValoriCantieriConOpzioni> listForGridview, decimal perc)
         {
             // Popolo l'oggetto della stampa con i valori iniziali del cantiere
             Data.StampaValoriCantieriConOpzioni objStampa = new Data.StampaValoriCantieriConOpzioni();
@@ -61,6 +61,11 @@ namespace GestioneCantieri
             decimal totFin = totContoPreventivo - totAcconti;
             objStampa.TotaleFinale = totFin;
 
+            if(perc == -1)
+            {
+                objStampa.TotaleAcconti = objStampa.TotaleConto = objStampa.TotaleFinale = -999.99m;
+            }
+
             //Aggiungo l'oggetto alla lista
             listForGridview.Add(objStampa);
         }
@@ -82,13 +87,14 @@ namespace GestioneCantieri
                 Document pdfDoc = new Document(PageSize.A4, 8f, 2f, 2f, 2f);
                 pdfDoc.Open();
                 rc.idCant = c.IdCantieri.ToString();
+                decimal perc = rc.CalcolaPercentualeTotaleMaterialiNascosti();
                 rc.BindGrid(grdStampaMateCant);
                 rc.BindGridPDF(grdStampaMateCant, grdStampaMateCantPDF);
                 rc.GeneraPDFPerContoFinCli(pdfDoc, mc, pTable, grdStampaMateCantPDF, totale);
                 pdfDoc.Close();
 
                 //Popolo i campi di riepilogo con i dati necessari
-                CompilaCampi(c.IdCantieri.ToString(), mc, ref listForGridview);
+                CompilaCampi(c.IdCantieri.ToString(), mc, ref listForGridview, perc);
             }
 
             grdStampaConOpzioni.DataSource = listForGridview;
@@ -104,6 +110,12 @@ namespace GestioneCantieri
                 if (grdStampaConOpzioni.Rows[i].Cells[5].Text == "0")
                 {
                     grdStampaConOpzioni.Rows[i].Visible = false;
+                }
+
+                // Se il totale Conto mostra un valore palesemente errato, la cella viene modificata mostrando l'errore invece del valore del cantiere
+                if(grdStampaConOpzioni.Rows[i].Cells[3].Text == "-999,99")
+                {
+                    grdStampaConOpzioni.Rows[i].Cells[3].Text = grdStampaConOpzioni.Rows[i].Cells[4].Text = grdStampaConOpzioni.Rows[i].Cells[5].Text = "--- ERRORE ---";
                 }
             }
 
