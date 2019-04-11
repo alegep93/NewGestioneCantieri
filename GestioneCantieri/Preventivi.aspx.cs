@@ -1,17 +1,15 @@
-﻿using System;
+﻿using GestioneCantieri.DAO;
+using GestioneCantieri.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using GestioneCantieri.DAO;
-using GestioneCantieri.Data;
 
 namespace GestioneCantieri
 {
-    public partial class Preventivi : System.Web.UI.Page
+    public partial class Preventivi : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

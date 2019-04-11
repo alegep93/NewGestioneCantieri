@@ -105,6 +105,7 @@
     <Content Include="InserimentoDati.aspx" />
     <Content Include="layout.Master" />
     <Content Include="Listino.aspx" />
+    <Content Include="ListinoHTS.aspx" />
     <Content Include="OrdineFrutti.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -208,6 +209,7 @@
     <Compile Include="DAO\DDTFornitoriDAO.cs" />
     <Compile Include="DAO\FornitoriDAO.cs" />
     <Compile Include="DAO\FruttiDAO.cs" />
+    <Compile Include="DAO\ListinoHtsDAO.cs" />
     <Compile Include="DAO\LocaliDAO.cs" />
     <Compile Include="DAO\Mamg0DAO.cs" />
     <Compile Include="DAO\MaterialiCantieriDAO.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="DAO\SpeseDAO.cs" />
     <Compile Include="DAO\StampeDAO.cs" />
     <Compile Include="Data\DDTFornitori.cs" />
+    <Compile Include="Data\ListinoHts.cs" />
     <Compile Include="Data\MatOrdFrutGroup.cs" />
     <Compile Include="Data\Preventivo.cs" />
     <Compile Include="Data\Mamg0ForDBF.cs" />
@@ -265,6 +268,13 @@
     </Compile>
     <Compile Include="GestionePagamenti.aspx.designer.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListinoHTS.aspx.cs">
+      <DependentUpon>ListinoHTS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListinoHTS.aspx.designer.cs">
+      <DependentUpon>ListinoHTS.aspx</DependentUpon>
     </Compile>
     <Compile Include="Preventivi.aspx.cs">
       <DependentUpon>Preventivi.aspx</DependentUpon>

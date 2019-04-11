@@ -11,6 +11,7 @@ namespace GestioneCantieri
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
     }
 }

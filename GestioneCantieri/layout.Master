@@ -38,7 +38,13 @@
                     <li><a href="Default.aspx">Home</a></li>
                     <li><a href="DDT-Mef.aspx">DDT Mef</a></li>
                     <li><a href="DDT-Fornitori.aspx">DDT Fornitori</a></li>
-                    <li><a href="Listino.aspx">Listino</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Listini<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Listino.aspx">Listino</a></li>
+                            <li><a href="ListinoHTS.aspx">Listino HTS</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestione Gruppi e Frutti<span class="caret"></span></a>
                         <ul class="dropdown-menu">

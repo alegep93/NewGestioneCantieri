@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <asp:Label ID="lblAnno" runat="server" Text="Concatenazione" />
+                    <asp:Label ID="lblAnno" runat="server" Text="Anno" />
                     <asp:TextBox ID="txtAnno" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtAnno_TextChanged" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-10 form-group">
@@ -97,7 +97,7 @@
                 <asp:Label ID="lblFiltroDescr" runat="server" Text="Descrizione"></asp:Label>
                 <asp:TextBox ID="txtFiltroDescr" CssClass="form-control" runat="server"></asp:TextBox>
             </div>
-<%--            <div class="col-md-2">
+            <%--<div class="col-md-2">
                 <asp:Label ID="lblFiltroData" runat="server" Text="Data"></asp:Label>
                 <asp:TextBox ID="txtFiltroData" CssClass="form-control" runat="server"></asp:TextBox>
             </div>--%>
