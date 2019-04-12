@@ -45,12 +45,9 @@ namespace GestioneCantieri
         }
         protected void SvuotaCampi()
         {
-            txtCodProd1.Text = "";
-            txtCodProd2.Text = "";
-            txtCodProd3.Text = "";
-            txtDescriCodProd1.Text = "";
-            txtDescriCodProd2.Text = "";
-            txtDescriCodProd3.Text = "";
+            txtCodice1.Text = txtCodice2.Text = txtCodice3.Text = "";
+            txtCodProd1.Text = txtCodProd2.Text = txtCodProd3.Text = "";
+            txtDescriCodProd1.Text = txtDescriCodProd2.Text = txtDescriCodProd3.Text = "";
             BindGrid();
         }
     }
