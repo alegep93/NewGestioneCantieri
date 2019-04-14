@@ -13,6 +13,9 @@ namespace GestioneCantieri
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            txtPercentualeSconto.Text = txtPercentualeSconto.Text != "" ? txtPercentualeSconto.Text : 50.ToString();
+            txtPercentualeSconto.Text = !txtPercentualeSconto.Text.Contains("%") ? txtPercentualeSconto.Text + "%" : txtPercentualeSconto.Text;
+
             if (!IsPostBack)
             {
                 SvuotaCampi();
@@ -48,6 +51,26 @@ namespace GestioneCantieri
             txtCodice1.Text = txtCodice2.Text = txtCodice3.Text = "";
             txtCodProd1.Text = txtCodProd2.Text = txtCodProd3.Text = "";
             txtDescriCodProd1.Text = txtDescriCodProd2.Text = txtDescriCodProd3.Text = "";
+            BindGrid();
+        }
+
+        protected void grdListinoHts_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[5].Text = "Prezzo Scontato";
+            }
+            else
+            {
+                // Calcolo il prezzo scontato
+                decimal sconto = Convert.ToDecimal(txtPercentualeSconto.Text.Replace("%",""));
+                decimal prezzo = e.Row.Cells[4].Text != "&nbsp;" ? Convert.ToDecimal(e.Row.Cells[4].Text) : 0;
+                e.Row.Cells[5].Text = (prezzo - prezzo * sconto / 100).ToString();
+            }
+        }
+
+        protected void txtPercentualeSconto_TextChanged(object sender, EventArgs e)
+        {
             BindGrid();
         }
     }

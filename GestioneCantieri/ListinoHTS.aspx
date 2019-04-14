@@ -74,23 +74,31 @@
                         <div class="col-md-12 text-center">
                             <asp:Button ID="btnEliminaListino" runat="server" OnClick="btnEliminaListino_Click" Text="ELIMINA LISTINO" CssClass="btn btn-danger btn-lg" OnClientClick="return confirm('Vuoi veramente eliminare TUTTO il listino?');" />
                         </div>
+                        <div class="col-md-12 text-center" style="margin-top: 20px;">
+                            <asp:Label ID="lblPercentualeSconto" runat="server">Percentuale Sconto</asp:Label>
+                            <asp:TextBox ID="txtPercentualeSconto" AutoPostBack="true" OnTextChanged="txtPercentualeSconto_TextChanged" runat="server"></asp:TextBox>
+                        </div>
                     </div>
                 </div>
             </asp:Panel>
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <asp:GridView ID="grdListinoHts" runat="server" ItemType="GestioneCantieri.Data.Mamg0" AutoGenerateColumns="False" CssClass="table table-striped table-responsive">
+                <asp:GridView ID="grdListinoHts" runat="server" ItemType="GestioneCantieri.Data.Mamg0" OnRowDataBound="grdListinoHts_RowDataBound" AutoGenerateColumns="False" CssClass="table table-striped table-responsive">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="Id" />
                         <asp:BoundField DataField="Codice" HeaderText="Codice" />
                         <asp:BoundField DataField="CodiceProdotto" HeaderText="Codice Prodotto" />
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
                         <asp:BoundField DataField="Prezzo" HeaderText="Prezzo" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Label ID="lblPrezzoScontato" runat="server"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:BoundField DataField="Cr" HeaderText="Cr" />
                         <asp:BoundField DataField="G" HeaderText="G" />
                         <asp:BoundField DataField="NoteDisponibilita" HeaderText="Note Disponibilità" />
-
                     </Columns>
                 </asp:GridView>
             </div>
