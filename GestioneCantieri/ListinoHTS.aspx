@@ -20,6 +20,12 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12 text-center">
+                <asp:Button ID="btnImportaListinoHts" CssClass="btn btn-info btn-lg" OnClick="btnImportaListinoHts_Click" Text="Importa Listino HTS" runat="server" /><br />
+                <asp:Label ID="lblImportMsg" runat="server"></asp:Label>
+            </div>
+        </div>
+        <div class="row">
             <asp:Panel ID="pnlListinoSearch" DefaultButton="btnSearch" runat="server">
                 <div id="filterContainer">
                     <!-- Ricerca Per Codice, CodiceProdotto e Descrizione -->

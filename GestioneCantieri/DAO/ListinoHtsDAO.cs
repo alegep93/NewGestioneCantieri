@@ -76,6 +76,24 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static void InsertAll(List<ListinoHts> items)
+        {
+            SqlConnection cn = GetConnection();
+            StringBuilder sql = new StringBuilder();
+
+            try
+            {
+                sql.Append("INSERT INTO ListinoHts (codice,codice_prodotto,descrizione,prezzo,cr,g,note_disponibilita) ");
+                sql.Append("VALUES (@Codice,@CodiceProdotto,@Descrizione,@Prezzo,@Cr,@G,@NoteDisponibilita) ");
+                cn.Execute(sql.ToString(), items);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la InsertAll in ListinoHtsDAO", ex);
+            }
+            finally { cn.Close(); }
+        }
+
         public static void Delete()
         {
             SqlConnection cn = GetConnection();
