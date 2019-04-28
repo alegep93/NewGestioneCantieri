@@ -2,12 +2,15 @@
 using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
 {
     public partial class Default : System.Web.UI.Page
     {
+        readonly string filePath = ConfigurationManager.AppSettings["DdtMef"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -50,16 +53,12 @@ namespace GestioneCantieri
         }
         protected void btn_GeneraDdtDaDbf_Click(object sender, EventArgs e)
         {
-            string pathFile = "";
-
-            pathFile = @"C:\MEF\ORDINI\";
-
             int idFornitore = FornitoriDAO.GetIdFornitore("Mef");
 
             //spinnerImg.Visible = true;
 
             // Genero una lista a partire dai dati contenuti nel nuovo file DBF
-            List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(pathFile, txtAcquirente.Text, idFornitore);
+            List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
 
             // Popolo la tabella temporanea
             InsertIntoDdtTemp(ddtList);

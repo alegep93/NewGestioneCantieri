@@ -2,8 +2,11 @@
 using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.IO;
 using System.Web.UI;
 
@@ -11,6 +14,8 @@ namespace GestioneCantieri
 {
     public partial class Listino : Page
     {
+        readonly string filePath = ConfigurationManager.AppSettings["Mamg0"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -33,6 +38,25 @@ namespace GestioneCantieri
         {
             Mamg0DAO.EliminaListino();
             Response.Redirect("~/Listino.aspx");
+        }
+        protected void btn_ImportaListino_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Elimino il listino
+                Mamg0DAO.EliminaListino();
+
+                // Reinserisco tutto il listino Mamg0, recuperando i dati da un file excel nominato Mamg0.xlsx
+                Mamg0DAO.GetDataFromExcelAndInsertBulkCopy(filePath);
+
+                // Aggiorno la tabella di visualizzazione risultati
+                BindGrid();
+            }
+            catch (Exception ex)
+            {
+                lblImportMsg.Text = "Errore durante l'importazione del listino" + ex.Message;
+                lblImportMsg.ForeColor = Color.Red;
+            }
         }
 
         /* HELPERS */
@@ -58,16 +82,6 @@ namespace GestioneCantieri
             txtDescriCodArt1.Text = "";
             txtDescriCodArt2.Text = "";
             txtDescriCodArt3.Text = "";
-            BindGrid();
-        }
-
-        protected void btn_ImportaListinoDaDBF_Click(object sender, EventArgs e)
-        {
-            string pathFile = @"C:\MEF\ORDINI\";
-
-            Mamg0DAO.EliminaListino();
-            Mamg0DAO.InsertIntoDBF(pathFile);
-
             BindGrid();
         }
     }

@@ -19,7 +19,8 @@
             <div class="col-md-12 text-center">
                 <div class="col-md-offset-4 col-md-4">
                     <%--<h1 id="filterToggle" class="btn btn-default btn-lg"></h1>--%>
-                    <asp:Button ID="btn_ImportaListinoDaDBF" class="btn btn-info btn-lg" OnClick="btn_ImportaListinoDaDBF_Click" OnClientClick="javascript:ShowHideLoader();return confirm('Vuoi importare il nuovo listino?');" Text="Importa Listino da DBF" runat="server" />
+                    <asp:Button ID="btn_ImportaListino" class="btn btn-info btn-lg" OnClick="btn_ImportaListino_Click" OnClientClick="javascript:ShowHideLoader();return confirm('Vuoi importare il nuovo listino?');" Text="Importa Listino da DBF" runat="server" />
+                    <asp:Label ID="lblImportMsg" runat="server"></asp:Label>
                 </div>
             </div>
             <asp:Panel ID="pnlListinoSearch" DefaultButton="btnSearch" runat="server">
