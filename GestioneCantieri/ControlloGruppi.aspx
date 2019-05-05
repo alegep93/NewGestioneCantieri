@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div class="row">
         <div class="col-md-10">
-            <asp:GridView ID="grdFruttiNonControllati" ItemType="GestioneCantieri.Data.GruppiFrutti" AutoGenerateColumns="false" OnRowDataBound="grdFruttiNonControllati_RowDataBound" OnRowCommand="grdFruttiNonControllati_RowCommand" CssClass="table table-striped text-center" runat="server">
+            <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-striped text-center" runat="server">
                 <Columns>
                     <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />
                     <asp:BoundField DataField="Descr" HeaderText="Descrizione" />
@@ -31,17 +31,18 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-            </asp:GridView>
+            </asp:gridview>
         </div>
 
         <div class="col-md-2 compGruppoFixed">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <asp:Label ID="lblPanelTitleGroupName" runat="server"></asp:Label></h3>
+                        <asp:label id="lblPanelTitleGroupName" runat="server"></asp:label>
+                    </h3>
                 </div>
                 <div class="panel-body">
-                    <asp:Label ID="lblGruppiNonControllati" runat="server" Text="Componenti Gruppo"></asp:Label>
+                    <asp:label id="lblGruppiNonControllati" runat="server" text="Componenti Gruppo"></asp:label>
                     <ul class="list-group">
                         <% foreach (var item in componentiGruppo)
                             {%>
@@ -50,7 +51,7 @@
                     </ul>
                 </div>
                 <div class="panel-footer">
-                    <asp:Label ID="lblNumGruppiNonControllati" runat="server"></asp:Label>
+                    <asp:label id="lblNumGruppiNonControllati" runat="server"></asp:label>
                 </div>
             </div>
         </div>

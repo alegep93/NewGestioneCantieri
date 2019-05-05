@@ -324,6 +324,8 @@ namespace GestioneCantieri
         {
             FillDdlScegliCant();
             pnlSubIntestazione.Visible = false;
+            ShowPanels(false, false, false, false, false, false, false, false);
+            lblTitoloMaschera.Text = "";
         }
         protected void btnSvuotaIntestazione_Click(object sender, EventArgs e)
         {
