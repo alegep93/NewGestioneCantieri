@@ -132,12 +132,23 @@ namespace GestioneCantieri
         //}
         protected void ddlScegliCantiere_TextChanged(object sender, EventArgs e)
         {
-            if (ddlScegliCantiere.SelectedItem.Value != "")
-                pnlInserisciDati.Visible = true;
+            if (ddlScegliCantiere.SelectedIndex != 0)
+            {
+                pnlInserisciDati.Visible = pnlInserisciNuovoGruppoOrdine.Visible = true;
+                pnlScegliGruppo.Visible = false;
+                lblQtaFrutto.Visible = txtQtaFrutto.Visible = btnInserisciFrutto.Visible = false;
+            }
+            else
+            {
+                pnlInserisciDati.Visible = pnlInserisciNuovoGruppoOrdine.Visible = pnlInserisciDati.Visible = pnlScegliGruppo.Visible = false;
+                lblQtaFrutto.Visible = txtQtaFrutto.Visible = btnInserisciFrutto.Visible = false;
+            }
+            SvuotaCampi();
         }
+
         protected void ddlScegliLocale_TextChanged(object sender, EventArgs e)
         {
-            if (ddlScegliLocale.SelectedItem.Value != "")
+            if (ddlScegliLocale.SelectedIndex != 0)
             {
                 pnlScegliGruppo.Visible = true;
                 //pnlMostraGruppiInseriti.Visible = true;
@@ -161,7 +172,7 @@ namespace GestioneCantieri
         }
         protected void ddlScegliFrutto_TextChanged(object sender, EventArgs e)
         {
-            if (ddlScegliFrutto.SelectedItem.Text != "")
+            if (ddlScegliFrutto.SelectedIndex != 0)
             {
                 lblQtaFrutto.Visible = txtQtaFrutto.Visible = btnInserisciFrutto.Visible = true;
                 PopolaListe();
@@ -281,6 +292,12 @@ namespace GestioneCantieri
             List<MatOrdFrut> ordFrutList = OrdineFruttiDAO.GetInfoForCantiereAndLocale(ddlScegliCantiere.SelectedValue, ddlScegliLocale.SelectedValue);
             grdOrdini.DataSource = ordFrutList;
             grdOrdini.DataBind();
+        }
+
+        private void SvuotaCampi()
+        {
+            txtNomeGruppoOrdine.Text = txtFiltroFrutto1.Text = txtFiltroFrutto2.Text = txtFiltroFrutto3.Text = txtFiltroGruppo1.Text = txtFiltroGruppo2.Text = txtFiltroGruppo3.Text = txtQtaFrutto.Text = "";
+            ddlScegliFrutto.SelectedIndex = ddlScegliGruppo.SelectedIndex = ddlScegliGruppoOrdine.SelectedIndex = ddlScegliLocale.SelectedIndex = 0;
         }
     }
 }

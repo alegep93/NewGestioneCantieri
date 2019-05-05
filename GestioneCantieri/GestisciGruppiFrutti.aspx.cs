@@ -238,6 +238,8 @@ namespace GestioneCantieri
 
                 lblClonaGruppo.ForeColor = Color.Blue;
                 lblClonaGruppo.Text = "Gruppo clonato con successo";
+
+                gruppiList = GruppiFruttiDAO.getGruppi("", "", "");
             }
             catch (Exception)
             {
