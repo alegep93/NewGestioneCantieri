@@ -314,7 +314,7 @@ namespace GestioneCantieri.DAO
                     sql += " AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA) ";
 
                 if (idOper != "-1")
-                    sql += " AND A.IdTblOperaio = @pIdOper ";
+                    sql += " AND A.Acquirente = @pIdOper ";
 
                 return cn.Query<MaterialiCantieri>(sql, new { pTipol = tipologia, pIdCant = idCant, dataDa, dataA, pIdOper = idOper }).ToList();
             }
