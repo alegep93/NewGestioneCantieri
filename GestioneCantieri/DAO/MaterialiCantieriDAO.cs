@@ -300,23 +300,23 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "SELECT IdMaterialiCantiere,B.DescriCodCAnt,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,A.Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,D.NomeOp,Fornitore, " +
+                      "ricaricoSiNo,A.Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,D.NomeOp Acquirente,Fornitore, " +
                       "NumeroBolla,ProtocolloInterno,A.Note,PzzoFinCli,B.CodCant,C.RagSocCli " +
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
                       "LEFT JOIN TblClienti AS C ON (B.IdTblClienti = C.IdCliente) " +
                       "LEFT JOIN TblOperaio AS D ON (A.Acquirente = D.IdOperaio) " +
-                      "WHERE Tipologia = @pTipol ";
+                      "WHERE Tipologia = @tipologia ";
 
                 if (idCant != "-1")
-                    sql += " AND IdTblCantieri = @pIdCant ";
+                    sql += " AND IdTblCantieri = @idCant ";
                 else
                     sql += " AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA) ";
 
                 if (idOper != "-1")
-                    sql += " AND A.Acquirente = @pIdOper ";
+                    sql += " AND A.Acquirente = @idOper ";
 
-                return cn.Query<MaterialiCantieri>(sql, new { pTipol = tipologia, pIdCant = idCant, dataDa, dataA, pIdOper = idOper }).ToList();
+                return cn.Query<MaterialiCantieri>(sql, new { tipologia, idCant, dataDa, dataA, idOper }).ToList();
             }
             catch (Exception ex)
             {
