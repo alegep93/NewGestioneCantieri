@@ -443,9 +443,9 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "DELETE FROM TblCantieri " +
-                      "WHERE IdCantieri = @IdCantieri ";
+                      "WHERE IdCantieri = @idCant ";
 
-                int row = cn.Execute(sql, new { pId = idCant });
+                int row = cn.Execute(sql, new { idCant });
 
                 if (row > 0)
                     return true;

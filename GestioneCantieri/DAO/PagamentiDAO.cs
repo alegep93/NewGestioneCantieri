@@ -79,6 +79,32 @@ namespace GestioneCantieri.DAO
             }
         }
 
+        public static bool GetPagamenti(int idCant)
+        {
+            bool ret = false;
+            SqlConnection cn = GetConnection();
+            string sql = "";
+
+            try
+            {
+                sql = "SELECT IdPagamenti,IdTblCantieri,data,Imporo,DescriPagamenti,Acconto,Saldo " +
+                      "FROM TblPagamenti " +
+                      "WHERE IdTblCantieri = @idCant";
+
+                ret = cn.Query<Pagamenti>(sql, new { idCant }).ToList().Count == 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero dei pagamenti", ex);
+            }
+            finally
+            {
+                CloseResouces(cn, null);
+            }
+
+            return ret;
+        }
+
         //INSERT
         public static bool InserisciPagamento(Pagamenti pag)
         {

@@ -400,7 +400,7 @@ namespace GestioneCantieri
             if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" && chkFiltroChiuso.Checked == false && chkFiltroRiscosso.Checked == false && chkFiltroFatturato.Checked == false))
                 BindGridCantieriWithSearch();
             else
-                BindGridCantieri(false,false);
+                BindGridCantieri(false, false);
         }
         protected void btnSvuotaFiltri_Click(object sender, EventArgs e)
         {
@@ -763,28 +763,37 @@ namespace GestioneCantieri
         }
         protected void EliminaCantiere(int idCant)
         {
-            bool isEliminato = CantieriDAO.EliminaCantiere(idCant);
-            if (isEliminato)
+            if (PagamentiDAO.GetPagamenti(idCant))
             {
-                lblIsCantInserito.Text = "Cantiere eliminato con successo";
-                lblIsCantInserito.ForeColor = Color.Blue;
+                bool isEliminato = CantieriDAO.EliminaCantiere(idCant);
+
+                if (isEliminato)
+                {
+                    lblIsCantInserito.Text = "Cantiere eliminato con successo";
+                    lblIsCantInserito.ForeColor = Color.Blue;
+                }
+                else
+                {
+                    lblIsCantInserito.Text = "Errore durante l'eliminazione del cantiere";
+                    lblIsCantInserito.ForeColor = Color.Red;
+                }
+
+                if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" && chkFiltroChiuso.Checked == false && chkFiltroRiscosso.Checked == false))
+                    BindGridCantieriWithSearch();
+                else
+                    BindGridCantieri();
+
+                ResettaCampi(pnlTxtBoxCantContainer);
+                txtCodCant.Enabled = false;
+                btnModCantiere.Visible = false;
+                btnInsCantiere.Visible = true;
+                lblTitoloInserimento.Text = "Inserimento Cantieri";
             }
             else
             {
-                lblIsCantInserito.Text = "Errore durante l'eliminazione del cantiere";
+                lblIsCantInserito.Text = "Impossibile eliminare il cantiere selezionato perchè ha dei pagamenti associati";
                 lblIsCantInserito.ForeColor = Color.Red;
             }
-
-            if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" && chkFiltroChiuso.Checked == false && chkFiltroRiscosso.Checked == false))
-                BindGridCantieriWithSearch();
-            else
-                BindGridCantieri();
-
-            ResettaCampi(pnlTxtBoxCantContainer);
-            txtCodCant.Enabled = false;
-            btnModCantiere.Visible = false;
-            btnInsCantiere.Visible = true;
-            lblTitoloInserimento.Text = "Inserimento Cantieri";
         }
         protected void PopolaCampiCantiere(int idCant, bool isControlEnabled)
         {
@@ -840,7 +849,7 @@ namespace GestioneCantieri
             if (num == "")
             {
                 txtNumeroCant.Text = CantieriDAO.GetLastNumCantForYear(anno);
-                if(txtNumeroCant.Text == "")
+                if (txtNumeroCant.Text == "")
                 {
                     txtNumeroCant.Text = "001";
                 }
@@ -849,7 +858,7 @@ namespace GestioneCantieri
             else
                 numCant = num;
 
-            string year = anno.Substring(2,2);
+            string year = anno.Substring(2, 2);
             string suffisso = "Ma";
             if (numCant.Length == 1)
                 txtCodCant.Text = year + "00" + numCant + suffisso;
