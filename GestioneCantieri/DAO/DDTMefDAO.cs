@@ -353,7 +353,7 @@ namespace GestioneCantieri.DAO
         public static List<DDTMef> GetDdtFromDBF(string pathFile, string acquirente, int idFornitore)
         {
             string excelConnectionString = "Provider = vfpoledb; Data Source = " + pathFile + "; Collating Sequence = machine";
-            string commandText = "SELECT FTANNO, FTDT, FTNR, FTAFO, FTDEX1, FTQTA, FTPU FROM " + pathFile + "\\D_DDT.DBF";
+            string commandText = "SELECT FTANNO, FTDT, FTNR, FTAFO, FTDEX1, FTQTA, FTPU FROM " + pathFile;
             OleDbConnection ExcelConection = null;
             List<DDTMef> list = new List<DDTMef>();
 
