@@ -51,10 +51,13 @@ namespace GestioneCantieri
 
                 // Aggiorno la tabella di visualizzazione risultati
                 BindGrid();
+
+                lblImportMsg.Text = "Importazione del listino avvenuta con successo";
+                lblImportMsg.ForeColor = Color.Blue;
             }
             catch (Exception ex)
             {
-                lblImportMsg.Text = "Errore durante l'importazione del listino" + ex.Message;
+                lblImportMsg.Text = "Errore durante l'importazione del listino. <br />" + ex;
                 lblImportMsg.ForeColor = Color.Red;
             }
         }

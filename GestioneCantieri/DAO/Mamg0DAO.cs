@@ -266,7 +266,7 @@ namespace GestioneCantieri.DAO
                     DataSet ds = new DataSet();
                     adaptor.Fill(ds);
 
-                    SqlConnection cn = BaseDAO.GetConnection();
+                    SqlConnection cn = GetConnection();
                     using (SqlBulkCopy bulkCopy = new SqlBulkCopy(cn))
                     {
                         bulkCopy.DestinationTableName = "dbo.MAMG0";

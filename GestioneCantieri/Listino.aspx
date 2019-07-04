@@ -20,6 +20,7 @@
                 <div class="col-md-offset-4 col-md-4">
                     <%--<h1 id="filterToggle" class="btn btn-default btn-lg"></h1>--%>
                     <asp:Button ID="btn_ImportaListino" class="btn btn-info btn-lg" OnClick="btn_ImportaListino_Click" OnClientClick="javascript:ShowHideLoader();return confirm('Vuoi importare il nuovo listino?');" Text="Importa Listino da DBF" runat="server" />
+                    <br />
                     <asp:Label ID="lblImportMsg" runat="server"></asp:Label>
                 </div>
             </div>
