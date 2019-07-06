@@ -183,7 +183,7 @@ namespace GestioneCantieri
         {
             decimal totale = 0m;
             decimal totaleFinale = 0m;
-            int numDdtAttuale = 0;
+            long numDdtAttuale = 0;
             List<MaterialiCantieri> matCantList = MaterialiCantieriDAO.GetMaterialeCantiere(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, ddlScegliFornitore.SelectedItem.Text, txtNumDDT.Text);
 
             //Apro lo stream verso il file PDF
@@ -321,15 +321,15 @@ namespace GestioneCantieri
             pdfDoc.Add(new Paragraph(""));
             pdfDoc.Add(tblTotali);
         }
-        protected void GeneraPDFPerMatCant(Document pdfDoc, List<MaterialiCantieri> matCantList, Phrase title, PdfPTable table, decimal totale, int numDdtAttuale, decimal totFin)
+        protected void GeneraPDFPerMatCant(Document pdfDoc, List<MaterialiCantieri> matCantList, Phrase title, PdfPTable table, decimal totale, long numDdtAttuale, decimal totFin)
         {
             PdfPTable tblTotali = null;
             Phrase intestazione = new Phrase();
             for (int k = 0; k < matCantList.Count; k++)
             {
-                if (numDdtAttuale != Convert.ToInt32(matCantList[k].NumeroBolla))
+                if (numDdtAttuale != Convert.ToInt64(matCantList[k].NumeroBolla))
                 {
-                    numDdtAttuale = Convert.ToInt32(matCantList[k].NumeroBolla);
+                    numDdtAttuale = Convert.ToInt64(matCantList[k].NumeroBolla);
                     intestazione = GeneraIntestazioneMatCant(matCantList, k);
 
                     //Transfer rows from GridView to table
