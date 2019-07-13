@@ -168,6 +168,7 @@ namespace GestioneCantieri
             }
 
             BindGridPagam();
+            SvuotaCampi(pnlGestPagam);
         }
         //Visibilità pannello
         protected void btnGestPagam_Click(object sender, EventArgs e)
