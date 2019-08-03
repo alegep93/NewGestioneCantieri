@@ -1149,7 +1149,7 @@ namespace GestioneCantieri
             BindGridAccrediti();
             EnableDisableControls(true, pnlMascheraGestCant);
             SvuotaCampi(pnlMascheraGestCant);
-            ChooseFornitore("Rientro");
+            ChooseFornitore("Accrediti");
             HideMessageLabels();
             txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
@@ -1270,7 +1270,7 @@ namespace GestioneCantieri
             mc.Fascia = Convert.ToInt32(txtFascia.Text);
             mc.ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text);
             mc.CodArt = txtCodArtAccrediti.Text;
-            mc.DescriCodArt = lblDescrCodArtAccrediti.Text;
+            mc.DescriCodArt = txtDescrCodArtAccrediti.Text;
             mc.DescriMateriali = txtDescrMatAccrediti.Text;
             mc.Note = txtNoteAccrediti.Text;
             mc.Note2 = txtNote2Accrediti.Text;
