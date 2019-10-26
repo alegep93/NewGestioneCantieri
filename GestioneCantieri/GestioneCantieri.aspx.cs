@@ -102,6 +102,9 @@ namespace GestioneCantieri
             {
                 ddlScegliDDTMef.SelectedIndex = 0;
             }
+
+            grdMostraDDTDaInserire.DataSource = null;
+            grdMostraDDTDaInserire.DataBind();
         }
         protected void EnableDisableControls(bool enableControls, Panel panelName)
         {
@@ -324,6 +327,7 @@ namespace GestioneCantieri
         {
             FillDdlScegliCant();
             pnlSubIntestazione.Visible = false;
+            txtDataDDT.Text = txtNumBolla.Text = txtProtocollo.Text = "";
             ShowPanels(false, false, false, false, false, false, false, false);
             lblTitoloMaschera.Text = "";
         }
@@ -384,6 +388,8 @@ namespace GestioneCantieri
                 pnlSubIntestazione.Visible = false;
                 pnlMascheraGestCant.Visible = false;
             }
+
+            txtDataDDT.Text = txtNumBolla.Text = txtProtocollo.Text = "";
 
             FillDdlScegliMatCant();
             FillDdlScegliAcquirente();

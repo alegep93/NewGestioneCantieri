@@ -7,7 +7,7 @@ namespace GestioneCantieri.Data
         int idCantieri = 0, idtblClienti = 0, ricarico = 0, iva = 0, anno = 0, fasciaTblCantieri = 0, numero = 0;
         string codCant = "", descriCodCAnt = "", indirizzo = "", città = "", ragSocCli = "", codRiferCant = "";
         decimal pzzoManodopera = 0, valorePreventivo = 0;
-        bool chiuso = false, riscosso = false, preventivo = false, daDividere = false, diviso = false, fatturato = false;
+        bool chiuso = false, riscosso = false, preventivo = false, daDividere = false, diviso = false, fatturato = false, nonRiscuotibile = false;
         DateTime data = new DateTime();
 
         public int IdCantieri { get => idCantieri; set => idCantieri = value; }
@@ -31,6 +31,7 @@ namespace GestioneCantieri.Data
         public bool DaDividere { get => daDividere; set => daDividere = value; }
         public bool Diviso { get => diviso; set => diviso = value; }
         public bool Fatturato { get => fatturato; set => fatturato = value; }
+        public bool NonRiscuotibile { get => nonRiscuotibile; set => nonRiscuotibile = value; }
         public DateTime Data { get => data; set => data = value; }
     }
 }

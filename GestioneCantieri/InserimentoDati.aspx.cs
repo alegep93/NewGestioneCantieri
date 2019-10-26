@@ -302,12 +302,13 @@ namespace GestioneCantieri
                 bool daDividere = chkDaDividere.Checked;
                 bool diviso = chkDiviso.Checked;
                 bool fatturato = chkFatturato.Checked;
+                bool nonRiscuotibile = chkNonRiscuotibile.Checked;
                 string codRiferCant = CostruisceCodRiferCant();
 
                 if (txtValPrevCant.Text == "")
                     txtValPrevCant.Text = "0";
 
-                Cantieri cant = FillObjCantiere(chiuso, riscosso, preventivo, daDividere, diviso, fatturato, codRiferCant);
+                Cantieri cant = FillObjCantiere(chiuso, riscosso, preventivo, daDividere, diviso, fatturato, nonRiscuotibile, codRiferCant);
 
                 bool isInserito = CantieriDAO.InserisciCantiere(cant);
 
@@ -333,7 +334,7 @@ namespace GestioneCantieri
                 lblIsCantInserito.ForeColor = Color.Red;
             }
         }
-        private Cantieri FillObjCantiere(bool chiuso, bool riscosso, bool preventivo, bool daDividere, bool diviso, bool fatturato, string codRiferCant)
+        private Cantieri FillObjCantiere(bool chiuso, bool riscosso, bool preventivo, bool daDividere, bool diviso, bool fatturato, bool nonRiscuotibile, string codRiferCant)
         {
             Cantieri c = new Cantieri();
             c.IdtblClienti = Convert.ToInt32(ddlScegliClientePerCantiere.SelectedValue);
@@ -354,6 +355,7 @@ namespace GestioneCantieri
             c.DaDividere = daDividere;
             c.Diviso = diviso;
             c.Fatturato = fatturato;
+            c.NonRiscuotibile = nonRiscuotibile;
             c.FasciaTblCantieri = Convert.ToInt32(txtFasciaCant.Text);
 
             if (codRiferCant != "")
@@ -369,8 +371,9 @@ namespace GestioneCantieri
             bool daDividere = chkDaDividere.Checked;
             bool diviso = chkDiviso.Checked;
             bool fatturato = chkFatturato.Checked;
+            bool nonRiscuotibile = chkNonRiscuotibile.Checked;
 
-            Cantieri cant = FillObjCantiere(chiuso, riscosso, preventivo, daDividere, diviso, fatturato, "");
+            Cantieri cant = FillObjCantiere(chiuso, riscosso, preventivo, daDividere, diviso, fatturato, nonRiscuotibile, "");
             cant.IdCantieri = Convert.ToInt32(hidIdCant.Value);
             bool isUpdated = CantieriDAO.UpdateCantiere(cant);
 
@@ -842,6 +845,7 @@ namespace GestioneCantieri
             chkDaDividere.Checked = cant.DaDividere;
             chkDiviso.Checked = cant.Diviso;
             chkFatturato.Checked = cant.Fatturato;
+            chkNonRiscuotibile.Checked = cant.NonRiscuotibile;
         }
         protected void PopolaCodCantAnnoNumero(string anno, string num = "")
         {
@@ -870,19 +874,13 @@ namespace GestioneCantieri
         protected string CostruisceCodRiferCant()
         {
             DateTime date = DateTime.Now;
-
             int numCant = Convert.ToInt32(CantieriDAO.GetNumCantPerAnno(txtAnnoCant.Text));
             int descrLength = txtDescrCodCant.Text.Trim().Length;
-            char firstDescrLetter = txtDescrCodCant.Text[0];
-            string lastYearDigits = date.ToString("yy");
-            int ddlLength = ddlScegliClientePerCantiere.SelectedItem.Text.Length;
-            char lastRagSocLetter = ddlScegliClientePerCantiere.SelectedItem.Text[ddlLength - 1];
-            string dayOfYear = date.DayOfYear.ToString();
-
-            string codRiferCant = Convert.ToString(numCant + descrLength) +
-                firstDescrLetter + lastYearDigits + lastRagSocLetter + dayOfYear;
-
-            return codRiferCant;
+            string firstTwoDescrCodCant = txtDescrCodCant.Text.Substring(0,2);
+            string lastYearDigits = date.Year.ToString().Substring(2,2);
+            string firstTwoRagSocCli = ddlScegliClientePerCantiere.SelectedItem.Text.Substring(0,2);
+            string codRiferCant = Convert.ToString(numCant + descrLength) + firstTwoDescrCodCant + lastYearDigits + firstTwoRagSocCli;
+            return codRiferCant.Replace(" ", "-").ToUpper();
         }
         //Spese
         private void BindGridSpese()

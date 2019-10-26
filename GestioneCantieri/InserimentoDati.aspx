@@ -415,11 +415,15 @@
                         <asp:Label ID="lblFatturato" runat="server" Text="Fatturato" />
                         <asp:CheckBox ID="chkFatturato" CssClass="form-control" Checked="false" runat="server" />
                     </div>
+                    <div class="col-md-1 form-group">
+                        <asp:Label ID="lblNonRiscuotibile" runat="server" Text="Non Riscuotibile" />
+                        <asp:CheckBox ID="chkNonRiscuotibile" CssClass="form-control" Checked="false" runat="server" />
+                    </div>
                     <div class="col-md-2 form-group">
                         <asp:Label ID="lblFasciaCant" runat="server" Text="Fascia Cantiere" />
                         <asp:TextBox ID="txtFasciaCant" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-3 form-group">
                         <asp:Label ID="lblConcatenazioneCant" runat="server" Text="Concatenazione Cantiere" />
                         <asp:TextBox ID="txtConcatenazioneCant" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>

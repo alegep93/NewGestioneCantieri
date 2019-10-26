@@ -286,20 +286,18 @@ namespace GestioneCantieri.DAO
         }
         public static string GetNumCantPerAnno(string anno)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            string sql = "SELECT COUNT(*) FROM TblCantieri WHERE Anno = @anno ";
             try
             {
-                sql = "SELECT COUNT(*) FROM TblCantieri WHERE Anno = @pAnno ";
-
-                return cn.Query<string>(sql, new { pAnno = anno }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<string>(sql, new { anno }).SingleOrDefault();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recuper dell'ultimo numero cantiere", ex);
             }
-            finally { CloseResouces(cn, null); }
         }
         public static DataTable FiltraCantieri(string anno, string codCant, string descr, string cliente, bool chiuso, bool riscosso, bool fatturato)
         {
