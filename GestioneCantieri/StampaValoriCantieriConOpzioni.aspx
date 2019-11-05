@@ -21,6 +21,9 @@
             color: darkblue;
             float: right;
         }
+        input[type=checkbox] {
+            position: static !important;
+        }
     </style>
 </asp:Content>
 
@@ -63,6 +66,10 @@
                 <div class="col-md-1">
                     <asp:Label ID="lblFatturato" runat="server" Text="Fatturato"></asp:Label>
                     <asp:CheckBox ID="chkFatturato" runat="server" />
+                </div>
+                <div class="col-md-2">
+                    <asp:Label ID="lblNonRiscuotibile" runat="server" Text="Non Riscuotibile"></asp:Label>
+                    <asp:CheckBox ID="chkNonRiscuotibile" runat="server" />
                 </div>
 
                 <!-- Bottone visualizzazione stampa -->

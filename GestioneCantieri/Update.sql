@@ -55,4 +55,5 @@ CREATE TABLE [dbo].[ListinoHts](
 ) ON [PRIMARY]
 GO
 
-
+-- Campo Non Riscuotibile
+ALTER TABLE TblCantieri ADD NonRiscuotibile bit NOT NULL DEFAULT(0)

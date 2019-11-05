@@ -490,8 +490,12 @@ namespace GestioneCantieri
                         MaterialiCantieri mc = PopolaMcObject(i);
                         MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
 
-                        lblInsMatDaDDT.Text = "Materiali inseriti con successo";
-                        lblInsMatDaDDT.ForeColor = Color.Blue;
+                        grdMostraDDTDaInserire.DataSource = null;
+                        grdMostraDDTDaInserire.DataBind();
+                        lblInsMatDaDDT.Text = "";
+
+                        //lblInsMatDaDDT.Text = "Materiali inseriti con successo";
+                        //lblInsMatDaDDT.ForeColor = Color.Blue;
                     }
                 }
             }
@@ -649,8 +653,8 @@ namespace GestioneCantieri
 
                 if (isInserito)
                 {
-                    lblIsRecordInserito.Text = "Record inserito con successo";
-                    lblIsRecordInserito.ForeColor = Color.Blue;
+                    //lblIsRecordInserito.Text = "Record inserito con successo";
+                    //lblIsRecordInserito.ForeColor = Color.Blue;
                 }
                 else
                 {
@@ -779,14 +783,6 @@ namespace GestioneCantieri
         protected void txtFiltroMatCantDescriCodArt_TextChanged(object sender, EventArgs e)
         {
             FillDdlScegliMatCant();
-        }
-        protected void txtCodArt_TextChanged(object sender, EventArgs e)
-        {
-            HideMessageLabels();
-        }
-        protected void txtDescriCodArt_TextChanged(object sender, EventArgs e)
-        {
-            HideMessageLabels();
         }
 
         /* EVENTI PER LA GESTIONE DEI ROWCOMMAND */

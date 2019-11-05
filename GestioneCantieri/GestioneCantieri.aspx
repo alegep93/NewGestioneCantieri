@@ -239,11 +239,11 @@
                 <div class="row">
                     <div class="col-md-2">
                         <asp:Label ID="lblCodArt" Text="Codice Articolo" runat="server" />
-                        <asp:TextBox ID="txtCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtCodArt_TextChanged" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtCodArt" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
                         <asp:Label ID="lblDescriCodArt" Text="Descrizione Codice Articolo" runat="server" />
-                        <asp:TextBox ID="txtDescriCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtDescriCodArt_TextChanged" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
                         <asp:Label ID="lblDescrMat" Text="Descrizione Materiale" runat="server" />

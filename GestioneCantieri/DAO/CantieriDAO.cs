@@ -121,7 +121,7 @@ namespace GestioneCantieri.DAO
             }
             finally { cn.Close(); }
         }
-        public static List<Cantieri> GetCantieri(string anno, int idCliente, bool fatturato, bool chiuso, bool riscosso)
+        public static List<Cantieri> GetCantieri(string anno, int idCliente, bool fatturato, bool chiuso, bool riscosso, bool nonRiscuotibile)
         {
             SqlConnection cn = GetConnection();
             ////SqlDataReader dr = null;
@@ -136,11 +136,11 @@ namespace GestioneCantieri.DAO
                       "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
                       "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
                       "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato " +
+                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato, Cant.NonRiscuotibile, Cant.codRiferCant " +
                       "FROM TblCantieri AS Cant " +
                       "JOIN TblClienti AS Cli ON (Cant.IdTblClienti = Cli.IdCliente) " +
                       "WHERE Anno LIKE @pAnno " +
-                      "AND Chiuso = @pChiuso AND Riscosso = @pRiscosso AND Fatturato = @pFatturato ";
+                      "AND Chiuso = @pChiuso AND Riscosso = @pRiscosso AND Fatturato = @pFatturato AND NonRiscuotibile = @nonRiscuotibile ";
 
                 if (idCliente != -1)
                 {
@@ -149,7 +149,7 @@ namespace GestioneCantieri.DAO
 
                 sql += "ORDER BY Cant.CodCant ASC ";
 
-                return cn.Query<Cantieri>(sql, new { pAnno = anno, pFatturato = fatturato, pChiuso = chiuso, pRiscosso = riscosso, idCliente = idCliente }).ToList();
+                return cn.Query<Cantieri>(sql, new { pAnno = anno, pFatturato = fatturato, pChiuso = chiuso, pRiscosso = riscosso, idCliente, nonRiscuotibile }).ToList();
             }
             catch (Exception ex)
             {
@@ -188,7 +188,7 @@ namespace GestioneCantieri.DAO
                       "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
                       "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
                       "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato " +
+                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato, Cant.codRiferCant " +
                       "FROM TblCantieri AS Cant " +
                       "JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente) " +
                       "ORDER BY Cant.CodCant ASC ";
@@ -219,7 +219,7 @@ namespace GestioneCantieri.DAO
                       "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
                       "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
                       "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato " +
+                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato, Cant.codRiferCant " +
                       "FROM TblCantieri AS Cant " +
                       "JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente) " +
                       "WHERE Cant.Chiuso = 0 AND Cant.Riscosso = 0 " +
@@ -253,7 +253,7 @@ namespace GestioneCantieri.DAO
                       "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
                       "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
                       "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato, Cant.CodRiferCant " +
+                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato, Cant.NonRiscuotibile, Cant.CodRiferCant " +
                       "FROM TblCantieri AS Cant " +
                       "JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente) " +
                       "WHERE Cant.IdCantieri = @pIdCant " +
@@ -299,7 +299,7 @@ namespace GestioneCantieri.DAO
                 throw new Exception("Errore durante il recuper dell'ultimo numero cantiere", ex);
             }
         }
-        public static DataTable FiltraCantieri(string anno, string codCant, string descr, string cliente, bool chiuso, bool riscosso, bool fatturato)
+        public static DataTable FiltraCantieri(string anno, string codCant, string descr, string cliente, bool chiuso, bool riscosso, bool fatturato, bool nonRiscuotibile)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
@@ -315,11 +315,11 @@ namespace GestioneCantieri.DAO
                       "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
                       "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
                       "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato " +
+                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato, Cant.NonRiscuotibile, Cant.codRiferCant " +
                       "FROM TblCantieri AS Cant " +
                       "JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente) " +
                       "WHERE Anno LIKE @pAnno AND CodCant LIKE @pCodCant AND DescriCodCAnt LIKE @pDescr AND Cli.RagSocCli LIKE @pRagSocCli " +
-                      "AND Chiuso LIKE @pChiuso AND Riscosso LIKE @pRiscosso AND Fatturato LIKE @pFatturato " +
+                      "AND Chiuso LIKE @pChiuso AND Riscosso LIKE @pRiscosso AND Fatturato LIKE @pFatturato AND NonRiscuotibile LIKE @pNonRiscuotibile " +
                       "ORDER BY Cant.CodCant ASC ";
 
                 SqlCommand cmd = new SqlCommand(sql, cn);
@@ -330,6 +330,7 @@ namespace GestioneCantieri.DAO
                 cmd.Parameters.Add(new SqlParameter("pChiuso", chiuso));
                 cmd.Parameters.Add(new SqlParameter("pRiscosso", riscosso));
                 cmd.Parameters.Add(new SqlParameter("pFatturato", fatturato));
+                cmd.Parameters.Add(new SqlParameter("pNonRiscuotibile", nonRiscuotibile));
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 DataTable table = new DataTable();
@@ -378,10 +379,10 @@ namespace GestioneCantieri.DAO
                 sql = "INSERT INTO TblCantieri " +
                       "(IdTblClienti,Data,CodCant,DescriCodCAnt,Indirizzo,Città,Ricarico, " +
                       "PzzoManodopera,Chiuso,Riscosso,Numero,ValorePreventivo,IVA,Anno,Preventivo, " +
-                      "FasciaTblCantieri,DaDividere,Diviso,Fatturato,CodRiferCant) " +
+                      "FasciaTblCantieri,DaDividere,Diviso,Fatturato,NonRiscuotibile,CodRiferCant) " +
                       "VALUES (@IdTblClienti,CONVERT(date,@Data),@CodCant,@DescriCodCAnt,@Indirizzo,@Città,@Ricarico, " +
                       "@PzzoManodopera,@Chiuso,@Riscosso,@Numero,@ValorePreventivo,@IVA,@Anno,@Preventivo,@FasciaTblCantieri, " +
-                      "@DaDividere,@Diviso,@Fatturato,@CodRiferCant) ";
+                      "@DaDividere,@Diviso,@Fatturato,@NonRiscuotibile,@CodRiferCant) ";
 
                 int ret = cn.Execute(sql, c);
 
@@ -415,7 +416,7 @@ namespace GestioneCantieri.DAO
                       "IVA = @IVA, Anno = @Anno, " +
                       "Preventivo = @Preventivo, FasciaTblCantieri = @FasciaTblCantieri, " +
                       "DaDividere = @DaDividere, Diviso = @Diviso, " +
-                      "Fatturato = @Fatturato " +
+                      "Fatturato = @Fatturato, NonRiscuotibile = @NonRiscuotibile " +
                       "WHERE IdCantieri = @IdCantieri ";
 
                 int row = cn.Execute(sql, c);

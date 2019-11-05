@@ -1318,6 +1318,24 @@ namespace GestioneCantieri {
         protected global::System.Web.UI.WebControls.CheckBox chkFiltroFatturato;
         
         /// <summary>
+        /// Controllo lblFiltroNonRiscuotibile.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroNonRiscuotibile;
+        
+        /// <summary>
+        /// Controllo chkFiltroNonRiscuotibile.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkFiltroNonRiscuotibile;
+        
+        /// <summary>
         /// Controllo btnFiltraCant.
         /// </summary>
         /// <remarks>

@@ -74,7 +74,7 @@ namespace GestioneCantieri
         #region Eventi Click
         protected void btnStampaContoCliente_Click(object sender, EventArgs e)
         {
-            List<Cantieri> listaCantieri = CantieriDAO.GetCantieri(txtAnno.Text, Convert.ToInt32(ddlScegliCliente.SelectedValue), chkFatturato.Checked, chkChiuso.Checked, chkRiscosso.Checked);
+            List<Cantieri> listaCantieri = CantieriDAO.GetCantieri(txtAnno.Text, Convert.ToInt32(ddlScegliCliente.SelectedValue), chkFatturato.Checked, chkChiuso.Checked, chkRiscosso.Checked, chkNonRiscuotibile.Checked);
             List<Data.StampaValoriCantieriConOpzioni> listForGridview = new List<Data.StampaValoriCantieriConOpzioni>();
 
             foreach (Cantieri c in listaCantieri)

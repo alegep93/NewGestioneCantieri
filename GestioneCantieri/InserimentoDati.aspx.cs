@@ -400,7 +400,8 @@ namespace GestioneCantieri
         }
         protected void btnFiltraCant_Click(object sender, EventArgs e)
         {
-            if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" && chkFiltroChiuso.Checked == false && chkFiltroRiscosso.Checked == false && chkFiltroFatturato.Checked == false))
+            if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" && 
+                chkFiltroChiuso.Checked == false && chkFiltroRiscosso.Checked == false && chkFiltroFatturato.Checked == false && chkFiltroNonRiscuotibile.Checked == false))
                 BindGridCantieriWithSearch();
             else
                 BindGridCantieri(false, false);
@@ -408,7 +409,7 @@ namespace GestioneCantieri
         protected void btnSvuotaFiltri_Click(object sender, EventArgs e)
         {
             ResettaCampi(pnlFiltriCant);
-            chkFiltroChiuso.Checked = chkFiltroRiscosso.Checked = false;
+            chkFiltroChiuso.Checked = chkFiltroRiscosso.Checked = chkFiltroFatturato.Checked = chkFiltroNonRiscuotibile.Checked = false;
             BindGridCantieri();
         }
 
@@ -733,7 +734,7 @@ namespace GestioneCantieri
         }
         protected void BindGridCantieriWithSearch()
         {
-            DataTable dt = CantieriDAO.FiltraCantieri(txtFiltroAnno.Text, txtFiltroCodCant.Text, txtFiltroDescr.Text, txtFiltroCliente.Text, chkFiltroChiuso.Checked, chkFiltroRiscosso.Checked, chkFiltroFatturato.Checked);
+            DataTable dt = CantieriDAO.FiltraCantieri(txtFiltroAnno.Text, txtFiltroCodCant.Text, txtFiltroDescr.Text, txtFiltroCliente.Text, chkFiltroChiuso.Checked, chkFiltroRiscosso.Checked, chkFiltroFatturato.Checked, chkFiltroNonRiscuotibile.Checked);
             List<Cantieri> cantList = dt.DataTableToList<Cantieri>();
             grdCantieri.DataSource = cantList;
             grdCantieri.DataBind();

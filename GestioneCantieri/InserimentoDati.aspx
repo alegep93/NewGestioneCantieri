@@ -442,7 +442,7 @@
                         <asp:Label ID="lblFiltroAnno" runat="server" Text="Anno"></asp:Label>
                         <asp:TextBox ID="txtFiltroAnno" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <asp:Label ID="lblFiltroCodCant" runat="server" Text="Codice Cantiere"></asp:Label>
                         <asp:TextBox ID="txtFiltroCodCant" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
@@ -466,6 +466,10 @@
                         <asp:Label ID="lblFiltroFatturato" runat="server" Text="Fatturato"></asp:Label>
                         <asp:CheckBox ID="chkFiltroFatturato" CssClass="form-control" Checked="false" runat="server" />
                     </div>
+                    <div class="col-md-1">
+                        <asp:Label ID="lblFiltroNonRiscuotibile" runat="server" Text="Non Riscuotibile"></asp:Label>
+                        <asp:CheckBox ID="chkFiltroNonRiscuotibile" CssClass="form-control" Checked="false" runat="server" />
+                    </div>
                     <div class="col-md-2">
                         <asp:Button ID="btnFiltraCant" OnClick="btnFiltraCant_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Filtra" />
                         <asp:Button ID="btnSvuotaFiltri" OnClick="btnSvuotaFiltri_Click" CssClass="btn btn-default pull-right" runat="server" Text="Svuota" Style="margin-right: 5px;" />
@@ -478,6 +482,7 @@
                         ItemType="GestioneCantieri.Data.Cantieri" runat="server" CssClass="table table-striped table-responsive text-center">
                         <Columns>
                             <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
+                            <asp:BoundField HeaderText="Codice Rif. Cant." DataField="codRiferCant" />
                             <asp:BoundField HeaderText="Descrizione Cantiere" DataField="DescriCodCAnt" />
                             <asp:BoundField HeaderText="Cliente" DataField="RagSocCli" />
                             <asp:BoundField HeaderText="Data Inserimento" DataField="Data" DataFormatString="{0:d}" />
