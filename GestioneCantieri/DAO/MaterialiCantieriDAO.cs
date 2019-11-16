@@ -316,6 +316,8 @@ namespace GestioneCantieri.DAO
                 if (idOper != "-1")
                     sql += " AND A.Acquirente = @idOper ";
 
+                sql += "ORDER BY A.Data, B.CodCant ";
+
                 return cn.Query<MaterialiCantieri>(sql, new { tipologia, idCant, dataDa, dataA, idOper }).ToList();
             }
             catch (Exception ex)
