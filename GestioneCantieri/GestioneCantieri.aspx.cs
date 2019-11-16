@@ -490,14 +490,14 @@ namespace GestioneCantieri
                         MaterialiCantieri mc = PopolaMcObject(i);
                         MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
 
-                        grdMostraDDTDaInserire.DataSource = null;
-                        grdMostraDDTDaInserire.DataBind();
-                        lblInsMatDaDDT.Text = "";
-
                         //lblInsMatDaDDT.Text = "Materiali inseriti con successo";
                         //lblInsMatDaDDT.ForeColor = Color.Blue;
                     }
                 }
+
+                grdMostraDDTDaInserire.DataSource = null;
+                grdMostraDDTDaInserire.DataBind();
+                lblInsMatDaDDT.Text = "";
             }
             else
             {
