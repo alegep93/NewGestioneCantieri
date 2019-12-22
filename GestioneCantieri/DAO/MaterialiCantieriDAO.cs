@@ -305,7 +305,7 @@ namespace GestioneCantieri.DAO
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
                       "LEFT JOIN TblClienti AS C ON (B.IdTblClienti = C.IdCliente) " +
-                      "LEFT JOIN TblOperaio AS D ON (A.Acquirente = D.IdOperaio) " +
+                      "LEFT JOIN TblOperaio AS D ON (A.IdTblOperaio = D.IdOperaio) " +
                       "WHERE Tipologia = @tipologia ";
 
                 if (idCant != "-1")

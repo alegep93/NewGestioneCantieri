@@ -57,3 +57,9 @@ GO
 
 -- Campo Non Riscuotibile
 ALTER TABLE TblCantieri ADD NonRiscuotibile bit NOT NULL DEFAULT(0)
+
+-- Aggiornamento codRiferCant
+UPDATE A
+SET A.codRiferCant = UPPER(CONCAT((A.Numero-1) + LEN(A.descricodcant), SUBSTRING(A.descricodcant, 1, 2), SUBSTRING(CONVERT(nvarchar, A.anno), 3, 2), SUBSTRING(B.RagSocCli, 1, 2)))
+FROM TblCantieri as A
+INNER JOIN TblClienti AS B ON A.IdTblClienti = B.IdCliente

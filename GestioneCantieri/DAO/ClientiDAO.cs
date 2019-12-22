@@ -38,6 +38,23 @@ namespace GestioneCantieri.DAO
             }
             finally { cn.Close(); }
         }
+
+        public static List<Clienti> GetAll()
+        {
+            string sql = "SELECT * FROM TblClienti ORDER BY RagSocCli ASC";
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Clienti>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero dei clienti", ex);
+            }
+        }
+
         public static List<Clienti> GetClienti(string filtro)
         {
             SqlConnection cn = GetConnection();

@@ -177,6 +177,31 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
+
+        public static List<Cantieri> GetAll(string codiceCantiere, string descrizioneCantiere)
+        {
+            codiceCantiere = $"'%{codiceCantiere}%'";
+            descrizioneCantiere = $"'%{descrizioneCantiere}%'";
+
+            string sql = "SELECT * FROM TblCantieri ";
+            sql += "WHERE Fatturato = 0 AND Riscosso = 0 AND NonRiscuotibile = 0 ";
+            sql += codiceCantiere != "%%" ? $"AND CodCant LIKE {codiceCantiere} " : "";
+            sql += descrizioneCantiere != "%%" ? $"AND DescriCodCAnt LIKE {descrizioneCantiere} " : "";
+            sql += "ORDER BY CodCant ASC ";
+
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Cantieri>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero dei cantieri", ex);
+            }
+        }
+
         public static DataTable GetAllCantieri()
         {
             SqlConnection cn = GetConnection();

@@ -118,6 +118,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Fatture.aspx" />
     <Content Include="Preventivi.aspx" />
     <Content Include="ResocontoOperaio.aspx" />
     <Content Include="RicalcoloConti.aspx" />
@@ -207,6 +208,9 @@
     <Compile Include="DAO\CantieriDAO.cs" />
     <Compile Include="DAO\CompGruppoFrutDAO.cs" />
     <Compile Include="DAO\DDTFornitoriDAO.cs" />
+    <Compile Include="DAO\FattureAccontiDAO.cs" />
+    <Compile Include="DAO\AmministratoriDAO.cs" />
+    <Compile Include="DAO\FattureCantieriDAO.cs" />
     <Compile Include="DAO\FornitoriDAO.cs" />
     <Compile Include="DAO\FruttiDAO.cs" />
     <Compile Include="DAO\ListinoHtsDAO.cs" />
@@ -219,10 +223,15 @@
     <Compile Include="DAO\DDTMefDAO.cs" />
     <Compile Include="DAO\GruppiFruttiDAO.cs" />
     <Compile Include="DAO\PagamentiDAO.cs" />
+    <Compile Include="DAO\FattureDAO.cs" />
     <Compile Include="DAO\PreventiviDAO.cs" />
     <Compile Include="DAO\SpeseDAO.cs" />
     <Compile Include="DAO\StampeDAO.cs" />
+    <Compile Include="Data\Amministratore.cs" />
     <Compile Include="Data\DDTFornitori.cs" />
+    <Compile Include="Data\Fattura.cs" />
+    <Compile Include="Data\FatturaAcconto.cs" />
+    <Compile Include="Data\FatturaCantiere.cs" />
     <Compile Include="Data\ListinoHts.cs" />
     <Compile Include="Data\MatOrdFrutGroup.cs" />
     <Compile Include="Data\Preventivo.cs" />
@@ -275,6 +284,13 @@
     </Compile>
     <Compile Include="ListinoHTS.aspx.designer.cs">
       <DependentUpon>ListinoHTS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fatture.aspx.cs">
+      <DependentUpon>Fatture.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fatture.aspx.designer.cs">
+      <DependentUpon>Fatture.aspx</DependentUpon>
     </Compile>
     <Compile Include="Preventivi.aspx.cs">
       <DependentUpon>Preventivi.aspx</DependentUpon>
