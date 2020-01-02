@@ -145,6 +145,7 @@
                     <asp:GridView ID="grdClienti" OnRowCommand="grdClienti_RowCommand" AutoGenerateColumns="false"
                         ItemType="GestioneCantieri.Data.Clienti" runat="server" CssClass="table table-striped table-responsive text-center">
                         <Columns>
+                            <asp:BoundField HeaderText="Id Cliente" DataField="IdCliente" />
                             <asp:BoundField HeaderText="Ragione Sociale" DataField="RagSocCli" />
                             <asp:BoundField HeaderText="Indirizzo" DataField="Indirizzo" />
                             <asp:BoundField HeaderText="Cap" DataField="Cap" />
