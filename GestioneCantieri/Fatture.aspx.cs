@@ -48,7 +48,7 @@ namespace GestioneCantieri
 
         protected void FillDdlScegliCantiere(string codiceCantiere = "", string descrizioneCantiere = "")
         {
-            List<Cantieri> cantieri = CantieriDAO.GetAll(codiceCantiere, descrizioneCantiere);
+            List<Cantieri> cantieri = CantieriDAO.GetForFatture(codiceCantiere, descrizioneCantiere);
 
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
@@ -130,7 +130,7 @@ namespace GestioneCantieri
             txtNumeroFattura.Text = fatt.Numero.ToString();
             ddlScegliCliente.SelectedValue = fatt.IdClienti.ToString();
             ddlScegliAmministratore.SelectedValue = fatt.IdAmministratori.ToString();
-            fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + f.IdCantieri.ToString());
+            fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetByIdCantiere(f.IdCantieri).CodCant);
             txtData.Text = fatt.Data.ToString("yyyy-MM-dd");
             txtData.TextMode = TextBoxMode.Date;
             fatAcconti.ForEach(f => lblShowAccontiAggiunti.Text += (lblShowAccontiAggiunti.Text == "" ? "" : "-") + f.ValoreAcconto.ToString());
@@ -216,11 +216,21 @@ namespace GestioneCantieri
                     p.IdFatture = FattureDAO.Insert(p);
 
                     // Inserisco i cantieri e gli acconti
-                    hfIdCantieriDaAggiungere.Value.Split(';').ToList().ForEach(c => FattureCantieriDAO.Insert(p.IdFatture, Convert.ToInt32(c)));
-                    hfValoriAccontiDaAggiungere.Value.Split(';').ToList().ForEach(a => FattureAccontiDAO.Insert(p.IdFatture, Convert.ToDouble(a)));
+                    if (hfIdCantieriDaAggiungere.Value.Contains(";"))
+                    {
+                        hfIdCantieriDaAggiungere.Value.Split(';').ToList().ForEach(c => FattureCantieriDAO.Insert(p.IdFatture, Convert.ToInt32(c)));
+                    }
+
+                    if (hfValoriAccontiDaAggiungere.Value.Contains(";"))
+                    {
+                        hfValoriAccontiDaAggiungere.Value.Split(';').ToList().ForEach(a => FattureAccontiDAO.Insert(p.IdFatture, Convert.ToDouble(a)));
+                    }
 
                     lblMessaggio.ForeColor = Color.Blue;
                     lblMessaggio.Text = "Fattura " + p.Numero + " inserito con successo";
+
+                    ResetToInitial();
+                    BindGrid();
                 }
                 else
                 {
@@ -231,11 +241,8 @@ namespace GestioneCantieri
             catch (Exception ex)
             {
                 lblMessaggio.ForeColor = Color.Red;
-                lblMessaggio.Text = "Errore durante l'inserimento del Fattura " + p.Numero + " ===> " + ex.Message;
+                lblMessaggio.Text = "Errore durante l'inserimento della Fattura " + p.Numero + " ===> " + ex.Message;
             }
-
-            ResetToInitial();
-            BindGrid();
         }
 
         protected void btnModFattura_Click(object sender, EventArgs e)

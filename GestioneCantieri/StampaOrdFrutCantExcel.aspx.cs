@@ -149,7 +149,7 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliCantiere()
         {
-            List<Cantieri> listCantieri = CantieriDAO.GetListCantieri();
+            List<Cantieri> listCantieri = CantieriDAO.GetCantieriAperti();
 
             ddlScegliCantiere.Items.Clear();
 

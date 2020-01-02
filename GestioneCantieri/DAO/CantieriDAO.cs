@@ -157,11 +157,10 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
-        public static List<Cantieri> GetListCantieri()
+        public static List<Cantieri> GetCantieriAperti()
         {
             SqlConnection cn = GetConnection();
             string sql = "";
-            List<Cantieri> cantieriList = new List<Cantieri>();
 
             try
             {
@@ -177,8 +176,22 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
-
-        public static List<Cantieri> GetAll(string codiceCantiere, string descrizioneCantiere)
+        public static Cantieri GetByIdCantiere(int idCantiere)
+        {
+            try
+            {
+                string sql = "SELECT IdCantieri,CodCant,DescriCodCAnt FROM TblCantieri WHERE IdCantieri = @idCantiere";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Cantieri>(sql, new { idCantiere }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero dei cantieri", ex);
+            }
+        }
+        public static List<Cantieri> GetForFatture(string codiceCantiere, string descrizioneCantiere)
         {
             codiceCantiere = $"'%{codiceCantiere}%'";
             descrizioneCantiere = $"'%{descrizioneCantiere}%'";
@@ -201,7 +214,6 @@ namespace GestioneCantieri.DAO
                 throw new Exception("Errore durante il recupero dei cantieri", ex);
             }
         }
-
         public static DataTable GetAllCantieri()
         {
             SqlConnection cn = GetConnection();
