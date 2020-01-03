@@ -18,7 +18,7 @@ namespace GestioneCantieri.DAO
 
             string whereData = (dataDa == "" && dataA == "") ? "" : ((dataDa != "" && dataA == "") ? " AND A.data >= @dataDa " : ((dataDa == "" && dataA != "") ? " AND A.data <= @dataA " : " AND A.Data BETWEEN @dataDa AND @dataA "));
 
-            string sql = "SELECT DISTINCT TOP 500 A.id_fatture, E.RagSocCli AS RagioneSocialeCliente, B.Cantieri, C.Acconti, D.nome AS NomeAmministratore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.riscosso, A.is_nota_di_credito " +
+            string sql = "SELECT DISTINCT A.id_fatture, E.RagSocCli AS RagioneSocialeCliente, B.Cantieri, C.Acconti, D.nome AS NomeAmministratore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.riscosso, A.is_nota_di_credito " +
                          "FROM TblFatture AS A " +
                          "LEFT JOIN ( " +
                          "	SELECT id_fatture, " +
