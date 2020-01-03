@@ -33,7 +33,7 @@
         }
 
         .table-container {
-            max-height: 600px;
+            max-height: 550px;
             overflow: scroll;
             overflow-y: auto;
         }
