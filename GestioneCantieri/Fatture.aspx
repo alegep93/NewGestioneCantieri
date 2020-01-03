@@ -33,11 +33,12 @@
         }
 
         .table-container {
-            max-height: 450px;
+            max-height: 600px;
             overflow: scroll;
             overflow-y: auto;
         }
     </style>
+    <link href="Css/Fatture.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Body" ContentPlaceHolderID="body" runat="server">
     <div class="container-fluid">
@@ -83,7 +84,7 @@
                             <asp:TextBox ID="txtFiltroCliente" CssClass="form-control" placeholder="Filtro Ragione Sociale Cliente" runat="server"></asp:TextBox>
                         </div>
                         <div class="col-md-4">
-                            <asp:Button ID="btnFiltraCliente" CssClass="btn btn-primary" Text="Filtra Clienti" runat="server"></asp:Button>
+                            <asp:Button ID="btnFiltraCliente" CssClass="btn btn-primary" OnClick="btnFiltraCliente_Click" Text="Filtra Clienti" runat="server"></asp:Button>
                         </div>
                     </div>
                 </div>
@@ -126,7 +127,9 @@
             <div class="row">
                 <div class="col-md-2 form-group">
                     <asp:Label ID="lblScegliAmministratore" runat="server" Text="Scegli Amministratore" />
-                    <asp:DropDownList ID="ddlScegliAmministratore" CssClass="form-control" runat="server"></asp:DropDownList>
+                    <%--<asp:DropDownList ID="ddlScegliAmministratore" CssClass="form-control" runat="server"></asp:DropDownList>--%>
+                    <asp:TextBox ID="txtShowAmministratore" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:HiddenField ID="hfIdAmministratore" runat="server"></asp:HiddenField>
                 </div>
                 <div class="col-md-1 form-group">
                     <asp:Label ID="lblImponibile" runat="server" Text="Imponibile" />
@@ -138,7 +141,7 @@
                 </div>
                 <div class="col-md-1 form-group">
                     <asp:Label ID="lblIva" runat="server" Text="Iva" />
-                    <asp:TextBox ID="txtIva" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtIva" CssClass="form-control" runat="server">22</asp:TextBox>
                 </div>
                 <div class="col-md-1 form-group">
                     <asp:Label ID="lblReverseCharge" runat="server" Text="Reverse charge" />
@@ -215,43 +218,51 @@
                             <asp:BoundField HeaderText="Cliente" DataField="RagioneSocialeCliente" />
                             <asp:BoundField HeaderText="Amministratore" DataField="NomeAmministratore" />
                             <asp:BoundField HeaderText="Cantieri" DataField="Cantieri" />
-                            <asp:BoundField HeaderText="Imponibile" DataField="Imponibile" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblImponibile" Text='<%# Item.Imponibile + " €" %>' runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField HeaderText="Iva %" DataField="Iva" />
                             <asp:BoundField HeaderText="Ritenuta d'acconto %" DataField="RitenutaAcconto" />
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Label ID="lblValoreIva" runat="server" />
+                                    €
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Label ID="lblValoreRitenutaAcconto" runat="server" />
+                                    €
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Label ID="lblImportoFattura" runat="server" />
+                                    €
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Label ID="lblImportoAmministratore" runat="server" />
+                                    €
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:HiddenField ID="hfRowIdFattura" Value="<%# Item.IdFatture %>" runat="server" />
-                                    <asp:CheckBox ID="chkReverseCharge" CssClass="grd-checkbox" Enabled="false" runat="server" />
+                                    <asp:CheckBox ID="chkReverseCharge" CssClass="grd-checkbox" Checked="<%# Item.ReverseCharge %>" Enabled="false" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chkRiscosso" CssClass="grd-checkbox" Enabled="false" runat="server" />
+                                    <asp:CheckBox ID="chkRiscosso" CssClass="grd-checkbox" Checked="<%# Item.Riscosso %>" Enabled="false" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chkNotaCredito" CssClass="grd-checkbox" Enabled="false" runat="server" />
+                                    <asp:CheckBox ID="chkNotaCredito" CssClass="grd-checkbox" Checked="<%# Item.IsNotaDiCredito %>" Enabled="false" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField HeaderText="Acconti" DataField="Acconti" />
@@ -280,6 +291,36 @@
                     </asp:GridView>
                 </div>
             </div>
+
+            <%-- Griglie Totali Per Quarter --%>
+            <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table iva-quarter-total-table text-center">
+                <Columns>
+                    <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
+                    <asp:BoundField HeaderText="Totale Iva" DataField="TotaleIva" DataFormatString="€ {0:###,###.##}" />
+                </Columns>
+            </asp:GridView>
+
+            <asp:GridView ID="grdTotaleImponibilePerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table imponibile-quarter-total-table text-center">
+                <Columns>
+                    <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
+                    <asp:BoundField HeaderText="Totale Imponibile" DataField="TotaleIva" DataFormatString="€ {0:###,###.##}" />
+                </Columns>
+            </asp:GridView>
+
+            <asp:GridView ID="grdTotaleImportoPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table importo-quarter-total-table text-center">
+                <Columns>
+                    <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
+                    <asp:BoundField HeaderText="Totale Importo" DataField="TotaleIva" DataFormatString="€ {0:###,###.##}" />
+                </Columns>
+            </asp:GridView>
+
+            <%-- Griglia Totali Filtrati --%>
+            <asp:GridView ID="grdTotali" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive total-table text-center">
+                <Columns>
+                    <asp:BoundField HeaderText="Titolo" DataField="Titolo" />
+                    <asp:BoundField HeaderText="Valore" DataField="Valore" DataFormatString="€ {0:###,###.##}" />
+                </Columns>
+            </asp:GridView>
         </asp:Panel>
     </div>
 </asp:Content>

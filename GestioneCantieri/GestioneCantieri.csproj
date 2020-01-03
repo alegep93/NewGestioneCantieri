@@ -93,6 +93,7 @@
     <Content Include="Css\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Css\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Css\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Css\Fatture.css" />
     <Content Include="DDT-Fornitori.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="GestioneAppunti.aspx" />

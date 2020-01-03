@@ -18,6 +18,7 @@ namespace GestioneCantieri
                 MostraPannello(true, false, false, false, false);
                 lblTitoloInserimento.Text = "Inserimento Clienti";
                 BindGridClienti();
+                FillDdlScegliAmministratore();
                 btnModCliente.Visible = btnModFornit.Visible = false;
                 btnModOper.Visible = btnModCantiere.Visible = false;
                 btnModSpesa.Visible = false;
@@ -27,6 +28,13 @@ namespace GestioneCantieri
             }
 
             Page.MaintainScrollPositionOnPostBack = true;
+        }
+
+        private void FillDdlScegliAmministratore()
+        {
+            ddlScegliAmministratore.Items.Clear();
+            ddlScegliAmministratore.Items.Add(new ListItem("", "-1"));
+            AmministratoriDAO.GetAll().ForEach(a => ddlScegliAmministratore.Items.Add(new ListItem(a.Nome, a.IdAmministratori.ToString())));
         }
 
         /* EVENTI CLICK */
@@ -126,19 +134,21 @@ namespace GestioneCantieri
         }
         private Clienti FillObjCliente()
         {
-            Clienti c = new Clienti();
-            c.RagSocCli = txtRagSocCli.Text;
-            c.Indirizzo = txtIndirizzo.Text;
-            c.Cap = txtCap.Text;
-            c.Città = txtCitta.Text;
-            c.Provincia = txtProvincia.Text;
-            c.Tel1 = txtTelefono.Text;
-            c.Cell1 = txtCellulare.Text;
-            c.PartitaIva = txtPartitaIva.Text;
-            c.CodFiscale = txtCodiceFiscale.Text;
-            c.Data = Convert.ToDateTime(txtDataInserimento.Text != "" ? txtDataInserimento.Text : DateTime.Now.ToString("dd-MM-yyyy"));
-            c.Note = txtNote.Text;
-            return c;
+            return new Clienti
+            {
+                RagSocCli = txtRagSocCli.Text,
+                IdAmministratore = Convert.ToInt64(ddlScegliAmministratore.SelectedValue),
+                Indirizzo = txtIndirizzo.Text,
+                Cap = txtCap.Text,
+                Città = txtCitta.Text,
+                Provincia = txtProvincia.Text,
+                Tel1 = txtTelefono.Text,
+                Cell1 = txtCellulare.Text,
+                PartitaIva = txtPartitaIva.Text,
+                CodFiscale = txtCodiceFiscale.Text,
+                Data = Convert.ToDateTime(txtDataInserimento.Text != "" ? txtDataInserimento.Text : DateTime.Now.ToString("dd-MM-yyyy")),
+                Note = txtNote.Text
+            };
         }
         protected void btnModCliente_Click(object sender, EventArgs e)
         {
@@ -400,7 +410,7 @@ namespace GestioneCantieri
         }
         protected void btnFiltraCant_Click(object sender, EventArgs e)
         {
-            if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" && 
+            if (!(txtFiltroAnno.Text == "" && txtFiltroCodCant.Text == "" && txtFiltroDescr.Text == "" && txtFiltroCliente.Text == "" &&
                 chkFiltroChiuso.Checked == false && chkFiltroRiscosso.Checked == false && chkFiltroFatturato.Checked == false && chkFiltroNonRiscuotibile.Checked == false))
                 BindGridCantieriWithSearch();
             else
@@ -586,6 +596,7 @@ namespace GestioneCantieri
             txtProvincia.Text = cli.Provincia;
             txtDataInserimento.Text = cli.Data.ToString("yyyy-MM-dd");
             txtNote.Text = cli.Note;
+            ddlScegliAmministratore.SelectedValue = cli.IdAmministratore.ToString();
         }
         //Fornitori
         protected void BindGridFornitori()
@@ -877,9 +888,9 @@ namespace GestioneCantieri
             DateTime date = DateTime.Now;
             int numCant = Convert.ToInt32(CantieriDAO.GetNumCantPerAnno(txtAnnoCant.Text));
             int descrLength = txtDescrCodCant.Text.Trim().Length;
-            string firstTwoDescrCodCant = txtDescrCodCant.Text.Substring(0,2);
-            string lastYearDigits = date.Year.ToString().Substring(2,2);
-            string firstTwoRagSocCli = ddlScegliClientePerCantiere.SelectedItem.Text.Substring(0,2);
+            string firstTwoDescrCodCant = txtDescrCodCant.Text.Substring(0, 2);
+            string lastYearDigits = date.Year.ToString().Substring(2, 2);
+            string firstTwoRagSocCli = ddlScegliClientePerCantiere.SelectedItem.Text.Substring(0, 2);
             string codRiferCant = Convert.ToString(numCant + descrLength) + firstTwoDescrCodCant + lastYearDigits + firstTwoRagSocCli;
             return codRiferCant.Replace(" ", "-").ToUpper();
         }

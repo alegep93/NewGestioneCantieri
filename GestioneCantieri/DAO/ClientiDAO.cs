@@ -18,7 +18,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT IdCliente, RagSocCli, Indirizzo, cap, Città, Tel1, " +
+                sql = "SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1, " +
                       "Cell1, PartitaIva, CodFiscale, Data, Provincia, Note " +
                       "FROM TblClienti " +
                       "ORDER BY RagSocCli ASC ";
@@ -88,7 +88,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT IdCliente, RagSocCli, Indirizzo, cap, Città, Tel1, " +
+                sql = "SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1, " +
                       "Cell1, PartitaIva, CodFiscale, Data, Provincia, Note " +
                       "FROM TblClienti " +
                       "WHERE RagSocCli LIKE @pRagSoc " +
@@ -117,7 +117,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT IdCliente, RagSocCli, Indirizzo, cap, Città, Tel1, " +
+                sql = "SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1, " +
                       "Cell1, PartitaIva, CodFiscale, Data, Provincia, Note " +
                       "FROM TblClienti " +
                       "WHERE IdCliente = @IdCliente " +
@@ -156,6 +156,21 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
+        public static List<Clienti> GetByRagSoc(string ragSocCli)
+        {
+            try
+            {
+                string sql = $"SELECT * FROM TblClienti WHERE RagSocCli LIKE '%{ragSocCli}%' ORDER BY RagSocCli ASC ";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Clienti>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante GetByRagSoc", ex);
+            }
+        }
 
         // INSERT
         public static bool InserisciCliente(Clienti c)
@@ -166,8 +181,8 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "INSERT INTO TblClienti " +
-                      "(RagSocCli,Indirizzo,Cap,Città,Provincia,Tel1,Cell1,PartitaIva,CodFiscale,Data,Note) " +
-                      "VALUES (@RagSocCli,@Indirizzo,@Cap,@Città,@Provincia,@Tel1,@Cell1,@PartitaIva,@CodFiscale,CONVERT(date,@Data),@Note) ";
+                      "(IdAmministratore,RagSocCli,Indirizzo,Cap,Città,Provincia,Tel1,Cell1,PartitaIva,CodFiscale,Data,Note) " +
+                      "VALUES (@IdAmministratore,@RagSocCli,@Indirizzo,@Cap,@Città,@Provincia,@Tel1,@Cell1,@PartitaIva,@CodFiscale,CONVERT(date,@Data),@Note) ";
 
                 int ret = cn.Execute(sql, c);
 
@@ -194,7 +209,8 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "UPDATE TblClienti " +
-                      "SET RagSocCli = @RagSocCli, " +
+                      "SET IdAmministratore = @IdAmministratore, " +
+                      "RagSocCli = @RagSocCli, " +
                       "Indirizzo = @Indirizzo, " +
                       "cap = @cap, " +
                       "Città = @Città, " +

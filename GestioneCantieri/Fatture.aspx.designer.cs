@@ -204,13 +204,22 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblScegliAmministratore;
 
         /// <summary>
-        /// Controllo ddlScegliAmministratore.
+        /// Controllo txtShowAmministratore.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliAmministratore;
+        protected global::System.Web.UI.WebControls.TextBox txtShowAmministratore;
+
+        /// <summary>
+        /// Controllo hfIdAmministratore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdAmministratore;
 
         /// <summary>
         /// Controllo lblImponibile.
@@ -517,5 +526,41 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdFatture;
+
+        /// <summary>
+        /// Controllo grdTotaleIvaPerQuarter.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdTotaleIvaPerQuarter;
+
+        /// <summary>
+        /// Controllo grdTotaleImponibilePerQuarter.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdTotaleImponibilePerQuarter;
+
+        /// <summary>
+        /// Controllo grdTotaleImportoPerQuarter.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdTotaleImportoPerQuarter;
+
+        /// <summary>
+        /// Controllo grdTotali.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdTotali;
     }
 }

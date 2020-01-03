@@ -31,11 +31,39 @@ namespace GestioneCantieri
             List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text);
             grdFatture.DataSource = fatture;
             grdFatture.DataBind();
+
+            grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter().Select(s => new
+            {
+                Trimestre = s.quarter,
+                TotaleIva = s.totaleIva.ToString("N2")
+            });
+            grdTotaleIvaPerQuarter.DataBind();
+
+            grdTotaleImponibilePerQuarter.DataSource = FattureDAO.GetTotaliImponibilePerQuarter().Select(s => new
+            {
+                Trimestre = s.quarter,
+                TotaleIva = s.totaleIva.ToString("N2")
+            });
+            grdTotaleImponibilePerQuarter.DataBind();
+
+            grdTotaleImportoPerQuarter.DataSource = FattureDAO.GetTotaliImportoPerQuarter().Select(s => new
+            {
+                Trimestre = s.quarter,
+                TotaleIva = s.totaleIva.ToString("N2")
+            });
+            grdTotaleImportoPerQuarter.DataBind();
+
+            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text).Select(s => new
+            {
+                Titolo = s.titolo,
+                Valore = s.valore.ToString("N2")
+            });
+            grdTotali.DataBind();
         }
 
-        protected void FillDdlScegliCliente()
+        protected void FillDdlScegliCliente(string ragSocCliente = "")
         {
-            List<Clienti> clienti = ClientiDAO.GetAll();
+            List<Clienti> clienti = ClientiDAO.GetByRagSoc(ragSocCliente);
 
             ddlScegliCliente.Items.Clear();
             ddlScegliCliente.Items.Add(new ListItem("", "-1"));
@@ -59,18 +87,18 @@ namespace GestioneCantieri
             }
         }
 
-        private void FillDdlScegliAmministratore()
-        {
-            List<Amministratore> amministratori = AmministratoriDAO.GetAll();
+        //private void FillDdlScegliAmministratore()
+        //{
+        //    List<Amministratore> amministratori = AmministratoriDAO.GetAll();
 
-            ddlScegliAmministratore.Items.Clear();
-            ddlScegliAmministratore.Items.Add(new ListItem("", "-1"));
+        //    ddlScegliAmministratore.Items.Clear();
+        //    ddlScegliAmministratore.Items.Add(new ListItem("", "-1"));
 
-            foreach (Amministratore amministratore in amministratori)
-            {
-                ddlScegliAmministratore.Items.Add(new ListItem(amministratore.Nome, amministratore.IdAmministratori.ToString()));
-            }
-        }
+        //    foreach (Amministratore amministratore in amministratori)
+        //    {
+        //        ddlScegliAmministratore.Items.Add(new ListItem(amministratore.Nome, amministratore.IdAmministratori.ToString()));
+        //    }
+        //}
 
         private void ResetToInitial()
         {
@@ -86,7 +114,7 @@ namespace GestioneCantieri
             SetNumeroFattura();
             FillDdlScegliCliente();
             FillDdlScegliCantiere();
-            FillDdlScegliAmministratore();
+            //FillDdlScegliAmministratore();
         }
 
         private void SetNumeroFattura()
@@ -104,11 +132,12 @@ namespace GestioneCantieri
 
         private Fattura PopolaFatturaObj()
         {
+            int idCliente = Convert.ToInt32(ddlScegliCliente.SelectedValue);
             Fattura fatt = new Fattura
             {
                 IdFatture = hfIdFattura.Value != "" ? Convert.ToInt32(hfIdFattura.Value) : 0,
-                IdClienti = Convert.ToInt32(ddlScegliCliente.SelectedValue),
-                IdAmministratori = Convert.ToInt64(ddlScegliAmministratore.SelectedValue),
+                IdClienti = idCliente,
+                IdAmministratori = Convert.ToInt64(ClientiDAO.GetSingleCliente(idCliente).IdAmministratore),
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
                 Riscosso = chkRiscosso.Checked,
@@ -129,7 +158,7 @@ namespace GestioneCantieri
 
             txtNumeroFattura.Text = fatt.Numero.ToString();
             ddlScegliCliente.SelectedValue = fatt.IdClienti.ToString();
-            ddlScegliAmministratore.SelectedValue = fatt.IdAmministratori.ToString();
+            txtShowAmministratore.Text = fatt.IdAmministratori.ToString();
             fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetByIdCantiere(f.IdCantieri).CodCant);
             txtData.Text = fatt.Data.ToString("yyyy-MM-dd");
             txtData.TextMode = TextBoxMode.Date;
@@ -142,12 +171,12 @@ namespace GestioneCantieri
             chkRiscosso.Checked = fatt.Riscosso;
             txtConcatenazione.Text = $"Fat. {fatt.Numero.ToString()} del {fatt.Data.ToString("dd/MM/yyyy")}";
 
-            // Accessibilità campi            
+            // Accessibilità campi
             txtNumeroFattura.ReadOnly = txtData.ReadOnly = txtValoreAcconto.ReadOnly = !isModifica;
             txtImponibile.ReadOnly = txtRitenutaAcconto.ReadOnly = txtIva.ReadOnly = !isModifica;
             txtFiltroCliente.ReadOnly = txtFiltroCodCantiere.ReadOnly = txtFiltroDescrizioneCantiere.ReadOnly = !isModifica;
             chkNotaCredito.Enabled = chkReverseCharge.Enabled = chkRiscosso.Enabled = isModifica;
-            ddlScegliAmministratore.Enabled = ddlScegliCantiere.Enabled = ddlScegliCliente.Enabled = isModifica;
+            ddlScegliCantiere.Enabled = ddlScegliCliente.Enabled = isModifica;
 
             // Visibilità pannelli
             pnlInsFatture.Visible = true;
@@ -200,8 +229,6 @@ namespace GestioneCantieri
             ResetToInitial();
             BindGrid();
         }
-
-
 
         protected void btnInsFattura_Click(object sender, EventArgs e)
         {
@@ -311,6 +338,7 @@ namespace GestioneCantieri
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
+                e.Row.Cells[5].Text = "Imponibile";
                 e.Row.Cells[8].Text = "Val. Iva";
                 e.Row.Cells[9].Text = "Val. Rit. Acc.";
                 e.Row.Cells[10].Text = "Imp. Fattura";
@@ -330,18 +358,18 @@ namespace GestioneCantieri
                 double valoreIva = imponibile * fattura.Iva / 100;
                 double valoreRitenutaAcconto = imponibile * fattura.RitenutaAcconto / 100;
 
-                (e.Row.FindControl("lblValoreIva") as Label).Text = valoreIva.ToString();
-                (e.Row.FindControl("lblValoreRitenutaAcconto") as Label).Text = valoreRitenutaAcconto.ToString();
+                (e.Row.FindControl("lblValoreIva") as Label).Text = valoreIva.ToString("N2");
+                (e.Row.FindControl("lblValoreRitenutaAcconto") as Label).Text = valoreRitenutaAcconto.ToString("N2");
 
                 double importoFattura = imponibile + valoreIva - valoreRitenutaAcconto;
-                (e.Row.FindControl("lblImportoFattura") as Label).Text = importoFattura.ToString();
+                (e.Row.FindControl("lblImportoFattura") as Label).Text = importoFattura.ToString("N2");
 
                 // Se è stato valorizzato il campo amministratore
                 if (fattura.IdAmministratori != 0)
                 {
                     // Eseguo il calcolo per quell'amministratore e lo sommo del totale generale
                     double importoAmministratore = imponibile - valoreRitenutaAcconto;
-                    (e.Row.FindControl("lblImportoAmministratore") as Label).Text = importoAmministratore.ToString();
+                    (e.Row.FindControl("lblImportoAmministratore") as Label).Text = importoAmministratore.ToString("N2");
                     totaleImportoAmministratore += importoAmministratore;
                 }
 
@@ -376,6 +404,11 @@ namespace GestioneCantieri
         protected void btnFiltraCantiere_Click(object sender, EventArgs e)
         {
             FillDdlScegliCantiere(txtFiltroCodCantiere.Text, txtFiltroDescrizioneCantiere.Text);
+        }
+
+        protected void btnFiltraCliente_Click(object sender, EventArgs e)
+        {
+            FillDdlScegliCliente(txtFiltroCliente.Text);
         }
     }
 }

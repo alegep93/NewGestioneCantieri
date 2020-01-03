@@ -15,7 +15,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                string sql = "SELECT * FROM TblAmministratori ";
+                string sql = "SELECT * FROM TblAmministratori ORDER BY nome";
                 using (SqlConnection cn = GetConnection())
                 {
                     ret = cn.Query<Amministratore>(sql).ToList();

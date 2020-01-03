@@ -79,6 +79,10 @@
                     <asp:TextBox ID="txtRagSocCli" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-3 form-group">
+                    <asp:Label ID="lblScegliAmministratore" runat="server" Text="Amministratore" />
+                    <asp:DropDownList ID="ddlScegliAmministratore" CssClass="form-control" runat="server"></asp:DropDownList>
+                </div>
+                <div class="col-md-3 form-group">
                     <asp:Label ID="lblIndirizzo" runat="server" Text="Indirizzo" />
                     <asp:TextBox ID="txtIndirizzo" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
@@ -116,7 +120,7 @@
                     <asp:Label ID="lblDataInserimento" runat="server" Text="Data Inserimento" />
                     <asp:TextBox ID="txtDataInserimento" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-md-6 form-group">
+                <div class="col-md-3 form-group">
                     <asp:Label ID="lblNote" runat="server" Text="Note" />
                     <asp:TextBox ID="txtNote" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>

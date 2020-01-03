@@ -16,19 +16,21 @@ namespace GestioneCantieri.DAO
             cantiere = "%" + cantiere + "%";
             amministratore = "%" + amministratore + "%";
 
-            string sql = "SELECT A.id_fatture, F.RagSocCli AS RagioneSocialeCliente,  " +
-                         "(SELECT STUFF((SELECT ';' + CONVERT(nvarchar, valore_acconto) AS 'data()' FROM TblFattureAcconti AS FatAcc WHERE FatAcc.id_fatture = A.id_fatture FOR XML PATH('')),1,1,'')) AS Acconti, " +
-                         "(SELECT STUFF((SELECT ';' + Cant.CodCant AS 'data()' FROM TblCantieri AS Cant INNER JOIN TblFattureCantieri AS FattCant ON Cant.IdCantieri = FattCant.id_cantieri WHERE Cant.IdCantieri = FattCant.id_cantieri FOR XML PATH('')),1,1,'')) AS Cantieri, " +
-                         "D.nome AS NomeAmministratore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.riscosso, A.is_nota_di_credito " +
+            string sql = "SELECT DISTINCT A.id_fatture, E.RagSocCli AS RagioneSocialeCliente, B.Cantieri, C.Acconti, D.nome AS NomeAmministratore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.riscosso, A.is_nota_di_credito " +
                          "FROM TblFatture AS A " +
+                         "LEFT JOIN ( " +
+                         "	SELECT id_fatture, " +
+                         "	(SELECT STUFF((SELECT ';' + Cant.CodCant FROM TblCantieri AS Cant INNER JOIN TblFattureCantieri AS Fc ON Cant.IdCantieri = Fc.id_cantieri WHERE Fc.id_fatture = FatCant.id_fatture FOR XML PATH('')),1,1,'')) AS Cantieri " +
+                         "	FROM TblFattureCantieri AS FatCant " +
+                         ") AS B ON A.id_fatture = B.id_fatture " +
+                         "LEFT JOIN ( " +
+                         "	SELECT id_fatture, " +
+                         "	(SELECT STUFF((SELECT ';' + CONVERT(nvarchar, valore_acconto) FROM TblFattureAcconti AS Fa WHERE FatAcc.id_fatture = Fa.id_fatture FOR XML PATH('')),1,1,'')) AS Acconti " +
+                         "	FROM TblFattureAcconti AS FatAcc " +
+                         ") AS C ON A.id_fatture = C.id_fatture " +
                          "LEFT JOIN TblAmministratori AS D ON A.id_amministratori = D.id_amministratori " +
-                         "INNER JOIN TblClienti AS F ON A.id_clienti = F.IdCliente " +
-                         "WHERE F.RagSocCli LIKE @cliente AND D.nome LIKE @amministratore ";
-
-            ///////////////////// TODO - CAPIRE COME FARE /////////////////////
-            //AND E.CodCant LIKE @cantiere 
-            ///////////////////// TODO - CAPIRE COME FARE /////////////////////
-
+                         "INNER JOIN TblClienti AS E ON A.id_clienti = E.IdCliente " +
+                         "WHERE E.RagSocCli LIKE @cliente AND (D.nome IS NULL OR D.nome LIKE @amministratore) ";
             sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : " ";
             sql += "ORDER BY A.data, A.numero ";
 
@@ -73,6 +75,94 @@ namespace GestioneCantieri.DAO
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero del singolo Fattura, id = " + idFattura, ex);
+            }
+        }
+
+        public static List<(string quarter, double totaleIva)> GetTotaliIvaPerQuarter()
+        {
+            try
+            {
+                string sql = "SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
+                             "       SUM(imponibile * iva / 100) TotaleIva " +
+                             "FROM TblFatture GROUP BY DATEPART(QUARTER, data)";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<(string, double)>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaliIvaPerQuarter", ex);
+            }
+        }
+
+        public static List<(string quarter, double totaleIva)> GetTotaliImponibilePerQuarter()
+        {
+            try
+            {
+                string sql = "SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
+                             "       SUM(imponibile) TotaleIva " +
+                             "FROM TblFatture GROUP BY DATEPART(QUARTER, data)";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<(string, double)>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaliIvaPerQuarter", ex);
+            }
+        }
+
+        public static List<(string quarter, double totaleIva)> GetTotaliImportoPerQuarter()
+        {
+            try
+            {
+                string sql = "SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
+                             "       SUM(imponibile + (imponibile * iva / 100) - ritenuta_acconto) TotaleIva " +
+                             "FROM TblFatture GROUP BY DATEPART(QUARTER, data)";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<(string, double)>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaliIvaPerQuarter", ex);
+            }
+        }
+
+        public static List<(string titolo, double valore)> GetTotaliFatture(string cliente, string amministratore, string annoString)
+        {
+            try
+            {
+                string whereAmministratore = "(" + (amministratore == "" ? "C.nome IS NULL OR " : "") + $"C.nome LIKE '%{amministratore}%') ";
+                string where = $"WHERE B.RagSocCli LIKE '%{cliente}%' AND {whereAmministratore} " + (annoString == "" ? "" : $"AND DATEPART(YEAR, A.data) = {Convert.ToInt32(annoString)} ");
+
+                string sql = "SELECT 'Totale Iva' as Titolo, ISNULL(SUM(imponibile * iva / 100), 0) AS Valore, 1 as Ordine " +
+                             "FROM TblFatture AS A " +
+                             "INNER JOIN TblClienti AS B ON A.id_clienti = B.IdCliente " +
+                             "LEFT JOIN TblAmministratori AS C ON A.id_amministratori = C.id_amministratori " + where;
+                sql += "UNION " +
+                             "SELECT 'Totale Imponibile' as Titolo, ISNULL(SUM(imponibile), 0) AS Valore, 2 as Ordine " +
+                             "FROM TblFatture AS A " +
+                             "INNER JOIN TblClienti AS B ON A.id_clienti = B.IdCliente " +
+                             "LEFT JOIN TblAmministratori AS C ON A.id_amministratori = C.id_amministratori " + where;
+                sql += "UNION " +
+                             "SELECT 'Totale Importo' as Titolo, ISNULL(SUM(imponibile + (imponibile * iva / 100) - ritenuta_acconto), 0) AS Valore, 3 as Ordine " +
+                             "FROM TblFatture AS A " +
+                             "INNER JOIN TblClienti AS B ON A.id_clienti = B.IdCliente " +
+                             "LEFT JOIN TblAmministratori AS C ON A.id_amministratori = C.id_amministratori " + where;
+                sql += "ORDER BY Ordine ";
+
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<(string, double)>(sql).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaliFatture", ex);
             }
         }
 
