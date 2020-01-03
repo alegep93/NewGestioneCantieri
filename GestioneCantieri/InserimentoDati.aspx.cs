@@ -596,7 +596,7 @@ namespace GestioneCantieri
             txtProvincia.Text = cli.Provincia;
             txtDataInserimento.Text = cli.Data.ToString("yyyy-MM-dd");
             txtNote.Text = cli.Note;
-            ddlScegliAmministratore.SelectedValue = cli.IdAmministratore.ToString();
+            ddlScegliAmministratore.SelectedValue = cli.IdAmministratore > 0 ? cli.IdAmministratore.ToString() : "-1";
         }
         //Fornitori
         protected void BindGridFornitori()

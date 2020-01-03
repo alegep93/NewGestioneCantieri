@@ -28,25 +28,27 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void BindGrid()
         {
-            List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text);
+            List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text);
             grdFatture.DataSource = fatture;
             grdFatture.DataBind();
 
-            grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter().Select(s => new
+            int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
+
+            grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIva = s.totaleIva.ToString("N2")
             });
             grdTotaleIvaPerQuarter.DataBind();
 
-            grdTotaleImponibilePerQuarter.DataSource = FattureDAO.GetTotaliImponibilePerQuarter().Select(s => new
+            grdTotaleImponibilePerQuarter.DataSource = FattureDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIva = s.totaleIva.ToString("N2")
             });
             grdTotaleImponibilePerQuarter.DataBind();
 
-            grdTotaleImportoPerQuarter.DataSource = FattureDAO.GetTotaliImportoPerQuarter().Select(s => new
+            grdTotaleImportoPerQuarter.DataSource = FattureDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIva = s.totaleIva.ToString("N2")

@@ -9,12 +9,14 @@ namespace GestioneCantieri.DAO
 {
     public class FattureDAO : BaseDAO
     {
-        public static List<Fattura> GetFatture(string anno, string cliente, string cantiere, string amministratore)
+        public static List<Fattura> GetFatture(string anno, string dataDa, string dataA, string cliente, string cantiere, string amministratore)
         {
             SqlConnection cn = GetConnection();
             cliente = "%" + cliente + "%";
             cantiere = "%" + cantiere + "%";
             amministratore = "%" + amministratore + "%";
+
+            string whereData = (dataDa == "" && dataA == "") ? "" : ((dataDa != "" && dataA == "") ? " AND A.data >= @dataDa " : ((dataDa == "" && dataA != "") ? " AND A.data <= @dataA " : " AND A.Data BETWEEN @dataDa AND @dataA "));
 
             string sql = "SELECT DISTINCT A.id_fatture, E.RagSocCli AS RagioneSocialeCliente, B.Cantieri, C.Acconti, D.nome AS NomeAmministratore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.riscosso, A.is_nota_di_credito " +
                          "FROM TblFatture AS A " +
@@ -30,13 +32,13 @@ namespace GestioneCantieri.DAO
                          ") AS C ON A.id_fatture = C.id_fatture " +
                          "LEFT JOIN TblAmministratori AS D ON A.id_amministratori = D.id_amministratori " +
                          "INNER JOIN TblClienti AS E ON A.id_clienti = E.IdCliente " +
-                         "WHERE E.RagSocCli LIKE @cliente AND (D.nome IS NULL OR D.nome LIKE @amministratore) ";
+                         "WHERE E.RagSocCli LIKE @cliente AND (D.nome IS NULL OR D.nome LIKE @amministratore) " + whereData;
             sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : " ";
             sql += "ORDER BY A.data, A.numero ";
 
             try
             {
-                return cn.Query<Fattura>(sql, new { anno, cliente, cantiere, amministratore }).ToList();
+                return cn.Query<Fattura>(sql, new { anno, dataDa, dataA, cliente, cantiere, amministratore }).ToList();
             }
             catch (Exception ex)
             {
@@ -78,13 +80,13 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        public static List<(string quarter, double totaleIva)> GetTotaliIvaPerQuarter()
+        public static List<(string quarter, double totaleIva)> GetTotaliIvaPerQuarter(int anno)
         {
             try
             {
                 string sql = "SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
                              "       SUM(imponibile * iva / 100) TotaleIva " +
-                             "FROM TblFatture GROUP BY DATEPART(QUARTER, data)";
+                             $"FROM TblFatture WHERE DATEPART(YEAR, data) = {anno} GROUP BY DATEPART(QUARTER, data)";
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<(string, double)>(sql).ToList();
@@ -96,13 +98,13 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        public static List<(string quarter, double totaleIva)> GetTotaliImponibilePerQuarter()
+        public static List<(string quarter, double totaleIva)> GetTotaliImponibilePerQuarter(int anno)
         {
             try
             {
                 string sql = "SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
                              "       SUM(imponibile) TotaleIva " +
-                             "FROM TblFatture GROUP BY DATEPART(QUARTER, data)";
+                             $"FROM TblFatture WHERE DATEPART(YEAR, data) = {anno} GROUP BY DATEPART(QUARTER, data)";
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<(string, double)>(sql).ToList();
@@ -114,13 +116,13 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        public static List<(string quarter, double totaleIva)> GetTotaliImportoPerQuarter()
+        public static List<(string quarter, double totaleIva)> GetTotaliImportoPerQuarter(int anno)
         {
             try
             {
                 string sql = "SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
                              "       SUM(imponibile + (imponibile * iva / 100) - ritenuta_acconto) TotaleIva " +
-                             "FROM TblFatture GROUP BY DATEPART(QUARTER, data)";
+                             $"FROM TblFatture WHERE DATEPART(YEAR, data) = {anno} GROUP BY DATEPART(QUARTER, data)";
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<(string, double)>(sql).ToList();

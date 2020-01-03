@@ -126,7 +126,7 @@
 
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <asp:Label ID="lblScegliAmministratore" runat="server" Text="Scegli Amministratore" />
+                    <asp:Label ID="lblScegliAmministratore" runat="server" Text="Amministratore" />
                     <%--<asp:DropDownList ID="ddlScegliAmministratore" CssClass="form-control" runat="server"></asp:DropDownList>--%>
                     <asp:TextBox ID="txtShowAmministratore" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
                     <asp:HiddenField ID="hfIdAmministratore" runat="server"></asp:HiddenField>
@@ -200,6 +200,14 @@
                 <div class="col-md-2">
                     <asp:Label ID="lblFiltroGrdAmministratore" runat="server" Text="Amministratore"></asp:Label>
                     <asp:TextBox ID="txtFiltroGrdAmministratore" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-md-2">
+                    <asp:Label ID="lblFiltroGrdDataDa" runat="server" Text="Data Da"></asp:Label>
+                    <asp:TextBox ID="txtFiltroGrdDataDa" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-md-2">
+                    <asp:Label ID="lblFiltroGrdDataA" runat="server" Text="Data A"></asp:Label>
+                    <asp:TextBox ID="txtFiltroGrdDataA" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-2">
                     <asp:Button ID="btnFiltraGrdFatture" OnClick="btnFiltraFatture_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Filtra" />
