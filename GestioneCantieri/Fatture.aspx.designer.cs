@@ -537,6 +537,42 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.TextBox txtFiltroGrdDataA;
 
         /// <summary>
+        /// Controllo lblFiltroGrdNumeroFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroGrdNumeroFattura;
+
+        /// <summary>
+        /// Controllo txtFiltroGrdNumeroFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGrdNumeroFattura;
+
+        /// <summary>
+        /// Controllo lblFiltroGrdRiscosso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroGrdRiscosso;
+
+        /// <summary>
+        /// Controllo ddlFiltroGrdRiscosso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroGrdRiscosso;
+
+        /// <summary>
         /// Controllo btnFiltraGrdFatture.
         /// </summary>
         /// <remarks>

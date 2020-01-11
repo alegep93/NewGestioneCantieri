@@ -210,6 +210,18 @@
                     <asp:TextBox ID="txtFiltroGrdDataA" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-2">
+                    <asp:Label ID="lblFiltroGrdNumeroFattura" runat="server" Text="Numero Fattura"></asp:Label>
+                    <asp:TextBox ID="txtFiltroGrdNumeroFattura" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-md-2">
+                    <asp:Label ID="lblFiltroGrdRiscosso" runat="server" Text="Numero Fattura"></asp:Label>
+                    <asp:DropDownList ID="ddlFiltroGrdRiscosso" CssClass="form-control" runat="server">
+                        <asp:ListItem Value="1">Tutte</asp:ListItem>
+                        <asp:ListItem Value="2">Riscosse</asp:ListItem>
+                        <asp:ListItem Value="3">Da Riscuotere</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-2">
                     <asp:Button ID="btnFiltraGrdFatture" OnClick="btnFiltraFatture_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Filtra" />
                     <asp:Button ID="btnSvuotaGrdFiltri" OnClick="btnSvuotaFiltri_Click" CssClass="btn btn-default pull-right" runat="server" Text="Svuota" Style="margin-right: 5px;" />
                 </div>

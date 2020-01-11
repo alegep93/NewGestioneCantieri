@@ -249,6 +249,7 @@
                     <asp:GridView ID="grdFornitori" OnRowCommand="grdFornitori_RowCommand" AutoGenerateColumns="false"
                         ItemType="GestioneCantieri.Data.Fornitori" runat="server" CssClass="table table-striped table-responsive text-center">
                         <Columns>
+                            <asp:BoundField HeaderText="Id" DataField="IdFornitori" />
                             <asp:BoundField HeaderText="Ragione Sociale" DataField="RagSocForni" />
                             <asp:BoundField HeaderText="Città" DataField="Città" />
                             <asp:BoundField HeaderText="Indirizzo" DataField="Indirizzo" />

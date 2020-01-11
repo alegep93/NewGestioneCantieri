@@ -28,7 +28,8 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void BindGrid()
         {
-            List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text);
+            int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
+            List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue));
             grdFatture.DataSource = fatture;
             grdFatture.DataBind();
 
@@ -55,7 +56,7 @@ namespace GestioneCantieri
             });
             grdTotaleImportoPerQuarter.DataBind();
 
-            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text).Select(s => new
+            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text).Select(s => new
             {
                 Titolo = s.titolo,
                 Valore = s.valore.ToString("N2")
