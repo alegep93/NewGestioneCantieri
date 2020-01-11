@@ -71,7 +71,13 @@
                     <li><a href="GestioneCantieri.aspx">Gestione Cantieri</a></li>
                     <li><a href="GestionePagamenti.aspx">Gestione Pagamenti</a></li>
                     <li><a href="Preventivi.aspx">Preventivi</a></li>
-                    <li><a href="Fatture.aspx">Fatture</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stampa Gruppi e Frutti<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Fatture.aspx">Fatture Emesse</a></li>
+                            <li><a href="FattureAcquisto.aspx">Fatture Acquisto</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stampe Varie<span class="caret"></span></a>
                         <ul class="dropdown-menu">

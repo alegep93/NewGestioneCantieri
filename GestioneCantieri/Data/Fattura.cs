@@ -11,7 +11,7 @@ namespace GestioneCantieri.Data
         public DateTime Data { get; set; } = DateTime.Now;
         public double Imponibile { get; set; } = 0;
         public int Iva { get; set; } = 0;
-        public int RitenutaAcconto { get; set; } = 0;
+        public double RitenutaAcconto { get; set; } = 0;
         public bool ReverseCharge { get; set; } = false;
         public bool Riscosso { get; set; } = false;
         public bool IsNotaDiCredito { get; set; } = false;

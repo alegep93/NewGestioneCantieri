@@ -147,11 +147,27 @@ namespace GestioneCantieri.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero di un singolo operaio", ex);
+                throw new Exception("Errore durante la GetSingleFornitore in FornitoriDAO", ex);
             }
             finally
             {
                 CloseResouces(cn, null);
+            }
+        }
+
+        public static List<Fornitori> GetByRagSoc(string ragSoc)
+        {
+            try
+            {
+                string sql = $"SELECT * FROM TblForitori WHERE RagSocForni LIKE LIKE '%{ragSoc}%' ORDER BY RagSocForni";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Fornitori>(sql, new { ragSoc }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetByRagSoc in FornitoriDAO", ex);
             }
         }
 

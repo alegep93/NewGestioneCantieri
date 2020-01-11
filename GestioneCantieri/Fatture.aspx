@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="Fatture.aspx.cs" Inherits="GestioneCantieri.Fatture" %>
 
 <asp:Content ID="Head" ContentPlaceHolderID="title" runat="server">
-    <title>Gestione Fatture</title>
+    <title>Fatture Emesse</title>
     <style>
         h1 {
             margin-bottom: 20px;
@@ -44,7 +44,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1>Gestione Fatture</h1>
+                <h1>Fatture Emesse</h1>
             </div>
         </div>
 

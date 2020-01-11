@@ -5,7 +5,7 @@ namespace GestioneCantieri.Data
     public class Clienti
     {
         public int IdCliente { get; set; } = 0;
-        public long IdAmministratore { get; set; } = 0;
+        public long? IdAmministratore { get; set; } = 0;
         public string RagSocCli { get; set; } = "";
         public string Indirizzo { get; set; } = "";
         public string Cap { get; set; } = "";

@@ -137,7 +137,7 @@ namespace GestioneCantieri
             return new Clienti
             {
                 RagSocCli = txtRagSocCli.Text,
-                IdAmministratore = Convert.ToInt64(ddlScegliAmministratore.SelectedValue),
+                IdAmministratore = Convert.ToInt64(ddlScegliAmministratore.SelectedValue) == -1 ? (long?)null : Convert.ToInt64(ddlScegliAmministratore.SelectedValue),
                 Indirizzo = txtIndirizzo.Text,
                 Cap = txtCap.Text,
                 Città = txtCitta.Text,
@@ -213,17 +213,18 @@ namespace GestioneCantieri
         }
         private Fornitori FillObjFornitore()
         {
-            Fornitori f = new Fornitori();
-            f.RagSocForni = txtRagSocFornit.Text;
-            f.Città = txtCittaFornit.Text;
-            f.Indirizzo = txtIndirFornit.Text;
-            f.Cap = txtCapFornit.Text;
-            f.Tel1 = Convert.ToInt32(txtTelFornit.Text);
-            f.Cell1 = Convert.ToInt32(txtCelFornit.Text);
-            f.CodFiscale = txtCodFiscFornit.Text;
-            f.PartitaIva = Convert.ToDouble(txtPartIvaFornit.Text);
-            f.Abbreviato = txtAbbrevFornit.Text;
-            return f;
+            return new Fornitori
+            {
+                RagSocForni = txtRagSocFornit.Text,
+                Città = txtCittaFornit.Text,
+                Indirizzo = txtIndirFornit.Text,
+                Cap = txtCapFornit.Text,
+                Tel1 = txtTelFornit.Text == "" ? 0 : Convert.ToInt32(txtTelFornit.Text),
+                Cell1 = txtCelFornit.Text == "" ? 0 : Convert.ToInt32(txtCelFornit.Text),
+                CodFiscale = txtCodFiscFornit.Text,
+                PartitaIva = txtPartIvaFornit.Text == "" ? 0 : Convert.ToDouble(txtPartIvaFornit.Text),
+                Abbreviato = txtAbbrevFornit.Text
+            };
         }
         protected void btnModFornit_Click(object sender, EventArgs e)
         {

@@ -96,6 +96,7 @@
     <Content Include="Css\Fatture.css" />
     <Content Include="DDT-Fornitori.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="FattureAcquisto.aspx" />
     <Content Include="GestioneAppunti.aspx" />
     <Content Include="GestioneCantieri.aspx" />
     <Content Include="GestioneLocali.aspx" />
@@ -212,6 +213,7 @@
     <Compile Include="DAO\FattureAccontiDAO.cs" />
     <Compile Include="DAO\AmministratoriDAO.cs" />
     <Compile Include="DAO\FattureCantieriDAO.cs" />
+    <Compile Include="DAO\FattureAcquistoDAO.cs" />
     <Compile Include="DAO\FornitoriDAO.cs" />
     <Compile Include="DAO\FruttiDAO.cs" />
     <Compile Include="DAO\ListinoHtsDAO.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="DAO\StampeDAO.cs" />
     <Compile Include="Data\Amministratore.cs" />
     <Compile Include="Data\DDTFornitori.cs" />
+    <Compile Include="Data\FatturaAcquisto.cs" />
     <Compile Include="Data\Fattura.cs" />
     <Compile Include="Data\FatturaAcconto.cs" />
     <Compile Include="Data\FatturaCantiere.cs" />
@@ -249,6 +252,13 @@
     </Compile>
     <Compile Include="DDT-Fornitori.aspx.designer.cs">
       <DependentUpon>DDT-Fornitori.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FattureAcquisto.aspx.cs">
+      <DependentUpon>FattureAcquisto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FattureAcquisto.aspx.designer.cs">
+      <DependentUpon>FattureAcquisto.aspx</DependentUpon>
     </Compile>
     <Compile Include="FooterPDF\TwoColumnHeaderFooter.cs" />
     <Compile Include="GestioneAppunti.aspx.cs">
