@@ -6,7 +6,7 @@ namespace GestioneCantieri.Data
     {
         public long IdFatture { get; set; } = 0;
         public int IdClienti { get; set; } = 0;
-        public long IdAmministratori { get; set; } = 0;
+        public long? IdAmministratori { get; set; } = 0;
         public int Numero { get; set; } = 0;
         public DateTime Data { get; set; } = DateTime.Now;
         public double Imponibile { get; set; } = 0;
