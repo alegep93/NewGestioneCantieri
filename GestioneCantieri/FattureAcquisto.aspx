@@ -62,7 +62,7 @@
 
         <asp:Panel ID="pnlInsFatture" DefaultButton="btnInsFattura" CssClass="panel-container" runat="server" Style="margin-top: 20px;">
             <div class="row">
-                <div class="col-md-offset-3 col-md-3 form-group">
+                <div class="col-md-offset-4 col-md-2 form-group">
                     <asp:Label ID="lblNumeroFattura" runat="server" Text="Numero Fattura" />
                     <asp:TextBox ID="txtNumeroFattura" CssClass="form-control" ReadOnly="true" runat="server"></asp:TextBox>
                 </div>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-offset-2 col-md-4">
+                <div class="col-md-offset-5 col-md-4">
                     <div class="row">
                         <div class="col-md-4">
                             <asp:TextBox ID="txtFiltroFornitore" CssClass="form-control" placeholder="Filtro Ragione Sociale Fornitore" runat="server"></asp:TextBox>
@@ -90,14 +90,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-offset-2 col-md-4 form-group">
+                <div class="col-md-offset-4 col-md-4 form-group">
                     <asp:Label ID="lblScegliFornitore" runat="server" Text="Scegli Fornitore" />
                     <asp:DropDownList ID="ddlScegliFornitore" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-1 form-group">
+                <div class="col-md-offset-3 col-md-1 form-group">
                     <asp:Label ID="lblImponibile" runat="server" Text="Imponibile" />
                     <asp:TextBox ID="txtImponibile" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
@@ -121,8 +121,8 @@
 
             <div class="row">
                 <div class="col-md-12 text-center form-group">
-                    <asp:Button ID="btnInsFattura" OnClick="btnInsFattura_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Fattura" />
-                    <asp:Button ID="btnModFattura" OnClick="btnModFattura_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Fattura" /><br />
+                    <asp:Button ID="btnInsFattura" OnClick="btnInsFattura_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Fattura Acquisto" />
+                    <asp:Button ID="btnModFattura" OnClick="btnModFattura_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Fattura Acquisto" /><br />
                     <asp:Label ID="lblMessaggio" runat="server" Text=""></asp:Label>
                 </div>
             </div>
@@ -162,13 +162,11 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdFatture" OnRowCommand="grdFatture_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Fattura" OnRowDataBound="grdFatture_RowDataBound" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.FatturaAcquisto" OnRowDataBound="grdFatture_RowDataBound" runat="server" CssClass="table table-striped table-responsive text-center">
                         <Columns>
                             <asp:BoundField HeaderText="Numero" DataField="Numero" />
                             <asp:BoundField HeaderText="Data" DataField="Data" DataFormatString="{0:d}" />
-                            <asp:BoundField HeaderText="Cliente" DataField="RagioneSocialeCliente" />
-                            <asp:BoundField HeaderText="Amministratore" DataField="NomeAmministratore" />
-                            <asp:BoundField HeaderText="Cantieri" DataField="Cantieri" />
+                            <asp:BoundField HeaderText="Cliente" DataField="RagioneSocialeFornitore" />
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Label ID="lblImponibile" Text='<%# Item.Imponibile + " €" %>' runat="server" />
@@ -196,19 +194,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Label ID="lblImportoAmministratore" runat="server" />
-                                    €
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:HiddenField ID="hfRowIdFattura" Value="<%# Item.IdFatture %>" runat="server" />
+                                    <asp:HiddenField ID="hfRowIdFattura" Value="<%# Item.IdFattureAcquisto %>" runat="server" />
                                     <asp:CheckBox ID="chkReverseCharge" CssClass="grd-checkbox" Checked="<%# Item.ReverseCharge %>" Enabled="false" runat="server" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:CheckBox ID="chkRiscosso" CssClass="grd-checkbox" Checked="<%# Item.Riscosso %>" Enabled="false" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
@@ -216,24 +203,23 @@
                                     <asp:CheckBox ID="chkNotaCredito" CssClass="grd-checkbox" Checked="<%# Item.IsNotaDiCredito %>" Enabled="false" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField HeaderText="Acconti" DataField="Acconti" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualizza" CommandName="Visualizza" CommandArgument="<%# BindItem.IdFatture %>" runat="server">
+                                    <asp:LinkButton ID="btnVisualizza" CommandName="Visualizza" CommandArgument="<%# BindItem.IdFattureAcquisto %>" runat="server">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModifica" CommandName="Modifica" CommandArgument="<%# BindItem.IdFatture %>" runat="server">
+                                    <asp:LinkButton ID="btnModifica" CommandName="Modifica" CommandArgument="<%# BindItem.IdFattureAcquisto %>" runat="server">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.IdFatture %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo fattura?');">
+                                    <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.IdFattureAcquisto %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo fattura?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>

@@ -90,19 +90,6 @@ namespace GestioneCantieri
             }
         }
 
-        //private void FillDdlScegliAmministratore()
-        //{
-        //    List<Amministratore> amministratori = AmministratoriDAO.GetAll();
-
-        //    ddlScegliAmministratore.Items.Clear();
-        //    ddlScegliAmministratore.Items.Add(new ListItem("", "-1"));
-
-        //    foreach (Amministratore amministratore in amministratori)
-        //    {
-        //        ddlScegliAmministratore.Items.Add(new ListItem(amministratore.Nome, amministratore.IdAmministratori.ToString()));
-        //    }
-        //}
-
         private void ResetToInitial()
         {
             txtFiltroGrdAnno.Text = txtFiltroGrdCliente.Text = txtFiltroGrdCantiere.Text = txtFiltroGrdAmministratore.Text = "";

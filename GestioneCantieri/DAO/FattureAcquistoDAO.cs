@@ -18,7 +18,7 @@ namespace GestioneCantieri.DAO
             string sql = "SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito " +
                          "FROM TblFattureAcquisto AS A " +
                          "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori " +
-                         "WHERE B.RagSocForni LIKE '%%' " + whereData;
+                         "WHERE B.RagSocForni LIKE @fornitore " + whereData;
             sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : " ";
             sql += numeroFattura > 0 ? "AND A.numero = @numeroFattura " : "";
             sql += "ORDER BY A.data, A.numero ";
@@ -52,7 +52,7 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        internal static Fattura GetSingle(long idFatturaAcquisto)
+        internal static FatturaAcquisto GetSingle(long idFatturaAcquisto)
         {
             Fattura prev = new Fattura();
             try
@@ -60,7 +60,7 @@ namespace GestioneCantieri.DAO
                 string sql = "SELECT * FROM TblFattureAcquisto WHERE id_fatture_acquisto = @idFatturaAcquisto ORDER BY numero ";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<Fattura>(sql, new { idFatturaAcquisto }).FirstOrDefault();
+                    return cn.Query<FatturaAcquisto>(sql, new { idFatturaAcquisto }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -137,11 +137,11 @@ namespace GestioneCantieri.DAO
                 sql += "UNION " +
                              "SELECT 'Totale Imponibile' as Titolo, ISNULL(SUM(imponibile), 0) AS Valore, 2 as Ordine " +
                              "FROM TblFattureAcquisto AS A " +
-                             "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori" + where;
+                             "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori " + where;
                 sql += "UNION " +
                              "SELECT 'Totale Importo' as Titolo, ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) AS Valore, 3 as Ordine " +
                              "FROM TblFattureAcquisto AS A " +
-                             "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori" + where;
+                             "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori " + where;
                 sql += "ORDER BY Ordine ";
 
                 using (SqlConnection cn = GetConnection())

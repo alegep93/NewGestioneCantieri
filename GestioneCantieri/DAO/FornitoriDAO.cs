@@ -159,7 +159,7 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = $"SELECT * FROM TblForitori WHERE RagSocForni LIKE LIKE '%{ragSoc}%' ORDER BY RagSocForni";
+                string sql = $"SELECT * FROM TblForitori WHERE RagSocForni LIKE '%{ragSoc}%' ORDER BY RagSocForni";
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<Fornitori>(sql, new { ragSoc }).ToList();
