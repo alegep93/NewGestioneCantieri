@@ -45,21 +45,21 @@ namespace GestioneCantieri
 
             int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
 
-            grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
+            grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIva = s.totaleIva.ToString("N2")
             });
             grdTotaleIvaPerQuarter.DataBind();
 
-            grdTotaleImponibilePerQuarter.DataSource = FattureDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
+            grdTotaleImponibilePerQuarter.DataSource = FattureAcquistoDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIva = s.totaleIva.ToString("N2")
             });
             grdTotaleImponibilePerQuarter.DataBind();
 
-            grdTotaleImportoPerQuarter.DataSource = FattureDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
+            grdTotaleImportoPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIva = s.totaleIva.ToString("N2")
