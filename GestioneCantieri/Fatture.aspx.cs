@@ -233,12 +233,12 @@ namespace GestioneCantieri
                     p.IdFatture = FattureDAO.Insert(p);
 
                     // Inserisco i cantieri e gli acconti
-                    if (hfIdCantieriDaAggiungere.Value.Contains(";"))
+                    if (hfIdCantieriDaAggiungere.Value != "" || hfIdCantieriDaAggiungere.Value.Contains(";"))
                     {
                         hfIdCantieriDaAggiungere.Value.Split(';').ToList().ForEach(c => FattureCantieriDAO.Insert(p.IdFatture, Convert.ToInt32(c)));
                     }
 
-                    if (hfValoriAccontiDaAggiungere.Value.Contains(";"))
+                    if (hfValoriAccontiDaAggiungere.Value != "" || hfValoriAccontiDaAggiungere.Value.Contains(";"))
                     {
                         hfValoriAccontiDaAggiungere.Value.Split(';').ToList().ForEach(a => FattureAccontiDAO.Insert(p.IdFatture, Convert.ToDouble(a)));
                     }
@@ -266,17 +266,36 @@ namespace GestioneCantieri
         {
             try
             {
-                Fattura p = PopolaFatturaObj();
-
-                if (FattureDAO.Update(p))
+                if (ddlScegliCliente.SelectedIndex > 0 && txtImponibile.Text != "" && txtData.Text != "")
                 {
-                    lblMessaggio.ForeColor = Color.Blue;
-                    lblMessaggio.Text = "Fattura " + p.Numero + " aggiornata con successo";
+                    Fattura p = PopolaFatturaObj();
+
+                    // Inserisco i cantieri e gli acconti
+                    if (hfIdCantieriDaAggiungere.Value != "" || hfIdCantieriDaAggiungere.Value.Contains(";"))
+                    {
+                        hfIdCantieriDaAggiungere.Value.Split(';').ToList().ForEach(c => FattureCantieriDAO.Insert(p.IdFatture, Convert.ToInt32(c)));
+                    }
+
+                    if (hfValoriAccontiDaAggiungere.Value != "" || hfValoriAccontiDaAggiungere.Value.Contains(";"))
+                    {
+                        hfValoriAccontiDaAggiungere.Value.Split(';').ToList().ForEach(a => FattureAccontiDAO.Insert(p.IdFatture, Convert.ToDouble(a)));
+                    }
+
+                    if (FattureDAO.Update(p))
+                    {
+                        lblMessaggio.ForeColor = Color.Blue;
+                        lblMessaggio.Text = "Fattura " + p.Numero + " aggiornata con successo";
+                    }
+                    else
+                    {
+                        lblMessaggio.ForeColor = Color.Red;
+                        lblMessaggio.Text = "Errore durante l'aggiornamento della Fattura " + p.Numero;
+                    }
                 }
                 else
                 {
                     lblMessaggio.ForeColor = Color.Red;
-                    lblMessaggio.Text = "Errore durante l'aggiornamento della Fattura " + p.Numero;
+                    lblMessaggio.Text = "I campi Cliente e Imponibile devono essere compilati";
                 }
             }
             catch (Exception ex)
