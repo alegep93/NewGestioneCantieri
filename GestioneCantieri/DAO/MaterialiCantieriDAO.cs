@@ -277,7 +277,7 @@ namespace GestioneCantieri.DAO
                       "NumeroBolla,ProtocolloInterno,Note,Note2,PzzoFinCli " +
                       "FROM TblMaterialiCantieri " +
                       "WHERE IdTblCantieri = @Id AND Visibile != 0 " +
-                      "ORDER BY Data";
+                      "ORDER BY IdMaterialiCantiere";
 
                 SqlCommand cmd = new SqlCommand(sql, cn);
                 cmd.Parameters.Add(new SqlParameter("Id", id));
@@ -378,7 +378,7 @@ namespace GestioneCantieri.DAO
                 sql = "SELECT ((PzzoUniCantiere * @pPerc)/100) AS 'Valore Ricalcolo' " +
                       "FROM TblMaterialiCantieri " +
                       "WHERE Visibile = 1 AND Ricalcolo = 1 AND IdTblCantieri = @pIdCant " +
-                      "ORDER BY Data";
+                      "ORDER BY IdMaterialiCantiere";
 
                 return cn.Query<decimal>(sql, new { pIdCant = idCant, pPerc = perc }).ToList();
             }
@@ -400,7 +400,7 @@ namespace GestioneCantieri.DAO
                       "FROM TblMaterialiCantieri AS A " +
                       "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
                       "WHERE Visibile = 1 AND ricaricoSiNo = 1 AND IdTblCantieri = @pIdCant " +
-                      "ORDER BY A.Data";
+                      "ORDER BY A.IdMaterialiCantiere";
 
                 return cn.Query<decimal>(sql, new { pIdCant = idCant }).ToList();
             }
