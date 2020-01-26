@@ -83,14 +83,14 @@ namespace GestioneCantieri
                 MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(c.IdCantieri.ToString());
                 RicalcoloConti rc = new RicalcoloConti();
                 decimal totale = 0m;
-                PdfPTable pTable = rc.InitializePdfTableDDT(grdStampaMateCantPDF);
+                PdfPTable pTable = rc.InitializePdfTableDDT();
                 Document pdfDoc = new Document(PageSize.A4, 8f, 2f, 2f, 2f);
                 pdfDoc.Open();
                 rc.idCant = c.IdCantieri.ToString();
                 decimal perc = rc.CalcolaPercentualeTotaleMaterialiNascosti();
-                rc.BindGrid(grdStampaMateCant);
-                rc.BindGridPDF(grdStampaMateCant, grdStampaMateCantPDF);
-                rc.GeneraPDFPerContoFinCli(pdfDoc, mc, pTable, grdStampaMateCantPDF, totale);
+                List<MaterialiCantieri> materiali = rc.GetMaterialiCantieri();
+                //rc.BindGridPDF(grdStampaMateCant, grdStampaMateCantPDF);
+                rc.GeneraPDFPerContoFinCli(pdfDoc, mc, pTable, materiali, totale);
                 pdfDoc.Close();
 
                 //Popolo i campi di riepilogo con i dati necessari
