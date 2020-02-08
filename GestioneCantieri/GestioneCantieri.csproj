@@ -84,7 +84,9 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="ControlloGruppi.aspx" />
+    <Content Include="Fatture\Bollette.aspx" />
+    <Content Include="Fatture\TotaliFatture.aspx" />
+    <Content Include="GruppiFrutti\ControlloGruppi.aspx" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
@@ -96,19 +98,20 @@
     <Content Include="Css\Fatture.css" />
     <Content Include="DDT-Fornitori.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="FattureAcquisto.aspx" />
+    <Content Include="Fatture\FattureAcquisto.aspx" />
     <Content Include="GestioneAppunti.aspx" />
     <Content Include="GestioneCantieri.aspx" />
     <Content Include="GestioneLocali.aspx" />
     <Content Include="GestionePagamenti.aspx" />
-    <Content Include="GestisciFrutti.aspx" />
-    <Content Include="GestisciGruppiFrutti.aspx" />
+    <Content Include="GruppiFrutti\GestisciFrutti.aspx" />
+    <Content Include="GruppiFrutti\GestisciGruppiFrutti.aspx" />
     <Content Include="Images\spinner.gif" />
-    <Content Include="InserimentoDati.aspx" />
+    <Content Include="InserimentoDati\Amministratori.aspx" />
+    <Content Include="InserimentoDati\InserimentoDati.aspx" />
     <Content Include="layout.Master" />
-    <Content Include="Listino.aspx" />
-    <Content Include="ListinoHTS.aspx" />
-    <Content Include="OrdineFrutti.aspx" />
+    <Content Include="Listini\Listino.aspx" />
+    <Content Include="Listini\ListinoHTS.aspx" />
+    <Content Include="GruppiFrutti\OrdineFrutti.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -120,7 +123,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Fatture.aspx" />
+    <Content Include="Fatture\Fatture.aspx" />
     <Content Include="Preventivi.aspx" />
     <Content Include="ResocontoOperaio.aspx" />
     <Content Include="RicalcoloConti.aspx" />
@@ -186,23 +189,39 @@
     <Content Include="DDT-Mef.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\zoom.gif" />
-    <Content Include="StampaFruttiGruppi.aspx" />
-    <Content Include="StampaOrdFrutLocale.aspx" />
-    <Content Include="StampaOrdFrutCantExcel.aspx" />
-    <Content Include="StampaPerTipologia.aspx" />
-    <Content Include="StampaValoriCantieri.aspx" />
-    <Content Include="StampaValoriCantieriConOpzioni.aspx" />
-    <Content Include="StampaVerificaCantiere.aspx" />
-    <Content Include="StampeVarie.aspx" />
+    <Content Include="Stampe\StampaFruttiGruppi.aspx" />
+    <Content Include="Stampe\StampaOrdFrutLocale.aspx" />
+    <Content Include="Stampe\StampaOrdFrutCantExcel.aspx" />
+    <Content Include="Stampe\StampaPerTipologia.aspx" />
+    <Content Include="Stampe\StampaValoriCantieri.aspx" />
+    <Content Include="Stampe\StampaValoriCantieriConOpzioni.aspx" />
+    <Content Include="Stampe\StampaVerificaCantiere.aspx" />
+    <Content Include="Stampe\StampeVarie.aspx" />
     <Content Include="Update.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlloGruppi.aspx.cs">
+    <Compile Include="DAO\BolletteDAO.cs" />
+    <Compile Include="Data\Bolletta.cs" />
+    <Compile Include="Fatture\Bollette.aspx.cs">
+      <DependentUpon>Bollette.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fatture\Bollette.aspx.designer.cs">
+      <DependentUpon>Bollette.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fatture\TotaliFatture.aspx.cs">
+      <DependentUpon>TotaliFatture.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fatture\TotaliFatture.aspx.designer.cs">
+      <DependentUpon>TotaliFatture.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GruppiFrutti\ControlloGruppi.aspx.cs">
       <DependentUpon>ControlloGruppi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ControlloGruppi.aspx.designer.cs">
+    <Compile Include="GruppiFrutti\ControlloGruppi.aspx.designer.cs">
       <DependentUpon>ControlloGruppi.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAO\BaseDAO.cs" />
@@ -253,11 +272,11 @@
     <Compile Include="DDT-Fornitori.aspx.designer.cs">
       <DependentUpon>DDT-Fornitori.aspx</DependentUpon>
     </Compile>
-    <Compile Include="FattureAcquisto.aspx.cs">
+    <Compile Include="Fatture\FattureAcquisto.aspx.cs">
       <DependentUpon>FattureAcquisto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="FattureAcquisto.aspx.designer.cs">
+    <Compile Include="Fatture\FattureAcquisto.aspx.designer.cs">
       <DependentUpon>FattureAcquisto.aspx</DependentUpon>
     </Compile>
     <Compile Include="FooterPDF\TwoColumnHeaderFooter.cs" />
@@ -289,18 +308,25 @@
     <Compile Include="GestionePagamenti.aspx.designer.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ListinoHTS.aspx.cs">
+    <Compile Include="InserimentoDati\Amministratori.aspx.cs">
+      <DependentUpon>Amministratori.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InserimentoDati\Amministratori.aspx.designer.cs">
+      <DependentUpon>Amministratori.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Listini\ListinoHTS.aspx.cs">
       <DependentUpon>ListinoHTS.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ListinoHTS.aspx.designer.cs">
+    <Compile Include="Listini\ListinoHTS.aspx.designer.cs">
       <DependentUpon>ListinoHTS.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Fatture.aspx.cs">
+    <Compile Include="Fatture\Fatture.aspx.cs">
       <DependentUpon>Fatture.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Fatture.aspx.designer.cs">
+    <Compile Include="Fatture\Fatture.aspx.designer.cs">
       <DependentUpon>Fatture.aspx</DependentUpon>
     </Compile>
     <Compile Include="Preventivi.aspx.cs">
@@ -324,39 +350,39 @@
     <Compile Include="RicalcoloConti.aspx.designer.cs">
       <DependentUpon>RicalcoloConti.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampaPerTipologia.aspx.cs">
+    <Compile Include="Stampe\StampaPerTipologia.aspx.cs">
       <DependentUpon>StampaPerTipologia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaPerTipologia.aspx.designer.cs">
+    <Compile Include="Stampe\StampaPerTipologia.aspx.designer.cs">
       <DependentUpon>StampaPerTipologia.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampaValoriCantieri.aspx.cs">
+    <Compile Include="Stampe\StampaValoriCantieri.aspx.cs">
       <DependentUpon>StampaValoriCantieri.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaValoriCantieri.aspx.designer.cs">
+    <Compile Include="Stampe\StampaValoriCantieri.aspx.designer.cs">
       <DependentUpon>StampaValoriCantieri.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampaValoriCantieriConOpzioni.aspx.cs">
+    <Compile Include="Stampe\StampaValoriCantieriConOpzioni.aspx.cs">
       <DependentUpon>StampaValoriCantieriConOpzioni.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaValoriCantieriConOpzioni.aspx.designer.cs">
+    <Compile Include="Stampe\StampaValoriCantieriConOpzioni.aspx.designer.cs">
       <DependentUpon>StampaValoriCantieriConOpzioni.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampaVerificaCantiere.aspx.cs">
+    <Compile Include="Stampe\StampaVerificaCantiere.aspx.cs">
       <DependentUpon>StampaVerificaCantiere.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaVerificaCantiere.aspx.designer.cs">
+    <Compile Include="Stampe\StampaVerificaCantiere.aspx.designer.cs">
       <DependentUpon>StampaVerificaCantiere.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampeVarie.aspx.cs">
+    <Compile Include="Stampe\StampeVarie.aspx.cs">
       <DependentUpon>StampeVarie.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampeVarie.aspx.designer.cs">
+    <Compile Include="Stampe\StampeVarie.aspx.designer.cs">
       <DependentUpon>StampeVarie.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\DataTableToListHelper.cs" />
@@ -387,18 +413,18 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestisciFrutti.aspx.cs">
+    <Compile Include="GruppiFrutti\GestisciFrutti.aspx.cs">
       <DependentUpon>GestisciFrutti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestisciFrutti.aspx.designer.cs">
+    <Compile Include="GruppiFrutti\GestisciFrutti.aspx.designer.cs">
       <DependentUpon>GestisciFrutti.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestisciGruppiFrutti.aspx.cs">
+    <Compile Include="GruppiFrutti\GestisciGruppiFrutti.aspx.cs">
       <DependentUpon>GestisciGruppiFrutti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestisciGruppiFrutti.aspx.designer.cs">
+    <Compile Include="GruppiFrutti\GestisciGruppiFrutti.aspx.designer.cs">
       <DependentUpon>GestisciGruppiFrutti.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -409,11 +435,11 @@
     <Compile Include="GridViewHelper\GridViewHelper.cs" />
     <Compile Include="GridViewHelper\GridViewSummary.cs" />
     <Compile Include="GridViewHelper\GridViewSummaryList.cs" />
-    <Compile Include="InserimentoDati.aspx.cs">
+    <Compile Include="InserimentoDati\InserimentoDati.aspx.cs">
       <DependentUpon>InserimentoDati.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="InserimentoDati.aspx.designer.cs">
+    <Compile Include="InserimentoDati\InserimentoDati.aspx.designer.cs">
       <DependentUpon>InserimentoDati.aspx</DependentUpon>
     </Compile>
     <Compile Include="layout.Master.cs">
@@ -423,18 +449,18 @@
     <Compile Include="layout.Master.designer.cs">
       <DependentUpon>layout.Master</DependentUpon>
     </Compile>
-    <Compile Include="Listino.aspx.cs">
+    <Compile Include="Listini\Listino.aspx.cs">
       <DependentUpon>Listino.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Listino.aspx.designer.cs">
+    <Compile Include="Listini\Listino.aspx.designer.cs">
       <DependentUpon>Listino.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OrdineFrutti.aspx.cs">
+    <Compile Include="GruppiFrutti\OrdineFrutti.aspx.cs">
       <DependentUpon>OrdineFrutti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OrdineFrutti.aspx.designer.cs">
+    <Compile Include="GruppiFrutti\OrdineFrutti.aspx.designer.cs">
       <DependentUpon>OrdineFrutti.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -443,25 +469,25 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="StampaFruttiGruppi.aspx.cs">
+    <Compile Include="Stampe\StampaFruttiGruppi.aspx.cs">
       <DependentUpon>StampaFruttiGruppi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaFruttiGruppi.aspx.designer.cs">
+    <Compile Include="Stampe\StampaFruttiGruppi.aspx.designer.cs">
       <DependentUpon>StampaFruttiGruppi.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampaOrdFrutLocale.aspx.cs">
+    <Compile Include="Stampe\StampaOrdFrutLocale.aspx.cs">
       <DependentUpon>StampaOrdFrutLocale.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaOrdFrutLocale.aspx.designer.cs">
+    <Compile Include="Stampe\StampaOrdFrutLocale.aspx.designer.cs">
       <DependentUpon>StampaOrdFrutLocale.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StampaOrdFrutCantExcel.aspx.cs">
+    <Compile Include="Stampe\StampaOrdFrutCantExcel.aspx.cs">
       <DependentUpon>StampaOrdFrutCantExcel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StampaOrdFrutCantExcel.aspx.designer.cs">
+    <Compile Include="Stampe\StampaOrdFrutCantExcel.aspx.designer.cs">
       <DependentUpon>StampaOrdFrutCantExcel.aspx</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -23,12 +23,12 @@ namespace GestioneCantieri.DAO
                          "FROM TblFatture AS A " +
                          "LEFT JOIN ( " +
                          "  SELECT id_fatture, " +
-                         "  (SELECT STUFF((SELECT ';' + Cant.CodCant FROM TblCantieri AS Cant INNER JOIN TblFattureCantieri AS Fc ON Cant.IdCantieri = Fc.id_cantieri WHERE Fc.id_fatture = FatCant.id_fatture FOR XML PATH('')),1,1,'')) AS Cantieri " +
+                         "  (SELECT STUFF((SELECT '; ' + Cant.CodCant FROM TblCantieri AS Cant INNER JOIN TblFattureCantieri AS Fc ON Cant.IdCantieri = Fc.id_cantieri WHERE Fc.id_fatture = FatCant.id_fatture FOR XML PATH('')),1,1,'')) AS Cantieri " +
                          "  FROM TblFattureCantieri AS FatCant " +
                          ") AS B ON A.id_fatture = B.id_fatture " +
                          "LEFT JOIN ( " +
                          "  SELECT id_fatture, " +
-                         "  (SELECT STUFF((SELECT ';' + CONVERT(nvarchar, valore_acconto) FROM TblFattureAcconti AS Fa WHERE FatAcc.id_fatture = Fa.id_fatture FOR XML PATH('')),1,1,'')) AS Acconti " +
+                         "  (SELECT STUFF((SELECT '; ' + CONVERT(nvarchar, valore_acconto) FROM TblFattureAcconti AS Fa WHERE FatAcc.id_fatture = Fa.id_fatture FOR XML PATH('')),1,1,'')) AS Acconti " +
                          "  FROM TblFattureAcconti AS FatAcc " +
                          ") AS C ON A.id_fatture = C.id_fatture " +
                          "LEFT JOIN TblAmministratori AS D ON A.id_amministratori = D.id_amministratori " +
@@ -80,6 +80,38 @@ namespace GestioneCantieri.DAO
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero del singolo Fattura, id = " + idFattura, ex);
+            }
+        }
+
+        internal static double GetTotaleImponibile()
+        {
+            try
+            {
+                string sql = "SELECT ISNULL(SUM(imponibile), 0) FROM TblFatture";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<double>(sql).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaleImponibile in FattureDAO", ex);
+            }
+        }
+
+        internal static double GetTotaleFatturato()
+        {
+            try
+            {
+                string sql = "SELECT ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) FROM TblFatture";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<double>(sql).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaleFatturato in FattureDAO", ex);
             }
         }
 
