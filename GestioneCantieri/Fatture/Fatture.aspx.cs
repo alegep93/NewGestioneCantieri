@@ -56,7 +56,9 @@ namespace GestioneCantieri
             });
             grdTotaleImportoPerQuarter.DataBind();
 
-            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text).Select(s => new
+            decimal valoreAccontiDaRiscuotere = FattureAccontiDAO.GetTotaleAccontiNonRiscossi();
+
+            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, valoreAccontiDaRiscuotere).Select(s => new
             {
                 Titolo = s.titolo,
                 Valore = s.valore.ToString("N2")

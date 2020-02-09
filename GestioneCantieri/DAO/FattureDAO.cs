@@ -169,7 +169,7 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        public static List<(string titolo, double valore)> GetTotaliFatture(string cliente, string amministratore, string annoString, int numeroFattura, int riscosso, string dataDa, string dataA)
+        public static List<(string titolo, double valore)> GetTotaliFatture(string cliente, string amministratore, string annoString, int numeroFattura, int riscosso, string dataDa, string dataA, decimal valoreAccontiDaRiscuotere)
         {
             try
             {
@@ -194,7 +194,7 @@ namespace GestioneCantieri.DAO
                              "INNER JOIN TblClienti AS B ON A.id_clienti = B.IdCliente " +
                              "LEFT JOIN TblAmministratori AS C ON A.id_amministratori = C.id_amministratori " + where;
                 sql += "UNION " +
-                             "SELECT 'Totale Da Riscuotere' as Titolo, ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) AS Valore, 4 as Ordine " +
+                             "SELECT 'Totale Da Riscuotere' as Titolo, ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)) - @valoreAccontiDaRiscuotere, 0) AS Valore, 4 as Ordine " +
                              "FROM TblFatture AS A " +
                              "INNER JOIN TblClienti AS B ON A.id_clienti = B.IdCliente " +
                              "LEFT JOIN TblAmministratori AS C ON A.id_amministratori = C.id_amministratori " + where + " AND riscosso = 0 ";
@@ -202,7 +202,7 @@ namespace GestioneCantieri.DAO
 
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<(string, double)>(sql, new { dataDa, dataA, numeroFattura, riscosso }).ToList();
+                    return cn.Query<(string, double)>(sql, new { dataDa, dataA, numeroFattura, riscosso, valoreAccontiDaRiscuotere }).ToList();
                 }
             }
             catch (Exception ex)

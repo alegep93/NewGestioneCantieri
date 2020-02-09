@@ -38,7 +38,7 @@
             overflow-y: auto;
         }
     </style>
-    <link href="Css/Fatture.css" rel="stylesheet" />
+    <link href="/Css/Fatture.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Body" ContentPlaceHolderID="body" runat="server">
     <div class="container-fluid">
