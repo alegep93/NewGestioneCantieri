@@ -91,6 +91,22 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static decimal GetTotaleAccontiNonRiscossi()
+        {
+            try
+            {
+                string sql = "SELECT SUM(valore_acconto) FROM TblFattureAcconti AS A INNER JOIN TblFatture AS B ON A.id_fatture = B.id_fatture WHERE B.riscosso = 0";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<decimal>(sql).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaleAccontiNonRiscossi in FattureAccontiDAO", ex);
+            }
+        }
+
         public static void Insert(long idFattura, double valoreAcconto)
         {
             try

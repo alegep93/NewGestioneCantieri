@@ -69,6 +69,38 @@ namespace GestioneCantieri.DAO
             }
         }
 
+        internal static double GetTotaleImponibile()
+        {
+            try
+            {
+                string sql = "SELECT ISNULL(SUM(imponibile), 0) FROM TblFattureAcquisto";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<double>(sql).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaleImponibile in FattureAcquistoDAO", ex);
+            }
+        }
+
+        internal static double GetTotaleFatturato()
+        {
+            try
+            {
+                string sql = "SELECT ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) FROM TblFattureAcquisto";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<double>(sql).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaleFatturato in FattureAcquistoDAO", ex);
+            }
+        }
+
         public static List<(string quarter, double totaleIva)> GetTotaliIvaPerQuarter(int anno)
         {
             try
@@ -147,6 +179,33 @@ namespace GestioneCantieri.DAO
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<(string, double)>(sql, new { dataDa, dataA, numeroFattura }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetTotaliFatture", ex);
+            }
+        }
+
+        public static List<(string quarter, double totaleAcquisto, double totaleEmesso, double saldo)> GetTotaliFatture(int anno)
+        {
+            try
+            {
+                string sql = "SELECT (CASE WHEN DATEPART(QUARTER, A.data) = 1 THEN 'Gen-Feb-Mar'  " +
+                             "             WHEN DATEPART(QUARTER, A.data) = 2 THEN 'Apr-Mag-Giu'  " +
+                             "             WHEN DATEPART(QUARTER, A.data) = 3 THEN 'Lug-Ago-Set'  " +
+                             "             WHEN DATEPART(QUARTER, A.data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
+                             "        SUM(A.imponibile * A.iva / 100) TotaleIvaAcquisto, " +
+                             "        SUM(B.imponibile * B.iva / 100) TotaleIvaEmesso, " +
+                             "        SUM(A.imponibile * A.iva / 100) - SUM(B.imponibile * B.iva / 100) Saldo " +
+                             "FROM TblFattureAcquisto AS A " +
+                             "INNER JOIN TblFatture AS B ON A.data = B.data " +
+                             "WHERE DATEPART(YEAR, A.data) = @anno " +
+                             "GROUP BY DATEPART(QUARTER, A.data) ";
+
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<(string, double, double, double)>(sql, new { anno }).ToList();
                 }
             }
             catch (Exception ex)

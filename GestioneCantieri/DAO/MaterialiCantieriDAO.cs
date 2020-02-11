@@ -186,7 +186,7 @@ namespace GestioneCantieri.DAO
                       "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
                       "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) AND A.idTblOperaio IS NOT NULL ";
 
-                if(idOperaio != "-1")
+                if (idOperaio != "-1")
                 {
                     sql += "AND A.IdTblOperaio = @pIdOper ";
                 }
@@ -226,7 +226,7 @@ namespace GestioneCantieri.DAO
                     sql += "AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) ";
                 }
 
-                if(idOperaio != "-1")
+                if (idOperaio != "-1")
                 {
                     sql += "AND A.IdTblOperaio = @pIdOper ";
                 }
@@ -265,30 +265,47 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
-        public static List<MaterialiCantieri> GetMaterialeCantiereForRicalcoloConti(string id)
+        public static List<MaterialiCantieri> GetMaterialeCantiereForRicalcoloConti(string idCant, decimal perc)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "SELECT IdMaterialiCantiere,IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore, " +
-                      "NumeroBolla,ProtocolloInterno,Note,Note2,PzzoFinCli " +
-                      "FROM TblMaterialiCantieri " +
-                      "WHERE IdTblCantieri = @Id AND Visibile != 0 " +
-                      "ORDER BY IdMaterialiCantiere";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("Id", id));
-
-                return cn.Query<MaterialiCantieri>(sql, new { Id = id }).ToList();
+                string sql = "SELECT A.IdMaterialiCantiere, A.IdTblCantieri, A.IdTblOperaio, A.DescriMateriali, A.Qta, A.Visibile, A.Ricalcolo, A.ricaricoSiNo, A.Data, A.PzzoUniCantiere, " +
+                             "A.Rientro, A.CodArt, A.DescriCodArt, A.Tipologia,A.UnitàDiMisura, A.ZOldNumeroBolla, A.Mate, A.Fascia, A.pzzoTemp, A.Acquirente, A.Fornitore, A.NumeroBolla, " +
+                             "A.ProtocolloInterno, A.Note, A.Note2, " +
+                             "(CASE WHEN A.PzzoFinCli = 0 " +
+                             "      THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN B.ValoreRicalcolo ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN C.ValoreRicarico ELSE 0 END)) " +
+                             "      ELSE A.PzzoFinCli " +
+                             "END) AS PzzoFinCli, A.OperaioPagato, (A.Qta * (CASE WHEN A.PzzoFinCli = 0 " +
+                             "THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN B.ValoreRicalcolo ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN C.ValoreRicarico ELSE 0 END)) " +
+                             "ELSE A.PzzoFinCli " +
+                             "END)) AS Valore " +
+                             "FROM ( " +
+                             "	SELECT * " +
+                             "	FROM TblMaterialiCantieri " +
+                             "	WHERE Visibile = 1 " +
+                             ") AS A " +
+                             "LEFT JOIN ( " +
+                             "	SELECT IdMaterialiCantiere, IdTblCantieri, ((PzzoUniCantiere * @perc)/100) AS 'ValoreRicalcolo' " +
+                             "	FROM TblMaterialiCantieri " +
+                             "	WHERE Visibile = 1 AND Ricalcolo = 1 " +
+                             ") AS B ON A.IdMaterialiCantiere = B.IdMaterialiCantiere AND A.IdTblCantieri = B.IdTblCantieri " +
+                             "LEFT JOIN ( " +
+                             "	SELECT A.IdMaterialiCantiere, A.IdTblCantieri, (((A.PzzoUniCantiere * B.Ricarico)/100)) AS 'ValoreRicarico' " +
+                             "	FROM TblMaterialiCantieri AS A " +
+                             "	LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
+                             "	WHERE Visibile = 1 AND ricaricoSiNo = 1 " +
+                             ") AS C ON B.IdMaterialiCantiere = C.IdMaterialiCantiere AND B.IdTblCantieri = C.IdTblCantieri " +
+                             "WHERE A.IdTblCantieri = @idCant " +
+                             "ORDER BY A.IdMaterialiCantiere ";
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<MaterialiCantieri>(sql, new { idCant, perc }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei materiali di cantiere per singolo cantiere", ex);
+                throw new Exception("Errore durante la GetMaterialeCantiereForRicalcoloConti in MaterialiCantieriDAO", ex);
             }
-            finally { CloseResouces(cn, null); }
         }
 
         //Recupero i record in base alla tipologia passata come parametro di ingresso

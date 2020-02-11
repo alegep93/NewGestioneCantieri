@@ -38,7 +38,7 @@
             overflow-y: auto;
         }
     </style>
-    <link href="Css/Fatture.css" rel="stylesheet" />
+    <link href="/Css/Fatture.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Body" ContentPlaceHolderID="body" runat="server">
     <div class="container-fluid">
@@ -236,8 +236,8 @@
                             <asp:BoundField HeaderText="Numero" DataField="Numero" />
                             <asp:BoundField HeaderText="Data" DataField="Data" DataFormatString="{0:d}" />
                             <asp:BoundField HeaderText="Cliente" DataField="RagioneSocialeCliente" />
-                            <asp:BoundField HeaderText="Amministratore" DataField="NomeAmministratore" />
-                            <asp:BoundField HeaderText="Cantieri" DataField="Cantieri" />
+                            <asp:BoundField HeaderText="Ammin." DataField="NomeAmministratore" />
+                            <asp:BoundField HeaderText="Cantieri" DataField="Cantieri" ControlStyle-Width="200px" ItemStyle-Width="200px" />
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Label ID="lblImponibile" Text='<%# Item.Imponibile + " €" %>' runat="server" />

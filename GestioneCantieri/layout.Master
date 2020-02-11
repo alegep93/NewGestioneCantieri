@@ -7,13 +7,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>--%>
-    <script src="Scripts/jquery-3.3.1.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <script src="Scripts/FilterToggle.js"></script>
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/FilterToggle.js"></script>
 
-    <link href="Css/style.css" rel="stylesheet" type="text/css" runat="server" media="screen"/>
-    <link href="Css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="Css/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Css/style.css" rel="stylesheet" type="text/css" runat="server" media="screen"/>
+    <link href="/Css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="/Css/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <%--<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet" />--%>
 
     <%-- FontAwesome --%>
@@ -39,58 +39,65 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="Default.aspx">Home</a></li>
-                    <li><a href="DDT-Mef.aspx">DDT Mef</a></li>
-                    <li><a href="DDT-Fornitori.aspx">DDT Fornitori</a></li>
+                    <li><a href="/Default.aspx">Home</a></li>
+                    <li><a href="/DDT-Mef.aspx">DDT Mef</a></li>
+                    <li><a href="/DDT-Fornitori.aspx">DDT Fornitori</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Listini<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="Listino.aspx">Listino</a></li>
-                            <li><a href="ListinoHTS.aspx">Listino HTS</a></li>
+                            <li><a href="/Listini/Listino.aspx">Listino</a></li>
+                            <li><a href="/Listini/ListinoHTS.aspx">Listino HTS</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestione Gruppi e Frutti<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="GestisciFrutti.aspx">Gestisci Frutti</a></li>
-                            <li><a href="GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
-                            <li><a href="ControlloGruppi.aspx">Controllo Gruppi</a></li>
-                            <li><a href="OrdineFrutti.aspx">Ordine Frutti</a></li>
+                            <li><a href="/GruppiFrutti/GestisciFrutti.aspx">Gestisci Frutti</a></li>
+                            <li><a href="/GruppiFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
+                            <li><a href="/GruppiFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
+                            <li><a href="/GruppiFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stampa Gruppi e Frutti<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="StampaFruttiGruppi.aspx">Stampa Frutti Gruppi</a></li>
-                            <li><a href="StampaOrdFrutLocale.aspx">Stampa Ord Frut Loc</a></li>
-                            <li><a href="StampaOrdFrutCantExcel.aspx">Stampa Ord Frut Cant Excel</a></li>
+                            <li><a href="/Stampe/StampaFruttiGruppi.aspx">Stampa Frutti Gruppi</a></li>
+                            <li><a href="/Stampe/StampaOrdFrutLocale.aspx">Stampa Ord Frut Loc</a></li>
+                            <li><a href="/Stampe/StampaOrdFrutCantExcel.aspx">Stampa Ord Frut Cant Excel</a></li>
                         </ul>
                     </li>
-                    <li><a href="GestioneLocali.aspx">Gestione Locali</a></li>
-                    <li><a href="InserimentoDati.aspx">Inserimento Dati</a></li>
-                    <li><a href="GestioneCantieri.aspx">Gestione Cantieri</a></li>
-                    <li><a href="GestionePagamenti.aspx">Gestione Pagamenti</a></li>
-                    <li><a href="Preventivi.aspx">Preventivi</a></li>
+                    <li><a href="/GestioneLocali.aspx">Gestione Locali</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Inserimento Dati<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/InserimentoDati/InserimentoDati.aspx">Inserimento Dati</a></li>
+                            <li><a href="/InserimentoDati/Amministratori.aspx">Amministratori</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/GestioneCantieri.aspx">Gestione Cantieri</a></li>
+                    <li><a href="/GestionePagamenti.aspx">Gestione Pagamenti</a></li>
+                    <li><a href="/Preventivi.aspx">Preventivi</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fatture<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="Fatture.aspx">Fatture Emesse</a></li>
-                            <li><a href="FattureAcquisto.aspx">Fatture Acquisto</a></li>
+                            <li><a href="/Fatture/Fatture.aspx">Fatture Emesse</a></li>
+                            <li><a href="/Fatture/FattureAcquisto.aspx">Fatture Acquisto</a></li>
+                            <li><a href="/Fatture/Bollette.aspx">Bollette</a></li>
+                            <li><a href="/Fatture/TotaliFatture.aspx">Totali Fatture</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stampe Varie<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="StampeVarie.aspx">Stampe DDT</a></li>
-                            <li><a href="ResocontoOperaio.aspx">Resoconto Operaio</a></li>
-                            <li><a href="RicalcoloConti.aspx">Ricalcolo Conti</a></li>
-                            <li><a href="StampaVerificaCantiere.aspx">Stampa Verifica Cantiere</a></li>
-                            <li><a href="StampaValoriCantieri.aspx">Stampa Valori Cantieri</a></li>
-                            <li><a href="StampaValoriCantieriConOpzioni.aspx">Stampa Valori Cantieri Con Opzioni</a></li>
-                            <li><a href="StampaPerTipologia.aspx">Stampa Per Tipologia</a></li>
+                            <li><a href="/Stampe/StampeVarie.aspx">Stampe DDT</a></li>
+                            <li><a href="/Stampe/ResocontoOperaio.aspx">Resoconto Operaio</a></li>
+                            <li><a href="/Stampe/RicalcoloConti.aspx">Ricalcolo Conti</a></li>
+                            <li><a href="/Stampe/StampaVerificaCantiere.aspx">Stampa Verifica Cantiere</a></li>
+                            <li><a href="/Stampe/StampaValoriCantieri.aspx">Stampa Valori Cantieri</a></li>
+                            <li><a href="/Stampe/StampaValoriCantieriConOpzioni.aspx">Stampa Valori Cantieri Con Opzioni</a></li>
+                            <li><a href="/Stampe/StampaPerTipologia.aspx">Stampa Per Tipologia</a></li>
                         </ul>
                     </li>
-                    <%--<li><a href="GestioneAppunti.aspx">Gestione Appunti</a></li>--%>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -56,7 +56,9 @@ namespace GestioneCantieri
             });
             grdTotaleImportoPerQuarter.DataBind();
 
-            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text).Select(s => new
+            decimal valoreAccontiDaRiscuotere = FattureAccontiDAO.GetTotaleAccontiNonRiscossi();
+
+            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, valoreAccontiDaRiscuotere).Select(s => new
             {
                 Titolo = s.titolo,
                 Valore = s.valore.ToString("N2")
@@ -93,18 +95,18 @@ namespace GestioneCantieri
         private void ResetToInitial()
         {
             txtFiltroGrdAnno.Text = txtFiltroGrdCliente.Text = txtFiltroGrdCantiere.Text = txtFiltroGrdAmministratore.Text = "";
-            txtNumeroFattura.Text = txtData.Text;
+            txtNumeroFattura.Text = txtShowAmministratore.Text = lblShowCantieriAggiunti.Text = txtData.Text = lblShowAccontiAggiunti.Text = "";
+            ddlScegliCliente.SelectedValue = ddlScegliCantiere.SelectedValue = "-1";
+            txtImponibile.Text = txtRitenutaAcconto.Text = txtIva.Text = txtConcatenazione.Text = txtValoreAcconto.Text = lblShowAccontiAggiunti.Text = lblShowCantieriAggiunti.Text = "";
+            chkNotaCredito.Checked = chkReverseCharge.Checked = chkRiscosso.Checked = false;
             txtIva.Text = "22";
-            ddlScegliCliente.SelectedIndex = 0;
-            ddlScegliCantiere.SelectedIndex = 0;
+            ddlScegliCliente.SelectedIndex = ddlScegliCantiere.SelectedIndex = 0;
             btnInsFattura.Visible = true;
             btnModFattura.Visible = false;
             txtData.ReadOnly = false;
-            lblShowAccontiAggiunti.Text = lblShowCantieriAggiunti.Text = "";
             SetNumeroFattura();
             FillDdlScegliCliente();
             FillDdlScegliCantiere();
-            //FillDdlScegliAmministratore();
         }
 
         private void SetNumeroFattura()
@@ -131,7 +133,7 @@ namespace GestioneCantieri
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
                 Riscosso = chkRiscosso.Checked,
-                Imponibile = txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text) : 0,
+                Imponibile = txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0,
                 Iva = txtIva.Text != "" ? Convert.ToInt32(txtIva.Text) : 0,
                 RitenutaAcconto = txtRitenutaAcconto.Text != "" ? Convert.ToInt32(txtRitenutaAcconto.Text) : 0,
                 ReverseCharge = chkReverseCharge.Checked,
@@ -252,7 +254,7 @@ namespace GestioneCantieri
                 else
                 {
                     lblMessaggio.ForeColor = Color.Red;
-                    lblMessaggio.Text = "I campi Cliente e Imponibile devono essere compilati";
+                    lblMessaggio.Text = "I campi Cliente, Imponibile e Data devono essere compilati";
                 }
             }
             catch (Exception ex)
@@ -295,7 +297,7 @@ namespace GestioneCantieri
                 else
                 {
                     lblMessaggio.ForeColor = Color.Red;
-                    lblMessaggio.Text = "I campi Cliente e Imponibile devono essere compilati";
+                    lblMessaggio.Text = "I campi Cliente, Imponibile e Data devono essere compilati";
                 }
             }
             catch (Exception ex)
@@ -335,6 +337,8 @@ namespace GestioneCantieri
         {
             pnlInsFatture.Visible = true;
             pnlRicercaFatture.Visible = !pnlInsFatture.Visible;
+            hfIdCantieriDaAggiungere.Value = hfValoriAccontiDaAggiungere.Value = "";
+            lblShowAccontiAggiunti.Text = lblShowCantieriAggiunti.Text = "";
         }
 
         protected void btnRicercaFatture_Click(object sender, EventArgs e)
