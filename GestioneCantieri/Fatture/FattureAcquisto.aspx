@@ -37,7 +37,7 @@
             overflow-y: auto;
         }
     </style>
-    <link href="Css/Fatture.css" rel="stylesheet" />
+    <link href="../Css/Fatture.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div class="container-fluid">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <asp:Label ID="lblData" runat="server" Text="Data" />
-                    <asp:TextBox ID="txtData" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtData" TextMode="Date" AutoPostBack="true" OnTextChanged="txtData_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-1 form-group">
                     <asp:Label ID="lblNotaCredito" runat="server" Text="Nota di credito" />

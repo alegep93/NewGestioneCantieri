@@ -15,6 +15,14 @@
     <div class="container-fluid">
         <h1>Totali Fatture</h1>
 
+        <%-- Filtro per anno --%>
+        <div class="row">
+            <div class="col-md-offset-5 col-md-2 text-center">
+                <asp:Label ID="lblFiltroAnno" Text="Filtro per Anno" runat="server"></asp:Label>
+                <asp:TextBox ID="txtFiltroAnno" AutoPostBack="true" OnTextChanged="txtFiltroAnno_TextChanged" CssClass="form-control text-center" runat="server"></asp:TextBox>
+            </div>
+        </div>
+
         <%-- Fatture Emesse --%>
         <div class="row">
             <div class="col-md-12 text-center">
@@ -65,10 +73,12 @@
 
         <%-- Tasse --%>
         <div class="row">
-            <div class="col-md-offset-4 col-md-4 text-center">
+            <div class="col-md-offset-5 col-md-2 text-center">
                 <asp:Label ID="lblTassePerc" Text="Tassa %" runat="server"></asp:Label>
-                <asp:TextBox ID="txtTassePerc" CssClass="form-control tax-imnput" AutoPostBack="true" OnTextChanged="txtTassePerc_TextChanged" runat="server"></asp:TextBox>
-                <asp:Label ID="lblUtileNettoTasse" Text="" CssClass="ml" runat="server"></asp:Label>
+                <asp:TextBox ID="txtTassePerc" CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtTassePerc_TextChanged" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-md-12 text-center">
+                <asp:Label ID="lblUtileNettoTasse" Text="" runat="server"></asp:Label>
             </div>
         </div>
     </div>

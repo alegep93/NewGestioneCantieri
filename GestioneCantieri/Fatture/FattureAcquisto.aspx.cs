@@ -24,13 +24,17 @@ namespace GestioneCantieri
 
         private void ResetToInitial()
         {
-            txtFiltroGrdAnno.Text = txtFiltroGrdFornitore.Text = "";
-            txtNumeroFattura.Text = txtData.Text;
+            txtFiltroGrdAnno.Text = txtFiltroGrdFornitore.Text = txtFiltroGrdDataDa.Text = txtFiltroGrdDataA.Text = txtFiltroGrdNumeroFattura.Text = "";
+            txtFiltroFornitore.Text = "";
+            ddlScegliFornitore.SelectedValue = "-1";
+            txtNumeroFattura.Text = txtData.Text = "";
+            txtImponibile.Text = txtRitenutaAcconto.Text = txtConcatenazione.Text = "";
+            chkNotaCredito.Checked = chkReverseCharge.Checked = false;
             txtIva.Text = "22";
-            ddlScegliFornitore.SelectedIndex = 0;
             btnInsFattura.Visible = true;
             btnModFattura.Visible = false;
             txtData.ReadOnly = false;
+            hfIdFattura.Value = "";
             SetNumeroFattura();
             FillDdlScegliFornitore();
             BindGrid();
@@ -77,13 +81,21 @@ namespace GestioneCantieri
         private void SetNumeroFattura()
         {
             long numeroFattura = FattureAcquistoDAO.GetLastNumber(DateTime.Now.Year);
+
             if (numeroFattura == 0)
             {
                 txtNumeroFattura.Text = "001";
             }
             else
             {
-                txtNumeroFattura.Text = numeroFattura.ToString();
+                if (numeroFattura.ToString().Length == 1)
+                {
+                    txtNumeroFattura.Text = "00" + numeroFattura.ToString();
+                }
+                if (numeroFattura.ToString().Length == 2)
+                {
+                    txtNumeroFattura.Text = "0" + numeroFattura.ToString();
+                }
             }
         }
 
@@ -108,7 +120,7 @@ namespace GestioneCantieri
                 IdFornitore = idFornitore,
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
-                Imponibile = txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text) : 0,
+                Imponibile = (chkNotaCredito.Checked ? -1 : 1) * (txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0),
                 Iva = txtIva.Text != "" ? Convert.ToInt32(txtIva.Text) : 0,
                 RitenutaAcconto = txtRitenutaAcconto.Text != "" ? Convert.ToInt32(txtRitenutaAcconto.Text) : 0,
                 ReverseCharge = chkReverseCharge.Checked,
@@ -248,7 +260,7 @@ namespace GestioneCantieri
         protected void grdFatture_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int idFattura = Convert.ToInt32(e.CommandArgument.ToString());
-            hfIdFattura.Value = idFattura.ToString();
+            //hfIdFattura.Value = idFattura.ToString();
 
             if (e.CommandName == "Visualizza")
                 VisualizzaDati(idFattura);
@@ -314,6 +326,23 @@ namespace GestioneCantieri
         protected void btnFiltraFornitore_Click(object sender, EventArgs e)
         {
             FillDdlScegliFornitore(txtFiltroFornitore.Text);
+        }
+
+        protected void txtData_TextChanged(object sender, EventArgs e)
+        {
+            if (hfIdFattura.Value == "")
+            {
+                txtNumeroFattura.Text = FattureAcquistoDAO.GetLastNumber(Convert.ToDateTime(txtData.Text).Year).ToString();
+
+                if (txtNumeroFattura.Text.Length == 1)
+                {
+                    txtNumeroFattura.Text = "00" + txtNumeroFattura.Text;
+                }
+                if (txtNumeroFattura.Text.Length == 2)
+                {
+                    txtNumeroFattura.Text = "0" + txtNumeroFattura.Text;
+                }
+            }
         }
     }
 }

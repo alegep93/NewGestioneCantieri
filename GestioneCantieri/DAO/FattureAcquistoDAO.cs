@@ -19,7 +19,7 @@ namespace GestioneCantieri.DAO
                          "FROM TblFattureAcquisto AS A " +
                          "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori " +
                          "WHERE B.RagSocForni LIKE @fornitore " + whereData;
-            sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : " ";
+            sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : "AND DATEPART(YEAR, A.data) = DATEPART(YEAR, GETDATE()) ";
             sql += numeroFattura > 0 ? "AND A.numero = @numeroFattura " : "";
             sql += "ORDER BY A.data, A.numero ";
 
@@ -40,7 +40,7 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = "SELECT ISNULL(MAX(numero)+1, 0) FROM TblFattureAcquisto WHERE DATEPART(YEAR, data) = @anno ";
+                string sql = "SELECT ISNULL(MAX(numero)+1, 1) FROM TblFattureAcquisto WHERE DATEPART(YEAR, data) = @anno ";
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<long>(sql, new { anno }).FirstOrDefault();
@@ -69,14 +69,15 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        internal static double GetTotaleImponibile()
+        internal static double GetTotaleImponibile(int anno)
         {
             try
             {
-                string sql = "SELECT ISNULL(SUM(imponibile), 0) FROM TblFattureAcquisto";
+                string sql = "SELECT ISNULL(SUM(imponibile), 0) FROM TblFattureAcquisto ";
+                sql += anno > 0 ? "WHERE DATEPART(YEAR, data) = @anno" : "";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<double>(sql).FirstOrDefault();
+                    return cn.Query<double>(sql, new { anno }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -85,14 +86,15 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        internal static double GetTotaleFatturato()
+        internal static double GetTotaleFatturato(int anno)
         {
             try
             {
-                string sql = "SELECT ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) FROM TblFattureAcquisto";
+                string sql = "SELECT ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) FROM TblFattureAcquisto ";
+                sql += anno > 0 ? "WHERE DATEPART(YEAR, data) = @anno" : "";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<double>(sql).FirstOrDefault();
+                    return cn.Query<double>(sql, new { anno }).FirstOrDefault();
                 }
             }
             catch (Exception ex)

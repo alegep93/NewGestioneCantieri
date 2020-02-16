@@ -15,22 +15,22 @@ namespace GestioneCantieri
     {
 
         /// <summary>
-        /// Controllo lblScegliFornitore.
+        /// Controllo lblDataBolletta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliFornitore;
+        protected global::System.Web.UI.WebControls.Label lblDataBolletta;
 
         /// <summary>
-        /// Controllo ddlScegliFornitore.
+        /// Controllo txtDataBolletta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliFornitore;
+        protected global::System.Web.UI.WebControls.TextBox txtDataBolletta;
 
         /// <summary>
         /// Controllo lblDataScadenza.
@@ -67,6 +67,42 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDataPagamento;
+
+        /// <summary>
+        /// Controllo lblProgressivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProgressivo;
+
+        /// <summary>
+        /// Controllo txtProgressivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProgressivo;
+
+        /// <summary>
+        /// Controllo lblScegliFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliFornitore;
+
+        /// <summary>
+        /// Controllo ddlScegliFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliFornitore;
 
         /// <summary>
         /// Controllo lblTotaleBolletta.
@@ -121,6 +157,51 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIdBolletta;
+
+        /// <summary>
+        /// Controllo lblFiltroAnno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroAnno;
+
+        /// <summary>
+        /// Controllo txtFiltroAnno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroAnno;
+
+        /// <summary>
+        /// Controllo lblFiltroFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroFornitore;
+
+        /// <summary>
+        /// Controllo ddlFiltroFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroFornitore;
+
+        /// <summary>
+        /// Controllo btnFiltraBollette.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltraBollette;
 
         /// <summary>
         /// Controllo grdBollette.

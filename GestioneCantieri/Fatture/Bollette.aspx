@@ -9,26 +9,36 @@
                 <h1>Bollette</h1>
             </div>
         </div>
-        <div class="row"style="margin-top: 10px;">
-            <div class="col-md-3">
-                <asp:Label ID="lblScegliFornitore" runat="server">Scegli Fornitore</asp:Label>
-                <asp:DropDownList ID="ddlScegliFornitore" CssClass="form-control" runat="server"></asp:DropDownList>
+        <div class="row" style="margin-top: 0px;">
+            <div class="col-md-4">
+                <asp:Label ID="lblDataBolletta" runat="server">Data Bolletta</asp:Label>
+                <asp:TextBox ID="txtDataBolletta" AutoPostBack="true" OnTextChanged="txtDataBolletta_TextChanged" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <asp:Label ID="lblDataScadenza" runat="server">Data Scadenza</asp:Label>
                 <asp:TextBox ID="txtDataScadenza" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <asp:Label ID="lblDataPagamento" runat="server">Data Pagamento</asp:Label>
                 <asp:TextBox ID="txtDataPagamento" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
             </div>
-            <div class="col-md-3">
+
+        </div>
+        <div class="row" style="margin-top: 0px;">
+            <div class="col-md-4">
+                <asp:Label ID="lblProgressivo" runat="server">Progressivo</asp:Label>
+                <asp:TextBox ID="txtProgressivo" CssClass="form-control" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-md-4">
+                <asp:Label ID="lblScegliFornitore" runat="server">Scegli Fornitore</asp:Label>
+                <asp:DropDownList ID="ddlScegliFornitore" CssClass="form-control" runat="server"></asp:DropDownList>
+            </div>
+            <div class="col-md-4">
                 <asp:Label ID="lblTotaleBolletta" runat="server">Totale Bolletta</asp:Label>
                 <asp:TextBox ID="txtTotaleBolletta" CssClass="form-control" runat="server"></asp:TextBox>
             </div>
         </div>
-
-        <div class="row">
+        <div class="row" style="margin-top: 0px;">
             <div class="col-md-12 text-center">
                 <asp:Button ID="btnAggiungiBolletta" CssClass="btn btn-lg btn-primary" OnClick="btnAggiungiBolletta_Click" Text="Aggiungi Bolletta" runat="server" />
                 <asp:Button ID="btnModificaBolletta" CssClass="btn btn-lg btn-primary" OnClick="btnModificaBolletta_Click" Text="Modifica Bolletta" runat="server" />
@@ -39,13 +49,29 @@
             </div>
         </div>
 
-        <div class="row text-center" style="margin-top: 30px;">
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-offset-3 col-md-3">
+                <asp:Label ID="lblFiltroAnno" Text="Filtro per Anno" runat="server"></asp:Label>
+                <asp:TextBox ID="txtFiltroAnno" CssClass="form-control" runat="server"></asp:TextBox>
+            </div>
+            <div class="col-md-3">
+                <asp:Label ID="lblFiltroFornitore" Text="Filtro per Fornitore" runat="server"></asp:Label>
+                <asp:DropDownList ID="ddlFiltroFornitore" CssClass="form-control" runat="server"></asp:DropDownList>
+            </div>
+            <div class="col-md-12 text-center">
+                <asp:Button ID="btnFiltraBollette" CssClass="btn btn-lg btn-primary" OnClick="btnFiltraBollette_Click" Text="Filtra" runat="server" />
+            </div>
+        </div>
+
+        <div class="row text-center" style="margin-top: 10px;">
             <div class="col-md-offset-2 col-md-8 text-center">
                 <asp:GridView ID="grdBollette" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.Bolletta" OnRowCommand="grdBollette_RowCommand" CssClass="table table-striped text-center" runat="server">
                     <Columns>
                         <asp:BoundField HeaderText="Fornitore" DataField="RagSocForni" />
-                        <asp:BoundField HeaderText="Data Scadenza" DataField="DataScadenza" />
-                        <asp:BoundField HeaderText="Data Pagamento" DataField="DataPagamento" />
+                        <asp:BoundField HeaderText="Progressivo" DataField="Progressivo" />
+                        <asp:BoundField HeaderText="Data Bolletta" DataField="DataBolletta" DataFormatString="{0:d}" />
+                        <asp:BoundField HeaderText="Data Scadenza" DataField="DataScadenza" DataFormatString="{0:d}" />
+                        <asp:BoundField HeaderText="Data Pagamento" DataField="DataPagamento" DataFormatString="{0:d}" />
                         <asp:BoundField HeaderText="Totale Bolletta" DataField="TotaleBolletta" />
                         <asp:TemplateField>
                             <ItemTemplate>

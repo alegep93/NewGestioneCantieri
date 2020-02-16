@@ -17,13 +17,15 @@ namespace GestioneCantieri
 
         private void SetLabels()
         {
-            double totaleImponibileEmesso = FattureDAO.GetTotaleImponibile();
-            double totaleFatturatoEmesso = FattureDAO.GetTotaleFatturato();
+            int anno = txtFiltroAnno.Text != "" ? Convert.ToInt32(txtFiltroAnno.Text) : 0;
 
-            double totaleImponibileAcquisto = FattureAcquistoDAO.GetTotaleImponibile();
-            double totaleFatturatoAcquisto = FattureAcquistoDAO.GetTotaleFatturato();
+            double totaleImponibileEmesso = FattureDAO.GetTotaleImponibile(anno);
+            double totaleFatturatoEmesso = FattureDAO.GetTotaleFatturato(anno);
 
-            decimal totaleBollette = BolletteDAO.GetTotale();
+            double totaleImponibileAcquisto = FattureAcquistoDAO.GetTotaleImponibile(anno);
+            double totaleFatturatoAcquisto = FattureAcquistoDAO.GetTotaleFatturato(anno);
+
+            decimal totaleBollette = BolletteDAO.GetTotale(anno);
 
             // Fatture Emesse
             lblFattureEmesseTotaleImponibile.Text =  $"Totale imponibile emesso: <strong>{totaleImponibileEmesso.ToString("N2")}</strong>";
@@ -42,12 +44,12 @@ namespace GestioneCantieri
             lblUtile.Text = $"Utile: <strong>{(totaleImponibileEmesso - totaleImponibileAcquisto - Convert.ToDouble(totaleBollette / 2)).ToString("N2")}</strong>";
             hfUtile.Value = (totaleImponibileEmesso - totaleImponibileAcquisto - Convert.ToDouble(totaleBollette / 2)).ToString("N2");
 
-            BindGrid();
+            BindGrid(anno);
         }
 
-        private void BindGrid()
+        private void BindGrid(int anno)
         {
-            grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliFatture(2019).Select(s => new
+            grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliFatture(anno).Select(s => new
             {
                 Trimestre = s.quarter,
                 TotaleIvaAcquisto = s.totaleAcquisto,
@@ -61,6 +63,11 @@ namespace GestioneCantieri
         {
             decimal utile = Convert.ToDecimal(hfUtile.Value);
             lblUtileNettoTasse.Text = $"Utile netto tasse: <strong>{(utile * Convert.ToDecimal(txtTassePerc.Text) / 100)}</strong>";
+        }
+
+        protected void txtFiltroAnno_TextChanged(object sender, EventArgs e)
+        {
+            SetLabels();
         }
     }
 }

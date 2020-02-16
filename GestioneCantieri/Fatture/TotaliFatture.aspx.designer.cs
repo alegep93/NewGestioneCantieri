@@ -15,6 +15,24 @@ namespace GestioneCantieri
     {
 
         /// <summary>
+        /// Controllo lblFiltroAnno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroAnno;
+
+        /// <summary>
+        /// Controllo txtFiltroAnno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroAnno;
+
+        /// <summary>
         /// Controllo lblFattureEmesseTotaleImponibile.
         /// </summary>
         /// <remarks>

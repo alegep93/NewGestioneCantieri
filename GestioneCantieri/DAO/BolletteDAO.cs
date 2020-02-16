@@ -9,13 +9,24 @@ namespace GestioneCantieri.DAO
 {
     public class BolletteDAO : BaseDAO
     {
-        public static List<Bolletta> GetAll()
+        public static List<Bolletta> GetAll(int anno = 0, int idFornitore = 0)
         {
             List<Bolletta> ret = new List<Bolletta>();
-
+            string where = "";
+            if(anno > 0 || idFornitore > 0)
+            {
+                where = "WHERE ";
+                where += anno > 0 ? $" DATEPART(YEAR, data_bolletta) = {anno} " : "";
+                where += (anno > 0 && idFornitore > 0 ? " AND " : "") + (idFornitore > 0 ? $" A.id_fornitori = {idFornitore}" : "");
+            }
+            
             try
             {
-                string sql = "SELECT A.*, B.RagSocForni FROM TblBollette AS A INNER JOIN TblForitori AS B ON A.id_fornitori = B.IdFornitori ORDER BY data_scadenza DESC";
+                string sql = "SELECT A.*, B.RagSocForni " +
+                             "FROM TblBollette AS A " +
+                             "INNER JOIN TblForitori AS B ON A.id_fornitori = B.IdFornitori " +
+                             where +
+                             "ORDER BY data_scadenza DESC";
                 using (SqlConnection cn = GetConnection())
                 {
                     ret = cn.Query<Bolletta>(sql).ToList();
@@ -48,7 +59,27 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static decimal GetTotale()
+        public static int GetMaxProgressivo(int anno)
+        {
+            int ret = 0;
+
+            try
+            {
+                string sql = "SELECT ISNULL(MAX(progressivo)+1, 1) FROM TblBollette WHERE DATEPART(YEAR, data_bolletta) = @anno ";
+
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<int>(sql, new { anno }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetSingle in BolletteDAO", ex);
+            }
+            return ret;
+        }
+
+        public static decimal GetTotale(int anno)
         {
             try
             {
@@ -69,7 +100,8 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = "INSERT INTO TblBollette (id_fornitori, data_scadenza, data_pagamento, totale_bolletta) VALUES (@IdFornitori, @DataScadenza, @DataPagamento, @TotaleBolletta)";
+                string sql = "INSERT INTO TblBollette (id_fornitori, data_bolletta, data_scadenza, data_pagamento, totale_bolletta, progressivo) " +
+                             "VALUES (@IdFornitori, @DataBolletta, @DataScadenza, @DataPagamento, @TotaleBolletta, @Progressivo)";
 
                 using (SqlConnection cn = GetConnection())
                 {
@@ -86,7 +118,8 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = "UPDATE TblBollette SET id_fornitori = @IdFornitori, data_scadenza = @DataScadenza, data_pagamento = @DataPagamento, totale_bolletta = @TotaleBolletta WHERE id_bollette = @IdBollette";
+                string sql = "UPDATE TblBollette SET id_fornitori = @IdFornitori, data_bolletta = @DataBolletta, data_scadenza = @DataScadenza, " +
+                             "data_pagamento = @DataPagamento, totale_bolletta = @TotaleBolletta, progressivo = @Progressivo WHERE id_bollette = @IdBollette";
 
                 using (SqlConnection cn = GetConnection())
                 {

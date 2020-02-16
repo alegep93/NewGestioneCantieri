@@ -83,14 +83,15 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        internal static double GetTotaleImponibile()
+        internal static double GetTotaleImponibile(int anno)
         {
             try
             {
-                string sql = "SELECT ISNULL(SUM(imponibile), 0) FROM TblFatture";
+                string sql = "SELECT ISNULL(SUM(imponibile), 0) FROM TblFatture ";
+                sql += anno > 0 ? "WHERE DATEPART(YEAR, data) = @anno" : "";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<double>(sql).FirstOrDefault();
+                    return cn.Query<double>(sql, new { anno }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -99,14 +100,15 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        internal static double GetTotaleFatturato()
+        internal static double GetTotaleFatturato(int anno)
         {
             try
             {
-                string sql = "SELECT ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) FROM TblFatture";
+                string sql = "SELECT ISNULL(SUM(imponibile + (imponibile * iva / 100) - (imponibile * ritenuta_acconto / 100)), 0) FROM TblFatture ";
+                sql += anno > 0 ? "WHERE DATEPART(YEAR, data) = @anno" : "";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<double>(sql).FirstOrDefault();
+                    return cn.Query<double>(sql, new { anno }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
