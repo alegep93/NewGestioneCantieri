@@ -118,7 +118,14 @@ namespace GestioneCantieri
             }
             else
             {
-                txtNumeroFattura.Text = numeroFattura.ToString();
+                if (numeroFattura.ToString().Length == 1)
+                {
+                    txtNumeroFattura.Text = "00" + numeroFattura.ToString();
+                }
+                if (numeroFattura.ToString().Length == 2)
+                {
+                    txtNumeroFattura.Text = "0" + numeroFattura.ToString();
+                }
             }
         }
 
@@ -133,7 +140,7 @@ namespace GestioneCantieri
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
                 Riscosso = chkRiscosso.Checked,
-                Imponibile = txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0,
+                Imponibile = (chkNotaCredito.Checked ? -1 : 1) *  (txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0),
                 Iva = txtIva.Text != "" ? Convert.ToInt32(txtIva.Text) : 0,
                 RitenutaAcconto = txtRitenutaAcconto.Text != "" ? Convert.ToInt32(txtRitenutaAcconto.Text) : 0,
                 ReverseCharge = chkReverseCharge.Checked,
