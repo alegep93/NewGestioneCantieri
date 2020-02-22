@@ -155,6 +155,25 @@ namespace GestioneCantieri.DAO
 
             return ret;
         }
+        public static bool DeleteOrdine(int idCantiere)
+        {
+            string sql = "DELETE FROM TblMatOrdFrut WHERE IdCantiere = @idCantiere";
+            bool ret = false;
+
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql, new { idCantiere });
+                }
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'eliminazione di un gruppo da un ordine", ex);
+            }
+            return ret;
+        }
         public static List<StampaOrdFrutCantLoc> GetAllGruppiInLocale(string idCant)
         {
             SqlConnection cn = GetConnection();

@@ -27,6 +27,14 @@
             </div>
         </div>
         <div class="row">
+            <!-- Elimina ordine cantiere -->
+            <div class="col-md-offset-3 col-md-6 text-center" style="margin-bottom: 20px;">
+                <asp:Button ID="btnEliminaOrdine" CssClass="btn btn-lg btn-primary" OnClick="btnEliminaOrdine_Click" onClientClick="return confirm('Vuoi veramente eliminare questo ordine?')" Text="Elimina Intero Ordine" runat="server" />
+                <br />
+                <asp:Label ID="lblMsg" runat="server"></asp:Label>
+            </div>
+        </div>
+        <div class="row">
             <!-- Scegli Gruppo a cui associare l'ordine -->
             <div class="col-md-offset-3 col-md-6">
                 <div class="col-md-4">

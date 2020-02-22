@@ -50,12 +50,12 @@ namespace GestioneCantieri
             if (isAggiunto)
             {
                 lblIsGruppoInserito.Text = "Componente '" + ddlScegliGruppo.SelectedItem.Text + "' aggiunto correttamente!";
-                lblIsGruppoInserito.ForeColor = System.Drawing.Color.Blue;
+                lblIsGruppoInserito.ForeColor = Color.Blue;
             }
             else
             {
                 lblIsGruppoInserito.Text = "Errore durante l'inserimento del gruppo '" + ddlScegliGruppo.SelectedItem.Text + "'";
-                lblIsGruppoInserito.ForeColor = System.Drawing.Color.Red;
+                lblIsGruppoInserito.ForeColor = Color.Red;
             }
 
             PopolaListe();
@@ -72,12 +72,12 @@ namespace GestioneCantieri
                 if (isInserito)
                 {
                     lblIsFruttoInserito.Text = "Frutto inserito con successo";
-                    lblIsFruttoInserito.ForeColor = System.Drawing.Color.Blue;
+                    lblIsFruttoInserito.ForeColor = Color.Blue;
                 }
                 else
                 {
                     lblIsFruttoInserito.Text = "Errore durante l'inserimento del frutto";
-                    lblIsFruttoInserito.ForeColor = System.Drawing.Color.Red;
+                    lblIsFruttoInserito.ForeColor = Color.Red;
                 }
 
                 ddlScegliFrutto.SelectedIndex = 0;
@@ -86,7 +86,7 @@ namespace GestioneCantieri
             else
             {
                 lblIsFruttoInserito.Text = "Il campo quantità deve essere compilato e deve essere inserito un valore maggiore di 0";
-                lblIsFruttoInserito.ForeColor = System.Drawing.Color.Red;
+                lblIsFruttoInserito.ForeColor = Color.Red;
             }
             PopolaListe();
             BindGrid();
@@ -298,6 +298,23 @@ namespace GestioneCantieri
         {
             txtNomeGruppoOrdine.Text = txtFiltroFrutto1.Text = txtFiltroFrutto2.Text = txtFiltroFrutto3.Text = txtFiltroGruppo1.Text = txtFiltroGruppo2.Text = txtFiltroGruppo3.Text = txtQtaFrutto.Text = "";
             ddlScegliFrutto.SelectedIndex = ddlScegliGruppo.SelectedIndex = ddlScegliGruppoOrdine.SelectedIndex = ddlScegliLocale.SelectedIndex = 0;
+        }
+
+        protected void btnEliminaOrdine_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OrdineFruttiDAO.DeleteOrdine(Convert.ToInt32(ddlScegliCantiere.SelectedValue));
+                lblMsg.Text = "Ordine eliminato con successo";
+                lblMsg.ForeColor = Color.Blue;
+                BindGrid();
+                SvuotaCampi();
+            }
+            catch (Exception ex)
+            {
+                lblMsg.Text = "Errore durante l'eliminazione dell'ordine ==> " + ex.Message;
+                lblMsg.ForeColor = Color.Red;
+            }
         }
     }
 }
