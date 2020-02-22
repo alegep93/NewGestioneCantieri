@@ -125,8 +125,8 @@
     </None>
     <Content Include="Fatture\Fatture.aspx" />
     <Content Include="Preventivi.aspx" />
-    <Content Include="ResocontoOperaio.aspx" />
-    <Content Include="RicalcoloConti.aspx" />
+    <Content Include="Stampe\ResocontoOperaio.aspx" />
+    <Content Include="Stampe\RicalcoloConti.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -336,18 +336,18 @@
     <Compile Include="Preventivi.aspx.designer.cs">
       <DependentUpon>Preventivi.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ResocontoOperaio.aspx.cs">
+    <Compile Include="Stampe\ResocontoOperaio.aspx.cs">
       <DependentUpon>ResocontoOperaio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ResocontoOperaio.aspx.designer.cs">
+    <Compile Include="Stampe\ResocontoOperaio.aspx.designer.cs">
       <DependentUpon>ResocontoOperaio.aspx</DependentUpon>
     </Compile>
-    <Compile Include="RicalcoloConti.aspx.cs">
+    <Compile Include="Stampe\RicalcoloConti.aspx.cs">
       <DependentUpon>RicalcoloConti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RicalcoloConti.aspx.designer.cs">
+    <Compile Include="Stampe\RicalcoloConti.aspx.designer.cs">
       <DependentUpon>RicalcoloConti.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stampe\StampaPerTipologia.aspx.cs">
