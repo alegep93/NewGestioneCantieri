@@ -49,6 +49,7 @@ namespace GestioneCantieri
 
         private void BindGrid(int anno)
         {
+            List<(string, double, double, double)> items = new List<(string, double, double, double)>();
             grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliFatture(anno).Select(s => new
             {
                 Trimestre = s.quarter,

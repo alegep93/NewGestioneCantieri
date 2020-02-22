@@ -193,17 +193,27 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = "SELECT (CASE WHEN DATEPART(QUARTER, A.data) = 1 THEN 'Gen-Feb-Mar'  " +
-                             "             WHEN DATEPART(QUARTER, A.data) = 2 THEN 'Apr-Mag-Giu'  " +
-                             "             WHEN DATEPART(QUARTER, A.data) = 3 THEN 'Lug-Ago-Set'  " +
-                             "             WHEN DATEPART(QUARTER, A.data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
-                             "        SUM(A.imponibile * A.iva / 100) TotaleIvaAcquisto, " +
-                             "        SUM(B.imponibile * B.iva / 100) TotaleIvaEmesso, " +
-                             "        SUM(A.imponibile * A.iva / 100) - SUM(B.imponibile * B.iva / 100) Saldo " +
-                             "FROM TblFattureAcquisto AS A " +
-                             "INNER JOIN TblFatture AS B ON A.data = B.data " +
-                             "WHERE DATEPART(YEAR, A.data) = @anno " +
-                             "GROUP BY DATEPART(QUARTER, A.data) ";
+                string sql = "SELECT Acquisto.Trimestre, Acquisto.TotaleIvaAcquisto, Emesso.TotaleIvaEmesso, (Acquisto.TotaleIvaAcquisto - Emesso.TotaleIvaEmesso) Saldo " +
+                             "FROM ( " +
+                             "	SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' " +
+                             "	             WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' " +
+                             "	             WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' " +
+                             "	             WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
+                             "			SUM(imponibile * iva / 100) TotaleIvaAcquisto " +
+                             "	FROM TblFattureAcquisto " +
+                             "	WHERE DATEPART(YEAR, data) = @anno " +
+                             "	GROUP BY DATEPART(YEAR, data), DATEPART(QUARTER, data) " +
+                             ") AS Acquisto " +
+                             "INNER JOIN ( " +
+                             "	SELECT (CASE WHEN DATEPART(QUARTER, data) = 1 THEN 'Gen-Feb-Mar' " +
+                             "	             WHEN DATEPART(QUARTER, data) = 2 THEN 'Apr-Mag-Giu' " +
+                             "	             WHEN DATEPART(QUARTER, data) = 3 THEN 'Lug-Ago-Set' " +
+                             "	             WHEN DATEPART(QUARTER, data) = 4 THEN 'Ott-Nov-Dic' END) Trimestre, " +
+                             "			SUM(imponibile * iva / 100) TotaleIvaEmesso " +
+                             "	FROM TblFatture " +
+                             "	WHERE DATEPART(YEAR, data) = @anno " +
+                             "	GROUP BY DATEPART(YEAR, data), DATEPART(QUARTER, data) " +
+                             ") AS Emesso ON Acquisto.Trimestre = Emesso.Trimestre ";
 
                 using (SqlConnection cn = GetConnection())
                 {
