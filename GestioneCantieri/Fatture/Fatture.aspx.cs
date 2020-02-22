@@ -20,50 +20,52 @@ namespace GestioneCantieri
         {
             if (!IsPostBack)
             {
-                ResetToInitial();
-                BindGrid();
+                ResetToInitial(false);
             }
         }
 
         /* HELPERS */
-        protected void BindGrid()
+        protected void BindGrid(bool needToUpdateGrid = true)
         {
-            int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
-            List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue));
-            grdFatture.DataSource = fatture;
-            grdFatture.DataBind();
-
-            int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
-
-            grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
+            if (needToUpdateGrid)
             {
-                Trimestre = s.quarter,
-                TotaleIva = s.totaleIva.ToString("N2")
-            });
-            grdTotaleIvaPerQuarter.DataBind();
+                int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
+                List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue));
+                grdFatture.DataSource = fatture;
+                grdFatture.DataBind();
 
-            grdTotaleImponibilePerQuarter.DataSource = FattureDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
-            {
-                Trimestre = s.quarter,
-                TotaleIva = s.totaleIva.ToString("N2")
-            });
-            grdTotaleImponibilePerQuarter.DataBind();
+                int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
 
-            grdTotaleImportoPerQuarter.DataSource = FattureDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
-            {
-                Trimestre = s.quarter,
-                TotaleIva = s.totaleIva.ToString("N2")
-            });
-            grdTotaleImportoPerQuarter.DataBind();
+                grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
+                {
+                    Trimestre = s.quarter,
+                    TotaleIva = s.totaleIva.ToString("N2")
+                });
+                grdTotaleIvaPerQuarter.DataBind();
 
-            decimal valoreAccontiDaRiscuotere = FattureAccontiDAO.GetTotaleAccontiNonRiscossi();
+                grdTotaleImponibilePerQuarter.DataSource = FattureDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
+                {
+                    Trimestre = s.quarter,
+                    TotaleIva = s.totaleIva.ToString("N2")
+                });
+                grdTotaleImponibilePerQuarter.DataBind();
 
-            grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, valoreAccontiDaRiscuotere).Select(s => new
-            {
-                Titolo = s.titolo,
-                Valore = s.valore.ToString("N2")
-            });
-            grdTotali.DataBind();
+                grdTotaleImportoPerQuarter.DataSource = FattureDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
+                {
+                    Trimestre = s.quarter,
+                    TotaleIva = s.totaleIva.ToString("N2")
+                });
+                grdTotaleImportoPerQuarter.DataBind();
+
+                decimal valoreAccontiDaRiscuotere = FattureAccontiDAO.GetTotaleAccontiNonRiscossi();
+
+                grdTotali.DataSource = FattureDAO.GetTotaliFatture(txtFiltroGrdCliente.Text, txtFiltroGrdAmministratore.Text, txtFiltroGrdAnno.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue), txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, valoreAccontiDaRiscuotere).Select(s => new
+                {
+                    Titolo = s.titolo,
+                    Valore = s.valore.ToString("N2")
+                });
+                grdTotali.DataBind();
+            }
         }
 
         protected void FillDdlScegliCliente(string ragSocCliente = "")
@@ -92,7 +94,7 @@ namespace GestioneCantieri
             }
         }
 
-        private void ResetToInitial()
+        private void ResetToInitial(bool needToUpdateGrid = true)
         {
             txtFiltroGrdAnno.Text = txtFiltroGrdCliente.Text = txtFiltroGrdCantiere.Text = txtFiltroGrdAmministratore.Text = "";
             txtNumeroFattura.Text = txtShowAmministratore.Text = lblShowCantieriAggiunti.Text = txtData.Text = lblShowAccontiAggiunti.Text = "";
@@ -107,6 +109,7 @@ namespace GestioneCantieri
             SetNumeroFattura();
             FillDdlScegliCliente();
             FillDdlScegliCantiere();
+            BindGrid(needToUpdateGrid);
         }
 
         private void SetNumeroFattura()
@@ -140,7 +143,7 @@ namespace GestioneCantieri
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
                 Riscosso = chkRiscosso.Checked,
-                Imponibile = (chkNotaCredito.Checked ? -1 : 1) *  (txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0),
+                Imponibile = (chkNotaCredito.Checked ? -1 : 1) * (txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0),
                 Iva = txtIva.Text != "" ? Convert.ToInt32(txtIva.Text) : 0,
                 RitenutaAcconto = txtRitenutaAcconto.Text != "" ? Convert.ToInt32(txtRitenutaAcconto.Text) : 0,
                 ReverseCharge = chkReverseCharge.Checked,
@@ -226,7 +229,6 @@ namespace GestioneCantieri
             }
 
             ResetToInitial();
-            BindGrid();
         }
 
         protected void btnInsFattura_Click(object sender, EventArgs e)
@@ -256,7 +258,6 @@ namespace GestioneCantieri
                     lblMessaggio.Text = "Fattura " + p.Numero + " inserito con successo";
 
                     ResetToInitial();
-                    BindGrid();
                 }
                 else
                 {
@@ -314,7 +315,6 @@ namespace GestioneCantieri
             }
 
             ResetToInitial();
-            BindGrid();
         }
 
         protected void grdFatture_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -352,6 +352,8 @@ namespace GestioneCantieri
         {
             pnlInsFatture.Visible = false;
             pnlRicercaFatture.Visible = !pnlInsFatture.Visible;
+            txtFiltroGrdAnno.Text = DateTime.Now.Year.ToString();
+            BindGrid(true);
         }
 
         protected void grdFatture_RowDataBound(object sender, GridViewRowEventArgs e)

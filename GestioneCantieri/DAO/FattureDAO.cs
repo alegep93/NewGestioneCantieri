@@ -34,7 +34,7 @@ namespace GestioneCantieri.DAO
                          "LEFT JOIN TblAmministratori AS D ON A.id_amministratori = D.id_amministratori " +
                          "INNER JOIN TblClienti AS E ON A.id_clienti = E.IdCliente " +
                          "WHERE E.RagSocCli LIKE @cliente " + whereData + " AND " + whereAmministratore;
-            sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : "AND DATEPART(YEAR, A.data) = DATEPART(YEAR, GETDATE()) ";
+            sql += anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : " ";
             sql += numeroFattura > 0 ? "AND A.numero = @numeroFattura " : "";
             sql += riscosso == 1 ? "" : (riscosso == 2 ? " AND A.riscosso = 1 " : " AND A.riscosso = 0 ");
             sql += "ORDER BY A.data, A.numero ";

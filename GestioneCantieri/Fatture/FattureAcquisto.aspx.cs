@@ -18,11 +18,11 @@ namespace GestioneCantieri
         {
             if (!IsPostBack)
             {
-                ResetToInitial();
+                ResetToInitial(false);
             }
         }
 
-        private void ResetToInitial()
+        private void ResetToInitial(bool needToUpdateGrid = true)
         {
             txtFiltroGrdAnno.Text = txtFiltroGrdFornitore.Text = txtFiltroGrdDataDa.Text = txtFiltroGrdDataA.Text = txtFiltroGrdNumeroFattura.Text = "";
             txtFiltroFornitore.Text = "";
@@ -37,45 +37,48 @@ namespace GestioneCantieri
             hfIdFattura.Value = "";
             SetNumeroFattura();
             FillDdlScegliFornitore();
-            BindGrid();
+            BindGrid(needToUpdateGrid);
         }
 
-        protected void BindGrid()
+        protected void BindGrid(bool needToUpdateGrid)
         {
-            int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
-            List<FatturaAcquisto> fatture = FattureAcquistoDAO.GetFattureAcquisto(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdFornitore.Text, numeroFattura);
-            grdFatture.DataSource = fatture;
-            grdFatture.DataBind();
-
-            int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
-
-            grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
+            if (needToUpdateGrid)
             {
-                Trimestre = s.quarter,
-                TotaleIva = s.totaleIva.ToString("N2")
-            });
-            grdTotaleIvaPerQuarter.DataBind();
+                int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
+                List<FatturaAcquisto> fatture = FattureAcquistoDAO.GetFattureAcquisto(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdFornitore.Text, numeroFattura);
+                grdFatture.DataSource = fatture;
+                grdFatture.DataBind();
 
-            grdTotaleImponibilePerQuarter.DataSource = FattureAcquistoDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
-            {
-                Trimestre = s.quarter,
-                TotaleIva = s.totaleIva.ToString("N2")
-            });
-            grdTotaleImponibilePerQuarter.DataBind();
+                int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
 
-            grdTotaleImportoPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
-            {
-                Trimestre = s.quarter,
-                TotaleIva = s.totaleIva.ToString("N2")
-            });
-            grdTotaleImportoPerQuarter.DataBind();
+                grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
+                {
+                    Trimestre = s.quarter,
+                    TotaleIva = s.totaleIva.ToString("N2")
+                });
+                grdTotaleIvaPerQuarter.DataBind();
 
-            grdTotali.DataSource = FattureAcquistoDAO.GetTotaliFatture(txtFiltroGrdFornitore.Text, txtFiltroGrdAnno.Text, numeroFattura, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text).Select(s => new
-            {
-                Titolo = s.titolo,
-                Valore = s.valore.ToString("N2")
-            });
-            grdTotali.DataBind();
+                grdTotaleImponibilePerQuarter.DataSource = FattureAcquistoDAO.GetTotaliImponibilePerQuarter(anno).Select(s => new
+                {
+                    Trimestre = s.quarter,
+                    TotaleIva = s.totaleIva.ToString("N2")
+                });
+                grdTotaleImponibilePerQuarter.DataBind();
+
+                grdTotaleImportoPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliImportoPerQuarter(anno).Select(s => new
+                {
+                    Trimestre = s.quarter,
+                    TotaleIva = s.totaleIva.ToString("N2")
+                });
+                grdTotaleImportoPerQuarter.DataBind();
+
+                grdTotali.DataSource = FattureAcquistoDAO.GetTotaliFatture(txtFiltroGrdFornitore.Text, txtFiltroGrdAnno.Text, numeroFattura, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text).Select(s => new
+                {
+                    Titolo = s.titolo,
+                    Valore = s.valore.ToString("N2")
+                });
+                grdTotali.DataBind();
+            }
         }
 
         private void SetNumeroFattura()
@@ -197,7 +200,6 @@ namespace GestioneCantieri
             }
 
             ResetToInitial();
-            BindGrid();
         }
 
         protected void btnInsFattura_Click(object sender, EventArgs e)
@@ -215,7 +217,6 @@ namespace GestioneCantieri
                     lblMessaggio.Text = "Fattura Acquisto " + fa.Numero + " inserito con successo";
 
                     ResetToInitial();
-                    BindGrid();
                 }
                 else
                 {
@@ -254,7 +255,6 @@ namespace GestioneCantieri
             }
 
             ResetToInitial();
-            BindGrid();
         }
 
         protected void grdFatture_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -272,7 +272,7 @@ namespace GestioneCantieri
 
         protected void btnFiltraFatture_Click(object sender, EventArgs e)
         {
-            BindGrid();
+            BindGrid(true);
         }
 
         protected void btnSvuotaFiltri_Click(object sender, EventArgs e)
@@ -290,6 +290,8 @@ namespace GestioneCantieri
         {
             pnlInsFatture.Visible = false;
             pnlRicercaFatture.Visible = !pnlInsFatture.Visible;
+            txtFiltroGrdAnno.Text = DateTime.Now.Year.ToString();
+            BindGrid(true);
         }
 
         protected void grdFatture_RowDataBound(object sender, GridViewRowEventArgs e)
