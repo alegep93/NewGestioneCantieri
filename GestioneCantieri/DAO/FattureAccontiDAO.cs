@@ -95,7 +95,7 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = "SELECT SUM(valore_acconto) FROM TblFattureAcconti AS A INNER JOIN TblFatture AS B ON A.id_fatture = B.id_fatture WHERE B.riscosso = 0";
+                string sql = "SELECT ISNULL(SUM(valore_acconto), 0) FROM TblFattureAcconti AS A INNER JOIN TblFatture AS B ON A.id_fatture = B.id_fatture WHERE B.riscosso = 0";
                 using (SqlConnection cn = GetConnection())
                 {
                     return cn.Query<decimal>(sql).FirstOrDefault();
