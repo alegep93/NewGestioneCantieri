@@ -1684,13 +1684,13 @@ namespace GestioneCantieri
             mc.Acquirente = ddlScegliAcquirente.SelectedItem.Value;
             mc.Fornitore = ddlScegliFornit.SelectedItem.Value;
             mc.DescriMateriali = txtDescrOper.Text;
-            mc.Qta = Convert.ToDouble(txtOperQta.Text);
+            mc.Qta = Convert.ToDouble(txtOperQta.Text.Replace(".", ","));
             mc.Visibile = chkOperVisibile.Checked;
             mc.Ricalcolo = chkOperRicalcolo.Checked;
             mc.RicaricoSiNo = chkOperRicaricoSiNo.Checked;
             mc.Tipologia = txtTipDatCant.Text;
             mc.ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text);
-            mc.PzzoUniCantiere = Convert.ToDecimal(txtPzzoOper.Text);
+            mc.PzzoUniCantiere = Convert.ToDecimal(txtPzzoOper.Text.Replace(".", ","));
             mc.Data = Convert.ToDateTime(txtDataDDT.Text);
             mc.Note = txtOperNote1.Text;
             mc.Note2 = txtOperNote2.Text;
@@ -1853,8 +1853,8 @@ namespace GestioneCantieri
             mc.DescriMateriali = txtDescrOper.Text;
             mc.Note = txtNote1.Text;
             mc.Note2 = txtNote2.Text;
-            mc.Qta = Convert.ToDouble(txtOperQta.Text);
-            mc.PzzoUniCantiere = Convert.ToDecimal(txtPzzoOper.Text);
+            mc.Qta = Convert.ToDouble(txtOperQta.Text.Replace(".", ","));
+            mc.PzzoUniCantiere = Convert.ToDecimal(txtPzzoOper.Text.Replace(".",","));
             mc.DescriMateriali = txtDescrOper.Text;
             mc.Visibile = chkOperVisibile.Checked;
             mc.Ricalcolo = chkOperRicalcolo.Checked;
@@ -1895,7 +1895,7 @@ namespace GestioneCantieri
         }
         protected void btnModOper_Click(object sender, EventArgs e)
         {
-            if ((Convert.ToDecimal(txtOperQta.Text) > 0 && txtOperQta.Text != ""))
+            if ((Convert.ToDecimal(txtOperQta.Text.Replace(".", ",")) > 0 && txtOperQta.Text != ""))
             {
                 MaterialiCantieri mc = new MaterialiCantieri();
                 PopolaObjOper(mc);
@@ -1933,7 +1933,7 @@ namespace GestioneCantieri
             {
                 if (txtNuovoCostoOperaio.Text != "" && txtNuovoCostoOperaio.Text != "0")
                 {
-                    bool isUpdated = MaterialiCantieriDAO.UpdateCostoOperaio(ddlScegliCant.SelectedItem.Value, txtNuovoCostoOperaio.Text, ddlScegliOperaio.SelectedItem.Value);
+                    bool isUpdated = MaterialiCantieriDAO.UpdateCostoOperaio(ddlScegliCant.SelectedItem.Value, txtNuovoCostoOperaio.Text.Replace(".", ","), ddlScegliOperaio.SelectedItem.Value);
                     if (isUpdated)
                     {
                         lblIsOperInserita.Text = "Costo operaio modificato con successo";

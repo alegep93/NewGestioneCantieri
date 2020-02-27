@@ -75,6 +75,8 @@
                 <!-- Bottone visualizzazione stampa -->
                 <div class="col-md-12">
                     <asp:Button ID="btnStampaValoriCantieri" CssClass="btn btn-lg btn-primary pull-right" OnClick="btnStampaContoCliente_Click" runat="server" Text="Stampa Valori Cantieri" />
+                    <br />
+                    <asp:Label ID="lblMsg" runat="server"></asp:Label>
                 </div>
             </div>
         </div>

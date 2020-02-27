@@ -61,7 +61,7 @@ namespace GestioneCantieri
             decimal totFin = totContoPreventivo - totAcconti;
             objStampa.TotaleFinale = totFin;
 
-            if(perc == -1)
+            if (perc == -1)
             {
                 objStampa.TotaleAcconti = objStampa.TotaleConto = objStampa.TotaleFinale = -999.99m;
             }
@@ -74,52 +74,61 @@ namespace GestioneCantieri
         #region Eventi Click
         protected void btnStampaContoCliente_Click(object sender, EventArgs e)
         {
-            List<Cantieri> listaCantieri = CantieriDAO.GetCantieri(txtAnno.Text, Convert.ToInt32(ddlScegliCliente.SelectedValue), chkFatturato.Checked, chkChiuso.Checked, chkRiscosso.Checked, chkNonRiscuotibile.Checked);
-            List<Data.StampaValoriCantieriConOpzioni> listForGridview = new List<Data.StampaValoriCantieriConOpzioni>();
-
-            foreach (Cantieri c in listaCantieri)
+            string codCant = "";
+            try
             {
-                //Ricreo i passaggi della "Stampa Ricalcolo Conti" per ottenere il valore del "Totale Ricalcolo"
-                MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(c.IdCantieri.ToString());
-                RicalcoloConti rc = new RicalcoloConti();
-                decimal totale = 0m;
-                PdfPTable pTable = rc.InitializePdfTableDDT();
-                Document pdfDoc = new Document(PageSize.A4, 8f, 2f, 2f, 2f);
-                pdfDoc.Open();
-                rc.idCant = c.IdCantieri.ToString();
-                decimal perc = rc.CalcolaPercentualeTotaleMaterialiNascosti();
-                List<MaterialiCantieri> materiali = rc.GetMaterialiCantieri();
-                //rc.BindGridPDF(grdStampaMateCant, grdStampaMateCantPDF);
-                rc.GeneraPDFPerContoFinCli(pdfDoc, mc, pTable, materiali, totale);
-                pdfDoc.Close();
+                List<Cantieri> listaCantieri = CantieriDAO.GetCantieri(txtAnno.Text, Convert.ToInt32(ddlScegliCliente.SelectedValue), chkFatturato.Checked, chkChiuso.Checked, chkRiscosso.Checked, chkNonRiscuotibile.Checked);
+                List<Data.StampaValoriCantieriConOpzioni> listForGridview = new List<Data.StampaValoriCantieriConOpzioni>();
 
-                //Popolo i campi di riepilogo con i dati necessari
-                CompilaCampi(c.IdCantieri.ToString(), mc, ref listForGridview, perc);
-            }
-
-            grdStampaConOpzioni.DataSource = listForGridview;
-            grdStampaConOpzioni.DataBind();
-
-            // Assegno il valore alla label che mostra il totale generale
-            decimal totGen = 0m;
-
-            for (int i = 0; i < grdStampaConOpzioni.Rows.Count; i++)
-            {
-                totGen += Convert.ToDecimal(grdStampaConOpzioni.Rows[i].Cells[5].Text);
-
-                if (grdStampaConOpzioni.Rows[i].Cells[5].Text == "0")
+                foreach (Cantieri c in listaCantieri)
                 {
-                    grdStampaConOpzioni.Rows[i].Visible = false;
+                    //Ricreo i passaggi della "Stampa Ricalcolo Conti" per ottenere il valore del "Totale Ricalcolo"
+                    codCant = c.CodCant;
+                    MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(c.IdCantieri.ToString());
+                    RicalcoloConti rc = new RicalcoloConti();
+                    decimal totale = 0m;
+                    PdfPTable pTable = rc.InitializePdfTableDDT();
+                    Document pdfDoc = new Document(PageSize.A4, 8f, 2f, 2f, 2f);
+                    pdfDoc.Open();
+                    rc.idCant = c.IdCantieri.ToString();
+                    decimal perc = rc.CalcolaPercentualeTotaleMaterialiNascosti();
+                    List<MaterialiCantieri> materiali = rc.GetMaterialiCantieri();
+                    //rc.BindGridPDF(grdStampaMateCant, grdStampaMateCantPDF);
+                    rc.GeneraPDFPerContoFinCli(pdfDoc, mc, pTable, materiali, totale);
+                    pdfDoc.Close();
+
+                    //Popolo i campi di riepilogo con i dati necessari
+                    CompilaCampi(c.IdCantieri.ToString(), mc, ref listForGridview, perc);
                 }
 
-                // Se il totale Conto mostra un valore palesemente errato, la cella viene modificata mostrando l'errore invece del valore del cantiere
-                if(grdStampaConOpzioni.Rows[i].Cells[3].Text == "-999,99")
-                {
-                    grdStampaConOpzioni.Rows[i].Cells[3].Text = grdStampaConOpzioni.Rows[i].Cells[4].Text = grdStampaConOpzioni.Rows[i].Cells[5].Text = "--- ERRORE ---";
-                }
-            }
+                grdStampaConOpzioni.DataSource = listForGridview;
+                grdStampaConOpzioni.DataBind();
 
-            lblTotaleGeneraleStampa.Text = "Totale: " + totGen.ToString("N2");
+                // Assegno il valore alla label che mostra il totale generale
+                decimal totGen = 0m;
+
+                for (int i = 0; i < grdStampaConOpzioni.Rows.Count; i++)
+                {
+                    totGen += Convert.ToDecimal(grdStampaConOpzioni.Rows[i].Cells[5].Text);
+
+                    if (grdStampaConOpzioni.Rows[i].Cells[5].Text == "0")
+                    {
+                        grdStampaConOpzioni.Rows[i].Visible = false;
+                    }
+
+                    // Se il totale Conto mostra un valore palesemente errato, la cella viene modificata mostrando l'errore invece del valore del cantiere
+                    if (grdStampaConOpzioni.Rows[i].Cells[3].Text == "-999,99")
+                    {
+                        grdStampaConOpzioni.Rows[i].Cells[3].Text = grdStampaConOpzioni.Rows[i].Cells[4].Text = grdStampaConOpzioni.Rows[i].Cells[5].Text = "--- ERRORE ---";
+                    }
+                }
+
+                lblTotaleGeneraleStampa.Text = "Totale: " + totGen.ToString("N2");
+            }
+            catch (Exception ex)
+            {
+                lblMsg.Text = $"Errore durante la stampa del cantiere {codCant} ==> {ex.Message}";
+            }
         }
         protected void btnFiltraCantieri_Click(object sender, EventArgs e)
         {
