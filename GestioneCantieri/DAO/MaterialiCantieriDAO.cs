@@ -269,32 +269,33 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                string sql = "SELECT A.IdMaterialiCantiere, A.IdTblCantieri, A.IdTblOperaio, A.DescriMateriali, A.Qta, A.Visibile, A.Ricalcolo, A.ricaricoSiNo, A.Data, A.PzzoUniCantiere, " +
-                             "A.Rientro, A.CodArt, A.DescriCodArt, A.Tipologia,A.UnitàDiMisura, A.ZOldNumeroBolla, A.Mate, A.Fascia, A.pzzoTemp, A.Acquirente, A.Fornitore, A.NumeroBolla, " +
-                             "A.ProtocolloInterno, A.Note, A.Note2, " +
-                             "(CASE WHEN A.PzzoFinCli = 0 " +
-                             "      THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN B.ValoreRicalcolo ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN C.ValoreRicarico ELSE 0 END)) " +
-                             "      ELSE A.PzzoFinCli " +
-                             "END) AS PzzoFinCli, A.OperaioPagato, (A.Qta * (CASE WHEN A.PzzoFinCli = 0 " +
-                             "THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN B.ValoreRicalcolo ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN C.ValoreRicarico ELSE 0 END)) " +
-                             "ELSE A.PzzoFinCli " +
+                string sql = "SELECT A.IdMaterialiCantiere, A.IdTblCantieri, A.IdTblOperaio, A.DescriMateriali, A.Qta, A.Visibile, A.Ricalcolo, A.ricaricoSiNo, A.Data,  " +
+                             "A.PzzoUniCantiere, A.Rientro, A.CodArt, A.DescriCodArt, A.Tipologia, A.UnitàDiMisura, A.ZOldNumeroBolla, A.Mate, A.Fascia, A.pzzoTemp, A.Acquirente, A.Fornitore, A.NumeroBolla, " +
+                             "A.ProtocolloInterno, A.Note, A.Note2, A.OperaioPagato, " +
+                             "(CASE WHEN ISNULL(A.PzzoFinCli, 0) = 0 " +
+                             "      THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN ISNULL(B.ValoreRicalcolo, 0) ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN ISNULL(C.ValoreRicarico, 0) ELSE 0 END)) " +
+                             "      ELSE ISNULL(A.PzzoFinCli, 0) " +
+                             "END) AS PzzoFinCli, " +
+                             "(A.Qta * (CASE WHEN ISNULL(A.PzzoFinCli, 0) = 0 " +
+                             "THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN ISNULL(B.ValoreRicalcolo, 0) ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN ISNULL(C.ValoreRicarico, 0) ELSE 0 END)) " +
+                             "ELSE ISNULL(A.PzzoFinCli, 0) " +
                              "END)) AS Valore " +
                              "FROM ( " +
-                             "	SELECT * " +
-                             "	FROM TblMaterialiCantieri " +
-                             "	WHERE Visibile = 1 " +
+                             "  SELECT * " +
+                             "  FROM TblMaterialiCantieri " +
+                             "  WHERE Visibile = 1 " +
                              ") AS A " +
                              "LEFT JOIN ( " +
-                             "	SELECT IdMaterialiCantiere, IdTblCantieri, ((PzzoUniCantiere * @perc)/100) AS 'ValoreRicalcolo' " +
-                             "	FROM TblMaterialiCantieri " +
-                             "	WHERE Visibile = 1 AND Ricalcolo = 1 " +
+                             "  SELECT IdMaterialiCantiere, IdTblCantieri, ((PzzoUniCantiere * @perc)/100) AS 'ValoreRicalcolo' " +
+                             "  FROM TblMaterialiCantieri " +
+                             "  WHERE Visibile = 1 AND Ricalcolo = 1 " +
                              ") AS B ON A.IdMaterialiCantiere = B.IdMaterialiCantiere AND A.IdTblCantieri = B.IdTblCantieri " +
                              "LEFT JOIN ( " +
-                             "	SELECT A.IdMaterialiCantiere, A.IdTblCantieri, (((A.PzzoUniCantiere * B.Ricarico)/100)) AS 'ValoreRicarico' " +
-                             "	FROM TblMaterialiCantieri AS A " +
-                             "	LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                             "	WHERE Visibile = 1 AND ricaricoSiNo = 1 " +
-                             ") AS C ON B.IdMaterialiCantiere = C.IdMaterialiCantiere AND B.IdTblCantieri = C.IdTblCantieri " +
+                             "  SELECT A.IdMaterialiCantiere, A.IdTblCantieri, (((A.PzzoUniCantiere * B.Ricarico)/100)) AS 'ValoreRicarico' " +
+                             "  FROM TblMaterialiCantieri AS A " +
+                             "  LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
+                             "  WHERE Visibile = 1 AND ricaricoSiNo = 1 " +
+                             ") AS C ON A.IdMaterialiCantiere = C.IdMaterialiCantiere AND A.IdTblCantieri = C.IdTblCantieri " +
                              "WHERE A.IdTblCantieri = @idCant " +
                              "ORDER BY A.IdMaterialiCantiere ";
                 using (SqlConnection cn = GetConnection())

@@ -13,6 +13,7 @@ namespace GestioneCantieri.Data
         public double RitenutaAcconto { get; set; } = 0;
         public bool ReverseCharge { get; set; } = false;
         public bool IsNotaDiCredito { get; set; } = false;
+        public string FilePath { get; set; } = "";
         public string RagioneSocialeFornitore { get; set; } = "";
     }
 }

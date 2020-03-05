@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="FattureAcquisto.aspx.cs" Inherits="GestioneCantieri.FattureAcquisto" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     <title>Fatture Acquisto</title>
     <style>
@@ -121,6 +122,15 @@
 
             <div class="row">
                 <div class="col-md-12 text-center form-group">
+                    <asp:FileUpload ID="fuUploadFattura" style="opacity: 0;" runat="server" />
+                    <label for="body_fuUploadFattura" style="cursor: pointer;">
+                        <i class="fas fa-upload" style="font-size: xx-large; color: #333;"></i>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-center form-group">
                     <asp:Button ID="btnInsFattura" OnClick="btnInsFattura_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Fattura Acquisto" />
                     <asp:Button ID="btnModFattura" OnClick="btnModFattura_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Fattura Acquisto" /><br />
                     <asp:Label ID="lblMessaggio" runat="server" Text=""></asp:Label>
@@ -201,6 +211,16 @@
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:CheckBox ID="chkNotaCredito" CssClass="grd-checkbox" Checked="<%# Item.IsNotaDiCredito %>" Enabled="false" runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:HyperLink ID="hlOpenPDF" NavigateUrl='<%# "~/" + Item.FilePath %>' runat="server">
+                                        <i class="fas fa-file-pdf" style="color: darkblue;"></i>
+                                    </asp:HyperLink>
+                                    <%--<asp:LinkButton ID="btnVisualizzaPDF" CommandName="VisualizzaPDF" CommandArgument="<%# BindItem.IdFattureAcquisto %>" runat="server">
+                                        <i class="fas fa-file-pdf" style="color: darkblue;"></i>
+                                    </asp:LinkButton>--%>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>

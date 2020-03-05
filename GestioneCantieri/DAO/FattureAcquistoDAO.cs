@@ -15,7 +15,7 @@ namespace GestioneCantieri.DAO
 
             string whereData = (dataDa == "" && dataA == "") ? "" : ((dataDa != "" && dataA == "") ? " AND A.data >= @dataDa " : ((dataDa == "" && dataA != "") ? " AND A.data <= @dataA " : " AND A.Data BETWEEN @dataDa AND @dataA "));
 
-            string sql = "SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito " +
+            string sql = "SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito, A.file_path " +
                          "FROM TblFattureAcquisto AS A " +
                          "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori " +
                          "WHERE B.RagSocForni LIKE @fornitore " + whereData;
@@ -247,8 +247,8 @@ namespace GestioneCantieri.DAO
             long ret = 0;
             try
             {
-                string sql = "INSERT INTO TblFattureAcquisto (id_fornitore,numero,data,imponibile,iva,ritenuta_acconto,reverse_charge,is_nota_di_credito) " +
-                             "VALUES (@IdFornitore,@Numero,@Data,@Imponibile,@Iva,@RitenutaAcconto,@ReverseCharge,@IsNotaDiCredito) " +
+                string sql = "INSERT INTO TblFattureAcquisto (id_fornitore,numero,data,imponibile,iva,ritenuta_acconto,reverse_charge,is_nota_di_credito,file_path) " +
+                             "VALUES (@IdFornitore,@Numero,@Data,@Imponibile,@Iva,@RitenutaAcconto,@ReverseCharge,@IsNotaDiCredito,@FilePath) " +
                              "SELECT CAST(scope_identity() AS bigint) ";
                 using (SqlConnection cn = GetConnection())
                 {
@@ -267,8 +267,8 @@ namespace GestioneCantieri.DAO
             try
             {
                 string sql = "UPDATE TblFattureAcquisto " +
-                             "SET id_fornitore = @IdFornitore, numero = @Numero, data = @Data, imponibile = @Imponibile, " +
-                             "iva = @Iva, ritenuta_acconto = @RitenutaAcconto, reverse_charge = @ReverseCharge, is_nota_di_credito = @IsNotaDiCredito " +
+                             "SET id_fornitore = @IdFornitore, numero = @Numero, data = @Data, imponibile = @Imponibile, iva = @Iva, " +
+                             "ritenuta_acconto = @RitenutaAcconto, reverse_charge = @ReverseCharge, is_nota_di_credito = @IsNotaDiCredito, file_path = @FilePath " +
                              "WHERE id_fatture_acquisto = @IdFattureAcquisto ";
 
                 using (SqlConnection cn = GetConnection())

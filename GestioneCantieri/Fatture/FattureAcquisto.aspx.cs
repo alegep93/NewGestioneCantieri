@@ -127,7 +127,8 @@ namespace GestioneCantieri
                 Iva = txtIva.Text != "" ? Convert.ToInt32(txtIva.Text) : 0,
                 RitenutaAcconto = txtRitenutaAcconto.Text != "" ? Convert.ToInt32(txtRitenutaAcconto.Text) : 0,
                 ReverseCharge = chkReverseCharge.Checked,
-                IsNotaDiCredito = chkNotaCredito.Checked
+                IsNotaDiCredito = chkNotaCredito.Checked,
+                FilePath = Server.MapPath(fuUploadFattura.FileName)
             };
         }
 
@@ -261,13 +262,23 @@ namespace GestioneCantieri
         {
             int idFattura = Convert.ToInt32(e.CommandArgument.ToString());
             //hfIdFattura.Value = idFattura.ToString();
-
+            //if (e.CommandName == "VisualizzaPDF")
+            //{
+            //    string filePath = FattureAcquistoDAO.GetSingle(idFattura).FilePath;
+            //    Response.Redirect(filePath);
+            //}
             if (e.CommandName == "Visualizza")
+            {
                 VisualizzaDati(idFattura);
+            }
             else if (e.CommandName == "Modifica")
+            {
                 ModificaDati(idFattura);
+            }
             else if (e.CommandName == "Elimina")
+            {
                 Elimina(idFattura);
+            }
         }
 
         protected void btnFiltraFatture_Click(object sender, EventArgs e)
