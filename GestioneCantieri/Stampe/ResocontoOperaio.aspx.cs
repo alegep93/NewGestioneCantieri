@@ -41,7 +41,7 @@ namespace GestioneCantieri
         protected void BindGrid(bool isFiltered)
         {
             decimal valore = 0m, totValore = 0m;
-            int totOre = 0;
+            decimal totOre = 0;
             List<MaterialiCantieri> matCantList = new List<MaterialiCantieri>();
 
             if (!isFiltered)
@@ -56,7 +56,7 @@ namespace GestioneCantieri
             {
                 valore = Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text) * Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[5].Text);
                 grdResocontoOperaio.Rows[i].Cells[6].Text = Math.Round(valore, 2).ToString();
-                totOre += Convert.ToInt32(Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text));
+                totOre += Convert.ToDecimal(Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text.Replace(".", ",")));
                 totValore += Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[6].Text);
             }
 
