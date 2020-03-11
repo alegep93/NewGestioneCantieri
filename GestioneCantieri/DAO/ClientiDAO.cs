@@ -134,17 +134,14 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
-        public static List<Clienti> GetClientiIdAndName()
+        public static List<Clienti> GetClientiIdAndName(string ragSocCli)
         {
             SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "SELECT IdCliente, RagSocCli " +
-                      "FROM TblClienti " +
-                      "ORDER BY RagSocCli ASC ";
-
+                string sql = "SELECT IdCliente, RagSocCli FROM TblClienti ";
+                sql += ragSocCli != "" ? $"WHERE RagSocCli LIKE '%{ragSocCli}%' " : " ";
+                sql += "ORDER BY RagSocCli ASC ";
                 return cn.Query<Clienti>(sql).ToList();
             }
             catch (Exception ex)

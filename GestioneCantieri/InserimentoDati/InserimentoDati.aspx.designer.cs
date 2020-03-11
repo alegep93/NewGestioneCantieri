@@ -780,6 +780,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Panel pnlInsCantieri;
 
         /// <summary>
+        /// Controllo txtFiltroClientePerInserimentoCantieri.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroClientePerInserimentoCantieri;
+
+        /// <summary>
+        /// Controllo btnFiltroClientePerInserimentoCantieri.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroClientePerInserimentoCantieri;
+
+        /// <summary>
         /// Controllo pnlTxtBoxCantContainer.
         /// </summary>
         /// <remarks>

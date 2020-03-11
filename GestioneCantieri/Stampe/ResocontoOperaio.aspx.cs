@@ -15,7 +15,7 @@ namespace GestioneCantieri
             if (!IsPostBack)
             {
                 FillDdlScegliAcquirente();
-                txtDataDa.Text = "2010-01-01";
+                txtDataDa.Text = DateTime.Now.Year + "-01-01";
                 txtDataA.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 txtDataDa.TextMode = txtDataA.TextMode = TextBoxMode.Date;
 
@@ -38,23 +38,19 @@ namespace GestioneCantieri
                 ddlScegliOperaio.Items.Add(new ListItem(show, op.IdOperaio.ToString()));
             }
         }
-        protected void BindGrid(bool isFiltered)
+        protected void BindGrid()
         {
-            decimal valore = 0m, totValore = 0m;
+            decimal totValore = 0m;
             decimal totOre = 0;
-            List<MaterialiCantieri> matCantList = new List<MaterialiCantieri>();
-
-            if (!isFiltered)
-                matCantList = MaterialiCantieriDAO.GetMatCantPerResocontoOperaio(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value);
-            else
-                matCantList = MaterialiCantieriDAO.GetMatCantPerResocontoOperaio(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value, txtFiltroCantiere.Text, ChkFiltroOperaioPagato.Checked);
+            List<MaterialiCantieri> matCantList;
+            matCantList = MaterialiCantieriDAO.GetMatCantPerResocontoOperaio(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value, txtFiltroCantiere.Text, Convert.ToInt32(rblChooseView.SelectedValue));
             grdResocontoOperaio.DataSource = matCantList;
             grdResocontoOperaio.DataBind();
 
             //Imposto la colonna del valore
             for (int i = 0; i < grdResocontoOperaio.Rows.Count; i++)
             {
-                valore = Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text) * Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[5].Text);
+                decimal valore = Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text) * Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[5].Text);
                 grdResocontoOperaio.Rows[i].Cells[6].Text = Math.Round(valore, 2).ToString();
                 totOre += Convert.ToDecimal(Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text.Replace(".", ",")));
                 totValore += Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[6].Text);
@@ -65,7 +61,7 @@ namespace GestioneCantieri
 
         protected void btnStampaResoconto_Click(object sender, EventArgs e)
         {
-            BindGrid(false);
+            BindGrid();
             btnPagaOperaio.Visible = true;
             CheckToEnablePagaOperaio();
         }
@@ -84,12 +80,12 @@ namespace GestioneCantieri
                 lblIsOperaioPagato.ForeColor = Color.Red;
             }
 
-            BindGrid(false);
+            BindGrid();
         }
 
         protected void btnFiltra_Click(object sender, EventArgs e)
         {
-            BindGrid(true);
+            BindGrid();
         }
 
         protected void ddlScegliOperaio_SelectedIndexChanged(object sender, EventArgs e)

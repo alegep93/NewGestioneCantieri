@@ -751,9 +751,9 @@ namespace GestioneCantieri
             grdCantieri.DataSource = cantList;
             grdCantieri.DataBind();
         }
-        protected void FillDdlClienti()
+        protected void FillDdlClienti(string ragSocCli = "")
         {
-            List<Clienti> listClienti = ClientiDAO.GetClientiIdAndName();
+            List<Clienti> listClienti = ClientiDAO.GetClientiIdAndName(ragSocCli);
 
             ddlScegliClientePerCantiere.Items.Clear();
             ddlScegliClientePerCantiere.Items.Add(new ListItem("", "-1"));
@@ -1018,6 +1018,11 @@ namespace GestioneCantieri
         protected void txtAnnoCant_TextChanged(object sender, EventArgs e)
         {
             PopolaCodCantAnnoNumero(txtAnnoCant.Text);
+        }
+
+        protected void btnFiltroClientePerInserimentoCantieri_Click(object sender, EventArgs e)
+        {
+            FillDdlClienti(txtFiltroClientePerInserimentoCantieri.Text);
         }
     }
 }

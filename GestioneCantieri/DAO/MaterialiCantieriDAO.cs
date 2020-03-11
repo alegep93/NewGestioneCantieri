@@ -173,35 +173,35 @@ namespace GestioneCantieri.DAO
             }
             finally { CloseResouces(cn, null); }
         }
-        public static List<MaterialiCantieri> GetMatCantPerResocontoOperaio(string dataInizio, string dataFine, string idOperaio)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+        //public static List<MaterialiCantieri> GetMatCantPerResocontoOperaio(string dataInizio, string dataFine, string idOperaio)
+        //{
+        //    SqlConnection cn = GetConnection();
+        //    string sql = "";
 
-            try
-            {
-                sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
-                      "FROM TblMaterialiCantieri AS A " +
-                      "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                      "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
-                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) AND A.idTblOperaio IS NOT NULL ";
+        //    try
+        //    {
+        //        sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
+        //              "FROM TblMaterialiCantieri AS A " +
+        //              "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
+        //              "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
+        //              "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) AND A.idTblOperaio IS NOT NULL ";
 
-                if (idOperaio != "-1")
-                {
-                    sql += "AND A.IdTblOperaio = @pIdOper ";
-                }
+        //        if (idOperaio != "-1")
+        //        {
+        //            sql += "AND A.IdTblOperaio = @pIdOper ";
+        //        }
 
-                sql += "ORDER BY A.Data ";
+        //        sql += "ORDER BY A.Data ";
 
-                return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei dati per il resoconto operaio", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static List<MaterialiCantieri> GetMatCantPerResocontoOperaio(string dataInizio, string dataFine, string idOperaio, string codCant, bool isOperaioPagato)
+        //        return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio }).ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante il recupero dei dati per il resoconto operaio", ex);
+        //    }
+        //    finally { CloseResouces(cn, null); }
+        //}
+        public static List<MaterialiCantieri> GetMatCantPerResocontoOperaio(string dataInizio, string dataFine, string idOperaio, string codCant = "", int viewStatus = 0)
         {
             SqlConnection cn = GetConnection();
             string sql = "";
@@ -217,13 +217,9 @@ namespace GestioneCantieri.DAO
                       "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) " +
                       "AND B.CodCant LIKE @codCant AND A.idTblOperaio IS NOT NULL ";
 
-                if (isOperaioPagato)
+                if (viewStatus != 2)
                 {
-                    sql += "AND A.OperaioPagato = @isOperaioPagato ";
-                }
-                else
-                {
-                    sql += "AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) ";
+                    sql += "AND (A.OperaioPagato = @viewStatus " + (viewStatus == 0 ? "OR A.OperaioPagato IS NULL" : "") + ") ";
                 }
 
                 if (idOperaio != "-1")
@@ -231,9 +227,9 @@ namespace GestioneCantieri.DAO
                     sql += "AND A.IdTblOperaio = @pIdOper ";
                 }
 
-                sql += "ORDER BY A.Data ";
+                sql += "ORDER BY A.Data, B.CodCant ";
 
-                return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio, isOperaioPagato, codCant }).ToList();
+                return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio, viewStatus, codCant }).ToList();
             }
             catch (Exception ex)
             {

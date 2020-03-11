@@ -7,11 +7,13 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri {
-    
-    
-    public partial class ResocontoOperaio {
-        
+namespace GestioneCantieri
+{
+
+
+    public partial class ResocontoOperaio
+    {
+
         /// <summary>
         /// Controllo pnlResocontoOperaio.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlResocontoOperaio;
-        
+
         /// <summary>
         /// Controllo lblDataDa.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDataDa;
-        
+
         /// <summary>
         /// Controllo txtDataDa.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDataDa;
-        
+
         /// <summary>
         /// Controllo lblDataA.
         /// </summary>
@@ -47,7 +49,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDataA;
-        
+
         /// <summary>
         /// Controllo txtDataA.
         /// </summary>
@@ -56,7 +58,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDataA;
-        
+
         /// <summary>
         /// Controllo lblScegliOperaio.
         /// </summary>
@@ -65,7 +67,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblScegliOperaio;
-        
+
         /// <summary>
         /// Controllo ddlScegliOperaio.
         /// </summary>
@@ -74,7 +76,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliOperaio;
-        
+
         /// <summary>
         /// Controllo btnStampaResoconto.
         /// </summary>
@@ -83,7 +85,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaResoconto;
-        
+
         /// <summary>
         /// Controllo btnPagaOperaio.
         /// </summary>
@@ -92,7 +94,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPagaOperaio;
-        
+
         /// <summary>
         /// Controllo lblIsOperaioPagato.
         /// </summary>
@@ -101,7 +103,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblIsOperaioPagato;
-        
+
         /// <summary>
         /// Controllo pnlFiltri.
         /// </summary>
@@ -110,7 +112,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlFiltri;
-        
+
         /// <summary>
         /// Controllo lblFiltroCantiere.
         /// </summary>
@@ -119,7 +121,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFiltroCantiere;
-        
+
         /// <summary>
         /// Controllo txtFiltroCantiere.
         /// </summary>
@@ -128,25 +130,16 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroCantiere;
-        
+
         /// <summary>
-        /// Controllo lblFiltroOperaioPagato.
+        /// Controllo rblChooseView.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFiltroOperaioPagato;
-        
-        /// <summary>
-        /// Controllo ChkFiltroOperaioPagato.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox ChkFiltroOperaioPagato;
-        
+        protected global::System.Web.UI.WebControls.RadioButtonList rblChooseView;
+
         /// <summary>
         /// Controllo btnFiltra.
         /// </summary>
@@ -155,7 +148,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltra;
-        
+
         /// <summary>
         /// Controllo grdResocontoOperaio.
         /// </summary>
@@ -164,7 +157,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdResocontoOperaio;
-        
+
         /// <summary>
         /// Controllo lblTotali.
         /// </summary>

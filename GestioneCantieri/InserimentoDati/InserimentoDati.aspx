@@ -346,6 +346,12 @@
 
             <!-- Pannello inserimento Cantieri -->
             <asp:Panel ID="pnlInsCantieri" CssClass="panel-container col-md-12" runat="server">
+                <div class="col-md-12">
+                    <div class="col-md-2 form-group">
+                        <asp:TextBox ID="txtFiltroClientePerInserimentoCantieri" placeholder="Filtro per cliente" CssClass="form-control" style="width: 75% !important; float:left; margin-right: 10px;" runat="server"></asp:TextBox>
+                        <asp:Button ID="btnFiltroClientePerInserimentoCantieri" Text="Filtra" CssClass="btn btn-primary" OnClick="btnFiltroClientePerInserimentoCantieri_Click" runat="server" />
+                    </div>
+                </div>
                 <asp:Panel ID="pnlTxtBoxCantContainer" CssClass="col-md-12" runat="server">
                     <div class="col-md-2 form-group">
                         <asp:Label ID="lblScegliCliente" runat="server" Text="Scegli Cliente" />

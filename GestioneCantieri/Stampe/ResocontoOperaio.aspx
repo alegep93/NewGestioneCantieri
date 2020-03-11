@@ -67,8 +67,14 @@
                     <asp:TextBox ID="txtFiltroCantiere" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-2">
-                    <asp:Label ID="lblFiltroOperaioPagato" Text="Operaio Pagato" runat="server"></asp:Label>
-                    <asp:CheckBox ID="ChkFiltroOperaioPagato" CssClass="form-control" runat="server"></asp:CheckBox>
+                    <%--<asp:Label ID="lblFiltroOperaioPagato" Text="Operaio Pagato" runat="server"></asp:Label>--%>
+                    <%--<asp:CheckBox ID="ChkFiltroOperaioPagato" CssClass="form-control" runat="server"></asp:CheckBox>--%>
+
+                    <asp:RadioButtonList ID="rblChooseView" runat="server">
+                        <asp:ListItem Value="0" Selected="True">Non Pagato</asp:ListItem>
+                        <asp:ListItem Value="1">Pagato</asp:ListItem>
+                        <asp:ListItem Value="2">Tutti</asp:ListItem>
+                    </asp:RadioButtonList>
                 </div>
                 <div class="col-md-2">
                     <asp:Button ID="btnFiltra" Text="Filtra" CssClass="btn btn-lg btn-primary" OnClick="btnFiltra_Click" runat="server"></asp:Button>
