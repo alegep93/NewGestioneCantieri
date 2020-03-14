@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
+using Utils;
 
 namespace GestioneCantieri.DAO
 {
@@ -249,25 +250,29 @@ namespace GestioneCantieri.DAO
             }
         }
 
-        public static void GetDataFromExcelAndInsertBulkCopy(string filePath)
+        public static void GetDataFromExcelAndInsertBulkCopy(string filePath, DBTransaction tr)
         {
             //List<Mamg0ForDBF> ret = new List<Mamg0ForDBF>();
             OleDbConnection ExcelConection = null;
 
             try
             {
-                OleDbConnectionStringBuilder OleStringBuilder = new OleDbConnectionStringBuilder(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + filePath + "; Extended Properties = 'Excel 12.0;HDR=Yes;IMEX=1';Persist Security Info=False;");
-                OleStringBuilder.DataSource = filePath;
-                ExcelConection = new OleDbConnection();
-                ExcelConection.ConnectionString = OleStringBuilder.ConnectionString;
+                OleDbConnectionStringBuilder OleStringBuilder = new OleDbConnectionStringBuilder(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + filePath + "; Extended Properties = 'Excel 12.0;HDR=Yes;IMEX=1';Persist Security Info=False;")
+                {
+                    DataSource = filePath
+                };
+
+                ExcelConection = new OleDbConnection
+                {
+                    ConnectionString = OleStringBuilder.ConnectionString
+                };
 
                 using (OleDbDataAdapter adaptor = new OleDbDataAdapter("SELECT * FROM [Mamg0$]", ExcelConection))
                 {
                     DataSet ds = new DataSet();
                     adaptor.Fill(ds);
 
-                    SqlConnection cn = GetConnection();
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(cn))
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(tr.Connection, SqlBulkCopyOptions.KeepIdentity, tr.Transaction))
                     {
                         bulkCopy.DestinationTableName = "dbo.MAMG0";
 
@@ -342,16 +347,12 @@ namespace GestioneCantieri.DAO
         }
 
         // DELETE
-        public static bool EliminaListino()
+        public static bool EliminaListino(DBTransaction tr)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "DELETE FROM MAMG0";
-
-                int rows = cn.Execute(sql);
+                string sql = "DELETE FROM MAMG0";
+                int rows = tr.Connection.Execute(sql, transaction: tr.Transaction);
 
                 if (rows > 0)
                     return true;
@@ -361,10 +362,6 @@ namespace GestioneCantieri.DAO
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione del listino", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
             }
         }
     }

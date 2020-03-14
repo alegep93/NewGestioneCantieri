@@ -490,6 +490,7 @@
     <Compile Include="Stampe\StampaOrdFrutCantExcel.aspx.designer.cs">
       <DependentUpon>StampaOrdFrutCantExcel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DBTransaction.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

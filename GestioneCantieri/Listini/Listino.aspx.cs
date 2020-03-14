@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Web.UI;
+using Utils;
 
 namespace GestioneCantieri
 {
@@ -36,30 +37,45 @@ namespace GestioneCantieri
         }
         protected void btnEliminaListino_Click(object sender, EventArgs e)
         {
-            Mamg0DAO.EliminaListino();
+            DBTransaction tr = new DBTransaction();
+            tr.Begin();
+            try
+            {
+                Mamg0DAO.EliminaListino(tr);
+                tr.Commit();
+            }
+            catch (Exception ex)
+            {
+                tr.Rollback();
+                throw new Exception("Errore durante l'eliminazione del listino MEF", ex);
+            }
             Response.Redirect("~/Listino.aspx");
         }
         protected void btn_ImportaListino_Click(object sender, EventArgs e)
         {
+            DBTransaction tr = new DBTransaction();
+            tr.Begin();
             try
             {
                 // Elimino il listino
-                Mamg0DAO.EliminaListino();
+                Mamg0DAO.EliminaListino(tr);
 
                 // Reinserisco tutto il listino Mamg0, recuperando i dati da un file excel nominato Mamg0.xlsx
-                Mamg0DAO.GetDataFromExcelAndInsertBulkCopy(filePath);
+                Mamg0DAO.GetDataFromExcelAndInsertBulkCopy(filePath, tr);
 
-                // Aggiorno la tabella di visualizzazione risultati
-                BindGrid();
-
+                tr.Commit();
                 lblImportMsg.Text = "Importazione del listino avvenuta con successo";
                 lblImportMsg.ForeColor = Color.Blue;
             }
             catch (Exception ex)
             {
+                tr.Rollback();
                 lblImportMsg.Text = "Errore durante l'importazione del listino. <br />" + ex;
                 lblImportMsg.ForeColor = Color.Red;
             }
+
+            // Aggiorno la tabella di visualizzazione risultati
+            BindGrid();
         }
 
         /* HELPERS */
