@@ -1,0 +1,13 @@
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\GestioneCantieri.dll.config
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\GestioneCantieri.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\GestioneCantieri.pdb
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\AjaxControlToolkit.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\AjaxMin.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Dapper.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Dapper.xml
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.xml
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.csprojAssemblyReference.cache
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.csproj.CopyComplete
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.pdb
