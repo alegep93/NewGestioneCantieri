@@ -84,6 +84,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Css\DdtMef.css" />
     <Content Include="Fatture\Bollette.aspx" />
     <Content Include="Fatture\TotaliFatture.aspx" />
     <Content Include="GruppiFrutti\ControlloGruppi.aspx" />
@@ -96,7 +97,7 @@
     <Content Include="Css\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Css\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Css\Fatture.css" />
-    <Content Include="DDT-Fornitori.aspx" />
+    <Content Include="DDT\DDT-Fornitori.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Fatture\FattureAcquisto.aspx" />
     <Content Include="GestioneAppunti.aspx" />
@@ -105,6 +106,7 @@
     <Content Include="GestionePagamenti.aspx" />
     <Content Include="GruppiFrutti\GestisciFrutti.aspx" />
     <Content Include="GruppiFrutti\GestisciGruppiFrutti.aspx" />
+    <Content Include="Images\BackgroundGradient.png" />
     <Content Include="Images\spinner.gif" />
     <Content Include="InserimentoDati\Amministratori.aspx" />
     <Content Include="InserimentoDati\InserimentoDati.aspx" />
@@ -186,7 +188,7 @@
     <Content Include="Css\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
     <Content Include="Css\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="Css\style.css" />
-    <Content Include="DDT-Mef.aspx" />
+    <Content Include="DDT\DDT-Mef.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\zoom.gif" />
     <Content Include="Stampe\StampaFruttiGruppi.aspx" />
@@ -265,11 +267,11 @@
     <Compile Include="Data\Pagamenti.cs" />
     <Compile Include="Data\Spese.cs" />
     <Compile Include="Data\Stampe.cs" />
-    <Compile Include="DDT-Fornitori.aspx.cs">
+    <Compile Include="DDT\DDT-Fornitori.aspx.cs">
       <DependentUpon>DDT-Fornitori.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DDT-Fornitori.aspx.designer.cs">
+    <Compile Include="DDT\DDT-Fornitori.aspx.designer.cs">
       <DependentUpon>DDT-Fornitori.aspx</DependentUpon>
     </Compile>
     <Compile Include="Fatture\FattureAcquisto.aspx.cs">
@@ -399,11 +401,11 @@
     <Compile Include="Data\Operai.cs" />
     <Compile Include="Data\StampaFruttiPerGruppi.cs" />
     <Compile Include="Data\StampaOrdFrutCantLoc.cs" />
-    <Compile Include="DDT-Mef.aspx.cs">
+    <Compile Include="DDT\DDT-Mef.aspx.cs">
       <DependentUpon>DDT-Mef.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DDT-Mef.aspx.designer.cs">
+    <Compile Include="DDT\DDT-Mef.aspx.designer.cs">
       <DependentUpon>DDT-Mef.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">

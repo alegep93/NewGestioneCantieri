@@ -91,24 +91,20 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
+
         public static int GetIdFornitore(string ragSoc)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "SELECT IdFornitori FROM TblForitori WHERE RagSocForni = @RagSocForni";
-
-                return cn.Query<int>(sql, new { RagSocForni = ragSoc }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "SELECT IdFornitori FROM TblForitori WHERE RagSocForni = @RagSocForni";
+                    return cn.Query<int>(sql, new { RagSocForni = ragSoc }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dell'idFornitore", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
             }
         }
         public static string GetRagSocFornitore(int id)

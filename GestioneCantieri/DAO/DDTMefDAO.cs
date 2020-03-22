@@ -12,25 +12,23 @@ namespace GestioneCantieri.DAO
     public class DDTMefDAO : BaseDAO
     {
         /*** Lista completa dei DDT ***/
-        public static List<DDTMef> getDDTList()
+        public static List<DDTMef> GetDDTList()
         {
-            string sql = "";
-            SqlConnection cn = GetConnection();
-
             try
             {
-                sql = "SELECT TOP 500 IdDDTMef, Anno, Data, N_DDT, CodArt, " +
-                      "DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT " +
-                      "FROM TblDDTMef " +
-                      "ORDER BY Anno, Data, N_DDT, CodArt";
-
-                return cn.Query<DDTMef>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "SELECT TOP 500 IdDDTMef, Anno, Data, N_DDT, CodArt, " +
+                                 "DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT " +
+                                 "FROM TblDDTMef " +
+                                 "ORDER BY Anno, Data, N_DDT, CodArt";
+                    return cn.Query<DDTMef>(sql).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dell'elenco dei DDT", ex);
             }
-            finally { CloseResouces(cn, null); }
         }
 
         public static DataTable GetDDT(string anno, string n_ddt)
@@ -122,14 +120,9 @@ namespace GestioneCantieri.DAO
         }
 
         /*** Mostro la lista dei DDT in base ai campi compilati ***/
-        public static List<DDTMef> searchFilter(DDTMefObject ddt)
+        public static List<DDTMef> SearchFilter(DDTMefObject ddt)
         {
-            List<DDTMef> retList = new List<DDTMef>();
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-            DateTime emptyData = new DateTime();
-
+            List<DDTMef> ret = new List<DDTMef>();
             ddt.CodArt1 = "%" + ddt.CodArt1 + "%";
             ddt.CodArt2 = "%" + ddt.CodArt2 + "%";
             ddt.CodArt3 = "%" + ddt.CodArt3 + "%";
@@ -144,7 +137,7 @@ namespace GestioneCantieri.DAO
             try
             {
                 /* Senza Filtro */
-                sql = "SELECT IdDDTMef, Anno, Data, N_DDT, CodArt, " +
+                string sql = "SELECT IdDDTMef, Anno, Data, N_DDT, CodArt, " +
                       "DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT " +
                       "FROM TblDDTMef ";
 
@@ -175,56 +168,59 @@ namespace GestioneCantieri.DAO
 
                 sql += "ORDER BY Anno, Data, N_DDT, CodArt ";
 
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
-                cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
-                cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
-                cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
-                cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
-
-                if (ddt.Qta == "")
-                    cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
-
-                if (ddt.NDdt == "")
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
-
-                if (ddt.DataInizio != "" && ddt.DataFine != "")
+                using (SqlConnection cn = GetConnection())
                 {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
-                }
-                else
-                {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
-                }
+                    SqlCommand cmd = new SqlCommand(sql, cn);
+                    cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
+                    cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
+                    cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
+                    cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
+                    cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
+                    cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
+                    cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
+                    cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
 
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
+                    if (ddt.Qta == "")
+                        cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
+                    else
+                        cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
 
-                while (dr.Read()) //Restituisce FALSE quando non ci sono più record da leggere
-                {
-                    DDTMef tmpDDTMef = new DDTMef();
-                    tmpDDTMef.Id = (dr.IsDBNull(0) ? -1 : dr.GetInt32(0));
-                    tmpDDTMef.Anno = (dr.IsDBNull(1) ? -1 : dr.GetInt32(1));
-                    tmpDDTMef.Data = (dr.IsDBNull(2) ? emptyData : dr.GetDateTime(2));
-                    tmpDDTMef.N_ddt = (dr.IsDBNull(3) ? -1 : dr.GetInt32(3));
-                    tmpDDTMef.CodArt = (dr.IsDBNull(4) ? null : dr.GetString(4));
-                    tmpDDTMef.DescriCodArt = (dr.IsDBNull(5) ? null : dr.GetString(5));
-                    tmpDDTMef.Qta = (dr.IsDBNull(6) ? -1 : dr.GetInt32(6));
-                    tmpDDTMef.Importo = (dr.IsDBNull(7) ? -1m : dr.GetDecimal(7));
-                    tmpDDTMef.Acquirente = (dr.IsDBNull(8) ? null : dr.GetString(8));
-                    tmpDDTMef.PrezzoUnitario = (dr.IsDBNull(9) ? -1m : dr.GetDecimal(9));
-                    tmpDDTMef.AnnoN_ddt = (dr.IsDBNull(10) ? -1 : dr.GetInt32(10));
-                    retList.Add(tmpDDTMef);
+                    if (ddt.NDdt == "")
+                        cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
+                    else
+                        cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
+
+                    if (ddt.DataInizio != "" && ddt.DataFine != "")
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
+                        cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
+                        cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
+                    }
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read()) //Restituisce FALSE quando non ci sono più record da leggere
+                    {
+                        DDTMef tmpDDTMef = new DDTMef();
+                        tmpDDTMef.Id = (dr.IsDBNull(0) ? -1 : dr.GetInt32(0));
+                        tmpDDTMef.Anno = (dr.IsDBNull(1) ? -1 : dr.GetInt32(1));
+                        tmpDDTMef.Data = (dr.IsDBNull(2) ? new DateTime() : dr.GetDateTime(2));
+                        tmpDDTMef.N_ddt = (dr.IsDBNull(3) ? -1 : dr.GetInt32(3));
+                        tmpDDTMef.CodArt = (dr.IsDBNull(4) ? null : dr.GetString(4));
+                        tmpDDTMef.DescriCodArt = (dr.IsDBNull(5) ? null : dr.GetString(5));
+                        tmpDDTMef.Qta = (dr.IsDBNull(6) ? -1 : dr.GetInt32(6));
+                        tmpDDTMef.Importo = (dr.IsDBNull(7) ? -1m : dr.GetDecimal(7));
+                        tmpDDTMef.Acquirente = (dr.IsDBNull(8) ? null : dr.GetString(8));
+                        tmpDDTMef.PrezzoUnitario = (dr.IsDBNull(9) ? -1m : dr.GetDecimal(9));
+                        tmpDDTMef.AnnoN_ddt = (dr.IsDBNull(10) ? -1 : dr.GetInt32(10));
+                        ret.Add(tmpDDTMef);
+                    }
                 }
-                return retList;
+                return ret;
             }
             catch (Exception ex)
             {
@@ -233,25 +229,15 @@ namespace GestioneCantieri.DAO
         }
 
         /*** Media del prezzo unitario ***/
-        public static decimal calcolaMediaPrezzoUnitario()
+        public static decimal CalcolaMediaPrezzoUnitario()
         {
-            decimal media = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             try
             {
-                sql = "SELECT (SUM(PrezzoUnitario)) / (COUNT(PrezzoUnitario)) " +
-                      "FROM TblDDTMef ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
-
-                if (dr.Read())
-                    media = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
-
-                return media;
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "SELECT (SUM(PrezzoUnitario)) / (COUNT(PrezzoUnitario)) FROM TblDDTMef";
+                    return cn.Query<decimal>(sql).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
@@ -260,13 +246,9 @@ namespace GestioneCantieri.DAO
         }
 
         /*** Media dei prezzi con filtro ***/
-        public static decimal calcolaMediaPrezzoUnitarioWithSearch(DDTMefObject ddt)
+        public static decimal CalcolaMediaPrezzoUnitarioWithSearch(DDTMefObject ddt)
         {
             decimal media = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             ddt.CodArt1 = "%" + ddt.CodArt1 + "%";
             ddt.CodArt2 = "%" + ddt.CodArt2 + "%";
             ddt.CodArt3 = "%" + ddt.CodArt3 + "%";
@@ -280,8 +262,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT (SUM(PrezzoUnitario)) / (COUNT(PrezzoUnitario)) " +
-                        "FROM TblDDTMef ";
+                string sql = "SELECT (SUM(PrezzoUnitario)) / (COUNT(PrezzoUnitario)) FROM TblDDTMef ";
 
                 if (ddt.AnnoInizio != "" && ddt.AnnoFine != "")
                 {
@@ -305,42 +286,44 @@ namespace GestioneCantieri.DAO
                     sql += "WHERE ((ANNO = @pAnnoInizio OR Anno = @pAnnoFine) OR (Data = CONVERT(Date,@pDataInizio) OR Data = CONVERT(Date,@pDataFine))) AND " + queryFilters;
                 }
 
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
-                cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
-                cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
-                cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
-                cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
-
-                if (ddt.Qta == "")
-                    cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
-
-                if (ddt.NDdt == "")
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
-
-                if (ddt.DataInizio != "" && ddt.DataFine != "")
+                using (SqlConnection cn = GetConnection())
                 {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
-                }
-                else
-                {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
-                }
+                    SqlCommand cmd = new SqlCommand(sql, cn);
+                    cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
+                    cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
+                    cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
+                    cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
+                    cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
+                    cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
+                    cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
+                    cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
 
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
+                    if (ddt.Qta == "")
+                        cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
+                    else
+                        cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
 
-                if (dr.Read())
-                    media = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                    if (ddt.NDdt == "")
+                        cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
+                    else
+                        cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
+
+                    if (ddt.DataInizio != "" && ddt.DataFine != "")
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
+                        cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
+                        cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
+                    }
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    if (dr.Read())
+                        media = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                }
 
                 return media;
             }
@@ -354,15 +337,19 @@ namespace GestioneCantieri.DAO
         {
             string excelConnectionString = "Provider = vfpoledb; Data Source = " + pathFile + "; Collating Sequence = machine";
             string commandText = "SELECT FTANNO, FTDT, FTNR, FTAFO, FTDEX1, FTQTA, FTPU FROM " + pathFile;
-            OleDbConnection ExcelConection = null;
             List<DDTMef> list = new List<DDTMef>();
 
             try
             {
-                OleDbConnectionStringBuilder OleStringBuilder = new OleDbConnectionStringBuilder(excelConnectionString);
-                OleStringBuilder.DataSource = pathFile;
-                ExcelConection = new OleDbConnection();
-                ExcelConection.ConnectionString = OleStringBuilder.ConnectionString;
+                OleDbConnectionStringBuilder OleStringBuilder = new OleDbConnectionStringBuilder(excelConnectionString)
+                {
+                    DataSource = pathFile
+                };
+
+                OleDbConnection ExcelConection = new OleDbConnection
+                {
+                    ConnectionString = OleStringBuilder.ConnectionString
+                };
 
                 using (OleDbDataAdapter adaptor = new OleDbDataAdapter(commandText, ExcelConection))
                 {
@@ -428,162 +415,105 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
-        public static bool InsertNewDdt(DDTMef ddt)
+        public static void InsertNewDdt(DDTMef ddt)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "INSERT INTO TblDDTMef (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT) " +
-                      "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT)";
-
-                int rows = cn.Execute(sql, ddt);
-
-                if (rows > 0)
-                    return true;
-                else
-                    return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "INSERT INTO TblDDTMef (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT) " +
+                                 "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT)";
+                    cn.Execute(sql, ddt);
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un nuovo record per il DDTMef ", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
         }
 
-        public static bool UpdateDdt()
+        public static void UpdateDdt()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "UPDATE A " +
-                      "SET A.Importo = B.Importo, A.PrezzoUnitario = B.PrezzoUnitario " +
-                      "FROM TblDDTMef AS A " +
-                      "INNER JOIN TblDDTMefTemp AS B ON A.Anno = B.Anno AND A.N_DDT = B.N_DDT AND A.CodArt = B.CodArt " +
-                      "WHERE A.Qta = B.Qta AND A.Importo != B.Importo ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                int rows = cmd.ExecuteNonQuery();
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "UPDATE A " +
+                                 "SET A.Importo = B.Importo, A.PrezzoUnitario = B.PrezzoUnitario " +
+                                 "FROM TblDDTMef AS A " +
+                                 "INNER JOIN TblDDTMefTemp AS B ON A.Anno = B.Anno AND A.N_DDT = B.N_DDT AND A.CodArt = B.CodArt " +
+                                 "WHERE A.Qta = B.Qta AND A.Importo != B.Importo ";
+                    cn.Execute(sql);
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'aggiornamento di un record del DDTMef", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
         }
 
         public static List<DDTMef> GetNewDDT()
         {
-            string sql = "";
-            SqlConnection cn = GetConnection();
-
             try
             {
-                sql = "SELECT A.IdDDTMef, A.Anno, A.Data, A.N_DDT, A.CodArt, A.DescriCodArt, A.Qta, A.Importo, A.Acquirente, A.PrezzoUnitario, A.AnnoN_DDT " +
-                      "FROM TblDDTMefTemp AS A " +
-                      "LEFT JOIN TblDDTMef AS B ON A.AnnoN_DDT = B.AnnoN_DDT " +
-                      "WHERE B.IdDDTMef IS NULL ";
-
-                return cn.Query<DDTMef>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "SELECT A.IdDDTMef, A.Anno, A.Data, A.N_DDT, A.CodArt, A.DescriCodArt, A.Qta, A.Importo, A.Acquirente, A.PrezzoUnitario, A.AnnoN_DDT " +
+                                 "FROM TblDDTMefTemp AS A " +
+                                 "LEFT JOIN TblDDTMef AS B ON A.AnnoN_DDT = B.AnnoN_DDT " +
+                                 "WHERE B.IdDDTMef IS NULL ";
+                    return cn.Query<DDTMef>(sql).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei nuovi DDT da aggiungere all'anagrafica", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
         }
 
         // Metodi per la tabella DDT Temporanea
-        public static bool InsertIntoDdtTemp(DDTMef ddt)
+        public static void InsertIntoDdtTemp(DDTMef ddt)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "INSERT INTO TblDDTMefTemp (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT) " +
-                      "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT) ";
-
-                int rows = cn.Execute(sql, ddt);
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "INSERT INTO TblDDTMefTemp (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT) " +
+                                 "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT) ";
+                    cn.Execute(sql, ddt);
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un nuovo record nella tabella TblDDTMefTemp ", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
         }
-        public static bool DeleteFromDdtTemp()
+        public static void DeleteFromDdtTemp()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
             try
             {
-                sql = "DELETE FROM TblDDTMefTemp ";
-
-                int rows = cn.Execute(sql);
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    string sql = "DELETE FROM TblDDTMefTemp ";
+                    int rows = cn.Execute(sql);
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione della tabella TblDDTMefTemp ", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
             }
         }
 
         // Calcolo dei totali DDT
         public static decimal GetTotalDDT()
         {
-            decimal totale = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             try
             {
-                sql = "SELECT SUM(Importo) FROM TblDDTMef ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
-
-                if (dr.Read())
+                using (SqlConnection cn = GetConnection())
                 {
-                    totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                    string sql = "SELECT SUM(Importo) FROM TblDDTMef ";
+                    return cn.Query<decimal>(sql).FirstOrDefault();
                 }
-
-                return totale;
             }
             catch (Exception ex)
             {
@@ -593,10 +523,6 @@ namespace GestioneCantieri.DAO
         public static decimal GetTotalDDT(DDTMefObject ddt)
         {
             decimal totale = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             ddt.CodArt1 = "%" + ddt.CodArt1 + "%";
             ddt.CodArt2 = "%" + ddt.CodArt2 + "%";
             ddt.CodArt3 = "%" + ddt.CodArt3 + "%";
@@ -610,7 +536,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT SUM(Importo) FROM TblDDTMef ";
+                string sql = "SELECT SUM(Importo) FROM TblDDTMef ";
 
                 if (ddt.AnnoInizio != "" && ddt.AnnoFine != "")
                 {
@@ -634,45 +560,49 @@ namespace GestioneCantieri.DAO
                     sql += "WHERE ((ANNO = @pAnnoInizio OR Anno = @pAnnoFine) OR (Data = CONVERT(Date,@pDataInizio) OR Data = CONVERT(Date,@pDataFine))) AND " + queryFilters;
                 }
 
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
-                cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
-                cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
-                cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
-                cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
-
-                if (ddt.Qta == "")
-                    cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
-
-                if (ddt.NDdt == "")
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
-
-                if (ddt.DataInizio != "" && ddt.DataFine != "")
+                using (SqlConnection cn = GetConnection())
                 {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
-                }
-                else
-                {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
-                }
+                    using (SqlCommand cmd = new SqlCommand(sql, cn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
+                        cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
 
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
+                        if (ddt.Qta == "")
+                            cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
+                        else
+                            cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
 
-                if (dr.Read())
-                {
-                    totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                        if (ddt.NDdt == "")
+                            cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
+                        else
+                            cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
+
+                        if (ddt.DataInizio != "" && ddt.DataFine != "")
+                        {
+                            cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
+                            cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
+                            cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
+                        }
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                            }
+                        }
+                    }
                 }
-
                 return totale;
             }
             catch (Exception ex)
@@ -684,37 +614,23 @@ namespace GestioneCantieri.DAO
         // Calcolo dell'imponibile DDT
         public static decimal GetImponibileDDT()
         {
-            decimal totale = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             try
             {
-                sql = "SELECT SUM((Importo * 100) / CONVERT(decimal(10,2), 122)) FROM TblDDTMef ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
-
-                if (dr.Read())
+                using (SqlConnection cn = GetConnection())
                 {
-                    totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                    string sql = "SELECT SUM((Importo * 100) / CONVERT(decimal(10,2), 122)) FROM TblDDTMef ";
+                    return cn.Query<decimal>(sql).FirstOrDefault();
                 }
-
-                return totale;
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il calcolo del totale DDT senza filtri", ex);
             }
         }
+
         public static decimal GetImponibileDDT(DDTMefObject ddt)
         {
             decimal totale = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             ddt.CodArt1 = "%" + ddt.CodArt1 + "%";
             ddt.CodArt2 = "%" + ddt.CodArt2 + "%";
             ddt.CodArt3 = "%" + ddt.CodArt3 + "%";
@@ -728,7 +644,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT SUM((Importo * 100) / CONVERT(decimal(10,2), 122)) FROM TblDDTMef ";
+                string sql = "SELECT SUM((Importo * 100) / CONVERT(decimal(10,2), 122)) FROM TblDDTMef ";
 
                 if (ddt.AnnoInizio != "" && ddt.AnnoFine != "")
                 {
@@ -752,43 +668,48 @@ namespace GestioneCantieri.DAO
                     sql += "WHERE ((ANNO = @pAnnoInizio OR Anno = @pAnnoFine) OR (Data = CONVERT(Date,@pDataInizio) OR Data = CONVERT(Date,@pDataFine))) AND " + queryFilters;
                 }
 
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
-                cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
-                cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
-                cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
-                cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
-
-                if (ddt.Qta == "")
-                    cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
-
-                if (ddt.NDdt == "")
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
-
-                if (ddt.DataInizio != "" && ddt.DataFine != "")
+                using (SqlConnection cn = GetConnection())
                 {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
-                }
-                else
-                {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
-                }
+                    using (SqlCommand cmd = new SqlCommand(sql, cn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
+                        cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
 
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
+                        if (ddt.Qta == "")
+                            cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
+                        else
+                            cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
 
-                if (dr.Read())
-                {
-                    totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                        if (ddt.NDdt == "")
+                            cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
+                        else
+                            cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
+
+                        if (ddt.DataInizio != "" && ddt.DataFine != "")
+                        {
+                            cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
+                            cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
+                            cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
+                        }
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                            }
+                        }
+                    }
                 }
 
                 return totale;
@@ -802,37 +723,23 @@ namespace GestioneCantieri.DAO
         // Calcolo dell'iva DDT
         public static decimal GetIvaDDT()
         {
-            decimal totale = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             try
             {
-                sql = "SELECT SUM(Importo - (100 * Importo / CONVERT(decimal(10,2),122))) FROM TblDDTMef ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
-
-                if (dr.Read())
+                using (SqlConnection cn = GetConnection())
                 {
-                    totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                    string sql = "SELECT SUM(Importo - (100 * Importo / CONVERT(decimal(10,2),122))) FROM TblDDTMef ";
+                    return cn.Query<decimal>(sql).FirstOrDefault();
                 }
-
-                return totale;
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il calcolo del totale DDT senza filtri", ex);
             }
         }
+
         public static decimal GetIvaDDT(DDTMefObject ddt)
         {
             decimal totale = 0m;
-            string sql = "";
-            SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
-
             ddt.CodArt1 = "%" + ddt.CodArt1 + "%";
             ddt.CodArt2 = "%" + ddt.CodArt2 + "%";
             ddt.CodArt3 = "%" + ddt.CodArt3 + "%";
@@ -846,7 +753,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT SUM(Importo - (100 * Importo / CONVERT(decimal(10,2),122))) FROM TblDDTMef ";
+                string sql = "SELECT SUM(Importo - (100 * Importo / CONVERT(decimal(10,2),122))) FROM TblDDTMef ";
 
                 if (ddt.AnnoInizio != "" && ddt.AnnoFine != "")
                 {
@@ -870,45 +777,50 @@ namespace GestioneCantieri.DAO
                     sql += "WHERE ((ANNO = @pAnnoInizio OR Anno = @pAnnoFine) OR (Data = CONVERT(Date,@pDataInizio) OR Data = CONVERT(Date,@pDataFine))) AND " + queryFilters;
                 }
 
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
-                cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
-                cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
-                cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
-                cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
-                cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
-
-                if (ddt.Qta == "")
-                    cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
-
-                if (ddt.NDdt == "")
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
-
-                if (ddt.DataInizio != "" && ddt.DataFine != "")
+                using (SqlConnection cn = GetConnection())
                 {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
-                }
-                else
-                {
-                    cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
-                    cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
-                }
+                    using (SqlCommand cmd = new SqlCommand(sql, cn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pAnnoInizio", ddt.AnnoInizio));
+                        cmd.Parameters.Add(new SqlParameter("pAnnoFine", ddt.AnnoFine));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt1", ddt.CodArt1));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt2", ddt.CodArt2));
+                        cmd.Parameters.Add(new SqlParameter("pCodArt3", ddt.CodArt3));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt1", ddt.DescriCodArt1));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt2", ddt.DescriCodArt2));
+                        cmd.Parameters.Add(new SqlParameter("pDescriCodArt3", ddt.DescriCodArt3));
 
-                dr = cmd.ExecuteReader(); //Esegue il comando e lo inserisce nel DataReader
+                        if (ddt.Qta == "")
+                            cmd.Parameters.Add(new SqlParameter("pQta", "%%"));
+                        else
+                            cmd.Parameters.Add(new SqlParameter("pQta", ddt.Qta));
 
-                if (dr.Read())
-                {
-                    totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                        if (ddt.NDdt == "")
+                            cmd.Parameters.Add(new SqlParameter("pN_DDT", "%%"));
+                        else
+                            cmd.Parameters.Add(new SqlParameter("pN_DDT", ddt.NDdt));
+
+                        if (ddt.DataInizio != "" && ddt.DataFine != "")
+                        {
+                            cmd.Parameters.Add(new SqlParameter("pDataInizio", Convert.ToDateTime(ddt.DataInizio)));
+                            cmd.Parameters.Add(new SqlParameter("pDataFine", Convert.ToDateTime(ddt.DataFine)));
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add(new SqlParameter("pDataInizio", ddt.DataInizio));
+                            cmd.Parameters.Add(new SqlParameter("pDataFine", ddt.DataFine));
+                        }
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+
+                            if (dr.Read())
+                            {
+                                totale = (dr.IsDBNull(0) ? -1m : dr.GetDecimal(0));
+                            }
+                        }
+                    }
                 }
-
                 return totale;
             }
             catch (Exception ex)
