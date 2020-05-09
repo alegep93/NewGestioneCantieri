@@ -58,7 +58,7 @@
         <%-- Totali IVA per Quarter --%>
         <div class="row" style="margin-top: 30px;">
             <div class="col-md-offset-2 col-md-8 text-center">
-                <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive text-center">
+                <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                     <Columns>
                         <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
                         <asp:BoundField HeaderText="Totale Iva Acquisto" DataField="TotaleIvaAcquisto" DataFormatString="€ {0:###,###.##}" />

@@ -15,7 +15,8 @@ namespace GestioneCantieri.DAO
 
             string whereData = (dataDa == "" && dataA == "") ? "" : ((dataDa != "" && dataA == "") ? " AND A.data >= @dataDa " : ((dataDa == "" && dataA != "") ? " AND A.data <= @dataA " : " AND A.Data BETWEEN @dataDa AND @dataA "));
 
-            string sql = "SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito, A.file_path " +
+            string sql = "SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito " +
+                         //", A.file_path" + 
                          "FROM TblFattureAcquisto AS A " +
                          "INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori " +
                          "WHERE B.RagSocForni LIKE @fornitore " + whereData;

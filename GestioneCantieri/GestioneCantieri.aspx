@@ -178,7 +178,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <asp:GridView ID="grdMostraDDTDaInserire" ItemType="GestioneCantieri.Data.DDTMef" AutoGenerateColumns="false" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdMostraDDTDaInserire" ItemType="GestioneCantieri.Data.DDTMef" AutoGenerateColumns="false" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="N_ddt" HeaderText="N_DDT" />
@@ -334,7 +334,7 @@
                 </asp:Panel>
 
                 <div class="col-md-12 table-responsive tableContainer">
-                    <asp:GridView ID="grdMatCant" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdMatCant_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdMatCant" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdMatCant_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -362,7 +362,7 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:GridView ID="grdRientro" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdRientro_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdRientro" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdRientro_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -489,7 +489,7 @@
                     </div>
                 </asp:Panel>
 
-                <asp:GridView ID="grdAccrediti" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdAccrediti_RowCommand" CssClass="table table-striped text-center" runat="server">
+                <asp:GridView ID="grdAccrediti" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdAccrediti_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -593,7 +593,7 @@
                 </asp:Panel>
 
                 <div class="col-md-12 table-responsive tableContainer">
-                    <asp:GridView ID="grdManodop" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdManodop_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdManodop" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdManodop_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -704,7 +704,7 @@
                 </asp:Panel>
 
                 <div class="col-md-12 table-responsive tableContainer">
-                    <asp:GridView ID="grdOperai" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdOperai_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdOperai" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdOperai_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -806,7 +806,7 @@
                 </asp:Panel>
 
                 <div class="col-md-12 table-responsive tableContainer">
-                    <asp:GridView ID="grdArrot" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdArrot_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdArrot" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdArrot_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -924,7 +924,7 @@
                 </asp:Panel>
 
                 <div class="col-md-12 table-responsive tableContainer">
-                    <asp:GridView ID="grdAChiam" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdAChiam_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdAChiam" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdAChiam_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -1033,7 +1033,7 @@
                 </asp:Panel>
 
                 <div class="col-md-12 table-responsive tableContainer">
-                    <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdSpese_RowCommand" CssClass="table table-striped text-center" runat="server">
+                    <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdSpese_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />

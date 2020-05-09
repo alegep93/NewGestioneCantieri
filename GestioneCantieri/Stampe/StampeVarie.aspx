@@ -96,7 +96,7 @@
 
         <asp:Label ID="lblIsNomeFileInserito" runat="server" CssClass="pull-right" Text=""></asp:Label>
 
-        <asp:GridView ID="grdStampaDDT" runat="server" ItemType="GestioneCantieri.Data.DDTMef" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center" Visible="true">
+        <asp:GridView ID="grdStampaDDT" runat="server" ItemType="GestioneCantieri.Data.DDTMef" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table" Visible="true">
             <Columns>
                 <asp:BoundField DataField="N_ddt" HeaderText="N_DDT" />
                 <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
@@ -107,7 +107,7 @@
             </Columns>
         </asp:GridView>
 
-        <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center" Visible="false">
+        <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table" Visible="false">
             <Columns>
                 <asp:BoundField DataField="NumeroBolla" HeaderText="Num. Bolla" />
                 <asp:BoundField DataField="Fornitore" HeaderText="Fornit." />

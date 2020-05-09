@@ -71,8 +71,8 @@
             </asp:Panel>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <asp:GridView ID="grdListino" runat="server" ItemType="GestioneCantieri.Data.Mamg0" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center">
+            <div class="col-md-12 tableContainer">
+                <asp:GridView ID="grdListino" runat="server" ItemType="GestioneCantieri.Data.Mamg0" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table">
                     <Columns>
                         <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
                         <asp:BoundField DataField="Desc" HeaderText="Descrizione" />

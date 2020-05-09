@@ -260,14 +260,27 @@ input[type="checkbox"] {
 .compGruppoFixed {
     position: fixed !important;
     right: 0;
-    padding-left: 5px !important;
 }
 
 #body_pnlMascheraMaterialiDaDDT input[type="submit"] {
     position: relative;
     top: 0px;
 }
-#body_pnlMascheraMaterialiDaDDT span.pull-right{
+
+#body_pnlMascheraMaterialiDaDDT span.pull-right {
     position: relative;
     top: -4px;
+}
+
+/* Intestazioni tabelle fisse */
+.tableContainer {
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.scrollable-table th {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #FFFFFF;
 }

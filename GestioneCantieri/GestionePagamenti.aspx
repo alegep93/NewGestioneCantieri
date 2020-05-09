@@ -135,7 +135,7 @@
         </asp:Panel>
 
         <div class="col-md-12 table-responsive tableContainer">
-            <asp:GridView ID="grdPagamenti" ItemType="GestioneCantieri.Data.Pagamenti" AutoGenerateColumns="false" OnRowCommand="grdPagamenti_RowCommand" CssClass="table table-striped text-center" runat="server">
+            <asp:GridView ID="grdPagamenti" ItemType="GestioneCantieri.Data.Pagamenti" AutoGenerateColumns="false" OnRowCommand="grdPagamenti_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                     <asp:BoundField DataField="Imporo" HeaderText="Importo" DataFormatString="{0:0.00}" />

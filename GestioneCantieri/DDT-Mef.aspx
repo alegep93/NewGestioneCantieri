@@ -153,7 +153,7 @@
             <div class="col-md-12 tableContainer">
                 <asp:GridView ID="grdListaDDTMef" runat="server" OnRowDataBound="grdListaDDTMef_RowDataBound" ItemType="GestioneCantieri.Data.DDTMef"
                     AutoGenerateColumns="False" OnRowCommand="grdListaDDTMef_RowCommand"
-                    PageSize="20" OnPageIndexChanging="grdListaDDTMef_PageIndexChanging" CssClass="table table-striped table-responsive text-center">
+                    PageSize="20" OnPageIndexChanging="grdListaDDTMef_PageIndexChanging" CssClass="table table-striped table-responsive text-center scrollable-table">
                     <Columns>
                         <%--<asp:BoundField DataField="Id" HeaderText="ID DDT Mef" />--%>
                         <asp:BoundField DataField="Anno" HeaderText="Anno" />

@@ -26,7 +26,7 @@ namespace GestioneCantieri.DAO
                              "FROM TblBollette AS A " +
                              "INNER JOIN TblForitori AS B ON A.id_fornitori = B.IdFornitori " +
                              where +
-                             "ORDER BY data_scadenza DESC";
+                             "ORDER BY DATEPART(YEAR, data_bolletta), progressivo";
                 using (SqlConnection cn = GetConnection())
                 {
                     ret = cn.Query<Bolletta>(sql).ToList();

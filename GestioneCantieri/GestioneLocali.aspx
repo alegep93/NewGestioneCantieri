@@ -39,7 +39,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-2 col-md-8 table-container">
-                <asp:GridView ID="grdLocali" AutoGenerateColumns="false" OnRowCommand="grdLocali_RowCommand" ItemType="GestioneCantieri.Data.Locali" runat="server" CssClass="table table-striped table-responsive">
+                <asp:GridView ID="grdLocali" AutoGenerateColumns="false" OnRowCommand="grdLocali_RowCommand" ItemType="GestioneCantieri.Data.Locali" runat="server" CssClass="table table-striped table-responsive scrollable-table">
                     <Columns>
                         <asp:BoundField HeaderText="Nome Locale" DataField="NomeLocale" />
                         <asp:TemplateField>

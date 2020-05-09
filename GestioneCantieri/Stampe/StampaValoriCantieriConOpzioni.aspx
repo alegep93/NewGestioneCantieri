@@ -84,7 +84,7 @@
         <!-- Griglia di visualizzazione -->
         <div class="row">
             <div class="col-md-12 table-container">
-                <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-responsive text-center" runat="server">
+                <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-responsive text-center scrollable-table" runat="server">
                     <Columns>
                         <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
                         <asp:BoundField HeaderText="Descrizione Cantiere" DataField="DescriCodCAnt" />
@@ -101,7 +101,7 @@
         <asp:Label ID="lblTotaleGeneraleStampa" CssClass="lblIntestazione" runat="server"></asp:Label>
 
         <!-- GridView di appoggio -->
-            <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center" Visible="false">
+            <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table" Visible="false">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                     <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />
@@ -117,7 +117,7 @@
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center" Visible="false">
+            <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table" Visible="false">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                     <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />

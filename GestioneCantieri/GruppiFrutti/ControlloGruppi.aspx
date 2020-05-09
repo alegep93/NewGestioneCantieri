@@ -2,11 +2,16 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     <title>Controllo Gruppi</title>
+    <style>
+        .tableContainer {
+            max-height: 800px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div class="row">
-        <div class="col-md-10">
-            <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-striped text-center" runat="server">
+        <div class="col-md-10 tableContainer">
+            <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-striped text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />
                     <asp:BoundField DataField="Descr" HeaderText="Descrizione" />

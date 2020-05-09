@@ -172,7 +172,7 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdFatture" OnRowCommand="grdFatture_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.FatturaAcquisto" OnRowDataBound="grdFatture_RowDataBound" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.FatturaAcquisto" OnRowDataBound="grdFatture_RowDataBound" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Numero" DataField="Numero" />
                             <asp:BoundField HeaderText="Data" DataField="Data" DataFormatString="{0:d}" />
@@ -250,21 +250,21 @@
             </div>
 
             <%-- Griglie Totali Per Quarter --%>
-            <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table iva-quarter-total-table text-center">
+            <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table iva-quarter-total-table text-center scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
                     <asp:BoundField HeaderText="Totale Iva" DataField="TotaleIva" DataFormatString="€ {0:###,###.##}" />
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView ID="grdTotaleImponibilePerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table imponibile-quarter-total-table text-center">
+            <asp:GridView ID="grdTotaleImponibilePerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table imponibile-quarter-total-table text-center scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
                     <asp:BoundField HeaderText="Totale Imponibile" DataField="TotaleIva" DataFormatString="€ {0:###,###.##}" />
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView ID="grdTotaleImportoPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table importo-quarter-total-table text-center">
+            <asp:GridView ID="grdTotaleImportoPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive quarter-total-table importo-quarter-total-table text-center scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
                     <asp:BoundField HeaderText="Totale Importo" DataField="TotaleIva" DataFormatString="€ {0:###,###.##}" />
@@ -272,7 +272,7 @@
             </asp:GridView>
 
             <%-- Griglia Totali Filtrati --%>
-            <asp:GridView ID="grdTotali" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive total-table text-center">
+            <asp:GridView ID="grdTotali" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive total-table text-center scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Titolo" DataField="Titolo" />
                     <asp:BoundField HeaderText="Valore" DataField="Valore" DataFormatString="€ {0:###,###.##}" />
