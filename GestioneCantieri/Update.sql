@@ -20,7 +20,28 @@ FTORAG nvarchar(50) NULL,
 importo2 decimal (10,2) NOT NULL DEFAULT(0),
 FTIMRA nvarchar(50) NULL,
 FTMLT0 nvarchar(50) NULL
+GO
 
+ALTER TABLE TblDDTMefTemp ADD
+FTVRF0 nvarchar(50) NULL, 
+FTDT30  nvarchar(50) NULL,
+FTAIN nvarchar(50) NULL,
+descrizione_articolo_2 nvarchar(200) NOT NULL DEFAULT (''),
+iva int NOT NULL DEFAULT (22),	
+prezzo_listino decimal (10,2) NOT NULL DEFAULT(0),
+data2 date NOT NULL DEFAULT(GETDATE()),
+valuta nvarchar(10) NOT NULL DEFAULT('EUR'),
+FTFOM nvarchar(50) NULL,
+FTCMA nvarchar(50) NULL,
+FTCDO nvarchar(50) NULL,
+FLFLAG nvarchar(50) NULL,
+FLFLQU nvarchar(50) NULL,
+data3 date NOT NULL DEFAULT(GETDATE()),
+FTORAG nvarchar(50) NULL,
+importo2 decimal (10,2) NOT NULL DEFAULT(0),
+FTIMRA nvarchar(50) NULL,
+FTMLT0 nvarchar(50) NULL
+GO
 
 USE [GestioneCantieri]
 GO

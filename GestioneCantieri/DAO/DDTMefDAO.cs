@@ -353,9 +353,8 @@ namespace GestioneCantieri.DAO
         public static List<DDTMef> GetDdtFromDBF(string pathFile, string acquirente, int idFornitore)
         {
             string excelConnectionString = "Provider = vfpoledb; Data Source = " + pathFile + "; Collating Sequence = machine";
-            string commandText = "SELECT FTANNO, FTDT, FTNR, FTAFO, FTDEX1, FTQTA, FTPU " +
-                                 "FTVRF0, FTDT30, FTAIN, FTDEX2, FTAIV, FTPUN, FTDTC, FTCVA, " +
-                                 "FTFOM, FTCMA, FTCDO, FLFLAG, FLFLQU, FTDTAG, FTORAG, FTTSCA, FTIMRA, FTMLT0 " +
+            string commandText = "SELECT FTANNO, FTDT, FTNR, FTVRF0, FTDT30, FTAFO, FTAIN, FTDEX1, FTDEX2, FTAIV, FTPUN, " +
+                                 "FTQTA, FTPU, FTDTC, FTCVA, FTFOM, FTCMA, FTCDO, FLFLAG, FLFLQU, FTDTAG, FTORAG, FTTSCA, FTIMRA, FTMLT0 " +
                                  "FROM " + pathFile;
 
             List<DDTMef> list = new List<DDTMef>();
@@ -374,45 +373,46 @@ namespace GestioneCantieri.DAO
 
                     foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        if (Convert.ToInt32(row.ItemArray[5]) != 0)
+                        if (Convert.ToInt32(row.ItemArray[11]) != 0)
                         {
                             DateTime date = Convert.ToDateTime(row.ItemArray[1].ToString().Substring(0, 4) + "-" + row.ItemArray[1].ToString().Substring(4, 2) + "-" + row.ItemArray[1].ToString().Substring(6, 2));
-                            DateTime date2 = Convert.ToDateTime(row.ItemArray[13].ToString().Substring(0, 4) + "-" + row.ItemArray[13].ToString().Substring(4, 2) + "-" + row.ItemArray[13].ToString().Substring(6, 2));
+                            DateTime date2 = (row.ItemArray[13].ToString() == "0,000" || row.ItemArray[13].ToString() == "99999999,000") ? DateTime.Now : Convert.ToDateTime(row.ItemArray[13].ToString().Substring(0, 4) + " -" + row.ItemArray[13].ToString().Substring(4, 2) + "-" + row.ItemArray[13].ToString().Substring(6, 2));
                             DateTime date3 = Convert.ToDateTime(row.ItemArray[20].ToString().Substring(0, 4) + "-" + row.ItemArray[20].ToString().Substring(4, 2) + "-" + row.ItemArray[20].ToString().Substring(6, 2));
                             
-                            decimal prezzoUnitario = Convert.ToDecimal(row.ItemArray[6]) / Convert.ToInt32(row.ItemArray[5].ToString() == "0" ? 1 : row.ItemArray[5]);
+                            decimal prezzoUnitario = Convert.ToDecimal(row.ItemArray[12]) / Convert.ToInt32(row.ItemArray[11].ToString() == "0" ? 1 : row.ItemArray[11]);
                             int annoN_ddt = Convert.ToInt32(row.ItemArray[0].ToString() + row.ItemArray[2].ToString());
 
                             DDTMef ddt = new DDTMef();
-                            ddt.Anno = Convert.ToInt32(row.ItemArray[0]);
-                            ddt.Data = date;
-                            ddt.N_ddt = Convert.ToInt32(row.ItemArray[2]);
-                            ddt.CodArt = row.ItemArray[3].ToString().Trim();
-                            ddt.DescriCodArt = row.ItemArray[4].ToString().Trim();
-                            ddt.Qta = Convert.ToInt32(row.ItemArray[5]);
-                            ddt.Importo = Convert.ToDecimal(row.ItemArray[6]);
-                            ddt.Acquirente = acquirente;
-                            ddt.PrezzoUnitario = prezzoUnitario;
-                            ddt.AnnoN_ddt = annoN_ddt;
-                            ddt.IdFornitore = idFornitore;
-                            ddt.FTVRF0 = row.ItemArray[7].ToString().Trim();
-                            ddt.FTDT30 = row.ItemArray[8].ToString().Trim();
-                            ddt.FTAIN = row.ItemArray[9].ToString().Trim();
-                            ddt.DescrizioneArticolo2 = row.ItemArray[10].ToString().Trim();
-                            ddt.Iva = Convert.ToInt32(row.ItemArray[11]);
-                            ddt.PrezzoListino = Convert.ToDecimal(row.ItemArray[12]);
-                            ddt.Data2 = date2;
-                            ddt.Valuta = row.ItemArray[14].ToString().Trim();
+                            ddt.Anno = Convert.ToInt32(row.ItemArray[0]); // FTANNO
+                            ddt.Data = date; // FTDT
+                            ddt.N_ddt = Convert.ToInt32(row.ItemArray[2]); // FTNR
+                            ddt.FTVRF0 = row.ItemArray[3].ToString().Trim();
+                            ddt.FTDT30 = row.ItemArray[4].ToString().Trim();
+                            ddt.CodArt = row.ItemArray[5].ToString().Trim(); // FTAFO
+                            ddt.FTAIN = row.ItemArray[6].ToString().Trim();
+                            ddt.DescriCodArt = row.ItemArray[7].ToString().Trim();  // FTDEX1
+                            ddt.DescrizioneArticolo2 = row.ItemArray[8].ToString().Trim(); // FTDEX2
+                            ddt.Iva = (row.ItemArray[9].ToString() == "" || row.ItemArray[9].ToString().Trim() == "D") ? 0 : Convert.ToInt32(row.ItemArray[9]); // FTAIV
+                            ddt.PrezzoListino = Convert.ToDecimal(row.ItemArray[10]); // FTPUN
+                            ddt.Qta = Convert.ToInt32(row.ItemArray[11]); // FTQTA
+                            ddt.Importo = Convert.ToDecimal(row.ItemArray[12]); // FTPU
+                            ddt.Data2 = date2; // FTDTC
+                            ddt.Valuta = row.ItemArray[14].ToString().Trim(); // FTCVA
                             ddt.FTFOM = row.ItemArray[15].ToString().Trim();
                             ddt.FTCMA = row.ItemArray[16].ToString().Trim();
                             ddt.FTCDO = row.ItemArray[17].ToString().Trim();
                             ddt.FLFLAG = row.ItemArray[18].ToString().Trim();
                             ddt.FLFLQU = row.ItemArray[19].ToString().Trim();
-                            ddt.Data3 = date3;
+                            ddt.Data3 = date3; // FTDTAG
                             ddt.FTORAG = row.ItemArray[21].ToString().Trim();
-                            ddt.Importo2 = Convert.ToDecimal(row.ItemArray[22]);
+                            ddt.Importo2 = Convert.ToDecimal(row.ItemArray[22]); // FTTSCA
                             ddt.FTIMRA = row.ItemArray[23].ToString().Trim();
                             ddt.FTMLT0 = row.ItemArray[24].ToString().Trim();
+
+                            ddt.Acquirente = acquirente;
+                            ddt.PrezzoUnitario = prezzoUnitario;
+                            ddt.AnnoN_ddt = annoN_ddt;
+                            ddt.IdFornitore = idFornitore;
                             list.Add(ddt);
                         }
                     }
@@ -484,7 +484,7 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "UPDATE A " +
-                      "SET A.Importo = B.Importo, A.PrezzoUnitario = B.PrezzoUnitario, A.PrezzoListino = B.PrezzoListino " +
+                      "SET A.Importo = B.Importo, A.PrezzoUnitario = B.PrezzoUnitario, A.prezzo_listino = B.prezzo_listino " +
                       "FROM TblDDTMef AS A " +
                       "INNER JOIN TblDDTMefTemp AS B ON A.Anno = B.Anno AND A.N_DDT = B.N_DDT AND A.CodArt = B.CodArt " +
                       "WHERE A.Qta = B.Qta AND A.Importo != B.Importo ";
@@ -540,7 +540,7 @@ namespace GestioneCantieri.DAO
             try
             {
                 sql = "INSERT INTO TblDDTMefTemp (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT, " +
-                      "FTVRF0,FTDT30,FTAIN,DescrizioneArticolo2,Iva,PrezzoListino,Data2,Valuta,FTFOM,FTCMA,FTCDO,FLFLAG,FLFLQU,Data3,FTORAG,Importo2,FTIMRA,FTMLT0) " +
+                      "FTVRF0,FTDT30,FTAIN,descrizione_articolo_2,Iva,prezzo_listino,Data2,Valuta,FTFOM,FTCMA,FTCDO,FLFLAG,FLFLQU,Data3,FTORAG,Importo2,FTIMRA,FTMLT0) " +
                       "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT, " +
                       "@FTVRF0,@FTDT30,@FTAIN,@DescrizioneArticolo2,@Iva,@PrezzoListino,@Data2,@Valuta,@FTFOM,@FTCMA,@FTCDO, " +
                       "@FLFLAG,@FLFLQU,@Data3,@FTORAG,@Importo2,@FTIMRA,@FTMLT0) ";
