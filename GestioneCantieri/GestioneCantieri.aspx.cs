@@ -757,7 +757,7 @@ namespace GestioneCantieri
         }
         protected void ddlScegliMatCant_TextChanged(object sender, EventArgs e)
         {
-            if (ddlScegliMatCant.SelectedIndex != -1)
+            if (ddlScegliMatCant.SelectedIndex > 0)
             {
                 string[] partiMatCant = ddlScegliMatCant.SelectedItem.Text.Split('|');
                 txtCodArt.Text = partiMatCant[0].Trim();
