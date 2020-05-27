@@ -456,8 +456,11 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "INSERT INTO TblDDTMef (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT) " +
-                      "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT)";
+                sql = "INSERT INTO TblDDTMef (Anno,Data,N_DDT,CodArt,DescriCodArt,Qta,Importo,Acquirente,PrezzoUnitario,AnnoN_DDT, " +
+                      "FTVRF0,FTDT30,FTAIN,descrizione_articolo_2,Iva,prezzo_listino,Data2,Valuta,FTFOM,FTCMA,FTCDO,FLFLAG,FLFLQU,Data3,FTORAG,Importo2,FTIMRA,FTMLT0) " +
+                      "VALUES (@Anno,@Data,@N_DDT,@CodArt,@DescriCodArt,@Qta,@Importo,@Acquirente,@PrezzoUnitario,@AnnoN_DDT, " +
+                      "@FTVRF0,@FTDT30,@FTAIN,@DescrizioneArticolo2,@Iva,@PrezzoListino,@Data2,@Valuta,@FTFOM,@FTCMA,@FTCDO, " +
+                      "@FLFLAG,@FLFLQU,@Data3,@FTORAG,@Importo2,@FTIMRA,@FTMLT0) ";
 
                 int rows = cn.Execute(sql, ddt);
 
@@ -514,7 +517,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT A.IdDDTMef, A.Anno, A.Data, A.N_DDT, A.CodArt, A.DescriCodArt, A.Qta, A.Importo, A.Acquirente, A.PrezzoUnitario, A.AnnoN_DDT " +
+                sql = "SELECT A.* " +
                       "FROM TblDDTMefTemp AS A " +
                       "LEFT JOIN TblDDTMef AS B ON A.AnnoN_DDT = B.AnnoN_DDT " +
                       "WHERE B.IdDDTMef IS NULL ";
