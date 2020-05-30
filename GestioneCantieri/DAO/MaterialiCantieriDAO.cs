@@ -42,7 +42,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT TOP 1000 IdMaterialiCantiere,IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo, " +
+                sql = "SELECT TOP 1000 IdMaterialiCantiere AS IdMaterialiCantieri,IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo, " +
                       "ricaricoSiNo,Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore, " +
                       "NumeroBolla,ProtocolloInterno,Note,PzzoFinCli " +
                       "FROM TblMaterialiCantieri " +

@@ -110,7 +110,7 @@
         <!-- Griglia di visualizzazione record -->
         <div class="col-md-12 table-container">
             <asp:GridView ID="grdPreventivi" OnRowCommand="grdPreventivi_RowCommand" AutoGenerateColumns="false"
-                ItemType="GestioneCantieri.Data.Preventivo" runat="server" CssClass="table table-striped table-responsive text-center">
+                ItemType="GestioneCantieri.Data.Preventivo" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Anno" DataField="Anno" />
                     <asp:BoundField HeaderText="Numero" DataField="Numero" />

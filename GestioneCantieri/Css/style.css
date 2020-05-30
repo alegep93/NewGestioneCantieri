@@ -1,34 +1,19 @@
 ﻿body {
-    width: 100%;
+    background: rgba(178,218,255,1);
+    background: -moz-linear-gradient(-45deg, rgba(178,218,255,1) 0%, rgba(130,190,255,1) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(178,218,255,1)), color-stop(100%, rgba(130,190,255,1)));
+    background: -webkit-linear-gradient(-45deg, rgba(178,218,255,1) 0%, rgba(130,190,255,1) 100%);
+    background: -o-linear-gradient(-45deg, rgba(178,218,255,1) 0%, rgba(130,190,255,1) 100%);
+    /*background: -ms-linear-gradient(-45deg, rgba(178,218,255,1) 0%, rgba(130,190,255,1) 100%);*/
+    background: linear-gradient(135deg, rgba(178,218,255,1) 0%, rgba(130,190,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2daff', endColorstr='#82beff', GradientType=1 );
     height: 100%;
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: cover;
-    background-color: #AAA !important;
-    background-image: url('../Images/BackgroundGradient.png');
 }
 
-.default-title {
-    height: 89vh;
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 10em;
-    width: 100%;
-}
-
-.table-overflow {
-    max-height: 500px;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
-    .table-overflow .border-bottom-bold {
-        border-bottom: 3px solid #000;
-    }
-
-/*.navbar-inverse {
+.navbar-inverse {
     border-radius: 0 !important;
 }
 
@@ -104,6 +89,50 @@ h1#filterToggle {
     }
 
     .searchFilterContainer input[type="submit"] {
+        margin: 10px 0 0 0;
+    }
+
+.recapContainer {
+    width: 25%;
+    float: left;
+    margin-bottom: 20px;
+}
+
+    .recapContainer table {
+        padding-left: 50px;
+    }
+
+    .recapContainer span {
+        font-weight: bold;
+        font-size: 26px !important;
+    }
+
+    .recapContainer .col-md-12 span {
+        width: 100%;
+        float: left;
+        font-size: 22px !important;
+    }
+
+    .recapContainer input[type="text"] {
+        width: 100%;
+        text-align: center;
+        padding: 5px 0;
+        font-size: 20px;
+        max-height: 34px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .recapContainer input[disabled] {
+        color: blue !important;
+    }
+
+    .recapContainer input[type="submit"] {
         margin: 10px 0 0 0;
     }
 
@@ -231,7 +260,6 @@ input[type="checkbox"] {
 .compGruppoFixed {
     position: fixed !important;
     right: 0;
-    padding-left: 5px !important;
 }
 
 #body_pnlMascheraMaterialiDaDDT input[type="submit"] {
@@ -242,4 +270,17 @@ input[type="checkbox"] {
 #body_pnlMascheraMaterialiDaDDT span.pull-right {
     position: relative;
     top: -4px;
-}*/
+}
+
+/* Intestazioni tabelle fisse */
+.tableContainer {
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.scrollable-table th {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #FFFFFF;
+}

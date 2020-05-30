@@ -30,7 +30,7 @@
 
         <div class="row">
             <div class="col-md-6 table-container">
-                <asp:GridView ID="grdGruppiInLocale" AllowSorting="true" OnSorting="grdGruppiInLocale_Sorting" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-striped table-responsive">
+                <asp:GridView ID="grdGruppiInLocale" AllowSorting="true" OnSorting="grdGruppiInLocale_Sorting" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-striped table-responsive scrollable-table">
                     <Columns>
                         <asp:BoundField HeaderText="Nome Locale" DataField="NomeLocale" />
                         <asp:BoundField HeaderText="Nome Locale / Gruppi Contenuti" DataField="NomeGruppo" />
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-md-6 table-container">
-                <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-striped table-responsive">
+                <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-striped table-responsive scrollable-table">
                     <Columns>
                         <asp:BoundField HeaderText="Descrizione Frutto" DataField="Descr001" />
                         <asp:BoundField HeaderText="Quantità (tot.)" DataField="Qta" />
@@ -49,7 +49,7 @@
                 </asp:GridView>
             </div>
 
-            <asp:GridView ID="grdFruttiNonInGruppo" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-striped table-responsive" Visible="false">
+            <asp:GridView ID="grdFruttiNonInGruppo" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-striped table-responsive scrollable-table" Visible="false">
                 <Columns>
                     <asp:BoundField HeaderText="Descrizione Frutto" DataField="Descr001" />
                     <asp:BoundField HeaderText="Quantità (tot.)" DataField="Qta" />

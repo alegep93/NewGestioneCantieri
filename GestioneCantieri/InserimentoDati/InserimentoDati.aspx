@@ -147,7 +147,7 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdClienti" OnRowCommand="grdClienti_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Clienti" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.Clienti" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Id Cliente" DataField="IdCliente" />
                             <asp:BoundField HeaderText="Ragione Sociale" DataField="RagSocCli" />
@@ -247,7 +247,7 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdFornitori" OnRowCommand="grdFornitori_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Fornitori" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.Fornitori" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Id" DataField="IdFornitori" />
                             <asp:BoundField HeaderText="Ragione Sociale" DataField="RagSocForni" />
@@ -315,7 +315,7 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdOperai" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Operai" OnRowCommand="grdOperai_RowCommand" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.Operai" OnRowCommand="grdOperai_RowCommand" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Nome" DataField="NomeOp" />
                             <asp:BoundField HeaderText="Descrizione" DataField="DescrOp" />
@@ -491,7 +491,7 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdCantieri" OnRowCommand="grdCantieri_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Cantieri" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.Cantieri" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
                             <asp:BoundField HeaderText="Codice Rif. Cant." DataField="codRiferCant" />
@@ -556,7 +556,7 @@
                 <!-- Griglia di visualizzazione record Spese -->
                 <div class="col-md-12 table-container">
                     <asp:GridView ID="grdSpese" OnRowCommand="grdSpese_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Spese" runat="server" CssClass="table table-striped table-responsive text-center">
+                        ItemType="GestioneCantieri.Data.Spese" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Descrizione" DataField="Descrizione" />
                             <asp:BoundField HeaderText="Prezzo" DataField="Prezzo" DataFormatString="{0:0.00}" />

@@ -104,7 +104,7 @@
         <asp:HiddenField ID="hfIdDDT" runat="server" />
         <div class="row">
             <div class="col-md-12 tableContainer">
-                <asp:GridView ID="grdListaDDTFornitori" runat="server" ItemType="GestioneCantieri.Data.DDTFornitori" AutoGenerateColumns="False" OnRowCommand="grdListaDDTFornitori_RowCommand" CssClass="table table-striped table-responsive text-center">
+                <asp:GridView ID="grdListaDDTFornitori" runat="server" ItemType="GestioneCantieri.Data.DDTFornitori" AutoGenerateColumns="False" OnRowCommand="grdListaDDTFornitori_RowCommand" CssClass="table table-striped table-responsive text-center scrollable-table">
                     <Columns>
                         <asp:BoundField DataField="RagSocFornitore" HeaderText="Ragione Sociale Fornitore" />
                         <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

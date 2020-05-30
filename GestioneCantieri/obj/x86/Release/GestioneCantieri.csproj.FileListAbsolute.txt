@@ -11,3 +11,4 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.csp
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.pdb
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\x86\Release\GestioneCantieri.csproj.CoreCompileInputs.cache

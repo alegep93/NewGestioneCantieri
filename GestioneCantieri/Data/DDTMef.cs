@@ -24,5 +24,25 @@ namespace GestioneCantieri.Data
         public decimal PrezzoUnitario { get => prezzoUnitario; set => prezzoUnitario = value; }
         public decimal Valore { get => valore; set => valore = value; }
         public bool DaInserire { get => daInserire; set => daInserire = value; }
+
+
+        public string FTVRF0 { get; set; } = "";
+        public string FTDT30 { get; set; } = "";
+        public string FTAIN { get; set; } = "";
+        public string DescrizioneArticolo2 { get; set; } = "";
+        public int Iva { get; set; } = 0;
+        public decimal PrezzoListino { get; set; } = 0;
+        public DateTime Data2 { get; set; } = new DateTime();
+        public string Valuta { get; set; } = "";
+        public string FTFOM { get; set; } = "";
+        public string FTCMA { get; set; } = "";
+        public string FTCDO { get; set; } = "";
+        public string FLFLAG { get; set; } = "";
+        public string FLFLQU { get; set; } = "";
+        public DateTime Data3 { get; set; } = new DateTime();
+        public string FTORAG { get; set; } = "";
+        public decimal Importo2 { get; set; } = 0;
+        public string FTIMRA { get; set; } = "";
+        public string FTMLT0 { get; set; } = "";
     }
 }

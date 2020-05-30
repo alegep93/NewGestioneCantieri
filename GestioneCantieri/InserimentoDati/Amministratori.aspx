@@ -24,7 +24,7 @@
         </div>
         <div class="row" style="margin-top: 30px;">
             <div class="col-md-offset-3 col-md-6 text-center">
-                <asp:GridView ID="grdAmministratori" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.Amministratore" OnRowCommand="grdAmministratori_RowCommand" CssClass="table table-striped text-center" runat="server">
+                <asp:GridView ID="grdAmministratori" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.Amministratore" OnRowCommand="grdAmministratori_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                     <Columns>
                         <asp:BoundField HeaderText="Nome amministratore" DataField="Nome" />
                         <asp:TemplateField>

@@ -102,7 +102,7 @@
         </div>
 
         <div class="tableContainer col-md-12 table-responsive">
-            <asp:GridView ID="grdStampaPerTipologia" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped text-center">
+            <asp:GridView ID="grdStampaPerTipologia" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped text-center scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                     <asp:BoundField DataField="CodCant" HeaderText="Codice Cantiere" />

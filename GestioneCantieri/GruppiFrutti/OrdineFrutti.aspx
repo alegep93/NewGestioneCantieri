@@ -163,7 +163,7 @@
 
         <div class="row">
             <div class="tableContainer col-md-12 table-responsive">
-                <asp:GridView ID="grdOrdini" runat="server" ItemType="GestioneCantieri.Data.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" AutoGenerateColumns="False" CssClass="table table-striped text-center">
+                <asp:GridView ID="grdOrdini" runat="server" ItemType="GestioneCantieri.Data.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" AutoGenerateColumns="False" CssClass="table table-striped text-center scrollable-table">
                     <Columns>
                         <asp:BoundField DataField="DescrCant" HeaderText="Cantiere" />
                         <asp:BoundField DataField="Appartamento" HeaderText="Locale" />

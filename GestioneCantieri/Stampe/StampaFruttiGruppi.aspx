@@ -36,7 +36,7 @@
             <div class="col-md-6 table-container">
                 <asp:GridView ID="grdFruttiInGruppo" AllowSorting="true" OnSorting="grdFruttiInGruppo_Sorting"
                     AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaFruttiPerGruppi"
-                    runat="server" CssClass="table table-striped table-responsive">
+                    runat="server" CssClass="table table-striped table-responsive scrollable-table">
                     <Columns>
                         <asp:BoundField HeaderText="Nome Gruppo" DataField="NomeGruppo" />
                         <asp:BoundField HeaderText="Nome Gruppo / Nome Frutto" DataField="NomeFrutto" />

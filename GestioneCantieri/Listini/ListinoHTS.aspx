@@ -89,8 +89,8 @@
             </asp:Panel>
         </div>
         <div class="row">
-            <div class="col-md-12 text-center">
-                <asp:GridView ID="grdListinoHts" runat="server" ItemType="GestioneCantieri.Data.Mamg0" OnRowDataBound="grdListinoHts_RowDataBound" AutoGenerateColumns="False" CssClass="table table-striped table-responsive">
+            <div class="col-md-12 text-center tableContainer">
+                <asp:GridView ID="grdListinoHts" runat="server" ItemType="GestioneCantieri.Data.Mamg0" OnRowDataBound="grdListinoHts_RowDataBound" AutoGenerateColumns="False" CssClass="table table-striped table-responsive scrollable-table">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="Id" />
                         <asp:BoundField DataField="Codice" HeaderText="Codice" />

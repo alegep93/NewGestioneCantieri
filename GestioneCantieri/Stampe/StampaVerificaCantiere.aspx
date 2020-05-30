@@ -77,7 +77,7 @@
 
         <div class="tableContainer col-md-12 table-responsive">
             <asp:GridView ID="grdStampaVerificaCant" runat="server"
-                ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped text-center"
+                ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped text-center scrollable-table"
                 AllowSorting="true" OnSorting="grdStampaVerificaCant_Sorting">
                 <Columns>
                     <asp:BoundField DataField="Tipologia" HeaderText="Tipologia" />
@@ -133,7 +133,7 @@
         </div>
 
         <!-- GridView di appoggio -->
-        <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center" Visible="false">
+        <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table" Visible="false">
             <Columns>
                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                 <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />
@@ -149,7 +149,7 @@
             </Columns>
         </asp:GridView>
 
-        <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center" Visible="false">
+        <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-responsive text-center scrollable-table" Visible="false">
             <Columns>
                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                 <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />
