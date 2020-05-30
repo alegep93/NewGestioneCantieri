@@ -163,8 +163,9 @@
     </asp:Panel>
 
     <div class="row mt-3">
-        <div class="col text-center table-overflow">
-            <asp:GridView ID="grdListaDDTMef" HeaderStyle-CssClass="border-bottom-bold" runat="server" ItemType="GestioneCantieri.Data.DDTMef" AutoGenerateColumns="False" CssClass="table table-dark table-striped scrollable-table">
+        <div class="col text-center table-overflow ddt-mef-table">
+            <asp:GridView ID="grdListaDDTMef" HeaderStyle-CssClass="border-bottom-bold" runat="server" ItemType="GestioneCantieri.Data.DDTMef" 
+                AutoGenerateColumns="False" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="Anno" HeaderText="Anno" />
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

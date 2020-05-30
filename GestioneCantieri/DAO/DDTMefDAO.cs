@@ -12,7 +12,7 @@ namespace GestioneCantieri.DAO
     public class DDTMefDAO : BaseDAO
     {
         /*** Lista completa dei DDT ***/
-        public static List<DDTMef> getDDTList()
+        public static List<DDTMef> GetDDTList()
         {
             string sql = "";
             SqlConnection cn = GetConnection();
@@ -122,7 +122,7 @@ namespace GestioneCantieri.DAO
         }
 
         /*** Mostro la lista dei DDT in base ai campi compilati ***/
-        public static List<DDTMef> searchFilter(DDTMefObject ddt)
+        public static List<DDTMef> SearchFilter(DDTMefObject ddt)
         {
             List<DDTMef> retList = new List<DDTMef>();
             string sql = "";
@@ -233,7 +233,7 @@ namespace GestioneCantieri.DAO
         }
 
         /*** Media del prezzo unitario ***/
-        public static decimal calcolaMediaPrezzoUnitario()
+        public static decimal CalcolaMediaPrezzoUnitario()
         {
             decimal media = 0m;
             string sql = "";
@@ -260,7 +260,7 @@ namespace GestioneCantieri.DAO
         }
 
         /*** Media dei prezzi con filtro ***/
-        public static decimal calcolaMediaPrezzoUnitarioWithSearch(DDTMefObject ddt)
+        public static decimal CalcolaMediaPrezzoUnitarioWithSearch(DDTMefObject ddt)
         {
             decimal media = 0m;
             string sql = "";
@@ -449,6 +449,7 @@ namespace GestioneCantieri.DAO
                 CloseResouces(cn, null);
             }
         }
+
         public static bool InsertNewDdt(DDTMef ddt)
         {
             SqlConnection cn = GetConnection();
