@@ -111,10 +111,8 @@
         </div>
 
         <form id="frmGestioneCantieri" runat="server">
-            <div class="container-fluid">
-                <asp:ContentPlaceHolder ID="body" runat="server">
-                </asp:ContentPlaceHolder>
-            </div>
+            <asp:ContentPlaceHolder ID="body" runat="server">
+            </asp:ContentPlaceHolder>
         </form>
     </div>
 </body>
