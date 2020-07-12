@@ -60,8 +60,8 @@ namespace GestioneCantieri
             //spinnerImg.Visible = true;
 
             // Genero una lista a partire dai dati contenuti nel nuovo file DBF
-            //List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
-            List<DDTMef> ddtList = ReadDataFromTextFile(idFornitore);
+            List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
+            //List<DDTMef> ddtList = ReadDataFromTextFile(idFornitore);
 
             // Popolo la tabella temporanea
             InsertIntoDdtTemp(ddtList);
