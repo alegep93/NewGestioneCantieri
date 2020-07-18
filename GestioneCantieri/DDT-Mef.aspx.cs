@@ -92,6 +92,9 @@ namespace GestioneCantieri
                     DDTMef ddt = new DDTMef();
                     int qta = line.Substring(174, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(174, 8).Trim());
                     decimal importo = line.Substring(185, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(185, 12).Trim())},{Convert.ToInt32(line.Substring(196, 3).Trim())}");
+                    string sigf = line.Substring(41, 3).Trim();
+                    string codf = line.Substring(44, 16).Trim();
+
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
                     ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : Convert.ToDateTime(GetDateFromString(line.Substring(4, 8).Trim()));
                     ddt.N_ddt = line.Substring(12, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 6).Trim());
@@ -102,7 +105,8 @@ namespace GestioneCantieri
                     ddt.DescriCodArt = line.Substring(77, 40).Trim();
                     ddt.DescrizioneArticolo2 = line.Substring(117, 40).Trim();
                     ddt.Iva = line.Substring(157, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(157, 2).Trim());
-                    ddt.PrezzoListino = line.Substring(159, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(159, 12).Trim())},{Convert.ToInt32(line.Substring(170, 3).Trim())}");
+                    //ddt.PrezzoListino = line.Substring(159, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(159, 12).Trim())},{Convert.ToInt32(line.Substring(170, 3).Trim())}");
+                    ddt.PrezzoListino = Convert.ToDecimal(Mamg0DAO.GetPrezzoDiListino(sigf, codf));
                     ddt.Qta = qta;
                     ddt.Importo = importo;
                     ddt.Data2 = line.Substring(200, 8).Trim() == "" ? new DateTime() : Convert.ToDateTime(GetDateFromString(line.Substring(200, 8).Trim()));

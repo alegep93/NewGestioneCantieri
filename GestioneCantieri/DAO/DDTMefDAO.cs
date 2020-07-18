@@ -19,8 +19,7 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT TOP 500 IdDDTMef, Anno, Data, N_DDT, CodArt, " +
-                      "DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT " +
+                sql = "SELECT TOP 500 * " +
                       "FROM TblDDTMef " +
                       "ORDER BY Anno, Data, N_DDT, CodArt";
 
@@ -145,7 +144,7 @@ namespace GestioneCantieri.DAO
             {
                 /* Senza Filtro */
                 sql = "SELECT IdDDTMef, Anno, Data, N_DDT, CodArt, " +
-                      "DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT " +
+                      "DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, prezzo_listino " +
                       "FROM TblDDTMef ";
 
                 //Controllo i casi in cui entrambi gli anni o le date siano
@@ -221,7 +220,7 @@ namespace GestioneCantieri.DAO
                     tmpDDTMef.Importo = (dr.IsDBNull(7) ? -1m : dr.GetDecimal(7));
                     tmpDDTMef.Acquirente = (dr.IsDBNull(8) ? null : dr.GetString(8));
                     tmpDDTMef.PrezzoUnitario = (dr.IsDBNull(9) ? -1m : dr.GetDecimal(9));
-                    tmpDDTMef.AnnoN_ddt = (dr.IsDBNull(10) ? -1 : dr.GetInt32(10));
+                    tmpDDTMef.PrezzoListino = (dr.IsDBNull(10) ? -1 : dr.GetDecimal(10));
                     retList.Add(tmpDDTMef);
                 }
                 return retList;

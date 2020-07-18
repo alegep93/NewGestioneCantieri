@@ -163,10 +163,10 @@
                         <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
                         <asp:BoundField DataField="DescriCodArt" HeaderText="Descrizione Codice Articolo" />
                         <asp:BoundField DataField="Qta" HeaderText="Quantità" />
+                        <asp:BoundField DataField="PrezzoListino" HeaderText="Prezzo di listino" />
                         <asp:BoundField DataField="Importo" HeaderText="Importo" DataFormatString="{0:0.00}" />
                         <asp:BoundField DataField="Acquirente" HeaderText="Acquirente" />
                         <asp:BoundField DataField="PrezzoUnitario" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
-                        <asp:BoundField DataField="AnnoN_ddt" HeaderText="Anno N_DDT" />
                     </Columns>
                     <PagerSettings Mode="Numeric" Position="Bottom" PageButtonCount="20" />
                     <PagerStyle ForeColor="#333" BorderWidth="0" BorderColor="Transparent" BorderStyle="None" CssClass="text-center pagination-container" />
