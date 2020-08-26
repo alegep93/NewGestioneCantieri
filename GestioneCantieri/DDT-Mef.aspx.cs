@@ -95,8 +95,12 @@ namespace GestioneCantieri
                     string sigf = line.Substring(41, 3).Trim();
                     string codf = line.Substring(44, 16).Trim();
 
+                    DateTime data = GetDateFromString(line.Substring(4, 8).Trim()).Value;
+                    DateTime data2 = GetDateFromString(line.Substring(200, 8).Trim()).HasValue ? GetDateFromString(line.Substring(200, 8).Trim()).Value : data;
+                    DateTime data3 = GetDateFromString(line.Substring(219, 8).Trim()).HasValue ? GetDateFromString(line.Substring(219, 8).Trim()).Value : data;
+
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
-                    ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : Convert.ToDateTime(GetDateFromString(line.Substring(4, 8).Trim()));
+                    ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : data;
                     ddt.N_ddt = line.Substring(12, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 6).Trim());
                     ddt.FTVRF0 = line.Substring(18, 15).Trim();
                     ddt.FTDT30 = line.Substring(33, 41).Trim();
@@ -109,14 +113,14 @@ namespace GestioneCantieri
                     ddt.PrezzoListino = Convert.ToDecimal(Mamg0DAO.GetPrezzoDiListino(sigf, codf));
                     ddt.Qta = qta;
                     ddt.Importo = importo;
-                    ddt.Data2 = line.Substring(200, 8).Trim() == "" ? new DateTime() : Convert.ToDateTime(GetDateFromString(line.Substring(200, 8).Trim()));
+                    ddt.Data2 = line.Substring(200, 8).Trim() == "" ? new DateTime() : data2;
                     ddt.Valuta = line.Substring(208, 3).Trim();
                     ddt.FTFOM = line.Substring(211, 1).Trim();
                     ddt.FTCMA = line.Substring(212, 2).Trim();
                     ddt.FTCDO = line.Substring(214, 2).Trim();
                     ddt.FLFLAG = line.Substring(216, 1).Trim();
                     ddt.FLFLQU = line.Substring(217, 2).Trim();
-                    ddt.Data3 = line.Substring(219, 8).Trim() == "" ? new DateTime() : Convert.ToDateTime(GetDateFromString(line.Substring(219, 8).Trim()));
+                    ddt.Data3 = line.Substring(219, 8).Trim() == "" ? new DateTime() : data3;
                     ddt.FTORAG = line.Substring(227, 6).Trim();
                     ddt.FTMLT0 = line.Substring(233, 5).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(233, 5).Trim())},{Convert.ToInt32(line.Substring(237, 2).Trim())}";
                     ddt.Importo2 = line.Substring(240, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(240, 12).Trim())},{Convert.ToInt32(line.Substring(251, 3).Trim())}");
@@ -135,10 +139,15 @@ namespace GestioneCantieri
             return ddts;
         }
 
-        public static DateTime GetDateFromString(string dataString)
+        public static DateTime? GetDateFromString(string dataString)
         {
             //Ottiene un DateTime da una stringa con la data formattata in base alla nostra scelta (in questo caso Italiana "dd/MM/yyyy")
-            DateTime data = new DateTime(Convert.ToInt32(dataString.Substring(0, 4)), Convert.ToInt32(dataString.Substring(4, 2)), Convert.ToInt32(dataString.Substring(6, 2)));
+            DateTime? data = null;
+            try
+            {
+                data = new DateTime(Convert.ToInt32(dataString.Substring(0, 4)), Convert.ToInt32(dataString.Substring(4, 2)), Convert.ToInt32(dataString.Substring(6, 2)));
+            }
+            catch { }
             return data;
         }
 
