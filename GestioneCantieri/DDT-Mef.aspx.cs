@@ -59,26 +59,33 @@ namespace GestioneCantieri
 
             //spinnerImg.Visible = true;
 
-            // Genero una lista a partire dai dati contenuti nel nuovo file DBF
-            //List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
-            List<DDTMef> ddtList = ReadDataFromTextFile(idFornitore);
-
-            // Popolo la tabella temporanea
-            InsertIntoDdtTemp(ddtList);
-
-            //Prendo la lista dei DDT non presenti sulla tabella TblDDTMef
-            List<DDTMef> ddtMancanti = DDTMefDAO.GetNewDDT();
-
-            foreach (DDTMef ddt in ddtMancanti)
+            try
             {
-                // Inserisco i nuovi DDT
-                DDTMefDAO.InsertNewDdt(ddt);
+                // Genero una lista a partire dai dati contenuti nel nuovo file DBF
+                //List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
+                List<DDTMef> ddtList = ReadDataFromTextFile(idFornitore);
+
+                // Popolo la tabella temporanea
+                InsertIntoDdtTemp(ddtList);
+
+                //Prendo la lista dei DDT non presenti sulla tabella TblDDTMef
+                List<DDTMef> ddtMancanti = DDTMefDAO.GetNewDDT();
+
+                foreach (DDTMef ddt in ddtMancanti)
+                {
+                    // Inserisco i nuovi DDT
+                    DDTMefDAO.InsertNewDdt(ddt);
+                }
+
+                //Aggiorno i prezzi del mese corrente
+                UpdatePrezzi();
+
+                BindGrid();
             }
-
-            //Aggiorno i prezzi del mese corrente
-            UpdatePrezzi();
-
-            BindGrid();
+            catch (Exception ex)
+            {
+                lblMsg.Text = $"Errore durante l'importazione del DDT Mef ===> {ex.Message}";
+            }
         }
 
         private List<DDTMef> ReadDataFromTextFile(int idFornitore)
@@ -91,13 +98,13 @@ namespace GestioneCantieri
                 {
                     DDTMef ddt = new DDTMef();
                     int qta = line.Substring(174, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(174, 8).Trim());
-                    decimal importo = line.Substring(185, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(185, 12).Trim())},{Convert.ToInt32(line.Substring(196, 3).Trim())}");
+                    decimal importo = line.Substring(185, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(185, 12).Trim())},{Convert.ToInt32(line.Substring(197, 3).Trim())}");
                     string sigf = line.Substring(41, 3).Trim();
                     string codf = line.Substring(44, 16).Trim();
 
                     DateTime data = GetDateFromString(line.Substring(4, 8).Trim()).Value;
-                    DateTime data2 = GetDateFromString(line.Substring(200, 8).Trim()).HasValue ? GetDateFromString(line.Substring(200, 8).Trim()).Value : data;
-                    DateTime data3 = GetDateFromString(line.Substring(219, 8).Trim()).HasValue ? GetDateFromString(line.Substring(219, 8).Trim()).Value : data;
+                    DateTime data2 = GetDateFromString(line.Substring(200, 8).Trim()) ?? data;
+                    DateTime data3 = GetDateFromString(line.Substring(219, 8).Trim()) ?? data;
 
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
                     ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : data;
@@ -122,9 +129,9 @@ namespace GestioneCantieri
                     ddt.FLFLQU = line.Substring(217, 2).Trim();
                     ddt.Data3 = line.Substring(219, 8).Trim() == "" ? new DateTime() : data3;
                     ddt.FTORAG = line.Substring(227, 6).Trim();
-                    ddt.FTMLT0 = line.Substring(233, 5).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(233, 5).Trim())},{Convert.ToInt32(line.Substring(237, 2).Trim())}";
-                    ddt.Importo2 = line.Substring(240, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(240, 12).Trim())},{Convert.ToInt32(line.Substring(251, 3).Trim())}");
-                    ddt.FTIMRA = line.Substring(255, 12).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(255, 12).Trim())},{Convert.ToInt32(line.Substring(266, 3).Trim())}";
+                    ddt.FTMLT0 = line.Substring(233, 5).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(233, 5).Trim())},{Convert.ToInt32(line.Substring(238, 2).Trim())}";
+                    ddt.Importo2 = line.Substring(240, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(240, 12).Trim())},{Convert.ToInt32(line.Substring(252, 3).Trim())}");
+                    ddt.FTIMRA = line.Substring(255, 12).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(255, 12).Trim())},{Convert.ToInt32(line.Substring(267, 3).Trim())}";
                     ddt.AnnoN_ddt = (line.Substring(0, 4).Trim() == "" || line.Substring(12, 6).Trim() == "") ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(0, 4).Trim())}{Convert.ToInt32(line.Substring(12, 6).Trim())}");
                     ddt.IdFornitore = idFornitore;
                     ddt.Acquirente = txtAcquirente.Text;
@@ -134,7 +141,7 @@ namespace GestioneCantieri
             }
             catch (Exception ex)
             {
-                lblMsg.Text = $"Errore durante la lettura del file dei DDT ===> {ex.Message}";
+                throw new Exception("Errore durante il popolamento della lista dei DDT Mef da ddt.txt", ex);
             }
             return ddts;
         }

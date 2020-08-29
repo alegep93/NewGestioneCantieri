@@ -40,7 +40,7 @@
                     <div class="col-md-2">
                         <asp:Button ID="btn_GeneraDdtDaDbf" class="btn btn-info btn-lg" OnClick="btn_GeneraDdtDaDbf_Click" OnClientClick="javascript:ShowHideLoader()" Text="Importa DBF" runat="server" /><br />
                         <img id="spinnerImg" src="Images/spinner.gif" alt="spinner" runat="server" />
-                        <asp:Label ID="lblMsg" runat="server"></asp:Label>
+                        <asp:Label ID="lblMsg" style="position: relative;top: 50px;" runat="server"></asp:Label>
                     </div>
                     <div class="col-md-8 recapContainer">
                         <div class="col-md-12">
