@@ -7,11 +7,13 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri {
-    
-    
-    public partial class GestisciFrutti {
-        
+namespace GestioneCantieri
+{
+
+
+    public partial class GestisciFrutti
+    {
+
         /// <summary>
         /// Controllo btnApriInserisci.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriInserisci;
-        
+
         /// <summary>
         /// Controllo btnApriModifica.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriModifica;
-        
+
         /// <summary>
         /// Controllo btnApriElimina.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriElimina;
-        
+
         /// <summary>
         /// Controllo lblTitle.
         /// </summary>
@@ -47,7 +49,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTitle;
-        
+
         /// <summary>
         /// Controllo pnlInserisci.
         /// </summary>
@@ -56,7 +58,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlInserisci;
-        
+
         /// <summary>
         /// Controllo lblInsFrutto.
         /// </summary>
@@ -65,7 +67,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInsFrutto;
-        
+
         /// <summary>
         /// Controllo txtInsNomeFrutto.
         /// </summary>
@@ -74,7 +76,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInsNomeFrutto;
-        
+
         /// <summary>
         /// Controllo btnInsFrutto.
         /// </summary>
@@ -83,7 +85,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInsFrutto;
-        
+
         /// <summary>
         /// Controllo lblIsFruttoInserito.
         /// </summary>
@@ -92,16 +94,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblIsFruttoInserito;
-        
-        /// <summary>
-        /// Controllo lblInsMostraListaFrutti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInsMostraListaFrutti;
-        
+
         /// <summary>
         /// Controllo pnlModifica.
         /// </summary>
@@ -110,7 +103,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlModifica;
-        
+
         /// <summary>
         /// Controllo txtFiltroFruttiMod1.
         /// </summary>
@@ -119,7 +112,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiMod1;
-        
+
         /// <summary>
         /// Controllo txtFiltroFruttiMod2.
         /// </summary>
@@ -128,7 +121,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiMod2;
-        
+
         /// <summary>
         /// Controllo txtFiltroFruttiMod3.
         /// </summary>
@@ -137,7 +130,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiMod3;
-        
+
         /// <summary>
         /// Controllo lblModScegliFrutto.
         /// </summary>
@@ -146,7 +139,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblModScegliFrutto;
-        
+
         /// <summary>
         /// Controllo ddlModScegliFrutto.
         /// </summary>
@@ -155,7 +148,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlModScegliFrutto;
-        
+
         /// <summary>
         /// Controllo pnlModFrutto.
         /// </summary>
@@ -164,7 +157,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlModFrutto;
-        
+
         /// <summary>
         /// Controllo lblModNomeFrutto.
         /// </summary>
@@ -173,7 +166,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblModNomeFrutto;
-        
+
         /// <summary>
         /// Controllo txtModNomeFrutto.
         /// </summary>
@@ -182,7 +175,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtModNomeFrutto;
-        
+
         /// <summary>
         /// Controllo btnSaveModFrutto.
         /// </summary>
@@ -191,7 +184,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveModFrutto;
-        
+
         /// <summary>
         /// Controllo lblSaveModFrutto.
         /// </summary>
@@ -200,16 +193,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSaveModFrutto;
-        
-        /// <summary>
-        /// Controllo lblModListaFrutti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModListaFrutti;
-        
+
         /// <summary>
         /// Controllo pnlElimina.
         /// </summary>
@@ -218,7 +202,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlElimina;
-        
+
         /// <summary>
         /// Controllo txtFiltroFruttiDel1.
         /// </summary>
@@ -227,7 +211,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiDel1;
-        
+
         /// <summary>
         /// Controllo txtFiltroFruttiDel2.
         /// </summary>
@@ -236,7 +220,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiDel2;
-        
+
         /// <summary>
         /// Controllo txtFiltroFruttiDel3.
         /// </summary>
@@ -245,7 +229,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiDel3;
-        
+
         /// <summary>
         /// Controllo lblDelFrutto.
         /// </summary>
@@ -254,7 +238,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDelFrutto;
-        
+
         /// <summary>
         /// Controllo ddlDelFrutto.
         /// </summary>
@@ -263,7 +247,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDelFrutto;
-        
+
         /// <summary>
         /// Controllo btnDelFrutto.
         /// </summary>
@@ -272,7 +256,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDelFrutto;
-        
+
         /// <summary>
         /// Controllo lblIsDelFrutto.
         /// </summary>
@@ -281,14 +265,5 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblIsDelFrutto;
-        
-        /// <summary>
-        /// Controllo lblDelMostraListaFrutti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDelMostraListaFrutti;
     }
 }

@@ -90,7 +90,7 @@ namespace GestioneCantieri
         {
             if (txtModNomeFrutto.Text != "")
             {
-                bool isSaved = GruppiFruttiDAO.UpdateFrutto(Convert.ToInt32(ddlModScegliFrutto.SelectedItem.Value), txtModNomeFrutto.Text);
+                bool isSaved = FruttiDAO.UpdateFrutto(new Frutti { Id1 = Convert.ToInt32(ddlModScegliFrutto.SelectedItem.Value), Descr001 = txtModNomeFrutto.Text });
                 if (isSaved)
                 {
                     lblSaveModFrutto.Text = "Frutto modificato con successo in '" + txtModNomeFrutto.Text + "'";
@@ -113,10 +113,10 @@ namespace GestioneCantieri
         }
         protected void btnDelFrutto_Click(object sender, EventArgs e)
         {
-            bool isDeleted = GruppiFruttiDAO.DeleteFrutto(Convert.ToInt32(ddlDelFrutto.SelectedItem.Value));
+            bool isDeleted = FruttiDAO.DeleteFrutto(Convert.ToInt32(ddlDelFrutto.SelectedItem.Value));
             if (isDeleted)
             {
-                lblIsDelFrutto.Text = "Frutto '"+ ddlDelFrutto.SelectedItem.Text +"' eliminato con successo";
+                lblIsDelFrutto.Text = "Frutto '" + ddlDelFrutto.SelectedItem.Text + "' eliminato con successo";
                 lblIsDelFrutto.ForeColor = Color.Blue;
             }
             else
@@ -172,7 +172,7 @@ namespace GestioneCantieri
             string filtro2 = pnlModifica.Visible == true ? txtFiltroFruttiMod2.Text : txtFiltroFruttiDel2.Text;
             string filtro3 = pnlModifica.Visible == true ? txtFiltroFruttiMod3.Text : txtFiltroFruttiDel3.Text;
 
-            List<Frutti> listFrutti = FruttiDAO.getFrutti(filtro1, filtro2, filtro3);
+            List<Frutti> listFrutti = FruttiDAO.GetFrutti(filtro1, filtro2, filtro3);
             ddlModScegliFrutto.Items.Clear();
             ddlDelFrutto.Items.Clear();
 
@@ -182,9 +182,9 @@ namespace GestioneCantieri
 
             foreach (Frutti f in listFrutti)
             {
-                string descrFrutto = f.Descr;
-                ddlModScegliFrutto.Items.Add(new ListItem(descrFrutto, f.Id.ToString())); //new ListItem(valore, chiave);
-                ddlDelFrutto.Items.Add(new ListItem(descrFrutto, f.Id.ToString())); //new ListItem(valore, chiave);
+                string descrFrutto = f.Descr001;
+                ddlModScegliFrutto.Items.Add(new ListItem(descrFrutto, f.Id1.ToString())); //new ListItem(valore, chiave);
+                ddlDelFrutto.Items.Add(new ListItem(descrFrutto, f.Id1.ToString())); //new ListItem(valore, chiave);
             }
         }
         protected void MostraListaFruttiInseriti()
@@ -192,7 +192,7 @@ namespace GestioneCantieri
             string filtro1 = pnlModifica.Visible == true ? txtFiltroFruttiMod1.Text : txtFiltroFruttiDel1.Text;
             string filtro2 = pnlModifica.Visible == true ? txtFiltroFruttiMod2.Text : txtFiltroFruttiDel2.Text;
             string filtro3 = pnlModifica.Visible == true ? txtFiltroFruttiMod3.Text : txtFiltroFruttiDel3.Text;
-            fruttiList = FruttiDAO.getFruttiWithSearch(filtro1, filtro2, filtro3);
+            fruttiList = FruttiDAO.GetFrutti(filtro1, filtro2, filtro3);
         }
     }
 }

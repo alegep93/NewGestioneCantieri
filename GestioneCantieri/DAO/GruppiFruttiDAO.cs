@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -11,375 +12,193 @@ namespace GestioneCantieri.DAO
     {
         public static bool CreaGruppo(string nomeGruppo, string descr)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("IF NOT EXISTS(SELECT NomeGruppo FROM TblGruppiFrutti WHERE NomeGruppo = @nomeGruppo)");
+            sql.AppendLine("INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@nomeGruppo,@descr,0)");
             try
             {
-                sql = "IF NOT EXISTS(SELECT NomeGruppo FROM TblGruppiFrutti WHERE NomeGruppo = @pNomeGruppo) " +
-                        "INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@pNomeGruppo,@pDescr,0) ";
-
-                int rowNumber = cn.Execute(sql, new { pNomeGruppo = nomeGruppo, pDescr = descr });
-                if (rowNumber > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { nomeGruppo, descr }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante la creazione di un nuovo gruppo", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
+
         public static int InserisciGruppo(string nomeGruppo, string descr)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            int ret = 0;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("IF NOT EXISTS(SELECT NomeGruppo FROM TblGruppiFrutti WHERE NomeGruppo = @nomeGruppo)");
+            sql.AppendLine("INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@nomeGruppo,@descr,0)");
+            sql.AppendLine("SELECT CAST(scope_identity() AS int)");
 
             try
             {
-                sql = "IF NOT EXISTS(SELECT NomeGruppo FROM TblGruppiFrutti WHERE NomeGruppo = @pNomeGruppo) " +
-                      "INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@pNomeGruppo,@pDescr,0) " +
-                      "SELECT CAST(scope_identity() AS int) ";
-
-                return cn.Query<int>(sql, new { pNomeGruppo = nomeGruppo, pDescr = descr }).FirstOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<int>(sql.ToString(), new { nomeGruppo, descr }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante la creazione di un nuovo gruppo", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static List<GruppiFrutti> getGruppi(string filter1, string filter2, string filter3)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
-            filter1 = "%" + filter1 + "%";
-            filter2 = "%" + filter2 + "%";
-            filter3 = "%" + filter3 + "%";
+        public static List<GruppiFrutti> GetGruppi(string filtroNome1, string filtroNome2, string filtroNome3, bool gruppiNonCompletati = false)
+        {
+            List<GruppiFrutti> ret = new List<GruppiFrutti>();
+            StringBuilder sql = new StringBuilder();
+
+            filtroNome1 = "%" + filtroNome1 + "%";
+            filtroNome2 = "%" + filtroNome2 + "%";
+            filtroNome3 = "%" + filtroNome3 + "%";
+
+            sql.AppendLine("SELECT Id,NomeGruppo,Descrizione");
+            sql.AppendLine("FROM TblGruppiFrutti");
+            sql.AppendLine("WHERE NomeGruppo LIKE @filtroNome1 AND NomeGruppo LIKE @filtroNome2 AND NomeGruppo LIKE @filtroNome3");
+            sql.AppendLine(gruppiNonCompletati ? "AND Completato = 0" : "");
+            sql.AppendLine("ORDER BY NomeGruppo ASC");
 
             try
             {
-                sql = "SELECT Id,NomeGruppo,Descrizione FROM TblGruppiFrutti " +
-                      "WHERE NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3 " +
-                      "ORDER BY NomeGruppo ASC ";
-
-                return cn.Query<GruppiFrutti>(sql, new { pFilter1 = filter1, pFilter2 = filter2, pFilter3 = filter3 }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<GruppiFrutti>(sql.ToString(), new { filtroNome1, filtroNome2, filtroNome3 }).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei gruppi", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static List<GruppiFrutti> getGruppiNonCompletati(string filter1, string filter2, string filter3)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
-            filter1 = "%" + filter1 + "%";
-            filter2 = "%" + filter2 + "%";
-            filter3 = "%" + filter3 + "%";
+        public static List<GruppiFrutti> GetAll()
+        {
+            List<GruppiFrutti> ret = new List<GruppiFrutti>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT Id,NomeGruppo,Descrizione,Completato,Controllato");
+            sql.AppendLine("FROM TblGruppiFrutti");
+            sql.AppendLine("ORDER BY NomeGruppo ASC");
 
             try
             {
-                sql = "SELECT Id,NomeGruppo,Descrizione FROM TblGruppiFrutti " +
-                      "WHERE Completato = 0 AND NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3 " +
-                      "ORDER BY NomeGruppo ASC ";
-
-                return cn.Query<GruppiFrutti>(sql, new { pFilter1 = filter1, pFilter2 = filter2, pFilter3 = filter3 }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei gruppi non compleatati", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static List<GruppiFrutti> getGruppiNonControllati()
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT Id,NomeGruppo,Descrizione,Completato,Controllato FROM TblGruppiFrutti " +
-                      "WHERE Controllato = 0 " +
-                      "ORDER BY NomeGruppo ASC ";
-
-                return cn.Query<GruppiFrutti>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<GruppiFrutti>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei gruppi non controllati", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static List<GruppiFrutti> GetGruppiWithSearch(string filter1, string filter2, string filter3)
+
+        public static GruppiFrutti GetSingle(int idGruppo)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            filter1 = "%" + filter1 + "%";
-            filter2 = "%" + filter2 + "%";
-            filter3 = "%" + filter3 + "%";
-
+            GruppiFrutti ret = new GruppiFrutti();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblGruppiFrutti WHERE Id = @idGruppo");
             try
             {
-                sql = "SELECT Id,NomeGruppo,Descrizione FROM TblGruppiFrutti " +
-                      "WHERE NomeGruppo LIKE @pFilter1 AND NomeGruppo LIKE @pFilter2 AND NomeGruppo LIKE @pFilter3 " +
-                      "ORDER BY NomeGruppo ASC ";
-
-                return cn.Query<GruppiFrutti>(sql, new { pFilter1 = filter1, pFilter2 = filter2, pFilter3 = filter3 }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<GruppiFrutti>(sql.ToString(), new { idGruppo }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei gruppi cercati", ex);
+                throw new Exception("Errore durante la GetSingle in GruppiFruttiDAO", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static string getDescrGruppo(int idGruppo)
+
+        public static bool UpdateGruppo(GruppiFrutti item)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("UPDATE TblGruppiFrutti");
+            sql.AppendLine("SET NomeGruppo = @NomeGruppo, Descrizione = @Descrizione");
+            sql.AppendLine("WHERE Id = @Id");
 
             try
             {
-                sql = "SELECT Descrizione " +
-                      "FROM TblGruppiFrutti " +
-                      "WHERE Id = @pIdGruppo ";
-
-                return cn.Query<string>(sql, new { pIdGruppo = idGruppo }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), item) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero della descrizione del gruppo", ex);
+                throw new Exception("Errore durante l'aggiornamento di un gruppo", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static string getNomeGruppo(int idGruppo)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
-            try
-            {
-                sql = "SELECT NomeGruppo " +
-                      "FROM TblGruppiFrutti " +
-                      "WHERE Id = @pIdGruppo ";
 
-                return cn.Query<string>(sql, new { pIdGruppo = idGruppo }).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero del nome del gruppo", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static GruppiFrutti GetGruppo(int idGruppo)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT Id, NomeGruppo, Descrizione AS Descr FROM TblGruppiFrutti WHERE Id = @idGruppo ";
-
-                return cn.Query<GruppiFrutti>(sql, new { idGruppo }).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero del singolo gruppo", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static bool UpdateGruppo(int idGruppo, string nome, string descr)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "UPDATE TblGruppiFrutti " +
-                      "SET NomeGruppo = @pNomeGruppo, Descrizione = @pDescr " +
-                      "WHERE Id = @pId; ";
-
-                int rowNumber = cn.Execute(sql, new { pNomeGruppo = nome, pDescr = descr, pId = idGruppo });
-
-                if (rowNumber > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'update di un gruppo", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static bool UpdateFrutto(int idFrutto, string descr)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "UPDATE TblFrutti " +
-                      "SET descr001 = @pDescr " +
-                      "WHERE ID1 = @pId; ";
-
-                int rowNumber = cn.Execute(sql, new { pDescr = descr, pId = idFrutto });
-
-                if (rowNumber > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'update di un frutto", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
         public static bool DeleteGruppo(int idGruppo)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("IF NOT EXISTS(SELECT Id FROM TblCompGruppoFrut WHERE IdTblGruppo = @idGruppo)");
+            sql.AppendLine("DELETE FROM TblGruppiFrutti WHERE Id = @idGruppo ");
             try
             {
-                sql = "IF NOT EXISTS(SELECT Id FROM TblCompGruppoFrut WHERE IdTblGruppo = @pId) " +
-                        "DELETE FROM TblGruppiFrutti WHERE Id = @pId ";
-
-                int rows = cn.Execute(sql, new { pId = idGruppo });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idGruppo }) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione di un gruppo", ex);
+                throw new Exception("Errore durante la DeleteGruppo in GruppoFruttiDAO", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static bool DeleteFrutto(int idFrutto)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
-            try
-            {
-                sql = "IF NOT EXISTS(SELECT Id FROM TblCompGruppoFrut WHERE IdTblGruppo = @pId) " +
-                        "DELETE FROM TblFrutti WHERE ID1 = @pId ";
-
-                int rowNumber = cn.Execute(sql, new { pId = idFrutto });
-
-                if (rowNumber > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'eliminazione di un frutto", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
         public static bool CompletaRiapriGruppo(string idGruppo, bool completa)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "UPDATE TblGruppiFrutti SET Completato = @completa WHERE Id = @pIdGruppo ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("@pIdGruppo", idGruppo));
-                cmd.Parameters.Add(new SqlParameter("@completa", completa));
-
-                int rowNumber = cn.Execute(sql, new { pIdGruppo = idGruppo, completa });
-
-                if (rowNumber > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il completamento di un gruppo", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static bool isGruppoAperto(int idGruppo)
-        {
-            SqlConnection cn = GetConnection();
-            SqlDataReader dr = null;
-            string sql = "";
             bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblGruppiFrutti SET Completato = @completa WHERE Id = @idGruppo");
 
             try
             {
-                sql = "SELECT Completato FROM TblGruppiFrutti WHERE Id = @pId ";
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pId", idGruppo));
-                dr = cmd.ExecuteReader();
-
-                if (dr.Read())
-                    ret = dr.GetBoolean(0);
-
-                return !ret;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idGruppo, completa }) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il controllo su gruppo aperto/chiuso", ex);
+                throw new Exception("Errore durante la CompletaRiapriGruppo in GruppiFruttiDAO", ex);
             }
-            finally { CloseResouces(cn, dr); }
+            return ret;
         }
 
         public static bool UpdateFlagControllato(int idGruppo)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
             bool ret = false;
-
+            StringBuilder sql = new StringBuilder("UPDATE TblGruppiFrutti SET Controllato = 1 WHERE Id = @idGruppo");
             try
             {
-                sql = "UPDATE TblGruppiFrutti SET Controllato = 1 WHERE Id = @idGruppo";
-
-                int rows = cn.Execute(sql, new { idGruppo });
-
-                if (rows > 0)
-                    ret = true;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idGruppo }) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'aggiornamento del flag controllato del gruppo " + idGruppo, ex);
+                throw new Exception("Errore durante la UpdateFlagControllato in GruppiFruttiDAO per il gruppo = " + idGruppo, ex);
             }
-            finally { CloseResouces(cn, null); }
-
             return ret;
-        }
-        public static int GetNumeroGruppiNonControllati()
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT COUNT(id) " +
-                      "FROM TblGruppiFrutti " +
-                      "WHERE Controllato = 0 ";
-
-                return cn.Query<int>(sql).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero del totale gruppi non controllati", ex);
-            }
-            finally { CloseResouces(cn, null); }
         }
     }
 }

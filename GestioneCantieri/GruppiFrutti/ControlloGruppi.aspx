@@ -14,7 +14,7 @@
             <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-striped text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />
-                    <asp:BoundField DataField="Descr" HeaderText="Descrizione" />
+                    <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:CheckBox ID="chkGruppoCompletato" Enabled="false" Checked="<%# BindItem.Completato %>" runat="server" />

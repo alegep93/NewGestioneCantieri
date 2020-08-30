@@ -3,6 +3,7 @@ using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -25,20 +26,20 @@ namespace GestioneCantieri
 
         private void MostraNumeroGruppiNonControllati()
         {
-            lblNumGruppiNonControllati.Text = "Numero di gruppi da controllare: " + GruppiFruttiDAO.GetNumeroGruppiNonControllati().ToString();
+            lblNumGruppiNonControllati.Text = "Numero di gruppi da controllare: " + GruppiFruttiDAO.GetAll().Where(w => !w.Controllato).Count().ToString();
         }
 
         private void BindGrid()
         {
-            List<GruppiFrutti> gruppiNonControllatiList = GruppiFruttiDAO.getGruppiNonControllati();
+            List<GruppiFrutti> gruppiNonControllatiList = GruppiFruttiDAO.GetAll().Where(w => !w.Controllato).ToList();
             grdFruttiNonControllati.DataSource = gruppiNonControllatiList;
             grdFruttiNonControllati.DataBind();
         }
 
         protected void MostraComponentiGruppo(int idGruppo)
         {
-            lblPanelTitleGroupName.Text = GruppiFruttiDAO.getNomeGruppo(idGruppo);
-            componentiGruppo = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+            lblPanelTitleGroupName.Text = GruppiFruttiDAO.GetSingle(idGruppo).NomeGruppo;
+            componentiGruppo = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
         }
 
         protected void grdFruttiNonControllati_RowCommand(object sender, GridViewCommandEventArgs e)

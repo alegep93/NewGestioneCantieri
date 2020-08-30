@@ -2,143 +2,120 @@
 using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class CompGruppoFrutDAO : BaseDAO
     {
         // SELECT
-        public static List<CompGruppoFrut> getCompGruppo(int idGruppo)
+        public static List<CompGruppoFrut> GetCompGruppo(int idGruppo)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            List<CompGruppoFrut> ret = new List<CompGruppoFrut>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto, Qta");
+            sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("WHERE IdTblGruppo = @idGruppo");
+            sql.AppendLine("ORDER BY CGF.Id ASC");
             try
             {
-                sql = "SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto AS IdFrutto, Qta " +
-                      "FROM TblCompGruppoFrut AS CGF " +
-                      "JOIN TblFrutti AS F ON (CGF.IdTblFrutto = F.ID1) " +
-                      "WHERE IdTblGruppo = @IdTblGruppo " +
-                      "ORDER BY CGF.Id ASC ";
-
-                return cn.Query<CompGruppoFrut>(sql, new { IdTblGruppo = idGruppo }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<CompGruppoFrut>(sql.ToString(), new { idGruppo }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei componeti del gruppo", ex);
+                throw new Exception("Errore durante la GetCompGruppo in CompGruppoFrutDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
+
         public static List<StampaFruttiPerGruppi> GetFruttiInGruppi(string idGruppo)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            List<StampaFruttiPerGruppi> ret = new List<StampaFruttiPerGruppi>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT GF.NomeGruppo, F.descr001 'NomeFrutto', CGF.Qta");
+            sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
+            sql.AppendLine("INNER JOIN TblGruppiFrutti AS GF ON CGF.IdTblGruppo = GF.Id");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine(idGruppo != null && idGruppo != "" ? "WHERE Gf.Id = @idGruppo" : "");
+            sql.AppendLine("GROUP BY GF.NomeGruppo, F.descr001, CGF.Qta");
+            sql.AppendLine("ORDER BY GF.NomeGruppo");
             try
             {
-                sql = "SELECT GF.NomeGruppo, F.descr001 'NomeFrutto', CGF.Qta " +
-                      "FROM TblCompGruppoFrut AS CGF " +
-                      "JOIN TblGruppiFrutti AS GF ON(CGF.IdTblGruppo = GF.Id) " +
-                      "JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1) ";
-
-                if (idGruppo != null && idGruppo != "")
-                    sql += "WHERE Gf.Id = " + idGruppo + " ";
-
-                sql += "GROUP BY GF.NomeGruppo, F.descr001, CGF.Qta " +
-                       "ORDER BY GF.NomeGruppo ";
-
-                return cn.Query<StampaFruttiPerGruppi>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<StampaFruttiPerGruppi>(sql.ToString(), new { idGruppo }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la selezione dei frutti nei vari gruppi", ex);
+                throw new Exception("Errore durante la GetFruttiInGruppi in CompGruppoFrutDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // INSERT
-        public static bool InserisciCompGruppo(int gruppo, int frutto, string qta)
+        public static bool InserisciCompGruppo(int idGruppo, int idFrutto, string qta)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO TblCompGruppoFrut(IdTblGruppo,IdTblFrutto,Qta) VALUES (@idGruppo,@idFrutto,@qta)");
             try
             {
-                sql = "INSERT INTO TblCompGruppoFrut(IdTblGruppo,IdTblFrutto,Qta) VALUES (@IdTblGruppo,@IdTblFrutto,@Qta) ";
-
-                int rowNumber = cn.Execute(sql, new { IdTblGruppo = gruppo, IdTblFrutto = frutto, Qta = qta });
-
-                if (rowNumber > 0)
-                    return true;
-                else
-                    return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idGruppo, idFrutto, qta }) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'inserimento di un frutto in un gruppo", ex);
+                throw new Exception("Errore durante la InserisciCompGruppo in CompGruppoFrutDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // DELETE
         public static bool DeleteGruppo(int idGruppo)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
             bool ret = false;
-
+            StringBuilder sql = new StringBuilder("DELETE FROM TblCompGruppoFrut WHERE IdTblGruppo = @idGruppo");
             try
             {
-                sql = "DELETE FROM TblCompGruppoFrut WHERE IdTblGruppo = @IdTblGruppo";
-                cn.Execute(sql, new { IdTblGruppo = idGruppo });
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idGruppo });
+                }
                 ret = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione di un gruppo dalla CompGruppoFrut", ex);
+                throw new Exception("Errore durante la DeleteGruppo in CompGruppoFrutDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
             return ret;
         }
-        public static bool DeleteCompGruppo(int idCompGruppo)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static bool Delete(int idCompGruppo)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblCompGruppoFrut WHERE Id = @idCompGruppo");
             try
             {
-                sql = "DELETE FROM TblCompGruppoFrut WHERE Id = @Id ";
-
-                int rowNumber = cn.Execute(sql, new { Id = idCompGruppo });
-
-                if (rowNumber > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idCompGruppo });
+                }
+                ret = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione di un componente di un gruppo frutto", ex);
+                throw new Exception("Errore durante la Delete in CompGruppoFrutDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

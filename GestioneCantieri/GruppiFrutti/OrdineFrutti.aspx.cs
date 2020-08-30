@@ -191,7 +191,7 @@ namespace GestioneCantieri
 
             if (e.CommandName == "EliminaOrdine")
             {
-                OrdineFruttiDAO.DeleteItem(id);
+                OrdineFruttiDAO.Delete(id);
             }
 
             BindGrid();
@@ -245,7 +245,7 @@ namespace GestioneCantieri
         }
         protected void FillDdlGruppi()
         {
-            List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.GetGruppiWithSearch(txtFiltroGruppo1.Text, txtFiltroGruppo2.Text, txtFiltroGruppo3.Text);
+            List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.GetGruppi(txtFiltroGruppo1.Text, txtFiltroGruppo2.Text, txtFiltroGruppo3.Text);
 
             ddlScegliGruppo.Items.Clear();
 
@@ -254,19 +254,20 @@ namespace GestioneCantieri
 
             foreach (GruppiFrutti gf in listGruppiFrutti)
             {
-                string nomeDescrGruppo = gf.NomeGruppo + " - " + gf.Descr;
+                string nomeDescrGruppo = gf.NomeGruppo + " - " + gf.Descrizione;
                 ddlScegliGruppo.Items.Add(new ListItem(nomeDescrGruppo, gf.Id.ToString())); //new ListItem(valore, chiave);
             }
         }
         protected void FillDdlFrutti()
         {
-            List<Frutti> listFrutti = FruttiDAO.getFruttiWithSearch(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text);
+            List<Frutti> listFrutti = FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text);
             ddlScegliFrutto.Items.Clear();
-
             ddlScegliFrutto.Items.Add(new ListItem("", "-1"));
 
             foreach (Frutti f in listFrutti)
-                ddlScegliFrutto.Items.Add(new ListItem(f.Descr, f.Id.ToString()));
+            {
+                ddlScegliFrutto.Items.Add(new ListItem(f.Descr001, f.Id1.ToString()));
+            }
         }
         protected void FillNomiGruppoOrdine()
         {
@@ -285,7 +286,7 @@ namespace GestioneCantieri
             string idCantiere = ddlScegliCantiere.SelectedItem.Value;
             string idLocale = ddlScegliLocale.SelectedItem.Value;
             fruttiList = OrdineFruttiDAO.GetFruttiNonInGruppo(idCantiere, idLocale);
-            compList = OrdineFruttiDAO.getGruppi(idCantiere, idLocale);
+            compList = OrdineFruttiDAO.GetGruppi(idCantiere, idLocale);
         }
         private void BindGrid()
         {

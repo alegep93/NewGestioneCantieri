@@ -40,7 +40,7 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliGruppo()
         {
-            List<GruppiFrutti> listGruppi = GruppiFruttiDAO.getGruppi("","","");
+            List<GruppiFrutti> listGruppi = GruppiFruttiDAO.GetGruppi("","","");
 
             ddlScegliGruppo.Items.Clear();
             ddlScegliGruppo.Items.Add(new ListItem("", "-1"));

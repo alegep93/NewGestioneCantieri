@@ -75,7 +75,7 @@ namespace GestioneCantieri
                 lblFruttoAggiungo.ForeColor = Color.Red;
             }
 
-            compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+            compList = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
             ddlFrutti.SelectedIndex = 0;
             txtQta.Text = "";
             ddlFrutti.Focus();
@@ -114,7 +114,13 @@ namespace GestioneCantieri
         protected void btnSaveModGruppo_Click(object sender, EventArgs e)
         {
             int idGruppo = Convert.ToInt32(ddlModScegliGruppo.SelectedItem.Value);
-            bool isSaved = GruppiFruttiDAO.UpdateGruppo(idGruppo, txtModNomeGruppo.Text, txtModDescrGruppo.Text);
+            bool isSaved = GruppiFruttiDAO.UpdateGruppo(new GruppiFrutti
+            {
+                Id = idGruppo,
+                NomeGruppo = txtModNomeGruppo.Text,
+                Descrizione = txtModDescrGruppo.Text
+            });
+                
             if (isSaved)
             {
                 lblSaveModGruppo.Text = "Nome gruppo modificato con successo in '" + txtModNomeGruppo.Text + "'";
@@ -172,7 +178,7 @@ namespace GestioneCantieri
         protected void btnDelCompGruppo_Click(object sender, EventArgs e)
         {
             int idCompGruppo = Convert.ToInt32(ddlDelCompGrup.SelectedItem.Value);
-            bool isDeleted = CompGruppoFrutDAO.DeleteCompGruppo(idCompGruppo);
+            bool isDeleted = CompGruppoFrutDAO.Delete(idCompGruppo);
             if (isDeleted)
             {
                 lblIsDelCompGruppo.Text = "Componente '" + ddlDelCompGrup.SelectedItem.Text + "' eliminato con successo dal gruppo '" + ddlDelNomeGruppo.SelectedItem.Text + "'";
@@ -185,7 +191,7 @@ namespace GestioneCantieri
             }
 
             fillDdlCompGruppo();
-            compList = CompGruppoFrutDAO.getCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
+            compList = CompGruppoFrutDAO.GetCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
             ddlDelCompGrup.SelectedIndex = 0;
             btnDelCompGruppo.Visible = false;
         }
@@ -227,21 +233,21 @@ namespace GestioneCantieri
             try
             {
                 int idGruppo = Convert.ToInt32(ddlModScegliGruppo.SelectedItem.Value);
-                GruppiFrutti gf = GruppiFruttiDAO.GetGruppo(idGruppo);
-                int idGruppoCopia = GruppiFruttiDAO.InserisciGruppo("Copia" + gf.NomeGruppo, gf.Descr);
-                compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+                GruppiFrutti gf = GruppiFruttiDAO.GetSingle(idGruppo);
+                int idGruppoCopia = GruppiFruttiDAO.InserisciGruppo("Copia" + gf.NomeGruppo, gf.Descrizione);
+                compList = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
 
                 foreach (CompGruppoFrut cgf in compList)
                 {
-                    CompGruppoFrutDAO.InserisciCompGruppo(idGruppoCopia, cgf.IdFrutto, cgf.Qta.ToString());
+                    CompGruppoFrutDAO.InserisciCompGruppo(idGruppoCopia, cgf.IdTblFrutto, cgf.Qta.ToString());
                 }
 
                 lblClonaGruppo.ForeColor = Color.Blue;
                 lblClonaGruppo.Text = "Gruppo clonato con successo";
 
-                gruppiList = GruppiFruttiDAO.getGruppi("", "", "");
+                gruppiList = GruppiFruttiDAO.GetGruppi("", "", "");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 lblClonaGruppo.ForeColor = Color.Red;
                 lblClonaGruppo.Text = "Errore durante la clonazione del gruppo selezionato";
@@ -282,9 +288,9 @@ namespace GestioneCantieri
             else
             {
                 int idGruppo = Convert.ToInt32(ddlGruppi.SelectedItem.Value);
-                txaShowDescrGruppo.Text = GruppiFruttiDAO.getDescrGruppo(idGruppo);
+                txaShowDescrGruppo.Text = GruppiFruttiDAO.GetSingle(idGruppo).Descrizione;
                 nuovoFruttoPanel.Visible = true;
-                compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+                compList = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
             }
         }
         protected void ddlModMostraGruppi_TextChanged(object sender, EventArgs e)
@@ -295,11 +301,10 @@ namespace GestioneCantieri
                 btnSaveModGruppo.Visible = true;
                 pnlModGruppo.Visible = true;
                 txtModNomeGruppo.Text = ddlModScegliGruppo.SelectedItem.Text;
-                txtModDescrGruppo.Text = GruppiFruttiDAO.getDescrGruppo(idGruppo);
-                compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+                txtModDescrGruppo.Text = GruppiFruttiDAO.GetSingle(idGruppo).Descrizione;
+                compList = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
 
-                bool isOpen = GruppiFruttiDAO.isGruppoAperto(idGruppo);
-                if (isOpen)
+                if (GruppiFruttiDAO.GetSingle(idGruppo).Completato)
                     btnRiapriGruppo.Visible = false;
                 else
                     btnRiapriGruppo.Visible = true;
@@ -311,9 +316,9 @@ namespace GestioneCantieri
             if (ddlDelNomeGruppo.SelectedItem.Value != "")
             {
                 pnlDelCompGrup.Visible = true;
-                txtDelDescrGruppo.Text = GruppiFruttiDAO.getDescrGruppo(idGruppo);
+                txtDelDescrGruppo.Text = GruppiFruttiDAO.GetSingle(idGruppo).Descrizione;
                 fillDdlCompGruppo();
-                compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+                compList = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
                 btnDelCompGruppo.Visible = false;
             }
             else
@@ -328,7 +333,7 @@ namespace GestioneCantieri
             else
                 btnDelGruppo.Visible = false;
 
-            compList = CompGruppoFrutDAO.getCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
+            compList = CompGruppoFrutDAO.GetCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
         }
         protected void ddlDelCompGrup_TextChanged(object sender, EventArgs e)
         {
@@ -337,13 +342,13 @@ namespace GestioneCantieri
             else
                 btnDelCompGruppo.Visible = false;
 
-            compList = CompGruppoFrutDAO.getCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
+            compList = CompGruppoFrutDAO.GetCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
         }
 
         /* HELPERS */
         protected void FillDdlFrutti()
         {
-            List<Frutti> listFrutti = FruttiDAO.getFrutti("","","");
+            List<Frutti> listFrutti = FruttiDAO.GetFrutti("","","");
 
             ddlFrutti.Items.Clear();
 
@@ -352,13 +357,13 @@ namespace GestioneCantieri
 
             foreach (Frutti f in listFrutti)
             {
-                string descrFrutto = f.Descr;
-                ddlFrutti.Items.Add(new ListItem(descrFrutto, f.Id.ToString())); //new ListItem(valore, chiave);
+                string descrFrutto = f.Descr001;
+                ddlFrutti.Items.Add(new ListItem(descrFrutto, f.Id1.ToString())); //new ListItem(valore, chiave);
             }
         }
         protected void FillDdlGruppi()
         {
-            List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.getGruppi(txtFiltroMod1.Text, txtFiltroMod2.Text, txtFiltroMod3.Text);
+            List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.GetGruppi(txtFiltroMod1.Text, txtFiltroMod2.Text, txtFiltroMod3.Text);
 
             ddlModScegliGruppo.Items.Clear();
 
@@ -376,7 +381,7 @@ namespace GestioneCantieri
             string filtro1 = (pnlInserisci.Visible == true ? txtFiltroGruppi1.Text : txtFiltroDel1.Text);
             string filtro2 = (pnlInserisci.Visible == true ? txtFiltroGruppi2.Text : txtFiltroDel2.Text);
             string filtro3 = (pnlInserisci.Visible == true ? txtFiltroGruppi3.Text : txtFiltroDel3.Text);
-            List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.getGruppiNonCompletati(filtro1, filtro2, filtro3);
+            List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.GetGruppi(filtro1, filtro2, filtro3, true);
 
             ddlGruppi.Items.Clear();
             ddlDelGruppo.Items.Clear();
@@ -397,7 +402,7 @@ namespace GestioneCantieri
         }
         protected void fillDdlCompGruppo()
         {
-            List<CompGruppoFrut> listFrutti = CompGruppoFrutDAO.getCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
+            List<CompGruppoFrut> listFrutti = CompGruppoFrutDAO.GetCompGruppo(Convert.ToInt32(ddlDelNomeGruppo.SelectedItem.Value));
 
             ddlDelCompGrup.Items.Clear();
 
@@ -412,14 +417,14 @@ namespace GestioneCantieri
         }
         protected void FiltraGruppi()
         {
-            gruppiList = GruppiFruttiDAO.GetGruppiWithSearch(txtFiltroGruppi1.Text, txtFiltroGruppi2.Text, txtFiltroGruppi3.Text);
+            gruppiList = GruppiFruttiDAO.GetGruppi(txtFiltroGruppi1.Text, txtFiltroGruppi2.Text, txtFiltroGruppi3.Text);
         }
 
         protected void ddlFrutti_TextChanged(object sender, EventArgs e)
         {
             int idGruppo = Convert.ToInt32(ddlGruppi.SelectedItem.Value);
             btnInsCompgruppo.Visible = true;
-            compList = CompGruppoFrutDAO.getCompGruppo(idGruppo);
+            compList = CompGruppoFrutDAO.GetCompGruppo(idGruppo);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -12,344 +13,323 @@ namespace GestioneCantieri.DAO
     {
         public static bool InserisciGruppo(string idCantiere, string idGruppoFrutto, string idLocale, int? idTblMatOrdFrutGroup)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "INSERT INTO TblMatOrdFrut(IdCantiere,IdGruppiFrutti,IdLocale,IdTblMatOrdFrutGroup) " +
-                      "VALUES (@IdCantiere,@IdGruppiFrutti,@IdLocale,@idTblMatOrdFrutGroup) ";
-
-                int rows = cn.Execute(sql, new { IdCantiere = idCantiere, IdGruppiFrutti = idGruppoFrutto, IdLocale = idLocale, idTblMatOrdFrutGroup });
-
-                if (rows > 0)
-                    return true;
-                else
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'inserimento di un gruppo", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static bool InserisciFruttoNonInGruppo(string idCantiere, string idLocale, string idFrutto, string qtaFrutti, int? idTblMatOrdFrutGroup)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "INSERT INTO TblMatOrdFrut(IdCantiere,IdLocale,IdFrutto,QtaFrutti,IdTblMatOrdFrutGroup) " +
-                      "VALUES (@IdCantiere,@IdLocale,@IdFrutto,@QtaFrutti,@idTblMatOrdFrutGroup) ";
-
-                int rows = cn.Execute(sql, new { IdCantiere = idCantiere, IdLocale = idLocale, IdFrutto = idFrutto, QtaFrutti = qtaFrutti, idTblMatOrdFrutGroup });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'inserimento di un frutto non appartenente ad un gruppo", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static List<MatOrdFrut> getGruppi(string idCantiere, string idLocale)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT GF.NomeGruppo, GF.Descrizione " +
-                      "FROM TblMatOrdFrut AS MOF " +
-                      "JOIN TblGruppiFrutti AS GF ON (MOF.IdGruppiFrutti = GF.Id) " +
-                      "WHERE IdCantiere = @IdCantiere AND IdLocale = @IdLocale " +
-                      "ORDER BY NomeGruppo ASC ";
-
-                return cn.Query<MatOrdFrut>(sql, new { IdCantiere = idCantiere, IdLocale = idLocale }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei gruppi", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static List<MatOrdFrut> GetFruttiNonInGruppo(string idCant, string idLocale)
-        {
-            SqlConnection cn = GetConnection();
-            try
-            {
-                string sql = "select F.descr001, SUM(MOF.QtaFrutti) " +
-                             "FROM TblMatOrdFrut AS MOF " +
-                             "LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1) " +
-                             "where IdCantiere = @IdCantiere AND IdLocale = @IdLocale AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL " +
-                             "GROUP BY F.descr001 " +
-                             "ORDER BY F.descr001 ASC ";
-
-                return cn.Query<MatOrdFrut>(sql, new { IdCantiere = idCant, IdLocale = idLocale }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante la stampa dei frutti in un locale.", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static bool DeleteGruppo(int idGruppo)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
             bool ret = false;
-
-            try
-            {
-                sql = "DELETE FROM TblMatOrdFrut WHERE IdGruppiFrutti = @IdGruppiFrutti";
-                cn.Execute(sql, new { IdGruppiFrutti = idGruppo });
-                ret = true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'eliminazione di un gruppo da un ordine", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
-            return ret;
-        }
-        public static bool DeleteItem(int itemId)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-            bool ret = false;
-
-            try
-            {
-                sql = "DELETE FROM TblMatOrdFrut WHERE Id = @Id";
-                cn.Execute(sql, new { Id = itemId });
-                ret = true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'eliminazione di un record da un ordine", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
-            return ret;
-        }
-        public static bool DeleteOrdine(int idCantiere)
-        {
-            string sql = "DELETE FROM TblMatOrdFrut WHERE IdCantiere = @idCantiere";
-            bool ret = false;
-
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("INSERT INTO TblMatOrdFrut(IdCantiere,IdGruppiFrutti,IdLocale,IdTblMatOrdFrutGroup)");
+            sql.AppendLine("VALUES (@idCantiere,@idGruppoFrutto,@idLocale,@idTblMatOrdFrutGroup)");
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, new { idCantiere });
+                    ret = cn.Execute(sql.ToString(), new { idCantiere, idGruppoFrutto, idLocale, idTblMatOrdFrutGroup }) > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la InserisciGruppo in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
+        public static bool InserisciFruttoNonInGruppo(string idCantiere, string idLocale, string idFrutto, string qtaFrutti, int? idTblMatOrdFrutGroup)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("INSERT INTO TblMatOrdFrut(IdCantiere,IdLocale,IdFrutto,QtaFrutti,IdTblMatOrdFrutGroup)");
+            sql.AppendLine("VALUES (@idCantiere,@idLocale,@idFrutto,@qtaFrutti,@idTblMatOrdFrutGroup)");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idCantiere, idLocale, idFrutto, qtaFrutti, idTblMatOrdFrutGroup }) > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la InserisciFruttoNonInGruppo in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
+        public static List<MatOrdFrut> GetGruppi(string idCantiere, string idLocale)
+        {
+            List<MatOrdFrut> ret = new List<MatOrdFrut>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT GF.NomeGruppo, GF.Descrizione");
+            sql.AppendLine("FROM TblMatOrdFrut AS MOF");
+            sql.AppendLine("INNER JOIN TblGruppiFrutti AS GF ON MOF.IdGruppiFrutti = GF.Id");
+            sql.AppendLine("WHERE IdCantiere = @idCantiere AND IdLocale = @idLocale");
+            sql.AppendLine("ORDER BY NomeGruppo ASC");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MatOrdFrut>(sql.ToString(), new { idCantiere, idLocale }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetGruppi in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
+        public static List<MatOrdFrut> GetFruttiNonInGruppo(string idCant, string idLocale)
+        {
+            List<MatOrdFrut> ret = new List<MatOrdFrut>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT F.descr001, SUM(MOF.QtaFrutti)");
+            sql.AppendLine("FROM TblMatOrdFrut AS MOF");
+            sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1)");
+            sql.AppendLine("WHERE IdCantiere = @IdCantiere AND IdLocale = @IdLocale AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
+            sql.AppendLine("GROUP BY F.descr001");
+            sql.AppendLine("ORDER BY F.descr001 ASC");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MatOrdFrut>(sql.ToString(), new { idCant, idLocale }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetFruttiNonInGruppo in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
+        public static bool DeleteGruppo(int idGruppo)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblMatOrdFrut WHERE IdGruppiFrutti = @idGruppo");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idGruppo });
                 }
                 ret = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione di un gruppo da un ordine", ex);
+                throw new Exception("Errore durante la DeleteGruppo in OrdineFruttiDAO", ex);
             }
             return ret;
         }
+
+        public static bool Delete(int id)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblMatOrdFrut WHERE Id = @id");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { id });
+                }
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la Delete in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
+        public static bool DeleteOrdine(int idCantiere)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblMatOrdFrut WHERE IdCantiere = @idCantiere");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idCantiere });
+                }
+                ret = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la DeleteOrdine in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
         public static List<StampaOrdFrutCantLoc> GetAllGruppiInLocale(string idCant)
         {
-            SqlConnection cn = GetConnection();
-
+            List<StampaOrdFrutCantLoc> ret = new List<StampaOrdFrutCantLoc>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT L.NomeLocale, GF.NomeGruppo, COUNT(Gf.NomeGruppo) AS 'Qta', MIN(MOFG.Descrizione) AS DescrizioneGruppoOrdine");
+            sql.AppendLine("FROM TblMatOrdFrut AS MOF");
+            sql.AppendLine("JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali)");
+            sql.AppendLine("JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id)");
+            sql.AppendLine("LEFT JOIN TblMatOrdFrutGroup AS MOFG ON MOF.IdTblMatOrdFrutGroup = MOFG.IdMatOrdFrutGroup");
+            sql.AppendLine("WHERE IdCantiere = @idCant");
+            sql.AppendLine("GROUP BY L.NomeLocale, GF.NomeGruppo");
+            sql.AppendLine("ORDER BY NomeLocale ASC");
             try
             {
-                string sql = "SELECT L.NomeLocale, GF.NomeGruppo, COUNT(Gf.NomeGruppo) AS 'Qta', MIN(MOFG.Descrizione) AS DescrizioneGruppoOrdine " +
-                             "FROM TblMatOrdFrut AS MOF " +
-                             "JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali) " +
-                             "JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id) " +
-                             "LEFT JOIN TblMatOrdFrutGroup AS MOFG ON MOF.IdTblMatOrdFrutGroup = MOFG.IdMatOrdFrutGroup " +
-                             "WHERE IdCantiere = @IdCantiere " +
-                             "GROUP BY L.NomeLocale, GF.NomeGruppo " +
-                             "ORDER BY NomeLocale ASC ";
-
-                return cn.Query<StampaOrdFrutCantLoc>(sql, new { IdCantiere = idCant }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<StampaOrdFrutCantLoc>(sql.ToString(), new { idCant }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la stampa dei gruppi in un locale.", ex);
+                throw new Exception("Errore durante la GetAllGruppiInLocale in OrdineFruttiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
+            return ret;
         }
+
         public static List<StampaOrdFrutCantLoc> GetAllFruttiInLocale(string idCant)
         {
-            SqlConnection cn = GetConnection();
+            List<StampaOrdFrutCantLoc> ret = new List<StampaOrdFrutCantLoc>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT F.descr001 AS 'Descr001', SUM(CGF.Qta) AS Qta");
+            sql.AppendLine("FROM TblMatOrdFrut AS MOF");
+            sql.AppendLine("JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali)");
+            sql.AppendLine("JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id)");
+            sql.AppendLine("JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id)");
+            sql.AppendLine("JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1)");
+            sql.AppendLine("WHERE IdCantiere = @idCant");
+            sql.AppendLine("GROUP BY F.descr001");
+            sql.AppendLine("ORDER BY F.descr001 ASC");
             try
             {
-                string sql = "SELECT F.descr001 AS 'Descr001', SUM(CGF.Qta) AS Qta " +
-                             "FROM TblMatOrdFrut AS MOF " +
-                             "JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali) " +
-                             "JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id) " +
-                             "JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id) " +
-                             "JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1) " +
-                             "WHERE IdCantiere = @IdCantiere " +
-                             "GROUP BY F.descr001 " +
-                             "ORDER BY F.descr001 ASC ";
-
-                return cn.Query<StampaOrdFrutCantLoc>(sql, new { IdCantiere = idCant }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<StampaOrdFrutCantLoc>(sql.ToString(), new { idCant }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la stampa dei frutti in un locale.", ex);
+                throw new Exception("Errore durante la GetAllFruttiInLocale in OrdineFruttiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
+            return ret;
         }
+
         public static DataTable GetAllFruttiInLocaleDataTable(string idCant)
         {
-            SqlConnection cn = GetConnection();
+            DataTable table = new DataTable();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT F.descr001, SUM(CGF.Qta) AS Qta");
+            sql.AppendLine("FROM TblMatOrdFrut AS MOF");
+            sql.AppendLine("JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali)");
+            sql.AppendLine("JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id)");
+            sql.AppendLine("JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id)");
+            sql.AppendLine("JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1)");
+            sql.AppendLine("WHERE IdCantiere = @idCant");
+            sql.AppendLine("GROUP BY F.descr001");
+            sql.AppendLine("ORDER BY F.descr001 ASC");
             try
             {
-                string sql = "SELECT F.descr001, SUM(CGF.Qta) AS Qta " +
-                             "FROM TblMatOrdFrut AS MOF " +
-                             "JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali) " +
-                             "JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id) " +
-                             "JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id) " +
-                             "JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1) " +
-                             "WHERE IdCantiere = @pIdCant " +
-                             "GROUP BY F.descr001 " +
-                             "ORDER BY F.descr001 ASC ";
+                using (SqlConnection cn = GetConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql.ToString(), cn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("idCant", idCant));
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
 
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pIdCant", idCant));
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
+                            table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la stampa dei frutti in un locale.", ex);
+                throw new Exception("Errore durante la GetAllFruttiInLocaleDataTable in OrdineFruttiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
+            return table;
         }
+
         public static List<StampaOrdFrutCantLoc> GetAllFruttiNonInGruppo(string idCant)
         {
-            SqlConnection cn = GetConnection();
-
+            List<StampaOrdFrutCantLoc> ret = new List<StampaOrdFrutCantLoc>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT F.descr001 AS 'Descr001', SUM(MOF.QtaFrutti) AS Qta");
+            sql.AppendLine("FROM TblMatOrdFrut AS MOF");
+            sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1)");
+            sql.AppendLine("where IdCantiere = @idCant AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
+            sql.AppendLine("GROUP BY F.descr001");
+            sql.AppendLine("ORDER BY F.descr001 ASC");
             try
             {
-                string sql = "SELECT F.descr001 AS 'Descr001', SUM(MOF.QtaFrutti) AS Qta " +
-                             "FROM TblMatOrdFrut AS MOF " +
-                             "LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1) " +
-                             "where IdCantiere = @IdCantiere AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL " +
-                             "GROUP BY F.descr001 " +
-                             "ORDER BY F.descr001 ASC ";
-
-                return cn.Query<StampaOrdFrutCantLoc>(sql, new { IdCantiere = idCant }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<StampaOrdFrutCantLoc>(sql.ToString(), new { idCant }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la stampa dei frutti in un locale.", ex);
+                throw new Exception("Errore durante la GetAllFruttiNonInGruppo in OrdineFruttiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
+            return ret;
         }
+
         public static List<StampaOrdFrutCantLoc> GetFruttiPerStampaExcel(string idCant)
         {
-            SqlConnection cn = GetConnection();
+            List<StampaOrdFrutCantLoc> ret = new List<StampaOrdFrutCantLoc>();
+            StringBuilder sql = new StringBuilder();
 
             try
             {
-                string sql = "SELECT descr AS 'descr001', SUM(Qta) AS 'Qta' FROM (" +
-                                "SELECT F.descr001 AS descr, SUM(CGF.Qta) As Qta " +
-                                "FROM TblMatOrdFrut AS MOF " +
-                                "JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali) " +
-                                "JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id) " +
-                                "JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id) " +
-                                "JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1) " +
-                                "WHERE IdCantiere = @IdCantiere " +
-                                "GROUP BY F.descr001 " +
-                                "UNION " +
-                                "SELECT F.descr001 AS descr, SUM(MOF.QtaFrutti) AS Qta " +
-                                "FROM TblMatOrdFrut AS MOF " +
-                                "LEFT JOIN TblFrutti AS F ON MOF.IdFrutto = F.ID1 " +
-                                "WHERE IdCantiere = @IdCantiere AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL " +
-                                "GROUP BY F.descr001" +
-                             ") AS A " +
-                             "GROUP BY descr " +
-                             "ORDER BY descr ";
+                sql.AppendLine("SELECT descr AS 'descr001', SUM(Qta) AS 'Qta' FROM (");
+                sql.AppendLine("    SELECT F.descr001 AS descr, SUM(CGF.Qta) As Qta");
+                sql.AppendLine("    FROM TblMatOrdFrut AS MOF");
+                sql.AppendLine("    JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali)");
+                sql.AppendLine("    JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id)");
+                sql.AppendLine("    JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id)");
+                sql.AppendLine("    JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1)");
+                sql.AppendLine("    WHERE IdCantiere = @idCant");
+                sql.AppendLine("    GROUP BY F.descr001");
+                sql.AppendLine("    UNION");
+                sql.AppendLine("    SELECT F.descr001 AS descr, SUM(MOF.QtaFrutti) AS Qta");
+                sql.AppendLine("    FROM TblMatOrdFrut AS MOF");
+                sql.AppendLine("    LEFT JOIN TblFrutti AS F ON MOF.IdFrutto = F.ID1");
+                sql.AppendLine("    WHERE IdCantiere = @idCant AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
+                sql.AppendLine("    GROUP BY F.descr001");
+                sql.AppendLine(") AS A");
+                sql.AppendLine("GROUP BY descr");
+                sql.AppendLine("ORDER BY descr");
 
-                return cn.Query<StampaOrdFrutCantLoc>(sql, new { IdCantiere = idCant }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<StampaOrdFrutCantLoc>(sql.ToString(), new { idCant }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la stampa dei gruppi in un locale.", ex);
+                throw new Exception("Errore durante la GetFruttiPerStampaExcel in OrdineFruttiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
+            return ret;
         }
+
         public static List<MatOrdFrut> GetInfoForCantiereAndLocale(string idCant, string idLocale)
         {
-            SqlConnection cn = GetConnection();
-
+            List<MatOrdFrut> ret = new List<MatOrdFrut>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo, E.descr001 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine");
+            sql.AppendLine("FROM TblMatOrdFrut AS A");
+            sql.AppendLine("LEFT JOIN TblCantieri AS B ON A.IdCantiere = B.IdCantieri");
+            sql.AppendLine("LEFT JOIN TblLocali AS C ON A.IdLocale = C.IdLocali");
+            sql.AppendLine("LEFT JOIN TblGruppiFrutti AS D ON A.IdGruppiFrutti = D.Id");
+            sql.AppendLine("LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.ID1");
+            sql.AppendLine("LEFT JOIN TblMatOrdFrutGroup AS F ON A.IdTblMatOrdFrutGroup = F.IdMatOrdFrutGroup");
+            sql.AppendLine("WHERE B.IdCantieri = @idCant AND C.IdLocali = @idLocale");
             try
             {
-                string sql = "SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo, E.descr001 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine " +
-                             "FROM TblMatOrdFrut AS A " +
-                             "LEFT JOIN TblCantieri AS B ON A.IdCantiere = B.IdCantieri " +
-                             "LEFT JOIN TblLocali AS C ON A.IdLocale = C.IdLocali " +
-                             "LEFT JOIN TblGruppiFrutti AS D ON A.IdGruppiFrutti = D.Id " +
-                             "LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.ID1 " +
-                             "LEFT JOIN TblMatOrdFrutGroup AS F ON A.IdTblMatOrdFrutGroup = F.IdMatOrdFrutGroup " +
-                             "WHERE B.IdCantieri = @IdCantieri AND C.IdLocali = @IdLocali ";
-
-                return cn.Query<MatOrdFrut>(sql, new { IdCantieri = idCant, IdLocali = idLocale }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MatOrdFrut>(sql.ToString(), new { idCant, idLocale }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero delle informazioni dei gruppiFrutti per un locale di un cantiere", ex);
+                throw new Exception("Errore durante la GetInfoForCantiereAndLocale in OrdineFruttiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }
