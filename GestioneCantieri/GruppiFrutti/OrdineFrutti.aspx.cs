@@ -117,19 +117,6 @@ namespace GestioneCantieri
             }
         }
 
-        /* EVENTI TEXT-CHANGED */
-        //protected void txtFiltroGruppo1_TextChanged(object sender, EventArgs e)
-        //{
-        //    FillDdlGruppi();
-        //}
-        //protected void txtFiltroGruppo2_TextChanged(object sender, EventArgs e)
-        //{
-        //    FillDdlGruppi();
-        //}
-        //protected void txtFiltroGruppo3_TextChanged(object sender, EventArgs e)
-        //{
-        //    FillDdlGruppi();
-        //}
         protected void ddlScegliCantiere_TextChanged(object sender, EventArgs e)
         {
             if (ddlScegliCantiere.SelectedIndex != 0)
@@ -151,7 +138,6 @@ namespace GestioneCantieri
             if (ddlScegliLocale.SelectedIndex != 0)
             {
                 pnlScegliGruppo.Visible = true;
-                //pnlMostraGruppiInseriti.Visible = true;
                 PopolaListe();
                 BindGrid();
             }
@@ -231,7 +217,7 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliLocale()
         {
-            List<Locali> listLocali = LocaliDAO.GetListLocali();
+            List<Locali> listLocali = LocaliDAO.GetAll();
 
             ddlScegliLocale.Items.Clear();
 
@@ -240,7 +226,7 @@ namespace GestioneCantieri
 
             foreach (Locali l in listLocali)
             {
-                ddlScegliLocale.Items.Add(new ListItem(l.NomeLocale, l.Id.ToString())); //new ListItem(valore, chiave);
+                ddlScegliLocale.Items.Add(new ListItem(l.NomeLocale, l.IdLocali.ToString())); //new ListItem(valore, chiave);
             }
         }
         protected void FillDdlGruppi()

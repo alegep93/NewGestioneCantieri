@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -11,46 +12,43 @@ namespace GestioneCantieri.DAO
     {
         public static List<MatOrdFrutGroup> GetAll()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            List<MatOrdFrutGroup> ret = new List<MatOrdFrutGroup>();
+            StringBuilder sql = new StringBuilder("SELECT IdMatOrdFrutGroup, Descrizione FROM TblMatOrdFrutGroup ORDER BY Descrizione");
 
             try
             {
-                sql = "SELECT IdMatOrdFrutGroup, Descrizione FROM TblMatOrdFrutGroup ORDER BY Descrizione";
-                return cn.Query<MatOrdFrutGroup>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MatOrdFrutGroup>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei nomi dei gruppi ordine", ex);
+                throw new Exception("Errore durante la GetAll in MatOrdFrutGroupDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         public static int Insert(string descrizione)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-            int rows = 0;
+            int ret = 0;
+            StringBuilder sql = new StringBuilder();
 
             try
             {
-                sql = "IF NOT EXISTS (SELECT * FROM TblMatOrdFrutGroup WHERE Descrizione = @descrizione)" +
-                        "INSERT INTO TblMatOrdFrutGroup (Descrizione) VALUES (@descrizione)";
-                rows = cn.Execute(sql, new { descrizione });
+                sql.AppendLine($"IF NOT EXISTS (SELECT * FROM TblMatOrdFrutGroup WHERE Descrizione = @descrizione)");
+                sql.AppendLine($"INSERT INTO TblMatOrdFrutGroup (Descrizione) VALUES (@descrizione)");
+
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { descrizione });
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'inserimento di un nuovo nome gruppo ordine", ex);
+                throw new Exception("Errore durante la Insert in MatOrdFrutGroupDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
-            return rows;
+            return ret;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace GestioneCantieri
         #region Helpers
         private void BindGrid()
         {
-            List<Locali> localiList = LocaliDAO.GetListLocali();
+            List<Locali> localiList = LocaliDAO.GetAll();
             grdLocali.DataSource = localiList;
             grdLocali.DataBind();
         }
@@ -34,7 +34,7 @@ namespace GestioneCantieri
             hfIdLocale.Value = idLocale.ToString();
             btnModificaLocale.Visible = true;
             btnInserisciLocale.Visible = false;
-            txtNomeLocale.Text = LocaliDAO.GetNomeLocale(idLocale);
+            txtNomeLocale.Text = LocaliDAO.GetSingle(idLocale).NomeLocale;
         }
         private void EliminaLocale(int idLocale)
         {

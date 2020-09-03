@@ -11,7 +11,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div class="row">
         <div class="col-md-10 tableContainer">
-            <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-striped text-center scrollable-table" runat="server">
+            <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-dark table-striped text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />
                     <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
@@ -27,12 +27,16 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnMostraCompGruppo" CommandName="MostraCompGruppo" CommandArgument='<%# BindItem.Id %>' CssClass="btn btn-lg btn-default" runat="server" Text="Visualizza Componenti" />
+                            <asp:LinkButton ID="btnMostraCompGruppo" CommandName="MostraCompGruppo" CommandArgument='<%# BindItem.Id %>' runat="server" Text="Visualizza Componenti">
+                                <i class="fas fa-eye" style="color: darkcyan;"></i>
+                            </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="btnControllaGruppo" CommandName="ControllaGruppo" CommandArgument="<%# BindItem.Id %>" CssClass="btn btn-lg btn-default" runat="server" Text="Controllato" />
+                            <asp:LinkButton ID="btnControllaGruppo" CommandName="ControllaGruppo" CommandArgument="<%# BindItem.Id %>" runat="server" Text="Controllato">
+                                <i class="fas fa-check" style="color: lightgreen;"></i>
+                            </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

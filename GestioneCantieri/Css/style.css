@@ -188,12 +188,6 @@ select.form-control,
     margin-bottom: 10px;
 }
 
-#body_lblIsGruppoInserito {
-    position: relative;
-    top: 10px;
-    right: 10px;
-}
-
 .panel-body {
     min-height: 130px;
 }
@@ -274,4 +268,8 @@ input[type="checkbox"] {
 }
 .ddt-fornitori-table {
     max-height: 550px;
+}
+
+.yellow-background {
+    background-color: #6DB1FD !important;
 }

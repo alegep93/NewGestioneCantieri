@@ -4,116 +4,102 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class LocaliDAO : BaseDAO
     {
-        public static List<Locali> GetListLocali()
+        public static List<Locali> GetAll()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            List<Locali> ret = new List<Locali>();
+            StringBuilder sql = new StringBuilder("SELECT IdLocali, NomeLocale FROM TblLocali ORDER BY NomeLocale ASC");
             try
             {
-                sql = "SELECT IdLocali 'Id', NomeLocale FROM TblLocali ORDER BY NomeLocale ASC ";
-                return cn.Query<Locali>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret=cn.Query<Locali>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei locali", ex);
+                throw new Exception("Errore durante la GetAll in LocaliDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
-        public static string GetNomeLocale(int idLocale)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static Locali GetSingle(int idLocale)
+        {
+            Locali ret = new Locali();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblLocali WHERE IdLocali = @idLocale");
             try
             {
-                sql = "SELECT NomeLocale FROM TblLocali WHERE IdLocali = @IdLocali ";
-                return cn.Query<string>(sql, new { IdLocali = idLocale }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Locali>(sql.ToString(), new { idLocale }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero del nome di un locale", ex);
+                throw new Exception("Errore durante la GetAll in LocaliDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
         public static bool InserisciLocale(string nomeLocale)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
             bool ret = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO TblLocali(NomeLocale) VALUES (@nomeLocale)");
 
             try
             {
-                sql = "INSERT INTO TblLocali(NomeLocale) VALUES (@NomeLocale)";
-                cn.Execute(sql, new { NomeLocale = nomeLocale });
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { nomeLocale });
+                }
                 ret = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'inserimento di un nuovo locale", ex);
+                throw new Exception("Errore durante la InserisciLocale in LocaliDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
             return ret;
         }
         public static bool ModificaLocale(int idLocale, string nomeLocale)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
             bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblLocali SET NomeLocale = @nomeLocale WHERE IdLocali = @idLocale");
 
             try
             {
-                sql = "UPDATE TblLocali SET NomeLocale = @NomeLocale WHERE IdLocali = @IdLocali";
-                cn.Execute(sql, new { IdLocali = idLocale, NomeLocale = nomeLocale });
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idLocale, nomeLocale });
+                }
                 ret = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'aggiornamento del nome di un locale", ex);
+                throw new Exception("Errore durante la ModificaLocale in LocaliDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
             return ret;
         }
         public static bool EliminaLocale(int idLocale)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
             bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblLocali WHERE IdLocali = @idLocale");
 
             try
             {
-                sql = "DELETE FROM TblLocali WHERE IdLocali = @IdLocali";
-                cn.Execute(sql, new { IdLocali = idLocale });
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idLocale });
+                }
                 ret = true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione di un locale", ex);
+                throw new Exception("Errore durante la EliminaLocale in LocaliDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
             return ret;
         }
     }

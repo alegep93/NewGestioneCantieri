@@ -3,10 +3,7 @@ namespace GestioneCantieri.Data
 {
     public class Locali
     {
-        int id = 0;
-        string nomeLocale = "";
-
-        public int Id { get => id; set => id = value; }
-        public string NomeLocale { get => nomeLocale; set => nomeLocale = value; }
+        public int IdLocali { get; set; } = 0;
+        public string NomeLocale { get; set; } = "";
     }
 }

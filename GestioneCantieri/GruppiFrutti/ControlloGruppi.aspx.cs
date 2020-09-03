@@ -64,15 +64,20 @@ namespace GestioneCantieri
 
         private void SelezionaRigaCorrente(int rowIndex)
         {
+            //for (int i = 0; i < grdFruttiNonControllati.Rows.Count; i++)
+            //{
+            //    grdFruttiNonControllati.Rows[i].BackColor = Color.Transparent;
+            //}
+            //for (int i = 1; i < grdFruttiNonControllati.Rows.Count; i = i + 2)
+            //{
+            //    grdFruttiNonControllati.Rows[i].BackColor = Color.FromArgb(249, 249, 249);
+            //}
+
             for (int i = 0; i < grdFruttiNonControllati.Rows.Count; i++)
             {
-                grdFruttiNonControllati.Rows[i].BackColor = Color.Transparent;
+                grdFruttiNonControllati.Rows[i].CssClass = "";
             }
-            for (int i = 1; i < grdFruttiNonControllati.Rows.Count; i = i + 2)
-            {
-                grdFruttiNonControllati.Rows[i].BackColor = Color.FromArgb(249, 249, 249);
-            }
-            grdFruttiNonControllati.Rows[rowIndex].BackColor = Color.Yellow;
+            grdFruttiNonControllati.Rows[rowIndex].CssClass = "yellow-background";
         }
 
         protected void grdFruttiNonControllati_RowDataBound(object sender, GridViewRowEventArgs e)

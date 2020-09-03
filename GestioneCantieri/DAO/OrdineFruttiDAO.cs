@@ -81,7 +81,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine("SELECT F.descr001, SUM(MOF.QtaFrutti)");
             sql.AppendLine("FROM TblMatOrdFrut AS MOF");
             sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1)");
-            sql.AppendLine("WHERE IdCantiere = @IdCantiere AND IdLocale = @IdLocale AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
+            sql.AppendLine("WHERE IdCantiere = @idCant AND IdLocale = @idLocale AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
             sql.AppendLine("GROUP BY F.descr001");
             sql.AppendLine("ORDER BY F.descr001 ASC");
             try
