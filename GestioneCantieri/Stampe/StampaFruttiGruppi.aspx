@@ -10,40 +10,34 @@
         });
     </script>
     <style>
-        .table-container {
-            position: relative;
-            top: 20px;
-        }
-
-            .table-container > div {
-                max-height: 500px;
-                overflow: hidden;
-                overflow-y: auto;
-            }
-
     </style>
 </asp:Content>
 
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
-    <h1>Stampa Frutti Gruppi</h1>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <asp:Label ID="lblScegliGruppo" runat="server" Text="Scegli Gruppo"></asp:Label>
-                <asp:DropDownList ID="ddlScegliGruppo" CssClass="form-control" OnTextChanged="ddlScegliGruppo_TextChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
-            </div>
+    <div class="row mt-3">
+        <div class="col text-center">
+            <h1>Stampa Frutti Gruppi</h1>
+        </div>
+    </div>
 
-            <div class="col-md-6 table-container">
-                <asp:GridView ID="grdFruttiInGruppo" AllowSorting="true" OnSorting="grdFruttiInGruppo_Sorting"
-                    AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaFruttiPerGruppi"
-                    runat="server" CssClass="table table-striped table-responsive scrollable-table">
-                    <Columns>
-                        <asp:BoundField HeaderText="Nome Gruppo" DataField="NomeGruppo" />
-                        <asp:BoundField HeaderText="Nome Gruppo / Nome Frutto" DataField="NomeFrutto" />
-                        <asp:BoundField HeaderText="Quantità" DataField="Qta" />
-                    </Columns>
-                </asp:GridView>
-            </div>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <asp:Label ID="lblScegliGruppo" runat="server" Text="Scegli Gruppo"></asp:Label>
+            <asp:DropDownList ID="ddlScegliGruppo" CssClass="form-control" OnTextChanged="ddlScegliGruppo_TextChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
+        </div>
+    </div>
+
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-md-6 table-container">
+            <asp:GridView ID="grdFruttiInGruppo" AllowSorting="true" OnSorting="grdFruttiInGruppo_Sorting"
+                AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaFruttiPerGruppi"
+                runat="server" CssClass="table table-dark table-striped scrollable-table">
+                <Columns>
+                    <asp:BoundField HeaderText="Nome Gruppo" DataField="NomeGruppo" />
+                    <asp:BoundField HeaderText="Nome Gruppo / Nome Frutto" DataField="NomeFrutto" />
+                    <asp:BoundField HeaderText="Quantità" DataField="Qta" />
+                </Columns>
+            </asp:GridView>
         </div>
     </div>
 </asp:Content>

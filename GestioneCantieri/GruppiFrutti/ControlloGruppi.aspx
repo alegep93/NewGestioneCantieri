@@ -9,7 +9,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-10 tableContainer">
             <asp:gridview id="grdFruttiNonControllati" itemtype="GestioneCantieri.Data.GruppiFrutti" autogeneratecolumns="false" onrowdatabound="grdFruttiNonControllati_RowDataBound" onrowcommand="grdFruttiNonControllati_RowCommand" cssclass="table table-dark table-striped text-center scrollable-table" runat="server">
                 <Columns>

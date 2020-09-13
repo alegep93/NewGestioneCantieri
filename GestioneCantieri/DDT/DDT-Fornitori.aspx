@@ -2,19 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     <title>DDT Fornitori</title>
-    <style>
-        .btn.btn-lg.btn-primary {
-            position: relative;
-            top: 13px;
-            width: 180px;
-        }
-
-        .errorLabel {
-            position: relative;
-            top: 13px;
-            left: 10px;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <%-- Titolo Pagina --%>
@@ -62,9 +49,9 @@
             <asp:Label ID="lblInsValore" Text="Valore" runat="server"></asp:Label>
             <asp:TextBox ID="txtInsValore" CssClass="form-control" runat="server"></asp:TextBox>
         </div>
-        <div class="col button-col">
-            <asp:Button ID="btnInserisciDDT" CssClass="btn btn-lg btn-primary" OnClick="btnInserisciDDT_Click" Text="Inserisci" runat="server"></asp:Button>
-            <asp:Button ID="btnModificaDDT" CssClass="btn btn-lg btn-primary" OnClick="btnModificaDDT_Click" Text="Modifica" runat="server"></asp:Button>
+        <div class="col">
+            <asp:Button ID="btnInserisciDDT" CssClass="btn btn-lg btn-primary w-100" OnClick="btnInserisciDDT_Click" Text="Inserisci" runat="server"></asp:Button>
+            <asp:Button ID="btnModificaDDT" CssClass="btn btn-lg btn-primary w-100" OnClick="btnModificaDDT_Click" Text="Modifica" runat="server"></asp:Button>
             <asp:Label ID="lblError" Text="" CssClass="errorLabel" runat="server"></asp:Label>
         </div>
     </div>
@@ -99,8 +86,8 @@
             <asp:Label ID="lblFiltroDescrMau" Text="Filtro Descr. Mau" runat="server"></asp:Label>
             <asp:TextBox ID="txtFiltroDescrMau" CssClass="form-control" runat="server"></asp:TextBox>
         </div>
-        <div class="col button-col">
-            <asp:Button ID="btnFiltra" CssClass="btn btn-lg btn-primary" OnClick="btnFiltra_Click" Text="Filtra" runat="server"></asp:Button>
+        <div class="col">
+            <asp:Button ID="btnFiltra" CssClass="btn btn-lg btn-primary w-100" OnClick="btnFiltra_Click" Text="Filtra" runat="server"></asp:Button>
         </div>
     </asp:Panel>
 

@@ -2,13 +2,6 @@
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
     <title>Gestisci Frutti</title>
-    <style>
-        .panel.panel-default div.panel-body {
-            max-height: 500px;
-            overflow: hidden;
-            overflow-y: auto;
-        }
-    </style>
 </asp:Content>
 
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">

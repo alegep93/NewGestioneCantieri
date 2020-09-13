@@ -28,6 +28,18 @@
         border-bottom: 3px solid #000;
     }
 
+
+.table-container {
+    position: relative;
+    top: 20px;
+}
+
+    .table-container > div {
+        max-height: 600px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
 .navbar-inverse {
     border-radius: 0 !important;
 }

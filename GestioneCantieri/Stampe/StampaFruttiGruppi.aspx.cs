@@ -1,12 +1,11 @@
 ﻿using GestioneCantieri.DAO;
-using GestioneCantieri.Data;
 using System;
-using System.Collections.Generic;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
 {
-    public partial class StampaFruttiGruppi : System.Web.UI.Page
+    public partial class StampaFruttiGruppi : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,26 +27,17 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void BindGrid()
         {
-            List<StampaFruttiPerGruppi> listFrutti = new List<StampaFruttiPerGruppi>();
-
-            if (ddlScegliGruppo.SelectedIndex != 0)
-                listFrutti = CompGruppoFrutDAO.GetFruttiInGruppi(ddlScegliGruppo.SelectedItem.Value);
-            else
-                listFrutti = CompGruppoFrutDAO.GetFruttiInGruppi(null);
-
-            grdFruttiInGruppo.DataSource = listFrutti;
+            grdFruttiInGruppo.DataSource = CompGruppoFrutDAO.GetFruttiInGruppi(ddlScegliGruppo.SelectedItem?.Value ?? "");
             grdFruttiInGruppo.DataBind();
         }
+
         protected void FillDdlScegliGruppo()
         {
-            List<GruppiFrutti> listGruppi = GruppiFruttiDAO.GetGruppi("","","");
-
             ddlScegliGruppo.Items.Clear();
             ddlScegliGruppo.Items.Add(new ListItem("", "-1"));
-
-            foreach (GruppiFrutti g in listGruppi)
-                ddlScegliGruppo.Items.Add(new ListItem(g.NomeGruppo, g.Id.ToString()));
+            GruppiFruttiDAO.GetGruppi("", "", "").ForEach(f => ddlScegliGruppo.Items.Add(new ListItem(f.NomeGruppo, f.Id.ToString())));
         }
+
         protected void GroupGridViewCells()
         {
             GridViewHelper helper = new GridViewHelper(grdFruttiInGruppo);

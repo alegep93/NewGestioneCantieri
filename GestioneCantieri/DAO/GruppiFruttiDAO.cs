@@ -61,11 +61,11 @@ namespace GestioneCantieri.DAO
             filtroNome2 = "%" + filtroNome2 + "%";
             filtroNome3 = "%" + filtroNome3 + "%";
 
-            sql.AppendLine("SELECT Id,NomeGruppo,Descrizione");
-            sql.AppendLine("FROM TblGruppiFrutti");
-            sql.AppendLine("WHERE NomeGruppo LIKE @filtroNome1 AND NomeGruppo LIKE @filtroNome2 AND NomeGruppo LIKE @filtroNome3");
+            sql.AppendLine($"SELECT Id,NomeGruppo,Descrizione");
+            sql.AppendLine($"FROM TblGruppiFrutti");
+            sql.AppendLine($"WHERE NomeGruppo LIKE @filtroNome1 AND NomeGruppo LIKE @filtroNome2 AND NomeGruppo LIKE @filtroNome3");
             sql.AppendLine(gruppiNonCompletati ? "AND Completato = 0" : "");
-            sql.AppendLine("ORDER BY NomeGruppo ASC");
+            sql.AppendLine($"ORDER BY NomeGruppo ASC");
 
             try
             {

@@ -90,7 +90,7 @@ namespace GestioneCantieri
 
             foreach (Cantieri cant in cantieri)
             {
-                ddlScegliCantiere.Items.Add(new ListItem($"{cant.CodCant} - {cant.DescriCodCAnt}", cant.IdCantieri.ToString()));
+                ddlScegliCantiere.Items.Add(new ListItem($"{cant.CodCant} - {cant.DescriCodCant}", cant.IdCantieri.ToString()));
             }
         }
 

@@ -351,7 +351,7 @@ namespace GestioneCantieri
             c.IdtblClienti = Convert.ToInt32(ddlScegliClientePerCantiere.SelectedValue);
             c.Data = Convert.ToDateTime(txtDataInserCant.Text);
             c.CodCant = txtCodCant.Text;
-            c.DescriCodCAnt = txtDescrCodCant.Text;
+            c.DescriCodCant = txtDescrCodCant.Text;
             c.Indirizzo = txtIndirizzoCant.Text;
             c.Città = txtCittaCant.Text;
             c.Ricarico = Convert.ToInt32(txtRicaricoCant.Text);
@@ -839,7 +839,7 @@ namespace GestioneCantieri
             txtDataInserCant.Text = cant.Data.ToString("yyyy-MM-dd");
             txtDataInserCant.TextMode = TextBoxMode.Date;
             txtCodCant.Text = cant.CodCant;
-            txtDescrCodCant.Text = cant.DescriCodCAnt;
+            txtDescrCodCant.Text = cant.DescriCodCant;
             txtIndirizzoCant.Text = cant.Indirizzo;
             txtCittaCant.Text = cant.Città;
             txtRicaricoCant.Text = cant.Ricarico.ToString();
@@ -849,7 +849,7 @@ namespace GestioneCantieri
             txtIvaCant.Text = cant.Iva.ToString();
             txtAnnoCant.Text = cant.Anno.ToString();
             txtFasciaCant.Text = cant.FasciaTblCantieri.ToString();
-            txtConcatenazioneCant.Text = cant.CodCant + "-" + cant.DescriCodCAnt;
+            txtConcatenazioneCant.Text = cant.CodCant + "-" + cant.DescriCodCant;
 
             //Spunto i checkbox se necessario
             chkCantChiuso.Checked = cant.Chiuso;

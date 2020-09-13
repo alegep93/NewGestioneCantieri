@@ -211,7 +211,7 @@ namespace GestioneCantieri
 
             foreach (Cantieri c in listCantieri)
             {
-                string cantiere = c.CodCant + " - " + c.DescriCodCAnt;
+                string cantiere = c.CodCant + " - " + c.DescriCodCant;
                 ddlScegliCantiere.Items.Add(new ListItem(cantiere, c.IdCantieri.ToString())); //new ListItem(valore, chiave);
             }
         }

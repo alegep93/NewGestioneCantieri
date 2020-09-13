@@ -43,7 +43,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
             sql.AppendLine("INNER JOIN TblGruppiFrutti AS GF ON CGF.IdTblGruppo = GF.Id");
             sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
-            sql.AppendLine(idGruppo != null && idGruppo != "" ? "WHERE Gf.Id = @idGruppo" : "");
+            sql.AppendLine(idGruppo != "-1" && idGruppo != "" ? "WHERE Gf.Id = @idGruppo" : "");
             sql.AppendLine("GROUP BY GF.NomeGruppo, F.descr001, CGF.Qta");
             sql.AppendLine("ORDER BY GF.NomeGruppo");
             try
