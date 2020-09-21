@@ -3,6 +3,7 @@ using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
@@ -56,7 +57,7 @@ namespace GestioneCantieri
         protected void btn_GeneraDdtDaDbf_Click(object sender, EventArgs e)
         {
             //Recupero l'id del fornitore "Mef"
-            int idFornitore = FornitoriDAO.GetIdFornitore("Mef");
+            int idFornitore = FornitoriDAO.GetFornitori("Mef").FirstOrDefault().IdFornitori;
 
             // Genero una lista a partire dai dati contenuti nel nuovo file DBF
             List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);

@@ -10,14 +10,13 @@ using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
 {
-    public partial class Amministratori : System.Web.UI.Page
+    public partial class Amministratori : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 ResetToInitial();
-                BindGrid();
             }
         }
 
@@ -26,6 +25,7 @@ namespace GestioneCantieri
             txtNomeAmministratore.Text = "";
             btnAggiungiAmministratore.Visible = true;
             btnModificaAmministratore.Visible = false;
+            BindGrid();
         }
 
         private void BindGrid()
@@ -57,7 +57,6 @@ namespace GestioneCantieri
             {
                 AmministratoriDAO.Delete(idAmministratore);
                 ResetToInitial();
-                BindGrid();
             }
         }
 
@@ -67,7 +66,6 @@ namespace GestioneCantieri
             {
                 AmministratoriDAO.Insert(txtNomeAmministratore.Text);
                 ResetToInitial();
-                BindGrid();
             }
             catch (Exception ex)
             {
@@ -86,7 +84,6 @@ namespace GestioneCantieri
                     Nome = txtNomeAmministratore.Text
                 });
                 ResetToInitial();
-                BindGrid();
             }
             catch (Exception ex)
             {

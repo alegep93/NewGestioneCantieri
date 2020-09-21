@@ -5,43 +5,44 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class CantieriDAO : BaseDAO
     {
         // SELECT
-        public static Cantieri GetCantiere(string id)
+        public static Cantieri GetSingle(string id)
         {
-            SqlConnection cn = GetConnection();
-            //SqlDataReader dr = null;
-            string sql = "";
-            Cantieri cant = new Cantieri();
+            Cantieri ret = new Cantieri();
+            StringBuilder sql = new StringBuilder();
+
+            sql.AppendLine($"SELECT Cant.IdCantieri, Cli.RagSocCli, Cant.CodCant, Cant.DescriCodCAnt,");
+            sql.AppendLine($"Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico,");
+            sql.AppendLine($"Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero,");
+            sql.AppendLine($"Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo,");
+            sql.AppendLine($"Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato");
+            sql.AppendLine($"FROM TblCantieri AS Cant");
+            sql.AppendLine($"JOIN TblClienti AS Cli ON Cant.IdTblClienti = Cli.IdCliente");
+            sql.AppendLine($"WHERE Cant.IdCantieri = @idCant");
+            sql.AppendLine($"ORDER BY Cant.CodCant ASC");
 
             try
             {
-                sql = "SELECT Cant.IdCantieri, Cli.RagSocCli, Cant.CodCant, Cant.DescriCodCAnt, " +
-                      "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
-                      "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
-                      "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato " +
-                      "FROM TblCantieri AS Cant " +
-                      "JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente) " +
-                      "WHERE Cant.IdCantieri = @idCant " +
-                      "ORDER BY Cant.CodCant ASC ";
-
-                return cn.Query<Cantieri>(sql, new { idCant = id }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Cantieri>(sql.ToString(), new { idCant = id }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei dati del singolo cantiere", ex);
+                throw new Exception("Errore durante la GetSingle in CantieriDAO", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
         public static DataTable GetCantieri(string anno, string codCant, string descr, bool chiuso, bool riscosso)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            StringBuilder sql = new StringBuilder();
 
             anno = "%" + anno + "%";
             codCant = "%" + codCant + "%";
@@ -49,37 +50,43 @@ namespace GestioneCantieri.DAO
 
             try
             {
-                sql = "SELECT Cant.IdCantieri, Cli.RagSocCli, Cant.CodCant, Cant.DescriCodCAnt, " +
-                      "Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico, " +
-                      "Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero, " +
-                      "Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo, " +
-                      "Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato " +
-                      "FROM TblCantieri AS Cant " +
-                      "JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente) " +
-                      "WHERE Anno LIKE @pAnno AND CodCant LIKE @pCodCant AND DescriCodCAnt LIKE @pDescr " +
-                      "AND Chiuso LIKE @pChiuso AND Riscosso LIKE @pRiscosso " +
-                      "ORDER BY Cant.CodCant ASC ";
+                sql.AppendLine($"SELECT Cant.IdCantieri, Cli.RagSocCli, Cant.CodCant, Cant.DescriCodCAnt,");
+                sql.AppendLine($"Cant.Data, Cant.Indirizzo, Cant.Città, Cant.Ricarico,");
+                sql.AppendLine($"Cant.PzzoManodopera, Cant.Chiuso, Cant.Riscosso, Cant.Numero,");
+                sql.AppendLine($"Cant.ValorePreventivo, Cant.IVA, Cant.Anno, Cant.Preventivo,");
+                sql.AppendLine($"Cant.FasciaTblCantieri, Cant.DaDividere, Cant.Diviso, Cant.Fatturato");
+                sql.AppendLine($"FROM TblCantieri AS Cant");
+                sql.AppendLine($"JOIN TblClienti AS Cli ON(Cant.IdTblClienti = Cli.IdCliente)");
+                sql.AppendLine($"WHERE Anno LIKE @pAnno AND CodCant LIKE @pCodCant AND DescriCodCAnt LIKE @pDescr");
+                sql.AppendLine($"AND Chiuso LIKE @pChiuso AND Riscosso LIKE @pRiscosso");
+                sql.AppendLine($"ORDER BY Cant.CodCant ASC");
 
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pAnno", anno));
-                cmd.Parameters.Add(new SqlParameter("pCodCant", codCant));
-                cmd.Parameters.Add(new SqlParameter("pDescr", descr));
-                cmd.Parameters.Add(new SqlParameter("pChiuso", chiuso));
-                cmd.Parameters.Add(new SqlParameter("pRiscosso", riscosso));
+                using (SqlConnection cn = GetConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql.ToString(), cn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("pAnno", anno));
+                        cmd.Parameters.Add(new SqlParameter("pCodCant", codCant));
+                        cmd.Parameters.Add(new SqlParameter("pDescr", descr));
+                        cmd.Parameters.Add(new SqlParameter("pChiuso", chiuso));
+                        cmd.Parameters.Add(new SqlParameter("pRiscosso", riscosso));
 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable table = new DataTable();
+                            table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                            adapter.Fill(table);
+                            return table;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'applicazione dei filtri sui cantieri", ex);
             }
-            finally { cn.Close(); }
         }
+
         public static DataTable GetCantieri(string anno, string codCant, bool fatturato, bool chiuso, bool riscosso)
         {
             SqlConnection cn = GetConnection();

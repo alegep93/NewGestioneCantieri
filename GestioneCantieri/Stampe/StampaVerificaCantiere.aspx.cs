@@ -58,7 +58,7 @@ namespace GestioneCantieri
                 "<strong>DescriCodCant</strong>: " + mc.DescriCodCant + " --- " +
                 "<strong>Cliente</strong>: " + mc.RagSocCli;
 
-            Cantieri c = CantieriDAO.GetCantiere(idCantiere);
+            Cantieri c = CantieriDAO.GetSingle(idCantiere);
             lblTotContoCliente.Text = "<strong>Tot. Conto/Preventivo</strong>: ";
 
             if (c.Preventivo)

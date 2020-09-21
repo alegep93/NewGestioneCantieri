@@ -91,7 +91,7 @@ namespace GestioneCantieri
             txtPzzoFinCli.Text = txtChiamPzzoFinCli.Text = "0.00";
 
             //Reimposto il campo Prezzo manodopera
-            Cantieri cant = CantieriDAO.GetCantiere(ddlScegliCant.SelectedItem.Value);
+            Cantieri cant = CantieriDAO.GetSingle(ddlScegliCant.SelectedItem.Value);
             txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
 
             //Reimposto il DDLScegliOperaio del pannello GestioneOperaio
@@ -204,17 +204,13 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliFornit()
         {
-            DataTable dt = FornitoriDAO.GetFornitoriDataTable();
-            List<Fornitori> listFornitori = dt.DataTableToList<Fornitori>();
-
             ddlScegliFornit.Items.Clear();
             ddlScegliFornit.Items.Add(new ListItem("", "-1"));
 
-            foreach (Fornitori f in listFornitori)
+            FornitoriDAO.GetFornitori().ForEach(f =>
             {
-                string show = f.RagSocForni;
-                ddlScegliFornit.Items.Add(new ListItem(show, f.IdFornitori.ToString()));
-            }
+                ddlScegliFornit.Items.Add(new ListItem(f.RagSocForni, f.IdFornitori.ToString()));
+            });
         }
         protected void FillDdlScegliDdtMef()
         {
@@ -375,7 +371,7 @@ namespace GestioneCantieri
         /* EVENTI TEXT-CHANGED */
         protected void ddlScegliCant_TextChanged(object sender, EventArgs e)
         {
-            Cantieri cant = CantieriDAO.GetCantiere(ddlScegliCant.SelectedItem.Value);
+            Cantieri cant = CantieriDAO.GetSingle(ddlScegliCant.SelectedItem.Value);
             txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
             txtFascia.Text = cant.FasciaTblCantieri.ToString();
 
@@ -1501,7 +1497,7 @@ namespace GestioneCantieri
             txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
 
             //Popolo il campo PzzoManodopera a partire dal prezzo scritto nella tabella Cantieri
-            Cantieri c = CantieriDAO.GetCantiere(ddlScegliCant.SelectedItem.Value);
+            Cantieri c = CantieriDAO.GetSingle(ddlScegliCant.SelectedItem.Value);
             txtPzzoManodop.Text = c.PzzoManodopera.ToString();
         }
 
@@ -1854,7 +1850,7 @@ namespace GestioneCantieri
             mc.Note = txtNote1.Text;
             mc.Note2 = txtNote2.Text;
             mc.Qta = Convert.ToDouble(txtOperQta.Text.Replace(".", ","));
-            mc.PzzoUniCantiere = Convert.ToDecimal(txtPzzoOper.Text.Replace(".",","));
+            mc.PzzoUniCantiere = Convert.ToDecimal(txtPzzoOper.Text.Replace(".", ","));
             mc.DescriMateriali = txtDescrOper.Text;
             mc.Visibile = chkOperVisibile.Checked;
             mc.Ricalcolo = chkOperRicalcolo.Checked;

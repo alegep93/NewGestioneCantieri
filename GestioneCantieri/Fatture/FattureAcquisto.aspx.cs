@@ -104,7 +104,7 @@ namespace GestioneCantieri
 
         protected void FillDdlScegliFornitore(string ragSocFornitore = "")
         {
-            List<Fornitori> fornitori = FornitoriDAO.GetByRagSoc(ragSocFornitore);
+            List<Fornitori> fornitori = FornitoriDAO.GetFornitori(ragSocFornitore);
 
             ddlScegliFornitore.Items.Clear();
             ddlScegliFornitore.Items.Add(new ListItem("", "-1"));

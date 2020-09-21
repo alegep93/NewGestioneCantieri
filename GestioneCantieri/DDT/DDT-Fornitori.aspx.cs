@@ -59,7 +59,7 @@ namespace GestioneCantieri
         {
             DDTFornitori ddt = new DDTFornitori();
             ddt.IdFornitore = Convert.ToInt32(ddlScegliFornitore.SelectedValue);
-            ddt.RagSocFornitore = FornitoriDAO.GetRagSocFornitore(ddt.IdFornitore);
+            ddt.RagSocFornitore = FornitoriDAO.GetSingle(ddt.IdFornitore).RagSocForni;
             ddt.Data = Convert.ToDateTime(txtInsData.Text);
             ddt.Protocollo = Convert.ToInt64(txtInsProtocollo.Text);
             ddt.NumeroDdt = txtInsNumeroDdt.Text;

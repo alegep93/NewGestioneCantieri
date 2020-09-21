@@ -5,264 +5,132 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class ClientiDAO : BaseDAO
     {
         //SELECT
-        public static DataTable GetAllClienti()
+        public static List<Clienti> GetClienti(string ragSocCli = "")
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            List<Clienti> ret = new List<Clienti>();
+            StringBuilder sql = new StringBuilder($"SELECT IdCliente, RagSocCli FROM TblClienti WHERE RagSocCli LIKE '%@ragSocCli%'");
 
-            try
-            {
-                sql = "SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1, " +
-                      "Cell1, PartitaIva, CodFiscale, Data, Provincia, Note " +
-                      "FROM TblClienti " +
-                      "ORDER BY RagSocCli ASC ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei clienti", ex);
-            }
-            finally { cn.Close(); }
-        }
-
-        public static List<Clienti> GetAll()
-        {
-            string sql = "SELECT * FROM TblClienti ORDER BY RagSocCli ASC";
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<Clienti>(sql).ToList();
+                    ret = cn.Query<Clienti>(sql.ToString(), new { ragSocCli }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei clienti", ex);
+                throw new Exception("Errore durante la GetClienti in ClientiDAO", ex);
             }
+            return ret;
         }
 
-        public static List<Clienti> GetClienti(string filtro)
+        public static Clienti GetSingle(int idCliente)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            filtro = "%" + filtro + "%";
-
+            Clienti ret = new Clienti();
+            StringBuilder sql = new StringBuilder();
             try
             {
-                sql = "SELECT IdCliente, RagSocCli " +
-                      "FROM TblClienti " +
-                      "WHERE RagSocCli LIKE @RagSocCli ";
+                sql.AppendLine($"SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1,");
+                sql.AppendLine($"Cell1, PartitaIva, CodFiscale, Data, Provincia, Note");
+                sql.AppendLine($"FROM TblClienti");
+                sql.AppendLine($"WHERE IdCliente = @idCliente");
+                sql.AppendLine($"ORDER BY RagSocCli ASC");
 
-                return cn.Query<Clienti>(sql, new { RagSocCli = filtro }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'applicazione dei filtri sui clienti", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static DataTable FiltraClienti(string ragSoc)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            ragSoc = "%" + ragSoc + "%";
-
-            try
-            {
-                sql = "SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1, " +
-                      "Cell1, PartitaIva, CodFiscale, Data, Provincia, Note " +
-                      "FROM TblClienti " +
-                      "WHERE RagSocCli LIKE @pRagSoc " +
-                      "ORDER BY RagSocCli ASC ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("@pRagSoc", ragSoc));
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il filtro dei clienti", ex);
-            }
-            finally { cn.Close(); }
-        }
-        public static Clienti GetSingleCliente(int idCliente)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1, " +
-                      "Cell1, PartitaIva, CodFiscale, Data, Provincia, Note " +
-                      "FROM TblClienti " +
-                      "WHERE IdCliente = @IdCliente " +
-                      "ORDER BY RagSocCli ASC ";
-
-                return cn.Query<Clienti>(sql, new { IdCliente = idCliente }).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei clienti", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static List<Clienti> GetClientiIdAndName(string ragSocCli)
-        {
-            SqlConnection cn = GetConnection();
-            try
-            {
-                string sql = "SELECT IdCliente, RagSocCli FROM TblClienti ";
-                sql += ragSocCli != "" ? $"WHERE RagSocCli LIKE '%{ragSocCli}%' " : " ";
-                sql += "ORDER BY RagSocCli ASC ";
-                return cn.Query<Clienti>(sql).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante GetClientiIdAndName", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static List<Clienti> GetByRagSoc(string ragSocCli)
-        {
-            try
-            {
-                string sql = $"SELECT * FROM TblClienti WHERE RagSocCli LIKE '%{ragSocCli}%' ORDER BY RagSocCli ASC ";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<Clienti>(sql).ToList();
+                    ret = cn.Query<Clienti>(sql.ToString(), new { idCliente }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante GetByRagSoc", ex);
+                throw new Exception("Errore durante la GetSingle in ClientiDAO", ex);
             }
+            return ret;
         }
 
         // INSERT
         public static bool InserisciCliente(Clienti c)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblClienti");
+            sql.AppendLine($"(IdAmministratore,RagSocCli,Indirizzo,Cap,Città,Provincia,Tel1,Cell1,PartitaIva,CodFiscale,Data,Note)");
+            sql.AppendLine($"VALUES (@IdAmministratore,@RagSocCli,@Indirizzo,@Cap,@Città,@Provincia,@Tel1,@Cell1,@PartitaIva,@CodFiscale,CONVERT(date,@Data),@Note)");
             try
             {
-                sql = "INSERT INTO TblClienti " +
-                      "(IdAmministratore,RagSocCli,Indirizzo,Cap,Città,Provincia,Tel1,Cell1,PartitaIva,CodFiscale,Data,Note) " +
-                      "VALUES (@IdAmministratore,@RagSocCli,@Indirizzo,@Cap,@Città,@Provincia,@Tel1,@Cell1,@PartitaIva,@CodFiscale,CONVERT(date,@Data),@Note) ";
-
-                int ret = cn.Execute(sql, c);
-
-                if (ret > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), c) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un nuovo cliente", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // UPDATE
         public static bool UpdateCliente(Clienti c)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
             try
             {
-                sql = "UPDATE TblClienti " +
-                      "SET IdAmministratore = @IdAmministratore, " +
-                      "RagSocCli = @RagSocCli, " +
-                      "Indirizzo = @Indirizzo, " +
-                      "cap = @cap, " +
-                      "Città = @Città, " +
-                      "Tel1 = @Tel1, " +
-                      "Cell1 = @Cell1, " +
-                      "PartitaIva = @PartitaIva, " +
-                      "CodFiscale = @CodFiscale, " +
-                      "Data = CONVERT(date,@Data), " +
-                      "Provincia = @Provincia, " +
-                      "Note = @Note " +
-                      "WHERE IdCliente = @IdCliente ";
+                sql.AppendLine($"UPDATE TblClienti");
+                sql.AppendLine($"SET IdAmministratore = @IdAmministratore,");
+                sql.AppendLine($"RagSocCli = @RagSocCli,");
+                sql.AppendLine($"Indirizzo = @Indirizzo,");
+                sql.AppendLine($"cap = @cap,");
+                sql.AppendLine($"Città = @Città,");
+                sql.AppendLine($"Tel1 = @Tel1,");
+                sql.AppendLine($"Cell1 = @Cell1,");
+                sql.AppendLine($"PartitaIva = @PartitaIva,");
+                sql.AppendLine($"CodFiscale = @CodFiscale,");
+                sql.AppendLine($"Data = CONVERT(date,@Data),");
+                sql.AppendLine($"Provincia = @Provincia,");
+                sql.AppendLine($"Note = @Note");
+                sql.AppendLine($"WHERE IdCliente = @IdCliente");
 
-                int row = cn.Execute(sql, c);
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), c) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update di un cliente", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // DELETE
         public static bool EliminaCliente(int idCliente)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"IF NOT EXISTS(SELECT IdTblClienti FROM TblCantieri where IdTblClienti = @idCliente)");
+            sql.AppendLine($"DELETE FROM TblClienti WHERE IdCliente = @idCliente");
             try
             {
-                sql = "IF NOT EXISTS(SELECT IdTblClienti FROM TblCantieri where IdTblClienti = @idCliente) " +
-                        "DELETE FROM TblClienti WHERE IdCliente = @idCliente ";
 
-                int row = cn.Execute(sql, new { idCliente });
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idCliente }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione di un fornitore", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

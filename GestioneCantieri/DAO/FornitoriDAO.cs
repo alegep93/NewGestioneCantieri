@@ -4,255 +4,122 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class FornitoriDAO : BaseDAO
     {
-        public static DataTable GetFornitoriDataTable()
+        public static List<Fornitori> GetFornitori(string ragioneSociale = "")
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdFornitori,RagSocForni,Indirizzo,cap, " +
-                      "Città,Tel1,Cell1,PartitaIva,CodFiscale,Abbreviato " +
-                      "FROM TblForitori " +
-                      "ORDER BY RagSocForni ASC ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei fornitori", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static DataTable GetFornitori(string ragSoc)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            ragSoc = "%" + ragSoc + "%";
-
-            try
-            {
-                sql = "SELECT IdFornitori,RagSocForni,Indirizzo,cap, " +
-                      "Città,Tel1,Cell1,PartitaIva,CodFiscale,Abbreviato " +
-                      "FROM TblForitori " +
-                      "WHERE RagSocForni LIKE @pRagSoc " +
-                      "ORDER BY RagSocForni ASC ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pRagSoc", ragSoc));
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei fornitori", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static List<Fornitori> GetFornitori()
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdFornitori,RagSocForni,Indirizzo,cap, " +
-                      "Città,Tel1,Cell1,PartitaIva,CodFiscale,Abbreviato " +
-                      "FROM TblForitori " +
-                      "ORDER BY RagSocForni ASC ";
-
-                return cn.Query<Fornitori>(sql).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei fornitori", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-
-        public static int GetIdFornitore(string ragSoc)
-        {
+            List<Fornitori> ret = new List<Fornitori>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT IdFornitori,RagSocForni,Indirizzo,cap,");
+            sql.AppendLine($"Città,Tel1,Cell1,PartitaIva,CodFiscale,Abbreviato");
+            sql.AppendLine($"FROM TblForitori");
+            sql.AppendLine($"WHERE RagSocForni LIKE '%@ragioneSociale%'");
+            sql.AppendLine($"ORDER BY RagSocForni");
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    string sql = "SELECT IdFornitori FROM TblForitori WHERE RagSocForni = @RagSocForni";
-                    return cn.Query<int>(sql, new { RagSocForni = ragSoc }).FirstOrDefault();
+                    ret = cn.Query<Fornitori>(sql.ToString(),new { ragioneSociale}).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dell'idFornitore", ex);
+                throw new Exception("Errore durante la GetFornitori in FornitoriDAO", ex);
             }
-        }
-        public static string GetRagSocFornitore(int id)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT RagSocForni FROM TblForitori WHERE IdFornitori = @IdFornitori";
-                return cn.Query<string>(sql, new { IdFornitori = id }).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero della Ragione Sociale del Fornitore " + id, ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static Fornitori GetSingleFornitore(int idFornitore)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdFornitori,RagSocForni,Indirizzo,cap, " +
-                      "Città,Tel1,Cell1,PartitaIva,CodFiscale,Abbreviato " +
-                      "FROM TblForitori " +
-                      "WHERE IdFornitori = @IdFornitori " +
-                      "ORDER BY RagSocForni ASC ";
-
-                return cn.Query<Fornitori>(sql, new { IdFornitori = idFornitore }).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante la GetSingleFornitore in FornitoriDAO", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
-        public static List<Fornitori> GetByRagSoc(string ragSoc)
+        public static Fornitori GetSingle(int idFornitore)
         {
+            Fornitori ret = new Fornitori();
+            StringBuilder sql = new StringBuilder("SELECT RagSocForni FROM TblForitori WHERE IdFornitori = @idFornitore");
             try
             {
-                string sql = $"SELECT * FROM TblForitori WHERE RagSocForni LIKE '%{ragSoc}%' ORDER BY RagSocForni";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<Fornitori>(sql, new { ragSoc }).ToList();
+                    ret = cn.Query<Fornitori>(sql.ToString(), new { idFornitore }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la GetByRagSoc in FornitoriDAO", ex);
+                throw new Exception("Errore durante il recupero della Ragione Sociale del Fornitore", ex);
             }
+            return ret;
         }
 
         public static bool InserisciFornitore(Fornitori f)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblForitori(RagSocForni, Indirizzo, cap, Città, Tel1, Cell1, PartitaIva, CodFiscale, Abbreviato)");
+            sql.AppendLine($"VALUES (@RagSocForni, @Indirizzo, @cap, @Città, @Tel1, @Cell1, @PartitaIva, @CodFiscale, @Abbreviato)");
             try
             {
-                sql = "INSERT INTO TblForitori(RagSocForni, Indirizzo, cap, Città, Tel1, Cell1, PartitaIva, CodFiscale, Abbreviato) " +
-                      "VALUES (@RagSocForni, @Indirizzo, @cap, @Città, @Tel1, @Cell1, @PartitaIva, @CodFiscale, @Abbreviato) ";
 
-                int ret = cn.Execute(sql, f);
-
-                if (ret > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), f) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un nuovo Fornitore", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
+
         public static bool UpdateFornitore(Fornitori f)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"UPDATE TblForitori");
+            sql.AppendLine($"SET RagSocForni = @RagSocForni,");
+            sql.AppendLine($"Indirizzo = @Indirizzo,");
+            sql.AppendLine($"cap = @cap,");
+            sql.AppendLine($"Città = @Città,");
+            sql.AppendLine($"Tel1 = @Tel1,");
+            sql.AppendLine($"Cell1 = @Cell1,");
+            sql.AppendLine($"PartitaIva = @PartitaIva,");
+            sql.AppendLine($"CodFiscale = @CodFiscale,");
+            sql.AppendLine($"Abbreviato = @Abbreviato");
+            sql.AppendLine($"WHERE IdFornitori = @IdFornitori");
             try
             {
-                sql = "UPDATE TblForitori " +
-                      "SET RagSocForni = @RagSocForni, " +
-                      "Indirizzo = @Indirizzo, " +
-                      "cap = @cap, " +
-                      "Città = @Città, " +
-                      "Tel1 = @Tel1, " +
-                      "Cell1 = @Cell1, " +
-                      "PartitaIva = @PartitaIva, " +
-                      "CodFiscale = @CodFiscale, " +
-                      "Abbreviato = @Abbreviato " +
-                      "WHERE IdFornitori = @IdFornitori ";
 
-                int row = cn.Execute(sql, f);
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), f) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update di un fornitore", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
-        public static bool EliminaFornitore(int idFornit)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static bool EliminaFornitore(int idFornitore)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblForitori WHERE IdFornitori = @idFornitore");
             try
             {
-                sql = "DELETE FROM TblForitori " +
-                      "WHERE IdFornitori = @IdFornitori ";
-
-                int row = cn.Execute(sql, new { IdFornitori = idFornit });
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idFornitore }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione di un fornitore", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

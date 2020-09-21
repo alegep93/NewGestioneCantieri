@@ -17,25 +17,24 @@ namespace GestioneCantieri
             if (!IsPostBack)
             {
                 BindGrid();
-                btnModificaLocale.Visible = false;
-                btnInserisciLocale.Visible = true;
+                ShowInsertButton(true);
             }
         }
 
         #region Helpers
         private void BindGrid()
         {
-            List<Locali> localiList = LocaliDAO.GetAll();
-            grdLocali.DataSource = localiList;
+            grdLocali.DataSource = LocaliDAO.GetAll();
             grdLocali.DataBind();
         }
+
         private void ModificaLocale(int idLocale)
         {
             hfIdLocale.Value = idLocale.ToString();
-            btnModificaLocale.Visible = true;
-            btnInserisciLocale.Visible = false;
             txtNomeLocale.Text = LocaliDAO.GetSingle(idLocale).NomeLocale;
+            ShowInsertButton(false);
         }
+
         private void EliminaLocale(int idLocale)
         {
             bool isEliminato = LocaliDAO.EliminaLocale(idLocale);
@@ -51,8 +50,13 @@ namespace GestioneCantieri
             }
 
             BindGrid();
-            btnModificaLocale.Visible = false;
-            btnInserisciLocale.Visible = true;
+            ShowInsertButton(true);
+        }
+
+        private void ShowInsertButton(bool showInsertButton)
+        {
+            btnInserisciLocale.Visible = showInsertButton;
+            btnModificaLocale.Visible = !btnInserisciLocale.Visible;
         }
         #endregion
 
@@ -71,9 +75,9 @@ namespace GestioneCantieri
                 lblError.Text = "Impossibile inserire il locale " + txtNomeLocale.Text;
                 lblError.ForeColor = Color.Red;
             }
-
             BindGrid();
         }
+
         protected void btnModificaLocale_Click(object sender, EventArgs e)
         {
             int idLocale = Convert.ToInt32(hfIdLocale.Value);
@@ -91,8 +95,7 @@ namespace GestioneCantieri
             }
 
             BindGrid();
-            btnModificaLocale.Visible = false;
-            btnInserisciLocale.Visible = true;
+            ShowInsertButton(true);
         }
         #endregion
 

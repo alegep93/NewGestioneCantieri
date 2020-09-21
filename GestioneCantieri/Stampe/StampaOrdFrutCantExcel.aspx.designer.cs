@@ -7,11 +7,13 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri {
-    
-    
-    public partial class StampaExcell {
-        
+namespace GestioneCantieri
+{
+
+
+    public partial class StampaExcell
+    {
+
         /// <summary>
         /// Controllo lblScegliCantiere.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblScegliCantiere;
-        
+
         /// <summary>
         /// Controllo ddlScegliCantiere.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliCantiere;
-        
+
         /// <summary>
         /// Controllo btnPrint.
         /// </summary>
@@ -38,16 +40,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrint;
-        
-        /// <summary>
-        /// Controllo grdGruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdGruppi;
-        
+
         /// <summary>
         /// Controllo grdFruttiInLocale.
         /// </summary>
@@ -56,7 +49,16 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdFruttiInLocale;
-        
+
+        /// <summary>
+        /// Controllo grdGruppi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdGruppi;
+
         /// <summary>
         /// Controllo grdFruttiNonInGruppo.
         /// </summary>

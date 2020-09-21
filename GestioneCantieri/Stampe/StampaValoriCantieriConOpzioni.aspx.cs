@@ -41,7 +41,7 @@ namespace GestioneCantieri
             objStampa.TotaleAcconti = objStampa.TotaleConto = objStampa.TotaleFinale = 0m;
 
             //Popolo il campo Conto/Preventivo
-            Cantieri c = CantieriDAO.GetCantiere(idCantiere);
+            Cantieri c = CantieriDAO.GetSingle(idCantiere);
             if (c.Preventivo)
                 objStampa.TotaleConto = c.ValorePreventivo;
             else

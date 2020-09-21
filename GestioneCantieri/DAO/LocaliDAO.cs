@@ -45,6 +45,7 @@ namespace GestioneCantieri.DAO
             }
             return ret;
         }
+
         public static bool InserisciLocale(string nomeLocale)
         {
             bool ret = false;
@@ -64,6 +65,7 @@ namespace GestioneCantieri.DAO
             }
             return ret;
         }
+
         public static bool ModificaLocale(int idLocale, string nomeLocale)
         {
             bool ret = false;
@@ -83,6 +85,7 @@ namespace GestioneCantieri.DAO
             }
             return ret;
         }
+
         public static bool EliminaLocale(int idLocale)
         {
             bool ret = false;

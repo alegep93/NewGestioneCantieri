@@ -70,15 +70,13 @@ namespace GestioneCantieri
 
         protected void FillDdlScegliCliente(string ragSocCliente = "")
         {
-            List<Clienti> clienti = ClientiDAO.GetByRagSoc(ragSocCliente);
-
             ddlScegliCliente.Items.Clear();
             ddlScegliCliente.Items.Add(new ListItem("", "-1"));
 
-            foreach (Clienti cli in clienti)
+            ClientiDAO.GetClienti(ragSocCliente).ForEach(f =>
             {
-                ddlScegliCliente.Items.Add(new ListItem(cli.RagSocCli, cli.IdCliente.ToString()));
-            }
+                ddlScegliCliente.Items.Add(new ListItem(f.RagSocCli, f.IdCliente.ToString()));
+            });
         }
 
         protected void FillDdlScegliCantiere(string codiceCantiere = "", string descrizioneCantiere = "")
@@ -139,7 +137,7 @@ namespace GestioneCantieri
             {
                 IdFatture = hfIdFattura.Value != "" ? Convert.ToInt32(hfIdFattura.Value) : 0,
                 IdClienti = idCliente,
-                IdAmministratori = Convert.ToInt64(ClientiDAO.GetSingleCliente(idCliente).IdAmministratore) == 0 ? (long?)null : Convert.ToInt64(ClientiDAO.GetSingleCliente(idCliente).IdAmministratore),
+                IdAmministratori = Convert.ToInt64(ClientiDAO.GetSingle(idCliente).IdAmministratore) == 0 ? (long?)null : Convert.ToInt64(ClientiDAO.GetSingle(idCliente).IdAmministratore),
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
                 Riscosso = chkRiscosso.Checked,

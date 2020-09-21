@@ -48,16 +48,14 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliFornitore()
         {
-            DataTable dt = FornitoriDAO.GetFornitoriDataTable();
-            List<Fornitori> listFornitori = dt.DataTableToList<Fornitori>();
 
             ddlScegliFornitore.Items.Clear();
             ddlScegliFornitore.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
 
-            foreach (Fornitori f in listFornitori)
+            FornitoriDAO.GetFornitori().ForEach(f =>
             {
                 ddlScegliFornitore.Items.Add(new System.Web.UI.WebControls.ListItem(f.RagSocForni, f.IdFornitori.ToString()));
-            }
+            });
         }
         protected void FillDdlScegliAcquirente()
         {

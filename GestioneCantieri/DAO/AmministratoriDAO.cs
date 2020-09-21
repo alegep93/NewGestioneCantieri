@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -12,13 +13,12 @@ namespace GestioneCantieri.DAO
         public static List<Amministratore> GetAll()
         {
             List<Amministratore> ret = new List<Amministratore>();
-
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblAmministratori ORDER BY nome");
             try
             {
-                string sql = "SELECT * FROM TblAmministratori ORDER BY nome";
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<Amministratore>(sql).ToList();
+                    ret = cn.Query<Amministratore>(sql.ToString()).ToList();
                 }
             }
             catch (Exception ex)
@@ -31,14 +31,12 @@ namespace GestioneCantieri.DAO
         public static Amministratore GetSingle(long idAmministratore)
         {
             Amministratore ret = new Amministratore();
-
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblAmministratori WHERE id_amministratori = @idAmministratore ");
             try
             {
-                string sql = "SELECT * FROM TblAmministratori WHERE id_amministratori = @idAmministratore ";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<Amministratore>(sql, new { idAmministratore }).FirstOrDefault();
+                    ret = cn.Query<Amministratore>(sql.ToString(), new { idAmministratore }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -50,13 +48,12 @@ namespace GestioneCantieri.DAO
 
         public static void Insert(string nome)
         {
+            StringBuilder sql = new StringBuilder("INSERT INTO TblAmministratori (nome) VALUES (@nome)");
             try
             {
-                string sql = "INSERT INTO TblAmministratori (nome) VALUES (@nome)";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, new { nome });
+                    cn.Execute(sql.ToString(), new { nome });
                 }
             }
             catch (Exception ex)
@@ -67,13 +64,13 @@ namespace GestioneCantieri.DAO
 
         public static void Update(Amministratore item)
         {
+            StringBuilder sql = new StringBuilder("UPDATE TblAmministratori SET nome = @Nome WHERE id_amministratori = @IdAmministratori");
             try
             {
-                string sql = "UPDATE TblAmministratori SET nome = @Nome WHERE id_amministratori = @IdAmministratori";
 
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, item);
+                    cn.Execute(sql.ToString(), item);
                 }
             }
             catch (Exception ex)
@@ -84,13 +81,12 @@ namespace GestioneCantieri.DAO
 
         public static void Delete(long idAmministratore)
         {
+            StringBuilder sql = new StringBuilder("DELETE FROM TblAmministratori WHERE id_amministratori = @idAmministratore");
             try
             {
-                string sql = "DELETE FROM TblAmministratori WHERE id_amministratori = @idAmministratore ";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, new { idAmministratore });
+                    cn.Execute(sql.ToString(), new { idAmministratore });
                 }
             }
             catch (Exception ex)

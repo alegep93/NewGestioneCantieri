@@ -38,7 +38,7 @@ namespace GestioneCantieri
         protected void CompilaCampi(string idCantiere)
         {
             //Popolo il campo Conto/Preventivo
-            Cantieri c = CantieriDAO.GetCantiere(idCantiere);
+            Cantieri c = CantieriDAO.GetSingle(idCantiere);
             if (c.Preventivo)
                 txtContoPreventivo.Text += String.Format("{0:n}", c.ValorePreventivo);
             else
