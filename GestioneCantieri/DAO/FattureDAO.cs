@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -50,37 +51,40 @@ namespace GestioneCantieri.DAO
             finally { CloseResouces(cn, null); }
         }
 
-        internal static long GetLastNumber(int anno)
+        internal static List<Fattura> GetAll()
         {
+            List<Fattura> ret = new List<Fattura>();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblFatture ORDER BY numero");
             try
             {
-                string sql = "SELECT ISNULL(MAX(numero)+1, 0) FROM TblFatture WHERE DATEPART(YEAR, data) = @anno ";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<long>(sql, new { anno }).FirstOrDefault();
+                    ret = cn.Query<Fattura>(sql.ToString()).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dell'ultimo numero Fattura", ex);
+                throw new Exception("Errore durante la GetAll in FattureDAO", ex);
             }
+            return ret;
         }
 
         internal static Fattura GetSingle(long idFattura)
         {
-            Fattura prev = new Fattura();
+            Fattura ret = new Fattura();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblFatture WHERE id_fatture = @idFattura ORDER BY numero");
             try
             {
-                string sql = "SELECT * FROM TblFatture WHERE id_fatture = @idFattura ORDER BY numero ";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<Fattura>(sql, new { idFattura }).FirstOrDefault();
+                    ret = cn.Query<Fattura>(sql.ToString(), new { idFattura }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero del singolo Fattura, id = " + idFattura, ex);
             }
+            return ret;
         }
 
         internal static double GetTotaleImponibile(int anno)

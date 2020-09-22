@@ -4,151 +4,137 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace GestioneCantieri.DAO
 {
     public class PreventiviDAO : BaseDAO
     {
-        public static List<Preventivo> GetPreventivi(string anno, string numero, string descrizione)
+        public static List<Preventivo> GetAll()
         {
-            SqlConnection cn = GetConnection();
-            List<Preventivo> list = new List<Preventivo>();
-            string sql = "";
-
-            anno = "%" + anno + "%";
-            numero = "%" + numero + "%";
-            descrizione = "%" + descrizione + "%";
-
+            List<Preventivo> ret = new List<Preventivo>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.*, B.NomeOp");
+            sql.AppendLine($"FROM TblPreventivi AS A");
+            sql.AppendLine($"INNER JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio");
+            sql.AppendLine($"ORDER BY A.Numero");
             try
             {
-                sql = "SELECT A.Id, A.Anno, A.Numero, B.NomeOp, A.Descrizione, A.Data " +
-                      "FROM TblPreventivi AS A " +
-                      "INNER JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio " +
-                      "WHERE A.Anno LIKE @anno " +
-                      "AND A.Descrizione LIKE @descrizione " +
-                      "AND A.Numero LIKE @numero " +
-                      "ORDER BY A.Numero ";
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Preventivo>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll in PreventiviDAO", ex);
+            }
+            return ret;
 
-                return cn.Query<Preventivo>(sql, new { anno, numero, descrizione }).ToList();
+        }
+        public static List<Preventivo> GetPreventivi(string anno, string numero, string descrizione)
+        {
+            List<Preventivo> ret = new List<Preventivo>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.*, B.NomeOp");
+            sql.AppendLine($"FROM TblPreventivi AS A");
+            sql.AppendLine($"INNER JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio");
+            sql.AppendLine($"WHERE A.Anno LIKE '%{anno}%' AND A.Descrizione LIKE '%{descrizione}%' AND A.Numero LIKE '%{numero}%'");
+            sql.AppendLine($"ORDER BY A.Numero");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Preventivo>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero della lista dei preventivi", ex);
             }
-            finally { CloseResouces(cn, null); }
-        }
-
-        internal static long GetLastNumber(int anno)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT ISNULL(MAX(Numero)+1, 0) FROM TblPreventivi WHERE Anno = @anno ";
-
-                return cn.Query<long>(sql, new { anno }).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dell'ultimo numero preventivo", ex);
-            }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         internal static Preventivo GetSingle(int idPreventivo)
         {
-            SqlConnection cn = GetConnection();
-            Preventivo prev = new Preventivo();
-            string sql = "";
-
+            Preventivo ret = new Preventivo();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT *, B.NomeOp");
+            sql.AppendLine($"FROM TblPreventivi AS A");
+            sql.AppendLine($"INNER JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio");
+            sql.AppendLine($"WHERE Id = @idPreventivo");
+            sql.AppendLine($"ORDER BY A.Numero");
             try
             {
-                sql = "SELECT *, B.NomeOp " +
-                      "FROM TblPreventivi AS A " +
-                      "INNER JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio " +
-                      "WHERE Id = @idPreventivo " +
-                      "ORDER BY A.Numero ";
-
-                return cn.Query<Preventivo>(sql, new { idPreventivo }).FirstOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Preventivo>(sql.ToString(), new { idPreventivo }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero del singolo preventivo, id = " + idPreventivo, ex);
+                throw new Exception("Errore durante il recupero del singolo preventivo", ex);
             }
-            finally { CloseResouces(cn, null); }
-        }
-
-        internal static bool Delete(int idPreventivo)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "DELETE FROM TblPreventivi WHERE Id = @idPreventivo";
-
-                int rows = cn.Execute(sql, new { idPreventivo });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'eliminazione del preventivo con id " + idPreventivo, ex);
-            }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         internal static bool Insert(Preventivo p)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO TblPreventivi(Anno,Numero,IdOperaio,Descrizione,Data) VALUES(@Anno,@Numero,@IdOperaio,@Descrizione,@Data)");
             try
             {
-                sql = "INSERT INTO TblPreventivi(Anno,Numero,IdOperaio,Descrizione,Data) VALUES(@Anno,@Numero,@IdOperaio,@Descrizione,@Data) ";
-
-                int rows = cn.Execute(sql, p);
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), p) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'inserimento del preventivo " + p.Numero, ex);
+                throw new Exception("Errore durante l'inserimento del preventivo", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         internal static bool Update(Preventivo p)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
             try
             {
-                sql = "UPDATE TblPreventivi " +
-                      "SET IdOperaio = @IdOperaio, Descrizione = @Descrizione, Data = @Data " +
-                      "WHERE Id = @Id ";
+                sql.AppendLine($"UPDATE TblPreventivi");
+                sql.AppendLine($"SET IdOperaio = @IdOperaio, Descrizione = @Descrizione, Data = @Data");
+                sql.AppendLine($"WHERE Id = @Id");
 
-                int rows = cn.Execute(sql, p);
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), p) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'aggiornamento del preventivo " + p.Numero, ex);
+                throw new Exception("Errore durante l'aggiornamento del preventivo", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
+        }
+
+        internal static bool Delete(int idPreventivo)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblPreventivi WHERE Id = @idPreventivo");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idPreventivo }) > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'eliminazione del preventivo", ex);
+            }
+            return ret;
         }
     }
 }

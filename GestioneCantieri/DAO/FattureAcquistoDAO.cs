@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -35,6 +36,24 @@ namespace GestioneCantieri.DAO
             {
                 throw new Exception("Errore durante la GetFattureAcquisto in FattureAcquistoDAO", ex);
             }
+        }
+
+        internal static List<FatturaAcquisto> GetAll()
+        {
+            List<FatturaAcquisto> ret = new List<FatturaAcquisto>();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblFattureAcquisto ORDER BY numero");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<FatturaAcquisto>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll in FattureAcquistoDAO", ex);
+            }
+            return ret;
         }
 
         internal static long GetLastNumber(int anno)

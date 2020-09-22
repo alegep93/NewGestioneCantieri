@@ -1,4 +1,5 @@
 ﻿using GestioneCantieri.DAO;
+using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,31 +18,45 @@ namespace GestioneCantieri
 
         private void SetLabels()
         {
+            double totaleImponibileEmesso = 0, totaleFatturatoEmesso = 0, totaleImponibileAcquisto = 0, totaleFatturatoAcquisto = 0;
             int anno = txtFiltroAnno.Text != "" ? Convert.ToInt32(txtFiltroAnno.Text) : 0;
+            List<Fattura> fatture = FattureDAO.GetAll();
+            List<FatturaAcquisto> fattureAcquisto = FattureAcquistoDAO.GetAll();
 
-            double totaleImponibileEmesso = FattureDAO.GetTotaleImponibile(anno);
-            double totaleFatturatoEmesso = FattureDAO.GetTotaleFatturato(anno);
+            if (anno != 0)
+            {
+                fatture = fatture.Where(w => w.Data.Year == anno).ToList();
+            }
 
-            double totaleImponibileAcquisto = FattureAcquistoDAO.GetTotaleImponibile(anno);
-            double totaleFatturatoAcquisto = FattureAcquistoDAO.GetTotaleFatturato(anno);
+            if (fatture.Count() > 0)
+            {
+                totaleImponibileEmesso = fatture.Sum(s => s.Imponibile);
+                totaleFatturatoEmesso = fatture.Sum(s => s.Imponibile + (s.Imponibile * s.Iva / 100) - (s.Imponibile * s.RitenutaAcconto / 100));
+            }
+
+            if (fatture.Count() > 0)
+            {
+                totaleImponibileAcquisto = fattureAcquisto.Sum(s => s.Imponibile);
+                totaleFatturatoAcquisto = fattureAcquisto.Sum(s => s.Imponibile + (s.Imponibile * s.Iva / 100) - (s.Imponibile * s.RitenutaAcconto / 100));
+            }
 
             decimal totaleBollette = BolletteDAO.GetTotale(anno);
 
             // Fatture Emesse
-            lblFattureEmesseTotaleImponibile.Text =  $"Totale imponibile emesso: <strong>{totaleImponibileEmesso.ToString("N2")}</strong>";
-            lblFattureEmesseTotaleFatturato.Text = $"Totale fatturato emesso: <strong>{totaleFatturatoEmesso.ToString("N2")}</strong>";
+            lblFattureEmesseTotaleImponibile.Text = $"Totale imponibile emesso: <strong>{totaleImponibileEmesso:N2}</strong>";
+            lblFattureEmesseTotaleFatturato.Text = $"Totale fatturato emesso: <strong>{totaleFatturatoEmesso:N2}</strong>";
 
             // Fatture Acquisto
-            lblFattureAcquistoTotaleImponibile.Text = $"Totale imponibile acquisto: <strong>{totaleImponibileAcquisto.ToString("N2")}</strong>";
-            lblFattureAcquistoTotaleFatturato.Text = $"Totale fatturato acquisto: <strong>{totaleFatturatoAcquisto.ToString("N2")}</strong>";
+            lblFattureAcquistoTotaleImponibile.Text = $"Totale imponibile acquisto: <strong>{totaleImponibileAcquisto:N2}</strong>";
+            lblFattureAcquistoTotaleFatturato.Text = $"Totale fatturato acquisto: <strong>{totaleFatturatoAcquisto:N2}</strong>";
 
             //Differenze
-            lblDifferenzaTotaleImponibile.Text = $"Differenza totale imponibile: <strong>{(totaleImponibileEmesso - totaleImponibileAcquisto).ToString("N2")}</strong>";
-            lblDifferenzaTotaleFatturato.Text = $"Differenza totale fatturato: <strong>{(totaleFatturatoEmesso - totaleFatturatoAcquisto).ToString("N2")}</strong>";
+            lblDifferenzaTotaleImponibile.Text = $"Differenza totale imponibile: <strong>{totaleImponibileEmesso - totaleImponibileAcquisto:N2}</strong>";
+            lblDifferenzaTotaleFatturato.Text = $"Differenza totale fatturato: <strong>{totaleFatturatoEmesso - totaleFatturatoAcquisto:N2}</strong>";
 
             // Bollette e Utile
-            lblTotaleBollette.Text = $"Totale bollette: <strong>{totaleBollette.ToString("N2")}</strong>";
-            lblUtile.Text = $"Utile: <strong>{(totaleImponibileEmesso - totaleImponibileAcquisto - Convert.ToDouble(totaleBollette / 2)).ToString("N2")}</strong>";
+            lblTotaleBollette.Text = $"Totale bollette: <strong>{totaleBollette:N2}</strong>";
+            lblUtile.Text = $"Utile: <strong>{totaleImponibileEmesso - totaleImponibileAcquisto - Convert.ToDouble(totaleBollette / 2):N2}</strong>";
             hfUtile.Value = (totaleImponibileEmesso - totaleImponibileAcquisto - Convert.ToDouble(totaleBollette / 2)).ToString("N2");
 
             BindGrid(anno);
@@ -49,7 +64,6 @@ namespace GestioneCantieri
 
         private void BindGrid(int anno)
         {
-            List<(string, double, double, double)> items = new List<(string, double, double, double)>();
             grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliFatture(anno).Select(s => new
             {
                 Trimestre = s.quarter,
@@ -62,8 +76,7 @@ namespace GestioneCantieri
 
         protected void txtTassePerc_TextChanged(object sender, EventArgs e)
         {
-            decimal utile = Convert.ToDecimal(hfUtile.Value);
-            lblUtileNettoTasse.Text = $"Utile netto tasse: <strong>{(utile * Convert.ToDecimal(txtTassePerc.Text) / 100)}</strong>";
+            lblUtileNettoTasse.Text = $"Utile netto tasse: <strong>{Convert.ToDecimal(hfUtile.Value) * Convert.ToDecimal(txtTassePerc.Text) / 100}</strong>";
         }
 
         protected void txtFiltroAnno_TextChanged(object sender, EventArgs e)

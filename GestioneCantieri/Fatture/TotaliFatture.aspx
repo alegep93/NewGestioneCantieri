@@ -1,84 +1,109 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="TotaliFatture.aspx.cs" Inherits="GestioneCantieri.TotaliFatture" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
-    <style>
-        span {
-            font-size: 24px;
-        }
-
-        .ml {
-            margin-left: 50px;
-        }
-    </style>
+    <title>Totali Fatture</title>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-    <div class="container-fluid">
-        <h1>Totali Fatture</h1>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col text-center">
+            <h1>Totali Fatture</h1>
+        </div>
+    </div>
 
-        <%-- Filtro per anno --%>
-        <div class="row">
-            <div class="col-md-offset-5 col-md-2 text-center">
-                <asp:Label ID="lblFiltroAnno" Text="Filtro per Anno" runat="server"></asp:Label>
-                <asp:TextBox ID="txtFiltroAnno" AutoPostBack="true" OnTextChanged="txtFiltroAnno_TextChanged" CssClass="form-control text-center" runat="server"></asp:TextBox>
+    <%-- Filtro per anno --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-2 text-center">
+            <asp:Label ID="lblFiltroAnno" Text="Filtro per Anno" runat="server"></asp:Label>
+            <asp:TextBox ID="txtFiltroAnno" AutoPostBack="true" OnTextChanged="txtFiltroAnno_TextChanged" CssClass="form-control text-center" runat="server"></asp:TextBox>
+        </div>
+    </div>
+
+    <%-- Fatture Emesse --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-6 text-center">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Label ID="lblFattureEmesseTotaleImponibile" Text="Totale Imponibile Emesso: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblFattureEmesseTotaleFatturato" Text="Totale Fatturato Emesso: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
             </div>
         </div>
+    </div>
 
-        <%-- Fatture Emesse --%>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <asp:Label ID="lblFattureEmesseTotaleImponibile" Text="Totale Imponibile Emesso: " runat="server"></asp:Label>
-                <asp:Label ID="lblFattureEmesseTotaleFatturato" CssClass="ml" Text="Totale Fatturato Emesso: " runat="server"></asp:Label>
+    <%-- Fatture acquisto --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-6 text-center">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Label ID="lblFattureAcquistoTotaleImponibile" Text="Totale Imponibile Acquisto: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblFattureAcquistoTotaleFatturato" Text="Totale Fatturato Acquisto: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
             </div>
         </div>
+    </div>
 
-        <%-- Fatture acquisto --%>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <asp:Label ID="lblFattureAcquistoTotaleImponibile" Text="Totale Imponibile Acquisto: " runat="server"></asp:Label>
-                <asp:Label ID="lblFattureAcquistoTotaleFatturato" CssClass="ml" Text="Totale Fatturato Acquisto: " runat="server"></asp:Label>
+    <%-- Differenze --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-6 text-center">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Label ID="lblDifferenzaTotaleImponibile" Text="Differenze Totale Imponibile: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblDifferenzaTotaleFatturato" Text="Differenze Totale Fatturato: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
             </div>
         </div>
+    </div>
 
-        <%-- Differenze --%>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <asp:Label ID="lblDifferenzaTotaleImponibile" Text="Differenze Totale Imponibile: " runat="server"></asp:Label>
-                <asp:Label ID="lblDifferenzaTotaleFatturato" CssClass="ml" Text="Differenze Totale Fatturato: " runat="server"></asp:Label>
+    <%-- Bollette --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-6 text-center">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Label ID="lblTotaleBollette" Text="Totale Bollette: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblUtile" Text="Utile: " CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
             </div>
         </div>
+    </div>
 
-        <%-- Bollette --%>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <asp:Label ID="lblTotaleBollette" Text="Totale Bollette: " runat="server"></asp:Label>
-                <asp:Label ID="lblUtile" CssClass="ml" Text="Utile: " runat="server"></asp:Label>
-            </div>
+    <%-- Totali IVA per Quarter --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-8 text-center">
+            <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                <Columns>
+                    <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
+                    <asp:BoundField HeaderText="Totale Iva Acquisto" DataField="TotaleIvaAcquisto" DataFormatString="€ {0:###,###.##}" />
+                    <asp:BoundField HeaderText="Totale Iva Emesso" DataField="TotaleIvaEmesso" DataFormatString="€ {0:###,###.##}" />
+                    <asp:BoundField HeaderText="Saldo" DataField="Saldo" DataFormatString="€ {0:###,###.##}" />
+                </Columns>
+            </asp:GridView>
         </div>
+    </div>
 
-        <%-- Totali IVA per Quarter --%>
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-md-offset-2 col-md-8 text-center">
-                <asp:GridView ID="grdTotaleIvaPerQuarter" AutoGenerateColumns="false" runat="server" CssClass="table table-striped table-responsive text-center scrollable-table">
-                    <Columns>
-                        <asp:BoundField HeaderText="Trimestre" DataField="Trimestre" />
-                        <asp:BoundField HeaderText="Totale Iva Acquisto" DataField="TotaleIvaAcquisto" DataFormatString="€ {0:###,###.##}" />
-                        <asp:BoundField HeaderText="Totale Iva Emesso" DataField="TotaleIvaEmesso" DataFormatString="€ {0:###,###.##}" />
-                        <asp:BoundField HeaderText="Saldo" DataField="Saldo" DataFormatString="€ {0:###,###.##}" />
-                    </Columns>
-                </asp:GridView>
+    <asp:HiddenField ID="hfUtile" runat="server" />
+
+    <%-- Tasse --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col text-center">
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-4 text-center">
+                    <asp:Label ID="lblTassePerc" Text="Tassa %" runat="server"></asp:Label>
+                    <asp:TextBox ID="txtTassePerc" CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtTassePerc_TextChanged" runat="server"></asp:TextBox>
+                </div>
             </div>
-        </div>
 
-        <asp:HiddenField ID="hfUtile" runat="server" />
-
-        <%-- Tasse --%>
-        <div class="row">
-            <div class="col-md-offset-5 col-md-2 text-center">
-                <asp:Label ID="lblTassePerc" Text="Tassa %" runat="server"></asp:Label>
-                <asp:TextBox ID="txtTassePerc" CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtTassePerc_TextChanged" runat="server"></asp:TextBox>
-            </div>
-            <div class="col-md-12 text-center">
-                <asp:Label ID="lblUtileNettoTasse" Text="" runat="server"></asp:Label>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-4 text-center">
+                    <asp:Label ID="lblUtileNettoTasse" Text="" CssClass="label-totali-fatture" runat="server"></asp:Label>
+                </div>
             </div>
         </div>
     </div>

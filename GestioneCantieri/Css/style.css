@@ -283,3 +283,7 @@ input[type="checkbox"] {
 .yellow-background {
     background-color: #6DB1FD !important;
 }
+
+.label-totali-fatture {
+    font-size: 24px;
+}
