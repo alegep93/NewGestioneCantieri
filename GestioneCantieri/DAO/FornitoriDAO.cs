@@ -16,10 +16,9 @@ namespace GestioneCantieri.DAO
         {
             List<Fornitori> ret = new List<Fornitori>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT IdFornitori,RagSocForni,Indirizzo,cap,");
-            sql.AppendLine($"Città,Tel1,Cell1,PartitaIva,CodFiscale,Abbreviato");
+            sql.AppendLine($"SELECT *");
             sql.AppendLine($"FROM TblForitori");
-            sql.AppendLine($"WHERE RagSocForni LIKE '%@ragioneSociale%'");
+            sql.AppendLine($"WHERE RagSocForni LIKE '%{ragioneSociale}%'");
             sql.AppendLine($"ORDER BY RagSocForni");
             try
             {
@@ -38,7 +37,7 @@ namespace GestioneCantieri.DAO
         public static Fornitori GetSingle(int idFornitore)
         {
             Fornitori ret = new Fornitori();
-            StringBuilder sql = new StringBuilder("SELECT RagSocForni FROM TblForitori WHERE IdFornitori = @idFornitore");
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblForitori WHERE IdFornitori = @idFornitore");
             try
             {
                 using (SqlConnection cn = GetConnection())

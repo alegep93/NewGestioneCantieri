@@ -3,6 +3,7 @@ using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
@@ -202,7 +203,7 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillDdlScegliCantiere()
         {
-            List<Cantieri> listCantieri = CantieriDAO.GetCantieriAperti();
+            List<Cantieri> listCantieri = CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList();
 
             ddlScegliCantiere.Items.Clear();
 

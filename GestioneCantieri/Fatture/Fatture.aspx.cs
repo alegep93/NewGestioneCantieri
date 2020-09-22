@@ -81,15 +81,12 @@ namespace GestioneCantieri
 
         protected void FillDdlScegliCantiere(string codiceCantiere = "", string descrizioneCantiere = "")
         {
-            List<Cantieri> cantieri = CantieriDAO.GetForFatture(codiceCantiere, descrizioneCantiere);
-
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
-
-            foreach (Cantieri cant in cantieri)
+            CantieriDAO.GetCantieri(codiceCantiere, descrizioneCantiere).Where(w => !w.Fatturato && !w.Riscosso && !w.NonRiscuotibile).ToList().ForEach(f =>
             {
-                ddlScegliCantiere.Items.Add(new ListItem($"{cant.CodCant} - {cant.DescriCodCant}", cant.IdCantieri.ToString()));
-            }
+                ddlScegliCantiere.Items.Add(new ListItem($"{f.CodCant} - {f.DescriCodCant}", f.IdCantieri.ToString()));
+            });
         }
 
         private void ResetToInitial(bool needToUpdateGrid = true)
@@ -159,7 +156,7 @@ namespace GestioneCantieri
             txtNumeroFattura.Text = fatt.Numero.ToString();
             ddlScegliCliente.SelectedValue = fatt.IdClienti.ToString();
             txtShowAmministratore.Text = fatt.IdAmministratori.ToString();
-            fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetByIdCantiere(f.IdCantieri).CodCant);
+            fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetSingle(f.IdCantieri).CodCant);
             txtData.Text = fatt.Data.ToString("yyyy-MM-dd");
             txtData.TextMode = TextBoxMode.Date;
             fatAcconti.ForEach(f => lblShowAccontiAggiunti.Text += (lblShowAccontiAggiunti.Text == "" ? "" : "-") + f.ValoreAcconto.ToString());
@@ -405,7 +402,7 @@ namespace GestioneCantieri
 
             if (idCantiere != -1)
             {
-                lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetSingleCantiere(idCantiere).CodCant;
+                lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetSingle(idCantiere).CodCant;
                 hfIdCantieriDaAggiungere.Value += (hfIdCantieriDaAggiungere.Value == "" ? "" : ";") + idCantiere;
             }
         }

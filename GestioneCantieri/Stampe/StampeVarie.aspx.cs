@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -59,30 +60,19 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliAcquirente()
         {
-            DataTable dt = OperaiDAO.GetOperai();
-            List<Operai> listOperai = dt.DataTableToList<Operai>();
-
             ddlScegliAcquirente.Items.Clear();
             ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
 
-            foreach (Operai op in listOperai)
+            OperaiDAO.GetAll().ForEach(f =>
             {
-                ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem(op.NomeOp, op.IdOperaio.ToString()));
-            }
+                ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem(f.NomeOp, f.IdOperaio.ToString()));
+            });
         }
         protected void FillDdlScegliCantiere()
         {
-            DataTable dt = CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked);
-            List<Cantieri> listCantieri = dt.DataTableToList<Cantieri>();
-
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
-            {
-                string show = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem(show, c.IdCantieri.ToString()));
-            }
+            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked));
         }
         protected void FillAllDdl()
         {

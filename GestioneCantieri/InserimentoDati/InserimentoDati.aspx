@@ -2,45 +2,6 @@
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
     <title>Inserimento Dati</title>
-    <%--<style>
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        .btn.btn-lg {
-            min-width: 100px;
-        }
-
-        .panel-container {
-            margin-top: 20px;
-        }
-
-        .labelConferma {
-            position: relative;
-            top: 14px;
-            right: 10px;
-        }
-
-        span.form-control {
-            border: none;
-            background-color: transparent;
-            box-shadow: none;
-            -webkit-box-shadow: none;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            position: relative;
-            left: -10px;
-        }
-
-        .table-container {
-            max-height: 500px;
-            overflow: scroll;
-            overflow-y: auto;
-        }
-    </style>--%>
 </asp:Content>
 
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
@@ -78,60 +39,58 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <!-- Pannello inserimento Clienti -->
-        <asp:Panel ID="pnlInsClienti" DefaultButton="btnInsCliente" CssClass="panel-container col" runat="server" Style="margin-top: 20px;">
+        <asp:Panel ID="pnlInsClienti" DefaultButton="btnInsCliente" CssClass="panel-container col" runat="server">
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblRagSocCLi" runat="server" Text="Ragione Sociale Cliente" />
                     <asp:TextBox ID="txtRagSocCli" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblScegliAmministratore" runat="server" Text="Amministratore" />
                     <asp:DropDownList ID="ddlScegliAmministratore" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblIndirizzo" runat="server" Text="Indirizzo" />
                     <asp:TextBox ID="txtIndirizzo" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCap" runat="server" Text="Cap" />
                     <asp:TextBox ID="txtCap" CssClass="form-control" MaxLength="5" runat="server"></asp:TextBox>
                 </div>
-            </div>
-
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCitta" runat="server" Text="Città" />
                     <asp:TextBox ID="txtCitta" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblProvincia" runat="server" Text="Provincia" />
                     <asp:TextBox ID="txtProvincia" CssClass="form-control" MaxLength="4" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-3 form-group">
-                    <asp:Label ID="lblTelefono" runat="server" Text="Telefono" />
-                    <asp:TextBox ID="txtTelefono" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col-3 form-group">
-                    <asp:Label ID="lblCellulare" runat="server" Text="Cellulare" />
-                    <asp:TextBox ID="txtCellulare" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-3 form-group">
+                <div class="col form-group">
+                    <asp:Label ID="lblTelefono" runat="server" Text="Telefono" />
+                    <asp:TextBox ID="txtTelefono" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col form-group">
+                    <asp:Label ID="lblCellulare" runat="server" Text="Cellulare" />
+                    <asp:TextBox ID="txtCellulare" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+
+                <div class="col form-group">
                     <asp:Label ID="lblPartitaIva" runat="server" Text="Partita Iva" />
                     <asp:TextBox ID="txtPartitaIva" CssClass="form-control" MaxLength="11" runat="server"></asp:TextBox>
                 </div>
 
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCodiceFiscale" runat="server" Text="Codice Fiscale" />
                     <asp:TextBox ID="txtCodiceFiscale" CssClass="form-control" MaxLength="16" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblDataInserimento" runat="server" Text="Data Inserimento" />
                     <asp:TextBox ID="txtDataInserimento" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblNote" runat="server" Text="Note" />
                     <asp:TextBox ID="txtNote" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
@@ -139,7 +98,7 @@
 
             <asp:HiddenField ID="hidIdClienti" runat="server" />
 
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center form-group">
                     <asp:Button ID="btnModCliente" OnClick="btnModCliente_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Modifica Cliente" />
                     <asp:Button ID="btnInsCliente" OnClick="btnInsCliente_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Cliente" />
@@ -148,8 +107,8 @@
             </div>
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <asp:Panel ID="pnlFiltriCliente" DefaultButton="btnFiltraClienti" CssClass="col-4 text-center" runat="server" Style="margin-top: 20px;">
-                    <asp:Label ID="lblFiltroRagSocCli" runat="server" Text="Ragione Sociale Cliente"></asp:Label>
+                <asp:Panel ID="pnlFiltriCliente" DefaultButton="btnFiltraClienti" CssClass="col-4 text-center" runat="server">
+                    <asp:Label ID="lblFiltroRagSocCli" runat="server" Text="Filtro per ragione sociale cliente"></asp:Label>
                     <asp:TextBox ID="txtFiltroRagSocCli" CssClass="form-control" runat="server"></asp:TextBox>
                     <asp:Button ID="btnFiltraClienti" OnClick="btnFiltraClienti_Click" CssClass="btn btn-lg btn-primary ml-3" runat="server" Text="Filtra" />
                     <asp:Button ID="btnSvuotaFiltriClienti" OnClick="btnSvuotaFiltriClienti_Click" CssClass="btn btn-lg btn-dark" runat="server" Text="Svuota" />
@@ -203,45 +162,39 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlInsFornitori" CssClass="panel-container col" runat="server">
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblRagSocFornit" runat="server" Text="Ragione Sociale Fornitore" />
                     <asp:TextBox ID="txtRagSocFornit" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCittaFornit" runat="server" Text="Citta" />
                     <asp:TextBox ID="txtCittaFornit" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblIndirFornit" runat="server" Text="Indirizzo" />
                     <asp:TextBox ID="txtIndirFornit" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-            </div>
-
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCapFornit" runat="server" Text="Cap" />
                     <asp:TextBox ID="txtCapFornit" CssClass="form-control" MaxLength="5" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblTelFornit" runat="server" Text="Telefono" />
                     <asp:TextBox ID="txtTelFornit" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCelFornit" runat="server" Text="Cellulare" />
                     <asp:TextBox ID="txtCelFornit" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-            </div>
-
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCodFiscFornit" runat="server" Text="Codice Fiscale" />
                     <asp:TextBox ID="txtCodFiscFornit" CssClass="form-control" MaxLength="16" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblPartIvaFornit" runat="server" Text="Partita Iva" />
                     <asp:TextBox ID="txtPartIvaFornit" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-4 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblAbbrevFornit" runat="server" Text="Abbreviato" />
                     <asp:TextBox ID="txtAbbrevFornit" CssClass="form-control" MaxLength="3" runat="server"></asp:TextBox>
                 </div>
@@ -249,7 +202,7 @@
 
             <asp:HiddenField ID="hidIdFornit" runat="server" />
 
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center form-group">
                     <asp:Button ID="btnModFornit" OnClick="btnModFornit_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Modifica Fornitore" />
                     <asp:Button ID="btnInsFornit" OnClick="btnInsFornit_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Fornitore" />
@@ -268,7 +221,7 @@
                     </div>
                     <div class="row d-flex justify-content-center align-items-center">
                         <div class="col text-center">
-                            <asp:Button ID="btnFiltraGrdFornitori" OnClick="btnFiltraGrdFornitori_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Griglia" Style="position: relative; top: 10px;" />
+                            <asp:Button ID="btnFiltraGrdFornitori" OnClick="btnFiltraGrdFornitori_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Griglia"/>
                         </div>
                     </div>
                 </div>
@@ -324,30 +277,30 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlInsOperai" CssClass="panel-container col" runat="server">
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblNomeOper" runat="server" Text="Nome Operaio" />
                     <asp:TextBox ID="txtNomeOper" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblDescrOper" runat="server" Text="Descrizione" />
                     <asp:TextBox ID="txtDescrOper" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblSuffOper" runat="server" Text="Suffisso" />
                     <asp:TextBox ID="txtSuffOper" CssClass="form-control" MaxLength="4" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblOperaio" runat="server" Text="Operaio" />
                     <asp:TextBox ID="txtOperaio" CssClass="form-control" MaxLength="4" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2 form-group">
+                <div class="col form-group">
                     <asp:Label ID="lblCostoOperaio" runat="server" Text="Costo Operaio" />
                     <asp:TextBox ID="txtCostoOperaio" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
 
             <asp:HiddenField ID="hidIdOper" runat="server" />
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center form-group">
                     <asp:Button ID="btnModOper" OnClick="btnModOper_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Modifica Operaio" />
                     <asp:Button ID="btnInsOper" OnClick="btnInsOper_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Operaio" />
@@ -398,11 +351,9 @@
     <!-- Pannello inserimento Cantieri -->
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlInsCantieri" CssClass="panel-container col text-center" runat="server">
-
             <div class="row d-flex align-items-center">
                 <div class="col-2 text-center">
-                    <asp:TextBox ID="txtFiltroClientePerInserimentoCantieri" placeholder="Filtro per cliente" CssClass="form-control" Style="width: 75% !important; float: left; margin-right: 10px;" runat="server"></asp:TextBox>
-                    <asp:Button ID="btnFiltroClientePerInserimentoCantieri" Text="Filtra" CssClass="btn btn-primary" OnClick="btnFiltroClientePerInserimentoCantieri_Click" runat="server" />
+                    <asp:TextBox ID="txtFiltroClientePerInserimentoCantieri" placeholder="Filtro per cliente" AutoPostBack="true" OnTextChanged="txtFiltroClientePerInserimentoCantieri_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
 
@@ -514,7 +465,7 @@
             </div>
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <asp:Panel ID="pnlFiltriCant" CssClass="col text-center" runat="server" Style="margin-top: 20px;">
+                <asp:Panel ID="pnlFiltriCant" CssClass="col text-center" runat="server">
                     <div class="row mt-3 d-flex justify-content-center align-items-center">
                         <div class="col-1">
                             <asp:Label ID="lblFiltroAnno" runat="server" Text="Anno"></asp:Label>
@@ -599,9 +550,9 @@
     <!-- Fine Pannello inserimento Cantieri -->
 
     <!-- Pannello inserimento spese -->
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
+    <div class="row d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlInsSpese" CssClass="panel-container col text-center" runat="server">
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-3 form-group">
                     <asp:Label ID="lblSpeseDescr" runat="server" Text="Descrizione" />
                     <asp:TextBox ID="txtSpeseDescr" CssClass="form-control" runat="server"></asp:TextBox>
@@ -628,7 +579,7 @@
                     <div class="row mt-3 d-flex justify-content-center align-items-center">
                         <asp:Label ID="lblFiltroSpesaDescr" runat="server" Text="Filtro Descrizione Spesa" />
                         <asp:TextBox ID="txtFiltroSpesaDescr" CssClass="form-control" runat="server"></asp:TextBox>
-                        <asp:Button ID="btnFiltraGrdSpese" OnClick="btnFiltraGrdSpese_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Spese" Style="position: relative; top: 10px;" />
+                        <asp:Button ID="btnFiltraGrdSpese" OnClick="btnFiltraGrdSpese_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Spese" />
                     </div>
                 </div>
             </asp:Panel>

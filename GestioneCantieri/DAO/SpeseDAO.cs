@@ -1,166 +1,126 @@
 ﻿using Dapper;
 using GestioneCantieri.Data;
 using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class SpeseDAO : BaseDAO
     {
         //SELECT
-        public static DataTable GetSpese()
+        public static List<Spese> GetAll()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            List<Spese> ret = new List<Spese>();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblSpese ORDER BY Descrizione");
 
             try
             {
-                sql = "SELECT IdSpesa,Descrizione,Prezzo FROM TblSpese ORDER BY Descrizione";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Spese>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero delle spese", ex);
+                throw new Exception("Errore durante la GetAll in SpeseDAO", ex);
             }
-            finally { cn.Close(); }
+            return ret;
         }
-        public static DataTable GetSpeseFromDescr(string descr)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
-            descr = "%" + descr + "%";
-
-            try
-            {
-                sql = "SELECT IdSpesa,Descrizione,Prezzo FROM TblSpese WHERE Descrizione LIKE @Descrizione";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("@Descrizione", descr));
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero delle spese con filtro sulla descrizione", ex);
-            }
-            finally { cn.Close(); }
-        }
         public static Spese GetDettagliSpesa(string idSpesa)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            Spese ret = new Spese();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblSpese where IdSpesa = @idSpesa");
             try
             {
-                sql = "SELECT IdSpesa, Descrizione, Prezzo FROM TblSpese where IdSpesa = @IdSpesa ";
-                return cn.Query<Spese>(sql, new { IdSpesa = idSpesa }).SingleOrDefault();
-
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Spese>(sql.ToString(), new { idSpesa }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero delle spese", ex);
+                throw new Exception("Errore durante la GetSingle in SpeseDAO", ex);
             }
-            finally
+            return ret;
+        }
+
+        public static List<Spese> GetByDescription(string descrizione)
+        {
+            List<Spese> ret = new List<Spese>();
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblSpese where Descrizione LIKE '%{descrizione}%'");
+            try
             {
-                CloseResouces(cn, null);
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Spese>(sql.ToString(), new { descrizione }).ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetByDescription in SpeseDAO", ex);
+            }
+            return ret;
         }
 
         //INSERT
         public static bool InsertSpesa(Spese s)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO TblSpese (Descrizione, Prezzo) VALUES (@Descrizione, @Prezzo)");
             try
             {
-                sql = "INSERT INTO TblSpese (Descrizione, Prezzo) " +
-                      "VALUES (@Descrizione, @Prezzo) ";
-
-                int rows = cn.Execute(sql, s);
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), s) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di una spesa", ex);
             }
-            finally { cn.Close(); }
+            return ret;
         }
 
         //UPDATE
         public static bool UpdateSpesa(Spese s)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblSpese SET Descrizione = @Descrizione, Prezzo = @Prezzo WHERE idSpesa = @idSpesa");
             try
             {
-                sql = "UPDATE TblSpese " +
-                      "SET Descrizione = @Descrizione, Prezzo = @Prezzo " +
-                      "WHERE idSpesa = @idSpesa";
-
-                int rows = cn.Execute(sql, s);
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), s) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'aggiornamento di una spesa", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         //DELETE
-        public static bool DeleteSpesa(int id)
+        public static bool DeleteSpesa(int idSpesa)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblSpese WHERE idSpesa = @idSpesa");
             try
             {
-                sql = "DELETE FROM TblSpese WHERE idSpesa = @idSpesa";
-
-                int rows = cn.Execute(sql, new { idSpesa = id });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idSpesa }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione di una spesa", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

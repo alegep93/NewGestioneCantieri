@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -23,17 +24,9 @@ namespace GestioneCantieri
         #region Helpers
         protected void FillDdlScegliCantiere()
         {
-            DataTable dt = CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked);
-            List<Cantieri> listCantieri = dt.DataTableToList<Cantieri>();
-
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
-            {
-                string show = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem(show, c.IdCantieri.ToString()));
-            }
+            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked));
         }
         protected void BindGrid()
         {
@@ -46,13 +39,19 @@ namespace GestioneCantieri
             decimal totArrot = 0m;
             decimal totChiam = 0m;
             decimal totSpese = 0m;
-            string idCantiere = ddlScegliCant.SelectedItem.Value;
+            int idCantiere = Convert.ToInt32(ddlScegliCant.SelectedItem.Value);
 
-            List<MaterialiCantieri> matCantList = MaterialiCantieriDAO.GetMaterialeCantiere(idCantiere);
+            List<MaterialiCantieri> matCantList = MaterialiCantieriDAO.GetMaterialeCantiere(idCantiere.ToString());
             grdStampaVerificaCant.DataSource = matCantList;
             grdStampaVerificaCant.DataBind();
 
-            MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(idCantiere);
+            Cantieri cant = CantieriDAO.GetSingle(idCantiere);
+            MaterialiCantieri mc = new MaterialiCantieri
+            {
+                RagSocCli = cant.RagSocCli,
+                CodCant = cant.CodCant,
+                DescriCodCant = cant.DescriCodCant
+            };
 
             lblIntestStampa.Text = "<strong>CodCant</strong>: " + mc.CodCant + " --- " +
                 "<strong>DescriCodCant</strong>: " + mc.DescriCodCant + " --- " +
@@ -137,7 +136,13 @@ namespace GestioneCantieri
         {
             //Ricreo i passaggi della "Stampa Ricalcolo Conti" per ottenere il valore del "Totale Ricalcolo"
             string idCantiere = ddlScegliCant.SelectedItem.Value;
-            MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(idCantiere);
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(idCantiere));
+            MaterialiCantieri mc = new MaterialiCantieri
+            {
+                RagSocCli = cant.RagSocCli,
+                CodCant = cant.CodCant,
+                DescriCodCant = cant.DescriCodCant
+            };
             RicalcoloConti rc = new RicalcoloConti();
             decimal totale = 0m;
             PdfPTable pTable = rc.InitializePdfTableDDT();

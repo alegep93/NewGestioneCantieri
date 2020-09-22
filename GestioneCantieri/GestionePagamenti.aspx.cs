@@ -1,48 +1,41 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
 {
-    public partial class GestionePagamenti : System.Web.UI.Page
+    public partial class GestionePagamenti : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 FillDdlScegliCant();
-                pnlGestPagam.Visible = false;
-                btnModPagam.Visible = false;
+                pnlGestPagam.Visible = btnModPagam.Visible = false;
             }
         }
 
         /* HELPERS */
         protected void FillDdlScegliCant()
         {
-            DataTable dt = CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked);
-            List<Cantieri> listCantieri = dt.DataTableToList<Cantieri>();
-
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
-            {
-                string show = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCant.Items.Add(new ListItem(show, c.IdCantieri.ToString()));
-            }
+            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked));
         }
         protected void SvuotaCampi(Panel pnl)
         {
             //Svuoto tutti i TextBox
             foreach (Control c in pnl.Controls)
             {
-                if (c is TextBox)
-                    ((TextBox)c).Text = "";
+                if (c is TextBox box)
+                {
+                    box.Text = "";
+                }
             }
 
             //Acconto e Saldo FALSE

@@ -1,9 +1,11 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -91,7 +93,7 @@ namespace GestioneCantieri
             txtPzzoFinCli.Text = txtChiamPzzoFinCli.Text = "0.00";
 
             //Reimposto il campo Prezzo manodopera
-            Cantieri cant = CantieriDAO.GetSingle(ddlScegliCant.SelectedItem.Value);
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
             txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
 
             //Reimposto il DDLScegliOperaio del pannello GestioneOperaio
@@ -169,38 +171,15 @@ namespace GestioneCantieri
         //Fill Ddl
         protected void FillDdlScegliCant()
         {
-            DataTable dt = CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked);
-            List<Cantieri> listCantieri = dt.DataTableToList<Cantieri>();
-
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
-            {
-                string show = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCant.Items.Add(new ListItem(show, c.IdCantieri.ToString()));
-            }
+            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked));
         }
         protected void FillDdlScegliAcquirente()
         {
-            int i = 0;
-            DataTable dt = OperaiDAO.GetOperai();
-            List<Operai> listOperai = dt.DataTableToList<Operai>();
-
             ddlScegliAcquirente.Items.Clear();
             ddlScegliAcquirente.Items.Add(new ListItem("", "-1"));
-
-            foreach (Operai op in listOperai)
-            {
-                string show = op.NomeOp + " - " + op.DescrOp;
-                ddlScegliAcquirente.Items.Add(new ListItem(show, op.IdOperaio.ToString()));
-
-                i++;
-                if (op.NomeOp == "Maurizio" || op.NomeOp == "Mau" || op.NomeOp == "MAU")
-                {
-                    ddlScegliAcquirente.SelectedIndex = i;
-                }
-            }
+            ddlScegliAcquirente = OperaioManager.FillDdlOperaio(OperaiDAO.GetAll());
         }
         protected void FillDdlScegliFornit()
         {
@@ -371,7 +350,7 @@ namespace GestioneCantieri
         /* EVENTI TEXT-CHANGED */
         protected void ddlScegliCant_TextChanged(object sender, EventArgs e)
         {
-            Cantieri cant = CantieriDAO.GetSingle(ddlScegliCant.SelectedItem.Value);
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
             txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
             txtFascia.Text = cant.FasciaTblCantieri.ToString();
 
@@ -442,8 +421,7 @@ namespace GestioneCantieri
 
             // Recupero l'id dell'acquirente dal nome
             string acquirente = grdMostraDDTDaInserire.Rows[numRiga].Cells[6].Text;
-            mc.Acquirente = OperaiDAO.GetIdAcquirente(acquirente);
-
+            mc.Acquirente = OperaiDAO.GetAll().Where(w => w.NomeOp == acquirente).FirstOrDefault().IdOperaio.ToString();
             mc.Fornitore = ddlScegliFornit.SelectedItem.Value;
             mc.NumeroBolla = grdMostraDDTDaInserire.Rows[numRiga].Cells[1].Text;
             mc.ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text);
@@ -1403,7 +1381,7 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillManodopMatCant(MaterialiCantieri mc)
         {
-            Operai op = OperaiDAO.GetOperaio(ddlScegliAcquirente.SelectedItem.Value);
+            Operai op = OperaiDAO.GetSingle(Convert.ToInt32(ddlScegliAcquirente.SelectedItem.Value));
             mc.CodArt = "Manodopera" + op.Operaio;
             mc.DescriCodArt = "Manodopera" + op.Operaio;
 
@@ -1497,7 +1475,7 @@ namespace GestioneCantieri
             txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
 
             //Popolo il campo PzzoManodopera a partire dal prezzo scritto nella tabella Cantieri
-            Cantieri c = CantieriDAO.GetSingle(ddlScegliCant.SelectedItem.Value);
+            Cantieri c = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
             txtPzzoManodop.Text = c.PzzoManodopera.ToString();
         }
 
@@ -1547,7 +1525,7 @@ namespace GestioneCantieri
         }
         private void PopolaObjManodop(MaterialiCantieri mc)
         {
-            Operai op = OperaiDAO.GetOperaio(ddlScegliAcquirente.SelectedItem.Value);
+            Operai op = OperaiDAO.GetSingle(Convert.ToInt32(ddlScegliAcquirente.SelectedItem.Value));
             mc.CodArt = "Manodopera" + op.Operaio;
             mc.DescriCodArt = "Manodopera" + op.Operaio;
 
@@ -1672,7 +1650,7 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillOperMatCant(MaterialiCantieri mc)
         {
-            Operai op = OperaiDAO.GetOperaio(ddlScegliOperaio.SelectedItem.Value);
+            Operai op = OperaiDAO.GetSingle(Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value));
             mc.CodArt = "Manodopera" + op.Operaio;
             mc.DescriCodArt = "Manodopera" + op.Operaio;
 
@@ -1696,24 +1674,9 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliOperaio()
         {
-            int i = 0;
-            DataTable dt = OperaiDAO.GetOperai();
-            List<Operai> listOperai = dt.DataTableToList<Operai>();
-
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-
-            foreach (Operai op in listOperai)
-            {
-                string show = op.NomeOp + " - " + op.DescrOp;
-                ddlScegliOperaio.Items.Add(new ListItem(show, op.IdOperaio.ToString()));
-
-                i++;
-                if (op.NomeOp == "Maurizio" || op.NomeOp == "Mau" || op.NomeOp == "MAU")
-                {
-                    ddlScegliOperaio.SelectedIndex = i;
-                }
-            }
+            ddlScegliOperaio = OperaioManager.FillDdlOperaio(OperaiDAO.GetAll());
         }
         protected void BindGridOper()
         {
@@ -1764,7 +1727,7 @@ namespace GestioneCantieri
         //Visibilità pannello
         protected void btnGestOper_Click(object sender, EventArgs e)
         {
-            Operai op = OperaiDAO.GetOperaio(ddlScegliOperaio.SelectedItem.Value);
+            Operai op = OperaiDAO.GetSingle(Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value));
             txtPzzoOper.Text = op != null ? op.CostoOperaio.ToString("N2") : "";
 
             lblTitoloMaschera.Text = "Gestione Operaio";
@@ -1782,7 +1745,7 @@ namespace GestioneCantieri
         /* EVENTI TEXT-CHANGED */
         protected void ddlScegliOperaio_TextChanged(object sender, EventArgs e)
         {
-            Operai op = OperaiDAO.GetOperaio(ddlScegliOperaio.SelectedItem.Value);
+            Operai op = OperaiDAO.GetSingle(Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value));
             txtPzzoOper.Text = op.CostoOperaio.ToString();
         }
 
@@ -1833,7 +1796,7 @@ namespace GestioneCantieri
         }
         private void PopolaObjOper(MaterialiCantieri mc)
         {
-            Operai op = OperaiDAO.GetOperaio(ddlScegliOperaio.SelectedItem.Value);
+            Operai op = OperaiDAO.GetSingle(Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value));
             mc.CodArt = "Manodopera" + op.Operaio;
             mc.DescriCodArt = "Manodopera" + op.Operaio;
 
@@ -2472,17 +2435,9 @@ namespace GestioneCantieri
         }
         protected void FillDdlScegliSpesa()
         {
-            DataTable dt = SpeseDAO.GetSpese();
-            List<Spese> listSpese = dt.DataTableToList<Spese>();
-
             ddlScegliSpesa.Items.Clear();
             ddlScegliSpesa.Items.Add(new ListItem("", "-1"));
-
-            foreach (Spese s in listSpese)
-            {
-                string show = s.Descrizione;
-                ddlScegliSpesa.Items.Add(new ListItem(show, s.IdSpesa.ToString()));
-            }
+            ddlScegliSpesa = SpesaManager.FillDdlSpese(SpeseDAO.GetAll());
         }
         protected void FillMatCantSpese(MaterialiCantieri mc)
         {

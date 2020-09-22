@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,24 +31,9 @@ namespace GestioneCantieri
 
         protected void FillDdlScegliOperaio()
         {
-            int i = 0;
-            DataTable dt = OperaiDAO.GetOperai();
-            List<Operai> listOperai = dt.DataTableToList<Operai>();
-
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-
-            foreach (Operai op in listOperai)
-            {
-                string show = op.NomeOp + " - " + op.DescrOp;
-                ddlScegliOperaio.Items.Add(new ListItem(show, op.IdOperaio.ToString()));
-
-                i++;
-                if (op.NomeOp == "Maurizio" || op.NomeOp == "Mau" || op.NomeOp == "MAU")
-                {
-                    ddlScegliOperaio.SelectedIndex = i;
-                }
-            }
+            ddlScegliOperaio = OperaioManager.FillDdlOperaio(OperaiDAO.GetAll());
         }
 
         private void ResetToInitial()

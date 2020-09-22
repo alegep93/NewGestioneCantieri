@@ -1,223 +1,120 @@
 ﻿using Dapper;
 using GestioneCantieri.Data;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class OperaiDAO : BaseDAO
     {
-        public static Operai GetOperaio(string id)
+        public static List<Operai> GetAll()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            List<Operai> ret = new List<Operai>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT *");
+            sql.AppendLine($"FROM TblOperaio");
+            sql.AppendLine($"ORDER BY NomeOp");
 
             try
             {
-                sql = "SELECT IdOperaio,NomeOp,DescrOp,Suffisso,Operaio,CostoOperaio " +
-                      "FROM TblOperaio " +
-                      "WHERE IdOperaio = @IdOperaio " +
-                      "ORDER BY NomeOp ASC ";
-
-                return cn.Query<Operai>(sql, new { IdOperaio = id }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Operai>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero degli operai", ex);
+                throw new Exception("Errore durante la GetAll in OperaiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
-        public static DataTable GetOperai()
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static Operai GetSingle(int idOperaio)
+        {
+            Operai ret = new Operai();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT *");
+            sql.AppendLine($"FROM TblOperaio");
+            sql.AppendLine($"WHERE IdOperaio = @idOperaio");
+            sql.AppendLine($"ORDER BY NomeOp");
             try
             {
-                sql = "SELECT IdOperaio,NomeOp,DescrOP,Suffisso,Operaio,CostoOperaio " +
-                      "FROM TblOperaio " +
-                      "ORDER BY NomeOp ASC ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Operai>(sql.ToString(), new { idOperaio }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero degli operai", ex);
+                throw new Exception("Errore durante la GetSingle in OperaiDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
-        public static DataTable GetAllOperai()
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static bool InserisciOperaio(Operai operaio)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblOperaio (NomeOp,DescrOP,Suffisso,Operaio,CostoOperaio)");
+            sql.AppendLine($"VALUES (@NomeOp,@DescrOp,@Suffisso,@Operaio,@CostoOperaio)");
             try
             {
-                sql = "SELECT IdOperaio,NomeOp,DescrOP,Suffisso,Operaio,CostoOperaio " +
-                      "FROM TblOperaio " +
-                      "ORDER BY NomeOp ASC ";
 
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero degli operai", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static Operai GetSingleOperaio(int idOperaio)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdOperaio,NomeOp,DescrOp,Suffisso,Operaio,CostoOperaio " +
-                      "FROM TblOperaio " +
-                      "WHERE IdOperaio = @IdOperaio " +
-                      "ORDER BY NomeOp ASC ";
-
-                return cn.Query<Operai>(sql, new { IdOperaio = idOperaio }).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero di un singolo operaio", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static string GetIdAcquirente(string NomeOperaio)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdOperaio " +
-                      "FROM TblOperaio " +
-                      "WHERE NomeOp = @NomeOp ";
-
-                return cn.Query<int>(sql, new { NomeOp = NomeOperaio }).SingleOrDefault().ToString();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero di un singolo operaio", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static bool InserisciOperaio(string nome, string descr, string suff, string operaio, string costoOp)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "INSERT INTO TblOperaio " +
-                      "(NomeOp, DescrOp, Suffisso, Operaio, CostoOperaio) " +
-                      "VALUES (@NomeOp,@DescrOp,@Suffisso,@Operaio,@CostoOperaio) ";
-
-                int ret = cn.Execute(sql, new { NomeOp = nome, DescrOp = descr, Suffisso = suff, Operaio = operaio, CostoOperaio = costoOp });
-
-                if (ret > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), operaio) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un nuovo operaio", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
-        public static bool UpdateOperaio(string idOper, string nome, string descr, string suff, string oper, string costoOp)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static bool UpdateOperaio(Operai operaio)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("UPDATE TblOperaio");
+            sql.AppendLine("SET NomeOp = @NomeOp, DescrOp = @DescrOp, Suffisso = @Suffisso, Operaio = @Operaio, CostoOperaio = @CostoOperaio");
+            sql.AppendLine("WHERE IdOperaio = @IdOperaio");
             try
             {
-                sql = "UPDATE TblOperaio " +
-                      "SET NomeOp = @NomeOp, " +
-                      "DescrOp = @DescrOp, " +
-                      "Suffisso = @Suffisso, " +
-                      "Operaio = @Operaio, " +
-                      "CostoOperaio = @CostoOperaio " +
-                      "WHERE IdOperaio = @IdOperaio ";
-
-                int row = cn.Execute(sql, new { IdOperaio = idOper, NomeOp = nome, DescrOp = descr, Suffisso = suff, Operaio = oper, CostoOperaio = costoOp });
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), operaio) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update di un operaio", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
-        public static bool EliminaOperaio(int idOper)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static bool EliminaOperaio(int idOperaio)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"IF NOT EXISTS (SELECT * FROM TblMaterialiCantieri WHERE IdTblOperaio = @idOperaio)");
+            sql.AppendLine($"DELETE FROM TblOperaio WHERE IdOperaio = @idOperaio");
             try
             {
-                sql = "DELETE FROM TblOperaio " +
-                      "WHERE IdOperaio = @IdOperaio ";
-
-                int row = cn.Execute(sql, new { IdOperaio = idOper });
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    int row = cn.Execute(sql.ToString(), new { idOperaio });
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione dell'operaio", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

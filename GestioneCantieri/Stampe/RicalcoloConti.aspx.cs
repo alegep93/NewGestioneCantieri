@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -51,17 +52,9 @@ namespace GestioneCantieri
 
         protected void FillDdlScegliCantiere()
         {
-            DataTable dt = CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked);
-            List<Cantieri> listCantieri = dt.DataTableToList<Cantieri>();
-
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
-            {
-                string show = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem(show, c.IdCantieri.ToString()));
-            }
+            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked));
         }
         public List<MaterialiCantieri> GetMaterialiCantieri()
         {
@@ -74,55 +67,6 @@ namespace GestioneCantieri
             else
             {
                 return MaterialiCantieriDAO.GetMaterialeCantiereForRicalcoloConti(idCant, perc);
-
-                //decimal valore = 0m;
-                //int cRicalcolo = 0, cRicarico = 0;
-                //List<decimal> decListRicalcolo = MaterialiCantieriDAO.CalcolaValoreRicalcolo(idCant, perc);
-                //List<decimal> decListRicarico = MaterialiCantieriDAO.CalcolaValoreRicarico(idCant);
-                //grd.DataSource = matCantList;
-                //grd.DataBind();
-
-                //matCantList.ForEach(f =>
-                //{
-                //    decimal valRicarico = (f.Visibile && f.RicaricoSiNo) ? f.ValoreRicarico : 0;
-                //    decimal valRicalcolo = (f.Visibile && f.Ricalcolo) ? f.ValoreRicalcolo : 0;
-                //    f.PzzoFinCli = f.PzzoFinCli == 0 ? Math.Round((f.PzzoUniCantiere + valRicalcolo + valRicarico), 2) : Math.Round(f.PzzoFinCli, 2);
-                //    valore = Convert.ToDecimal(f.Qta) * f.PzzoFinCli;
-                //});
-
-                //return matCantList;
-
-                ////Imposto la colonna del valore
-                //for (int i = 0; i < grd.Rows.Count; i++)
-                //{
-                //    string visibile = grd.Rows[i].Cells[8].Text;
-                //    string ricalcolo = grd.Rows[i].Cells[9].Text;
-                //    string ricaricoSiNo = grd.Rows[i].Cells[10].Text;
-                //    decimal pzzoUnit = 0m, valRicarico = 0m, valRicalcolo = 0m;
-                //    pzzoUnit = Convert.ToDecimal(grd.Rows[i].Cells[3].Text);
-                //
-                //    if (visibile == "True" && ricaricoSiNo == "True")
-                //    {
-                //        grd.Rows[i].Cells[4].Text = decListRicarico[cRicarico].ToString();
-                //        valRicarico = Convert.ToDecimal(grd.Rows[i].Cells[4].Text);
-                //        cRicarico++;
-                //    }
-                //
-                //    if (visibile == "True" && ricalcolo == "True")
-                //    {
-                //        grd.Rows[i].Cells[5].Text = decListRicalcolo[cRicalcolo].ToString();
-                //        valRicalcolo = Convert.ToDecimal(grd.Rows[i].Cells[5].Text);
-                //        cRicalcolo++;
-                //    }
-                //
-                //    if (matCantList[i].PzzoFinCli == 0)
-                //        grd.Rows[i].Cells[6].Text = Math.Round((pzzoUnit + valRicalcolo + valRicarico), 2).ToString();
-                //    else
-                //        grd.Rows[i].Cells[6].Text = Math.Round(matCantList[i].PzzoFinCli, 2).ToString();
-                //
-                //    valore = Convert.ToDecimal(grd.Rows[i].Cells[2].Text) * Convert.ToDecimal(grd.Rows[i].Cells[6].Text);
-                //    grd.Rows[i].Cells[7].Text = valore.ToString();
-                //}
             }
         }
 
@@ -206,8 +150,13 @@ namespace GestioneCantieri
         public void ExportToPdfPerContoFinCli(List<MaterialiCantieri> matCantList)
         {
             decimal totale = 0m;
-            MaterialiCantieri mc = new MaterialiCantieri();
-            mc = CantieriDAO.GetDataPerIntestazione(idCant);
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(idCant));
+            MaterialiCantieri mc = new MaterialiCantieri
+            {
+                RagSocCli = cant.RagSocCli,
+                CodCant = cant.CodCant,
+                DescriCodCant = cant.DescriCodCant
+            };
 
             //Apro lo stream verso il file PDF
             Document pdfDoc = new Document(PageSize.A4, 8f, 2f, 2f, 2f);
@@ -230,27 +179,12 @@ namespace GestioneCantieri
         }
         public void GeneraPDFPerContoFinCli(Document pdfDoc, MaterialiCantieri mc, PdfPTable table, List<MaterialiCantieri> matCantList, decimal totale)
         {
-            PdfPTable tblTotali = null;
-            Phrase intestazione = new Phrase();
-            Phrase dataPhrase = new Phrase();
-            Phrase descriptionPhrase = new Phrase();
-            Phrase quantityPhrase = new Phrase();
-            Phrase unitaryPricePhrase = new Phrase();
-            Phrase valuePhrase = new Phrase();
-            intestazione = GeneraIntestazioneContoFinCli(mc);
-
-
-            // List<MaterialiCantieri> matCantList = MaterialiCantieriDAO.GetMaterialeCantiereForRicalcoloConti(idCant);
-
-            //Transfer rows from GridView to table
-            //for (int i = 0; i < grdStampaMateCant.Columns.Count; i++)
-            //{
-
-            dataPhrase = new Phrase(Server.HtmlDecode("Data"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
-            descriptionPhrase = new Phrase(Server.HtmlDecode("Descrizione Codice Articolo"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
-            quantityPhrase = new Phrase(Server.HtmlDecode("Qtà"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
-            unitaryPricePhrase = new Phrase(Server.HtmlDecode("Prezzo Unitario"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
-            valuePhrase = new Phrase(Server.HtmlDecode("Valore"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+            Phrase intestazione = GeneraIntestazioneContoFinCli(mc);
+            Phrase dataPhrase = new Phrase(Server.HtmlDecode("Data"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+            Phrase descriptionPhrase = new Phrase(Server.HtmlDecode("Descrizione Codice Articolo"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+            Phrase quantityPhrase = new Phrase(Server.HtmlDecode("Qtà"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+            Phrase unitaryPricePhrase = new Phrase(Server.HtmlDecode("Prezzo Unitario"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+            Phrase valuePhrase = new Phrase(Server.HtmlDecode("Valore"), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
 
             PdfPCell dataCell = new PdfPCell(dataPhrase);
             PdfPCell descriptionCell = new PdfPCell(descriptionPhrase);
@@ -269,29 +203,16 @@ namespace GestioneCantieri
             table.AddCell(quantityCell);
             table.AddCell(unitaryPriceCell);
             table.AddCell(valueCell);
-            //}
 
             int j = 0;
 
             foreach (MaterialiCantieri materiale in matCantList)
             {
-                //if (grd.Rows[i].RowType == DataControlRowType.DataRow)
-                //{
-                //for (int j = 0; j < grd.Columns.Count; j++)
-                //{
-
-                //if (j == 3 || j == 4)
-                //{
                 unitaryPricePhrase = new Phrase(Server.HtmlDecode(String.Format("{0:n}", Convert.ToDecimal(materiale.PzzoFinCli)).ToString()), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
                 valuePhrase = new Phrase(Server.HtmlDecode(String.Format("{0:n}", Convert.ToDecimal(materiale.Valore)).ToString()), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
-                //}
-                //else
-                //{
                 dataPhrase = new Phrase(Server.HtmlDecode(materiale.Data.ToString("dd/MM/yyyy")), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
                 descriptionPhrase = new Phrase(Server.HtmlDecode(materiale.DescriCodArt), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
                 quantityPhrase = new Phrase(Server.HtmlDecode(materiale.Qta.ToString()), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
-                //}
-
                 dataCell = new PdfPCell(dataPhrase);
                 descriptionCell = new PdfPCell(descriptionPhrase);
                 quantityCell = new PdfPCell(quantityPhrase);
@@ -299,15 +220,6 @@ namespace GestioneCantieri
                 valueCell = new PdfPCell(valuePhrase);
                 dataCell.BorderWidth = descriptionCell.BorderWidth = quantityCell.BorderWidth = unitaryPriceCell.BorderWidth = valueCell.BorderWidth = 0;
                 quantityCell.HorizontalAlignment = unitaryPriceCell.HorizontalAlignment = valueCell.HorizontalAlignment = Element.ALIGN_CENTER;
-
-                //switch (j)
-                //{
-                //    case 2:
-                //    case 3:
-                //    case 4:
-                //        cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                //        break;
-                //}
 
                 //Set Color of Alternating row
                 if (j % 2 != 0)
@@ -320,7 +232,6 @@ namespace GestioneCantieri
                 table.AddCell(quantityCell);
                 table.AddCell(unitaryPriceCell);
                 table.AddCell(valueCell);
-                //}
 
                 if (ddlScegliTipoNote != null)
                 {
@@ -365,10 +276,9 @@ namespace GestioneCantieri
 
                 totale += Convert.ToDecimal(materiale.Valore);
                 j++;
-                //}
             }
 
-            tblTotali = new PdfPTable(1);
+            PdfPTable tblTotali = new PdfPTable(1);
             tblTotali.WidthPercentage = 100;
 
             GeneraTotalePerContoFinCli(tblTotali, totale);

@@ -41,7 +41,7 @@ namespace GestioneCantieri
             objStampa.TotaleAcconti = objStampa.TotaleConto = objStampa.TotaleFinale = 0m;
 
             //Popolo il campo Conto/Preventivo
-            Cantieri c = CantieriDAO.GetSingle(idCantiere);
+            Cantieri c = CantieriDAO.GetSingle(Convert.ToInt32(idCantiere));
             if (c.Preventivo)
                 objStampa.TotaleConto = c.ValorePreventivo;
             else
@@ -84,7 +84,13 @@ namespace GestioneCantieri
                 {
                     //Ricreo i passaggi della "Stampa Ricalcolo Conti" per ottenere il valore del "Totale Ricalcolo"
                     codCant = c.CodCant;
-                    MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(c.IdCantieri.ToString());
+                    Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(c.IdCantieri));
+                    MaterialiCantieri mc = new MaterialiCantieri
+                    {
+                        RagSocCli = cant.RagSocCli,
+                        CodCant = cant.CodCant,
+                        DescriCodCant = cant.DescriCodCant
+                    };
                     RicalcoloConti rc = new RicalcoloConti();
                     decimal totale = 0m;
                     PdfPTable pTable = rc.InitializePdfTableDDT();

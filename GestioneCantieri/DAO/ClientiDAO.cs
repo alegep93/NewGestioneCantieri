@@ -15,13 +15,13 @@ namespace GestioneCantieri.DAO
         public static List<Clienti> GetClienti(string ragSocCli = "")
         {
             List<Clienti> ret = new List<Clienti>();
-            StringBuilder sql = new StringBuilder($"SELECT IdCliente, RagSocCli FROM TblClienti WHERE RagSocCli LIKE '%@ragSocCli%'");
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblClienti WHERE RagSocCli LIKE '%{ragSocCli}%'");
 
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<Clienti>(sql.ToString(), new { ragSocCli }).ToList();
+                    ret = cn.Query<Clienti>(sql.ToString()).ToList();
                 }
             }
             catch (Exception ex)
@@ -37,8 +37,7 @@ namespace GestioneCantieri.DAO
             StringBuilder sql = new StringBuilder();
             try
             {
-                sql.AppendLine($"SELECT IdCliente, IdAmministratore, RagSocCli, Indirizzo, cap, Città, Tel1,");
-                sql.AppendLine($"Cell1, PartitaIva, CodFiscale, Data, Provincia, Note");
+                sql.AppendLine($"SELECT *");
                 sql.AppendLine($"FROM TblClienti");
                 sql.AppendLine($"WHERE IdCliente = @idCliente");
                 sql.AppendLine($"ORDER BY RagSocCli ASC");
@@ -60,8 +59,7 @@ namespace GestioneCantieri.DAO
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"INSERT INTO TblClienti");
-            sql.AppendLine($"(IdAmministratore,RagSocCli,Indirizzo,Cap,Città,Provincia,Tel1,Cell1,PartitaIva,CodFiscale,Data,Note)");
+            sql.AppendLine($"INSERT INTO TblClienti (IdAmministratore,RagSocCli,Indirizzo,Cap,Città,Provincia,Tel1,Cell1,PartitaIva,CodFiscale,Data,Note)");
             sql.AppendLine($"VALUES (@IdAmministratore,@RagSocCli,@Indirizzo,@Cap,@Città,@Provincia,@Tel1,@Cell1,@PartitaIva,@CodFiscale,CONVERT(date,@Data),@Note)");
             try
             {

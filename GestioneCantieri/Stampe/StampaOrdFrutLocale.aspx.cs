@@ -6,6 +6,7 @@ using System.Data;
 using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Linq;
+using GestioneCantieri.Utils;
 
 namespace GestioneCantieri
 {
@@ -74,7 +75,7 @@ namespace GestioneCantieri
         {
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
-            CantieriDAO.GetCantieriAperti().ForEach(f => ddlScegliCantiere.Items.Add(new ListItem($"{f.CodCant} - {f.DescriCodCant}", f.IdCantieri.ToString())));
+            ddlScegliCantiere = CantiereManager.FillDdlCantieri(CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList());
         }
 
         protected void GroupGridViewCells()

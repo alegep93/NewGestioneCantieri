@@ -23,22 +23,17 @@ namespace GestioneCantieri
         #region Helpers
         protected void FillDdlScegliCantiere()
         {
-            DataTable dt = CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, chkFatturato.Checked, chkChiuso.Checked, chkRiscosso.Checked);
-            List<Cantieri> listCantieri = dt.DataTableToList<Cantieri>();
-
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
+            CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, chkFatturato.Checked, chkChiuso.Checked, chkRiscosso.Checked).ForEach(f =>
             {
-                string show = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem(show, c.IdCantieri.ToString()));
-            }
+                ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem($"{f.CodCant} - {f.DescriCodCant}", f.IdCantieri.ToString()));
+            });
         }
         protected void CompilaCampi(string idCantiere)
         {
             //Popolo il campo Conto/Preventivo
-            Cantieri c = CantieriDAO.GetSingle(idCantiere);
+            Cantieri c = CantieriDAO.GetSingle(Convert.ToInt32(idCantiere));
             if (c.Preventivo)
                 txtContoPreventivo.Text += String.Format("{0:n}", c.ValorePreventivo);
             else
@@ -69,7 +64,13 @@ namespace GestioneCantieri
         {
             //Ricreo i passaggi della "Stampa Ricalcolo Conti" per ottenere il valore del "Totale Ricalcolo"
             string idCantiere = ddlScegliCant.SelectedItem.Value;
-            MaterialiCantieri mc = CantieriDAO.GetDataPerIntestazione(idCantiere);
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(idCantiere));
+            MaterialiCantieri mc = new MaterialiCantieri
+            {
+                RagSocCli = cant.RagSocCli,
+                CodCant = cant.CodCant,
+                DescriCodCant = cant.DescriCodCant
+            };
             RicalcoloConti rc = new RicalcoloConti();
             decimal totale = 0m;
             PdfPTable pTable = rc.InitializePdfTableDDT();

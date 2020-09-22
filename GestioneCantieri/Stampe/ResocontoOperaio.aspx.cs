@@ -26,17 +26,13 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillDdlScegliAcquirente()
         {
-            DataTable dt = OperaiDAO.GetOperai();
-            List<Operai> listOperai = dt.DataTableToList<Operai>();
-
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
 
-            foreach (Operai op in listOperai)
+            OperaiDAO.GetAll().ForEach(f =>
             {
-                string show = op.Operaio + " - " + op.NomeOp + " - " + op.DescrOp;
-                ddlScegliOperaio.Items.Add(new ListItem(show, op.IdOperaio.ToString()));
-            }
+                ddlScegliOperaio.Items.Add(new ListItem($"{f.Operaio} - {f.NomeOp} - {f.DescrOp}", f.IdOperaio.ToString()));
+            });
         }
         protected void BindGrid()
         {
