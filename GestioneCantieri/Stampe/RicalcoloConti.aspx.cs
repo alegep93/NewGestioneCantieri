@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -54,7 +55,7 @@ namespace GestioneCantieri
         {
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked));
+            CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
         }
         public List<MaterialiCantieri> GetMaterialiCantieri()
         {
@@ -106,7 +107,7 @@ namespace GestioneCantieri
         protected decimal CalcolaTotAcconti()
         {
             decimal totAcconti = 0m;
-            List<Pagamenti> pagList = PagamentiDAO.GetPagamenti(idCant);
+            List<Pagamenti> pagList = PagamentiDAO.GetAll().Where(w => w.IdTblCantieri == Convert.ToInt32(idCant)).ToList();
 
             foreach (Pagamenti p in pagList)
             {

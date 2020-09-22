@@ -60,7 +60,7 @@ namespace GestioneCantieri
         {
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
-            ddlScegliCantiere = CantiereManager.FillDdlCantieri(CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList());
+            CantiereManager.FillDdlCantieri(CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList(), ref ddlScegliCantiere);
         }
         #endregion
 

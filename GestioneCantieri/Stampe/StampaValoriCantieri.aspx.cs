@@ -5,6 +5,7 @@ using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace GestioneCantieri
 {
@@ -41,7 +42,7 @@ namespace GestioneCantieri
 
             //Popolo il campo Tot. Acconti
             decimal totAcconti = 0m;
-            List<Pagamenti> pagList = PagamentiDAO.GetPagamenti(idCantiere);
+            List<Pagamenti> pagList = PagamentiDAO.GetAll().Where(w => w.IdTblCantieri == Convert.ToInt32(idCantiere)).ToList();
             foreach (Pagamenti p in pagList)
             {
                 totAcconti += p.Imporo;

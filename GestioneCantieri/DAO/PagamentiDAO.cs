@@ -1,193 +1,117 @@
 ﻿using Dapper;
 using GestioneCantieri.Data;
+using Org.BouncyCastle.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class PagamentiDAO : BaseDAO
     {
         //SELECT
-        public static Pagamenti GetSinglePagamento(int idPagam)
+        public static List<Pagamenti> GetAll(string descrizionePagamento = "")
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            List<Pagamenti> ret = new List<Pagamenti>();
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblPagamenti WHERE DescriPagamenti LIKE '%{descrizionePagamento}%'");
             try
             {
-                sql = "SELECT IdTblCantieri, data, Imporo, DescriPagamenti, Acconto, Saldo " +
-                      "FROM TblPagamenti " +
-                      "WHERE IdPagamenti = @IdPagamenti ";
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Pagamenti>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetPagamenti per idCantiere in PagamentiDAO", ex);
+            }
+            return ret;
+        }
 
-                return cn.Query<Pagamenti>(sql, new { IdPagamenti = idPagam }).SingleOrDefault();
+        public static Pagamenti GetSingle(int idPagamenti)
+        {
+            Pagamenti ret = new Pagamenti();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT *");
+            sql.AppendLine($"FROM TblPagamenti");
+            sql.AppendLine($"WHERE IdPagamenti = @idPagamenti");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Pagamenti>(sql.ToString(), new { idPagamenti }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero del singolo pagamento", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static List<Pagamenti> GetPagamenti(string idCant)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdTblCantieri,data,Imporo,DescriPagamenti,Acconto,Saldo " +
-                      "FROM TblPagamenti " +
-                      "WHERE IdTblCantieri = @IdTblCantieri ";
-
-                return cn.Query<Pagamenti>(sql, new { IdTblCantieri = idCant }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei pagamenti", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-        public static List<Pagamenti> GetPagamenti(string idCant, string descrizione)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            descrizione = "%" + descrizione + "%";
-
-            try
-            {
-                sql = "SELECT IdPagamenti,IdTblCantieri,data,Imporo,DescriPagamenti,Acconto,Saldo " +
-                      "FROM TblPagamenti " +
-                      "WHERE IdTblCantieri = @IdTblCantieri AND ISNULL(DescriPagamenti,'') LIKE @DescriPagamenti ";
-
-                return cn.Query<Pagamenti>(sql, new { IdTblCantieri = idCant, DescriPagamenti = descrizione }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei pagamenti", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-        }
-
-        public static bool GetPagamenti(int idCant)
-        {
-            bool ret = false;
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "SELECT IdPagamenti,IdTblCantieri,data,Imporo,DescriPagamenti,Acconto,Saldo " +
-                      "FROM TblPagamenti " +
-                      "WHERE IdTblCantieri = @idCant";
-
-                ret = cn.Query<Pagamenti>(sql, new { idCant }).ToList().Count == 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei pagamenti", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
-
             return ret;
         }
 
         //INSERT
         public static bool InserisciPagamento(Pagamenti pag)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblPagamenti (IdTblCantieri, data, Imporo, DescriPagamenti, Acconto, Saldo)");
+            sql.AppendLine($"VALUES (@IdTblCantieri, @data, @Imporo, @DescriPagamenti, @Acconto, @Saldo)");
             try
             {
-                sql = "INSERT INTO TblPagamenti (IdTblCantieri, data, Imporo, DescriPagamenti, Acconto, Saldo) " +
-                      "VALUES (@IdTblCantieri, @data, @Imporo, @DescriPagamenti, @Acconto, @Saldo)";
-
-                int row = cn.Execute(sql, pag);
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), pag) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un pagamento", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         //UPDATE
         public static bool UpdatePagamento(Pagamenti pag)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"UPDATE TblPagamenti");
+            sql.AppendLine($"SET IdTblCantieri = @IdTblCantieri, data = @data, Imporo = @Imporo,");
+            sql.AppendLine($"DescriPagamenti = @DescriPagamenti, Acconto = @Acconto, Saldo = @Saldo");
+            sql.AppendLine($"WHERE IdPagamenti = @IdPagamenti");
             try
             {
-                sql = "UPDATE TblPagamenti " +
-                      "SET IdTblCantieri = @IdTblCantieri, data = @data, Imporo = @Imporo, " +
-                      "DescriPagamenti = @DescriPagamenti, Acconto = @Acconto, Saldo = @Saldo " +
-                      "WHERE IdPagamenti = @IdPagamenti";
-
-                int row = cn.Execute(sql, pag);
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), pag) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante la modifica di un pagamento", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         //DELETE
-        public static bool DeletePagamento(int idPagam)
+        public static bool DeletePagamento(int idPagamenti)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblPagamenti WHERE IdPagamenti = @idPagamenti");
             try
             {
-                sql = "DELETE FROM TblPagamenti WHERE IdPagamenti = @IdPagamenti ";
-
-                int row = cn.Execute(sql, new { IdPagamenti = idPagam });
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idPagamenti }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione di un pagamento", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

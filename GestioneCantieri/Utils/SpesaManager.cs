@@ -6,14 +6,12 @@ namespace GestioneCantieri.Utils
 {
     public class SpesaManager
     {
-        public static DropDownList FillDdlSpese(List<Spese> items)
+        public static void FillDdlSpese(List<Spese> items, ref DropDownList ddl)
         {
-            DropDownList ret = new DropDownList();
-            items.ForEach(f =>
+            foreach(Spese item in items)
             {
-                ret.Items.Add(new ListItem(f.Descrizione, f.IdSpesa.ToString()));
-            });
-            return ret;
+                ddl.Items.Add(new ListItem(item.Descrizione, item.IdSpesa.ToString()));
+            };
         }
     }
 }

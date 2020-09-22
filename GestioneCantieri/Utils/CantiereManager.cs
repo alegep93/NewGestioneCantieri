@@ -6,14 +6,12 @@ namespace GestioneCantieri.Utils
 {
     public class CantiereManager
     {
-        public static DropDownList FillDdlCantieri(List<Cantieri> items)
+        public static void FillDdlCantieri(List<Cantieri> items, ref DropDownList ddl)
         {
-            DropDownList ret = new DropDownList();
-            items.ForEach(f =>
+            foreach(Cantieri item in items)
             {
-                ret.Items.Add(new ListItem($"{f.CodCant} - {f.DescriCodCant}", f.IdCantieri.ToString()));
-            });
-            return ret;
+                ddl.Items.Add(new ListItem($"{item.CodCant} - {item.DescriCodCant}", item.IdCantieri.ToString()));
+            };
         }
     }
 }

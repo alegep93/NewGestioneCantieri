@@ -173,13 +173,13 @@ namespace GestioneCantieri
         {
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new ListItem("", "-1"));
-            ddlScegliCant = CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked));
+            CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked), ref ddlScegliCant);
         }
         protected void FillDdlScegliAcquirente()
         {
             ddlScegliAcquirente.Items.Clear();
             ddlScegliAcquirente.Items.Add(new ListItem("", "-1"));
-            ddlScegliAcquirente = OperaioManager.FillDdlOperaio(OperaiDAO.GetAll());
+            OperaioManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliAcquirente);
         }
         protected void FillDdlScegliFornit()
         {
@@ -1676,7 +1676,7 @@ namespace GestioneCantieri
         {
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-            ddlScegliOperaio = OperaioManager.FillDdlOperaio(OperaiDAO.GetAll());
+            OperaioManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
         }
         protected void BindGridOper()
         {
@@ -2437,7 +2437,7 @@ namespace GestioneCantieri
         {
             ddlScegliSpesa.Items.Clear();
             ddlScegliSpesa.Items.Add(new ListItem("", "-1"));
-            ddlScegliSpesa = SpesaManager.FillDdlSpese(SpeseDAO.GetAll());
+            SpesaManager.FillDdlSpese(SpeseDAO.GetAll(), ref ddlScegliSpesa);
         }
         protected void FillMatCantSpese(MaterialiCantieri mc)
         {

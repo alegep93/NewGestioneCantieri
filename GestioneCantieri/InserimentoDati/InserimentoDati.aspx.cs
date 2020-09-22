@@ -669,7 +669,7 @@ namespace GestioneCantieri
             }
             else if (e.CommandName == "ElimCant")
             {
-                if (PagamentiDAO.GetPagamenti(idCant))
+                if (PagamentiDAO.GetAll().Where(w => w.IdTblCantieri == Convert.ToInt32(idCant)).Count() == 0)
                 {
                     bool isDeleted = CantieriDAO.EliminaCantiere(idCant);
 

@@ -33,7 +33,7 @@ namespace GestioneCantieri
         {
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-            ddlScegliOperaio = OperaioManager.FillDdlOperaio(OperaiDAO.GetAll());
+            OperaioManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
         }
 
         private void ResetToInitial()

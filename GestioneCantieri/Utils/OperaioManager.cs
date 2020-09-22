@@ -6,19 +6,17 @@ namespace GestioneCantieri.Utils
 {
     public class OperaioManager
     {
-        public static DropDownList FillDdlOperaio(List<Operai> items)
+        public static void FillDdlOperaio(List<Operai> items, ref DropDownList ddl)
         {
-            DropDownList ret = new DropDownList();
-            items.ForEach(f =>
+            foreach (Operai item in items)
             {
-                ret.Items.Add(new ListItem($"{f.NomeOp} - {f.DescrOp}", f.IdOperaio.ToString()));
+                ddl.Items.Add(new ListItem($"{item.NomeOp} - {item.DescrOp}", item.IdOperaio.ToString()));
 
-                if (f.NomeOp.ToUpper() == "MAURIZIO" || f.NomeOp.ToUpper() == "MAU")
+                if (item.NomeOp.ToUpper() == "MAURIZIO" || item.NomeOp.ToUpper() == "MAU")
                 {
-                    ret.SelectedValue = f.IdOperaio.ToString();
+                    ddl.SelectedValue = item.IdOperaio.ToString();
                 }
-            });
-            return ret;
+            };
         }
     }
 }
