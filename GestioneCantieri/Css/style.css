@@ -284,6 +284,7 @@ input[type="checkbox"] {
     background-color: #6DB1FD !important;
 }
 
+.label-totale-valore,
 .label-totali-fatture {
     font-size: 24px;
 }
