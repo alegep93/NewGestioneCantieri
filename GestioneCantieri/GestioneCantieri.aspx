@@ -169,7 +169,7 @@
                 </asp:GridView>
             </div>
             <div class="row d-flex justify-content-center align-items-center">
-                <asp:Button ID="btnSelezionaTuttoBOTTOM" CssClass="btn btn-lg btn-dark" OnClick="btnSelezionaTutto_Click" Text="Seleziona Tutto" runat="server" />
+                <asp:Button ID="btnSelezionaTuttoBOTTOM" CssClass="btn btn-lg btn-dark mr-2" OnClick="btnSelezionaTutto_Click" Text="Seleziona Tutto" runat="server" />
                 <asp:Button ID="btnDeselezionaTuttoBOTTOM" CssClass="btn btn-lg btn-dark" OnClick="btnDeselezionaTutto_Click" Text="Deseleziona Tutto" runat="server" />
                 <asp:Button ID="btnInsMatDaDDT" OnClick="btnInsMatDaDDT_Click" CssClass="btn btn-lg btn-primary ml-2" Text="Inserisci Materiali" runat="server" /><br />
                 <asp:Label ID="lblInsMatDaDDT" CssClass="pull-right" runat="server"></asp:Label>
@@ -283,7 +283,7 @@
             <asp:HiddenField ID="hidIdMatCant" runat="server" />
 
             <div class="row d-flex justify-content-center align-items-center">
-                <asp:Panel ID="pnlFiltriMatCant" CssClass="col text-center" runat="server">
+                <asp:Panel ID="pnlFiltriMatCant" CssClass="col-8 text-center" runat="server">
                     <div class="row d-flex justify-content-center align-items-center">
                         <div class="col">
                             <asp:Label ID="lblFiltroCodArtGrdMatCant" runat="server" Text="Filtro Cod Art"></asp:Label>
@@ -302,7 +302,7 @@
                             <asp:TextBox ID="txtFiltroFornitoreGrdMatCant" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col-1">
-                            <asp:Button ID="btnFiltraGrdMatCant" OnClick="btnFiltraGrdMatCant_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra Record" />
+                            <asp:Button ID="btnFiltraGrdMatCant" OnClick="btnFiltraGrdMatCant_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra" />
                         </div>
                         <div class="col">
                             <asp:Label ID="lblTotaleValoreMatCant_Rientro" CssClass="label-totale-valore ml-3" runat="server"></asp:Label>
@@ -455,7 +455,7 @@
             <asp:HiddenField ID="hfIdAccrediti" runat="server" />
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <asp:Panel ID="pnlFiltriAccrediti" CssClass="col text-center" runat="server">
+                <asp:Panel ID="pnlFiltriAccrediti" CssClass="col-6 text-center" runat="server">
                     <div class="row mt-3 d-flex justify-content-center align-items-center">
                         <div class="col">
                             <asp:Label ID="lblFiltroCodArtAccrediti" runat="server" Text="Filtro Cod Art"></asp:Label>
@@ -474,7 +474,7 @@
                             <asp:TextBox ID="txtFiltroFornAccrediti" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col">
-                            <asp:Button ID="btnFiltraAccrediti" OnClick="btnFiltraAccrediti_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra Record" />
+                            <asp:Button ID="btnFiltraAccrediti" OnClick="btnFiltraAccrediti_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra" />
                             <asp:Label ID="lblTotValAccrediti" CssClass="pull-right" runat="server"></asp:Label>
                         </div>
                     </div>
@@ -716,7 +716,7 @@
 
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdOperai" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" 
+                    <asp:GridView ID="grdOperai" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdOperai_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -755,105 +755,108 @@
     </div>
 
     <!-- Maschera Gestione Arrotondamenti -->
-    <div class="row d-flex justify-content-center align-items-center">
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlGestArrotond" CssClass="col text-center" runat="server">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center">
-                    <div class="col-6">
-                        <asp:Label ID="lblArrotCodArt" Text="Codice Articolo" runat="server" />
-                        <asp:TextBox ID="txtArrotCodArt" CssClass="form-control" runat="server" Text="Arrotondamento"></asp:TextBox>
-                    </div>
-                    <div class="col-6">
-                        <asp:Label ID="lblArrotDescriCodArt" Text="Descrizione Codice Articolo" runat="server" />
-                        <asp:TextBox ID="txtArrotDescriCodArt" CssClass="form-control" runat="server" Text="Arrotondamento"></asp:TextBox>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col text-center">
-                    <div class="col-6">
-                        <asp:Label ID="lblArrotQta" Text="Quantità" runat="server" />
-                        <asp:TextBox ID="txtArrotQta" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-6">
-                        <asp:Label ID="lblArrotPzzoUnit" Text="Prezzo Unitario" runat="server" />
-                        <asp:TextBox ID="txtArrotPzzoUnit" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col text-center">
-                    <div class="col-2">
-                        <asp:Label ID="lblArrotVisibile" Text="Visibile" runat="server" />
-                        <asp:CheckBox ID="chkArrotVisibile" CssClass="form-control" runat="server" />
-                    </div>
-                    <div class="col-2">
-                        <asp:Label ID="lblArrotRicalcolo" Text="Ricalcolo" runat="server" />
-                        <asp:CheckBox ID="chkArrotRicalcolo" CssClass="form-control" Enabled="false" runat="server" />
-                    </div>
-                    <div class="col-2">
-                        <asp:Label ID="lblArrotRicaricoSiNo" Text="Ricarico Si/No" runat="server" />
-                        <asp:CheckBox ID="chkArrotRicaricoSiNo" CssClass="form-control" runat="server" />
-                    </div>
-                    <div class="col-6">
-                        <asp:Button ID="btnInsArrot" OnClick="btnInsArrot_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Arrotondamento" />
-                        <asp:Button ID="btnModArrot" OnClick="btnModArrot_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Arrotondamento" />
-                        <asp:Label ID="lblIsArrotondInserito" Text="" CssClass="pull-right" runat="server" />
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <asp:Label ID="lblArrotCodArt" Text="Codice Articolo" runat="server" />
+                            <asp:TextBox ID="txtArrotCodArt" CssClass="form-control" runat="server" Text="Arrotondamento"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblArrotDescriCodArt" Text="Descrizione Codice Articolo" runat="server" />
+                            <asp:TextBox ID="txtArrotDescriCodArt" CssClass="form-control" runat="server" Text="Arrotondamento"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblArrotQta" Text="Quantità" runat="server" />
+                            <asp:TextBox ID="txtArrotQta" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblArrotPzzoUnit" Text="Prezzo Unitario" runat="server" />
+                            <asp:TextBox ID="txtArrotPzzoUnit" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-1">
+                            <asp:Label ID="lblArrotVisibile" Text="Visibile" runat="server" />
+                            <asp:CheckBox ID="chkArrotVisibile" CssClass="form-control" runat="server" />
+                        </div>
+                        <div class="col-1">
+                            <asp:Label ID="lblArrotRicalcolo" Text="Ricalcolo" runat="server" />
+                            <asp:CheckBox ID="chkArrotRicalcolo" CssClass="form-control" Enabled="false" runat="server" />
+                        </div>
+                        <div class="col-1">
+                            <asp:Label ID="lblArrotRicaricoSiNo" Text="Ricarico Si/No" runat="server" />
+                            <asp:CheckBox ID="chkArrotRicaricoSiNo" CssClass="form-control" runat="server" />
+                        </div>
+                        <div class="col">
+                            <asp:Button ID="btnInsArrot" OnClick="btnInsArrot_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Arrotondamento" />
+                            <asp:Button ID="btnModArrot" OnClick="btnModArrot_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Arrotondamento" /><br />
+                            <asp:Label ID="lblIsArrotondInserito" Text="" CssClass="pull-right" runat="server" />
+                        </div>
                     </div>
                 </div>
             </div>
 
             <asp:HiddenField ID="hidArrot" runat="server" />
 
-            <asp:Panel ID="pnlFiltriArrot" CssClass="col text-center" runat="server">
-                <div class="col-offset-3 col-6">
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroArrotCodArt" runat="server" Text="Filtro Cod Art"></asp:Label>
-                        <asp:TextBox ID="txtFiltroArrotCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+            <div class="row mt-4 d-flex justify-content-center align-items-center">
+                <asp:Panel ID="pnlFiltriArrot" CssClass="col-6 text-center" runat="server">
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <asp:Label ID="lblFiltroArrotCodArt" runat="server" Text="Filtro Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroArrotCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblFiltroArrotDescriCodArt" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroArrotDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblFiltroArrotProtocollo" runat="server" Text="Filtro Protocollo"></asp:Label>
+                            <asp:TextBox ID="txtFiltroArrotProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Button ID="btnArrotFiltraGrd" OnClick="btnArrotFiltraGrd_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra" />
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroArrotDescriCodArt" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
-                        <asp:TextBox ID="txtFiltroArrotDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroArrotProtocollo" runat="server" Text="Filtro Protocollo"></asp:Label>
-                        <asp:TextBox ID="txtFiltroArrotProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-3">
-                        <asp:Button ID="btnArrotFiltraGrd" OnClick="btnArrotFiltraGrd_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra Record" />
-                    </div>
-                </div>
-            </asp:Panel>
+                </asp:Panel>
+            </div>
 
-            <div class="col text-center table-responsive tableContainer">
-                <asp:GridView ID="grdArrot" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdArrot_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
-                    <Columns>
-                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-                        <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
-                        <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
-                        <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
-                        <asp:BoundField DataField="Qta" HeaderText="Quantità" />
-                        <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnVisualArrot" CommandName="VisualArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnModArrot" CommandName="ModArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnElimArrot" CommandName="ElimArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
-                                    runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col text-center table-responsive tableContainer">
+                    <asp:GridView ID="grdArrot" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                        OnRowCommand="grdArrot_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
+                        <Columns>
+                            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
+                            <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
+                            <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
+                            <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
+                            <asp:BoundField DataField="Qta" HeaderText="Quantità" />
+                            <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnVisualArrot" CommandName="VisualArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                        <i class="fas fa-eye" style="color: darkblue;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnModArrot" CommandName="ModArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                        <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnElimArrot" CommandName="ElimArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                        runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
+                                        <i class="fas fa-times" style="color: red;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
         </asp:Panel>
     </div>
@@ -862,41 +865,41 @@
     <div class="row d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlGestChiamata" CssClass="col text-center" runat="server">
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamCodArt" Text="Codice Articolo" runat="server" />
                     <asp:TextBox ID="txtChiamCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtChiamCodArt_TextChanged" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamDescriCodArt" Text="Descrizione Codice Articolo" runat="server" />
                     <asp:TextBox ID="txtChiamDescriCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtChiamDescriCodArt_TextChanged" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamDescrMate" Text="Descrizione Materiale" runat="server" />
                     <asp:TextBox ID="txtChiamDescrMate" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3">
+                <div class="col">
                     <asp:Label ID="lblChiamNote" Text="Note" runat="server" />
                     <asp:TextBox ID="txtChiamNote" TextMode="MultiLine" Rows="2" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-3">
+                <div class="col">
                     <asp:Label ID="lblChiamNote2" Text="Note 2" runat="server" />
                     <asp:TextBox ID="txtChiamNote2" TextMode="MultiLine" Rows="2" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
             </div>
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamQta" Text="Quantità" runat="server" />
                     <asp:TextBox ID="txtChiamQta" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamPzzoNetto" Text="Prezzo Netto Mef" runat="server" />
                     <asp:TextBox ID="txtChiamPzzoNetto" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamPzzoUnit" Text="Prezzo Unitario" runat="server" />
                     <asp:TextBox ID="txtChiamPzzoUnit" Text="0.00" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-2">
+                <div class="col">
                     <asp:Label ID="lblChiamPzzoFinCli" Text="Prezzo Finale Cliente" runat="server" />
                     <asp:TextBox ID="txtChiamPzzoFinCli" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
@@ -909,72 +912,81 @@
                     <asp:Label ID="lblChiamRicalcolo" Text="Ricalcolo" runat="server" />
                     <asp:CheckBox ID="chkChiamRicalcolo" CssClass="form-control" Checked="false" runat="server" />
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                     <asp:Label ID="lblChiamRicaricoSiNo" Text="Ricarico Si/No" runat="server" />
                     <asp:CheckBox ID="chkChiamRicaricoSiNo" CssClass="form-control" Checked="false" runat="server" />
                 </div>
             </div>
-            <div class="row d-flex justify-content-center align-items-center">
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col-6">
-                    <asp:Button ID="btnCalcolaPzzoUnitAChiam" OnClick="btnCalcolaPzzoUnitAChiam_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Calcola Prezzo Unitario" />
-                </div>
-                <div class="col-6">
+                    <asp:Button ID="btnCalcolaPzzoUnitAChiam" OnClick="btnCalcolaPzzoUnitAChiam_Click" CssClass="btn btn-lg btn-dark mr-3" runat="server" Text="Calcola Prezzo Unitario" />
                     <asp:Button ID="btnInsAChiam" OnClick="btnInsAChiam_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci A Chiamata" />
-                    <asp:Button ID="btnModAChiam" OnClick="btnModAChiam_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica A Chiamata" />
+                    <asp:Button ID="btnModAChiam" OnClick="btnModAChiam_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica A Chiamata" /><br />
                     <asp:Label ID="lblIsAChiamInserita" Text="" CssClass="pull-right" runat="server" />
                 </div>
             </div>
 
             <asp:HiddenField ID="hidAChiamata" runat="server" />
 
-            <asp:Panel ID="pnlFiltriGrdAChiam" CssClass="col text-center" runat="server">
-                <div class="col-offset-3 col-6">
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroAChiamCodArt" runat="server" Text="Filtro Cod Art"></asp:Label>
-                        <asp:TextBox ID="txtFiltroAChiamCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <asp:Panel ID="pnlFiltriGrdAChiam" CssClass="col-6 text-center" runat="server">
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <asp:Label ID="lblFiltroAChiamCodArt" runat="server" Text="Filtro Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroAChiamCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblFiltroAChiamDescriCodArt" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroAChiamDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblFiltroAChiamProtocollo" runat="server" Text="Filtro Protocollo"></asp:Label>
+                            <asp:TextBox ID="txtFiltroAChiamProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Button ID="btnFiltraGrdAChiam" OnClick="btnFiltraGrdAChiam_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra" />
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroAChiamDescriCodArt" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
-                        <asp:TextBox ID="txtFiltroAChiamDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroAChiamProtocollo" runat="server" Text="Filtro Protocollo"></asp:Label>
-                        <asp:TextBox ID="txtFiltroAChiamProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-3">
-                        <asp:Button ID="btnFiltraGrdAChiam" OnClick="btnFiltraGrdAChiam_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra Record" />
-                    </div>
-                </div>
-            </asp:Panel>
+                </asp:Panel>
+            </div>
 
-            <div class="col text-center table-responsive tableContainer">
-                <asp:GridView ID="grdAChiam" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdAChiam_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
-                    <Columns>
-                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-                        <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
-                        <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" />
-                        <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
-                        <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
-                        <asp:BoundField DataField="Qta" HeaderText="Quantità" />
-                        <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnVisualChiam" CommandName="VisualChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnModChiam" CommandName="ModChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnElimChiam" CommandName="ElimChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
-                                    runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col text-center table-responsive tableContainer">
+                    <asp:GridView ID="grdAChiam" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                        OnRowCommand="grdAChiam_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
+                        <Columns>
+                            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
+                            <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
+                            <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" />
+                            <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
+                            <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
+                            <asp:BoundField DataField="Qta" HeaderText="Quantità" />
+                            <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnVisualChiam" CommandName="VisualChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                        <i class="fas fa-eye" style="color: darkblue;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnModChiam" CommandName="ModChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                        <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnElimChiam" CommandName="ElimChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                        runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
+                                        <i class="fas fa-times" style="color: red;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
         </asp:Panel>
     </div>
@@ -984,108 +996,113 @@
         <asp:Panel ID="pnlGestSpese" CssClass="col text-center" runat="server">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center">
-                    <div class="col text-center">
-                        <asp:Label ID="lblScegliSpesa" Text="Scegli Spesa" runat="server" />
-                        <asp:DropDownList ID="ddlScegliSpesa" CssClass="form-control" AutoPostBack="true" OnTextChanged="ddlScegliSpesa_TextChanged" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="col-2">
-                        <asp:Label ID="lblSpeseCodArt" Text="Codice Articolo" runat="server" />
-                        <asp:TextBox ID="txtSpeseCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtSpeseCodArt_TextChanged" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-2">
-                        <asp:Label ID="lblSpeseDescriCodArt" Text="Descrizione Codice Articolo" runat="server" />
-                        <asp:TextBox ID="txtSpeseDescriCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtSpeseDescriCodArt_TextChanged" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-2">
-                        <asp:Label ID="lblSpeseQta" Text="Quantità" runat="server" />
-                        <asp:TextBox ID="txtSpeseQta" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-1">
-                        <asp:Label ID="lblSpesaPrezzo" Text="Prezzo" runat="server" />
-                        <asp:TextBox ID="txtSpesaPrezzo" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-1">
-                        <asp:Label ID="lblSpesaPrezzoCalcolato" Text="Prezzo Calcolato" runat="server" />
-                        <asp:TextBox ID="txtSpesaPrezzoCalcolato" Text="0.00" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-1">
-                        <asp:Label ID="lblSpesaVisibile" Text="Visibile" runat="server" />
-                        <asp:CheckBox ID="chkSpesaVisibile" CssClass="form-control" Checked="false" runat="server" />
-                    </div>
-                    <div class="col-1">
-                        <asp:Label ID="lblSpesaRicalcolo" Text="Ricalcolo" runat="server" />
-                        <asp:CheckBox ID="chkSpesaRicalcolo" CssClass="form-control" Checked="false" Enabled="false" runat="server" />
-                    </div>
-                    <div class="col-2">
-                        <asp:Label ID="lblSpesaRicarico" Text="Ricarico Si/No" runat="server" />
-                        <asp:CheckBox ID="chkSpesaRicarico" CssClass="form-control" Checked="false" runat="server" />
-                    </div>
+                    <asp:Label ID="lblScegliSpesa" Text="Scegli Spesa" runat="server" />
+                    <asp:DropDownList ID="ddlScegliSpesa" CssClass="form-control" AutoPostBack="true" OnTextChanged="ddlScegliSpesa_TextChanged" runat="server"></asp:DropDownList>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblSpeseCodArt" Text="Codice Articolo" runat="server" />
+                    <asp:TextBox ID="txtSpeseCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtSpeseCodArt_TextChanged" runat="server"></asp:TextBox>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblSpeseDescriCodArt" Text="Descrizione Codice Articolo" runat="server" />
+                    <asp:TextBox ID="txtSpeseDescriCodArt" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtSpeseDescriCodArt_TextChanged" runat="server"></asp:TextBox>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblSpeseQta" Text="Quantità" runat="server" />
+                    <asp:TextBox ID="txtSpeseQta" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblSpesaPrezzo" Text="Prezzo" runat="server" />
+                    <asp:TextBox ID="txtSpesaPrezzo" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblSpesaPrezzoCalcolato" Text="Prezzo Calcolato" runat="server" />
+                    <asp:TextBox ID="txtSpesaPrezzoCalcolato" Text="0.00" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblSpesaVisibile" Text="Visibile" runat="server" />
+                    <asp:CheckBox ID="chkSpesaVisibile" CssClass="form-control" Checked="false" runat="server" />
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblSpesaRicalcolo" Text="Ricalcolo" runat="server" />
+                    <asp:CheckBox ID="chkSpesaRicalcolo" CssClass="form-control" Checked="false" Enabled="false" runat="server" />
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblSpesaRicarico" Text="Ricarico Si/No" runat="server" />
+                    <asp:CheckBox ID="chkSpesaRicarico" CssClass="form-control" Checked="false" runat="server" />
                 </div>
             </div>
 
-            <div class="row d-flex justify-content-center align-items-center">
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center">
-                    <div class="col-8">
-                        <asp:Button ID="btnCalcolaPzzoUnitSpese" OnClick="btnCalcolaPzzoUnitSpese_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Calcola Prezzo Spesa" />
-                    </div>
-                    <div class="col-4">
-                        <asp:Button ID="btnInsSpesa" OnClick="btnInsSpesa_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Spesa" />
-                        <asp:Button ID="btnModSpesa" OnClick="btnModSpesa_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Spesa" />
-                        <asp:Label ID="lblIsSpesaInserita" Text="" CssClass="pull-right" runat="server" />
-                    </div>
+                    <asp:Button ID="btnCalcolaPzzoUnitSpese" OnClick="btnCalcolaPzzoUnitSpese_Click" CssClass="btn btn-lg btn-dark mr-3" runat="server" Text="Calcola Prezzo Spesa" />
+                    <asp:Button ID="btnInsSpesa" OnClick="btnInsSpesa_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Inserisci Spesa" />
+                    <asp:Button ID="btnModSpesa" OnClick="btnModSpesa_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Modifica Spesa" /><br />
+                    <asp:Label ID="lblIsSpesaInserita" Text="" CssClass="pull-right" runat="server" />
                 </div>
             </div>
 
             <asp:HiddenField ID="hidIdSpesa" runat="server" />
 
-            <asp:Panel ID="pnlFiltriGrdSpese" CssClass="col text-center" runat="server">
-                <div class="col-offset-3 col-6">
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroSpeseCodArt" runat="server" Text="Filtro Cod Art"></asp:Label>
-                        <asp:TextBox ID="txtFiltroSpeseCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <asp:Panel ID="pnlFiltriGrdSpese" CssClass="col-6 text-center" runat="server">
+                    <div class="row mt-3 d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <asp:Label ID="lblFiltroSpeseCodArt" runat="server" Text="Filtro Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroSpeseCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblFiltroSpeseDescriCodArt" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
+                            <asp:TextBox ID="txtFiltroSpeseDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Label ID="lblFiltroSpeseProtocollo" runat="server" Text="Filtro Protocollo"></asp:Label>
+                            <asp:TextBox ID="txtFiltroSpeseProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:Button ID="btnFiltraGrdSpese" OnClick="btnFiltraGrdSpese_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra" />
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroSpeseDescriCodArt" runat="server" Text="Filtro Descri Cod Art"></asp:Label>
-                        <asp:TextBox ID="txtFiltroSpeseDescriCodArt" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-3">
-                        <asp:Label ID="lblFiltroSpeseProtocollo" runat="server" Text="Filtro Protocollo"></asp:Label>
-                        <asp:TextBox ID="txtFiltroSpeseProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-3">
-                        <asp:Button ID="btnFiltraGrdSpese" OnClick="btnFiltraGrdSpese_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra Record" />
-                    </div>
-                </div>
-            </asp:Panel>
+                </asp:Panel>
+            </div>
 
-            <div class="col text-center table-responsive tableContainer">
-                <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdSpese_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
-                    <Columns>
-                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-                        <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
-                        <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" />
-                        <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
-                        <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
-                        <asp:BoundField DataField="Qta" HeaderText="Quantità" />
-                        <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnVisualSpesa" CommandName="VisualSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnModSpesa" CommandName="ModSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnElimSpesa" CommandName="ElimSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
-                                    runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col text-center table-responsive tableContainer">
+                    <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" 
+                        OnRowCommand="grdSpese_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
+                        <Columns>
+                            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
+                            <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
+                            <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" />
+                            <asp:BoundField DataField="CodArt" HeaderText="Cod. Art" />
+                            <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. Cod. Art." />
+                            <asp:BoundField DataField="Qta" HeaderText="Quantità" />
+                            <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnVisualSpesa" CommandName="VisualSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                        <i class="fas fa-eye" style="color: darkblue;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnModSpesa" CommandName="ModSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                        <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnElimSpesa" CommandName="ElimSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                        runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
+                                        <i class="fas fa-times" style="color: red;"></i>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
         </asp:Panel>
     </div>
