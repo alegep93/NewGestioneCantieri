@@ -39,7 +39,7 @@ namespace GestioneCantieri.DAO
             string sql = "";
             SqlConnection cn = GetConnection();
 
-            filters.NumeroDdt = "%" + filters.NumeroDdt + "%";
+            filters.NumeroDDT = "%" + filters.NumeroDDT + "%";
             filters.Articolo = "%" + filters.Articolo + "%";
             filters.DescrizioneFornitore = "%" + filters.DescrizioneFornitore + "%";
             filters.DescrizioneMau  = "%" + filters.DescrizioneMau + "%";

@@ -111,23 +111,22 @@
                         </div>
                     </div>
                 </div>
-            </asp:Panel>
 
-
-            <!-- Pulsantiera per scelta maschera -->
-            <asp:Panel ID="pnlScegliMaschera" CssClass="row mt-3 d-flex justify-content-center align-items-center" runat="server">
-                <div class="col text-center">
-                    <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-dark" Text="Materiali da DDT" />
-                    <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri" />
-                    <asp:Button ID="btnMatCantAltriFornitori" runat="server" OnClick="btnMatCantAltriFornitori_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri Altri Fornitori" />
-                    <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-dark" Text="Rientro Materiali" />
-                    <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-dark" Text="Accrediti" />
-                    <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-dark" Text="Manodopera" />
-                    <asp:Button ID="btnGestOper" runat="server" OnClick="btnGestOper_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Operaio" />
-                    <asp:Button ID="btnGestArrot" runat="server" OnClick="btnGestArrot_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Arrotond." />
-                    <asp:Button ID="btnGestChiam" runat="server" OnClick="btnGestChiam_Click" CssClass="btn btn-lg btn-dark" Text="Gest. A Chiamata." />
-                    <asp:Button ID="btnGestSpese" runat="server" OnClick="btnGestSpese_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Spese" />
-                </div>
+                <!-- Pulsantiera per scelta maschera -->
+                <asp:Panel ID="pnlScegliMaschera" CssClass="row mt-3 d-flex justify-content-center align-items-center" runat="server">
+                    <div class="col text-center">
+                        <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-dark" Text="Materiali da DDT" />
+                        <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri" />
+                        <asp:Button ID="btnMatCantAltriFornitori" runat="server" OnClick="btnMatCantAltriFornitori_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri Altri Fornitori" />
+                        <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-dark" Text="Rientro Materiali" />
+                        <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-dark" Text="Accrediti" />
+                        <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-dark" Text="Manodopera" />
+                        <asp:Button ID="btnGestOper" runat="server" OnClick="btnGestOper_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Operaio" />
+                        <asp:Button ID="btnGestArrot" runat="server" OnClick="btnGestArrot_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Arrotond." />
+                        <asp:Button ID="btnGestChiam" runat="server" OnClick="btnGestChiam_Click" CssClass="btn btn-lg btn-dark" Text="Gest. A Chiamata." />
+                        <asp:Button ID="btnGestSpese" runat="server" OnClick="btnGestSpese_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Spese" />
+                    </div>
+                </asp:Panel>
             </asp:Panel>
         </asp:Panel>
     </div>
@@ -1068,7 +1067,7 @@
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" 
+                    <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdSpese_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

@@ -85,17 +85,15 @@ namespace GestioneCantieri
         #region Helpers
         protected void BindGrid()
         {
-            grdListaDDTMef.DataSource = DDTMefDAO.GetDDTList();
+            grdListaDDTMef.DataSource = DDTMefDAO.GetAll();
             grdListaDDTMef.DataBind();
             GetBasicValuesForRecap();
         }
 
         private void GetBasicValuesForRecap()
         {
-            txtMedia.Text = DDTMefDAO.CalcolaMediaPrezzoUnitario().ToString("0.00") + " €";
-            txtTotDDT.Text = DDTMefDAO.GetTotalDDT().ToString("N2") + " €";
-            txtImponibileDDT.Text = DDTMefDAO.GetImponibileDDT().ToString("N2") + " €";
-            txtIvaDDT.Text = DDTMefDAO.GetIvaDDT().ToString("N2") + " €";
+            List<DDTMef> listaDdt = DDTMefDAO.GetAll();
+            SetFields(listaDdt);
         }
 
         protected void BindGridWithSearch()
@@ -103,19 +101,20 @@ namespace GestioneCantieri
             DDTMefObject ddt = FillDdtObject();
 
             // Rigenero la griglia
-            List<DDTMef> listaDDT = DDTMefDAO.SearchFilter(ddt);
-            grdListaDDTMef.DataSource = listaDDT;
+            List<DDTMef> listaDdt = DDTMefDAO.GetDdt(ddt);
+            grdListaDDTMef.DataSource = listaDdt;
             grdListaDDTMef.DataBind();
 
-            //Rigenero il valore della media dei prezzi unitari
-            ddt = FillDdtObject();
-            txtMedia.Text = DDTMefDAO.CalcolaMediaPrezzoUnitarioWithSearch(ddt).ToString("0.00") + " €";
-            ddt = FillDdtObject();
-            txtTotDDT.Text = DDTMefDAO.GetTotalDDT(ddt).ToString("N2") + " €";
-            ddt = FillDdtObject();
-            txtImponibileDDT.Text = DDTMefDAO.GetImponibileDDT(ddt).ToString("N2") + " €";
-            ddt = FillDdtObject();
-            txtIvaDDT.Text = DDTMefDAO.GetIvaDDT(ddt).ToString("N2") + " €";
+            // Popolo i campi con i dati filtrati
+            SetFields(listaDdt);
+        }
+
+        private void SetFields(List<DDTMef> items)
+        {
+            txtMedia.Text = (items.Sum(s => s.PrezzoUnitario) / (items.Count() == 0 ? 1 : items.Count())).ToString("0.00") + " €";
+            txtTotDDT.Text = items.Sum(s => s.Importo).ToString("N2") + " €";
+            txtImponibileDDT.Text = items.Sum(s => (s.Importo * 100) / (100 + s.Iva)).ToString("N2") + " €";
+            txtIvaDDT.Text = items.Sum(s => s.Importo - (100 * s.Importo / (100 + s.Iva))).ToString("N2") + " €";
         }
 
         protected DDTMefObject FillDdtObject()

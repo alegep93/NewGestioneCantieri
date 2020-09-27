@@ -62,7 +62,7 @@ namespace GestioneCantieri
             ddt.RagSocFornitore = FornitoriDAO.GetSingle(ddt.IdFornitore).RagSocForni;
             ddt.Data = Convert.ToDateTime(txtInsData.Text);
             ddt.Protocollo = Convert.ToInt64(txtInsProtocollo.Text);
-            ddt.NumeroDdt = txtInsNumeroDdt.Text;
+            ddt.NumeroDDT = txtInsNumeroDdt.Text;
             ddt.Articolo = txtInsArticolo.Text;
             ddt.DescrizioneFornitore = txtInsDescrForn.Text;
             ddt.DescrizioneMau = txtInsDescrMau.Text;
@@ -84,7 +84,7 @@ namespace GestioneCantieri
             DDTFornitori ddt = new DDTFornitori();
             ddt.IdFornitore = ddlFiltraFornitore.SelectedValue != "" ? Convert.ToInt32(ddlFiltraFornitore.SelectedValue) : -1;
             ddt.Protocollo = txtFiltraProtocollo.Text != "" ? Convert.ToInt64(txtFiltraProtocollo.Text) : -1;
-            ddt.NumeroDdt = txtFiltraNumeroDdt.Text != "" ? txtFiltraNumeroDdt.Text : "";
+            ddt.NumeroDDT = txtFiltraNumeroDdt.Text != "" ? txtFiltraNumeroDdt.Text : "";
             ddt.Articolo = txtFiltraArticolo.Text != "" ? txtFiltraArticolo.Text : "";
             ddt.Qta = txtFiltraQta.Text != "" ? Convert.ToInt32(txtFiltraQta.Text) : -1;
             ddt.DescrizioneFornitore = txtFiltroDescrForn.Text != "" ? txtFiltroDescrForn.Text : "";
@@ -113,7 +113,7 @@ namespace GestioneCantieri
             ddlScegliFornitore.SelectedValue = ddt.IdFornitore.ToString();
             txtInsData.Text = ddt.Data.ToString("dd/MM/yyyy");
             txtInsProtocollo.Text = ddt.Protocollo.ToString();
-            txtInsNumeroDdt.Text = ddt.NumeroDdt.ToString();
+            txtInsNumeroDdt.Text = ddt.NumeroDDT.ToString();
             txtInsArticolo.Text = ddt.Articolo.ToString();
             txtInsDescrForn.Text = ddt.DescrizioneFornitore.ToString();
             txtInsDescrMau.Text = ddt.DescrizioneMau.ToString();

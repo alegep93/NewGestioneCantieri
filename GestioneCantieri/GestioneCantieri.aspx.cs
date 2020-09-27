@@ -23,11 +23,10 @@ namespace GestioneCantieri
                 grdMatCant.Visible = grdRientro.Visible = false;
                 btnModMatCant.Visible = btnModRientro.Visible = false;
             }
-
             Page.MaintainScrollPositionOnPostBack = true;
         }
 
-        /* HELPERS */
+        #region Helpers 
         protected void SvuotaIntestazione()
         {
             string tipol = txtTipDatCant.Text;
@@ -35,18 +34,27 @@ namespace GestioneCantieri
             //Svuoto tutti i TextBox
             foreach (Control c in pnlFiltriSceltaCant.Controls)
             {
-                if (c is TextBox)
-                    ((TextBox)c).Text = "";
-                if (c is CheckBox)
-                    ((CheckBox)c).Checked = false;
+                if (c is TextBox box)
+                {
+                    box.Text = "";
+                }
+
+                if (c is CheckBox chk)
+                {
+                    chk.Checked = false;
+                }
             }
             foreach (Control c in pnlSubIntestazione.Controls)
             {
-                if (c is TextBox)
-                    ((TextBox)c).Text = "";
+                if (c is TextBox box)
+                {
+                    box.Text = "";
+                }
 
                 if (ddlScegliDDTMef.SelectedIndex != -1)
+                {
                     ddlScegliDDTMef.SelectedIndex = 0;
+                }
 
                 ddlScegliFornit.SelectedIndex = 0;
             }
@@ -60,13 +68,17 @@ namespace GestioneCantieri
             //Svuoto tutti i TextBox
             foreach (Control c in pnl.Controls)
             {
-                if (c is TextBox)
-                    ((TextBox)c).Text = "";
+                if (c is TextBox box)
+                {
+                    box.Text = "";
+                }
             }
 
             //Svuoto il DDL del listino solamente se è stato popolato
             if (ddlScegliListino.SelectedIndex != -1)
+            {
                 ddlScegliListino.SelectedIndex = 0;
+            }
 
             //Visibile TRUE
             chkVisibile.Checked = chkManodopVisibile.Checked = chkOperVisibile.Checked = chkChiamVisibile.Checked = true;
@@ -93,8 +105,7 @@ namespace GestioneCantieri
             txtPzzoFinCli.Text = txtChiamPzzoFinCli.Text = "0.00";
 
             //Reimposto il campo Prezzo manodopera
-            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
-            txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
+            txtPzzoManodop.Text = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value)).PzzoManodopera.ToString("N2");
 
             //Reimposto il DDLScegliOperaio del pannello GestioneOperaio
             ddlScegliOperaio.SelectedIndex = 0;
@@ -110,26 +121,38 @@ namespace GestioneCantieri
         }
         protected void EnableDisableControls(bool enableControls, Panel panelName)
         {
-            foreach (Control c in panelName.Controls)
-            {
-                if (c is TextBox)
-                    ((TextBox)c).Enabled = enableControls;
-                else if (c is DropDownList)
-                    ((DropDownList)c).Enabled = enableControls;
-            }
             foreach (Control c in pnlIntestazione.Controls)
             {
-                if (c is TextBox)
-                    ((TextBox)c).Enabled = enableControls;
-                else if (c is DropDownList)
-                    ((DropDownList)c).Enabled = enableControls;
+                if (c is TextBox box)
+                {
+                    box.Enabled = enableControls;
+                }
+                else if (c is DropDownList ddl)
+                {
+                    ddl.Enabled = enableControls;
+                }
             }
             foreach (Control c in pnlSubIntestazione.Controls)
             {
-                if (c is TextBox)
-                    ((TextBox)c).Enabled = enableControls;
-                else if (c is DropDownList)
-                    ((DropDownList)c).Enabled = enableControls;
+                if (c is TextBox box)
+                {
+                    box.Enabled = enableControls;
+                }
+                else if (c is DropDownList ddl)
+                {
+                    ddl.Enabled = enableControls;
+                }
+            }
+            foreach (Control c in panelName.Controls)
+            {
+                if (c is TextBox box)
+                {
+                    box.Enabled = enableControls;
+                }
+                else if (c is DropDownList ddl)
+                {
+                    ddl.Enabled = enableControls;
+                }
             }
 
             //Textbox Tipologia sempre Disabilitato
@@ -138,19 +161,21 @@ namespace GestioneCantieri
         protected void ChooseFornitore(string nomeFornitore)
         {
             int i = 0;
-            foreach (ListItem li in ddlScegliFornit.Items)
-            {
-                if (li.Text == nomeFornitore)
-                {
-                    ddlScegliFornit.SelectedIndex = i;
-                    return;
-                }
-                i++;
-            }
-
             if (nomeFornitore == "")
             {
                 ddlScegliFornit.SelectedIndex = 0;
+            }
+            else
+            {
+                foreach (ListItem li in ddlScegliFornit.Items)
+                {
+                    if (li.Text == nomeFornitore)
+                    {
+                        ddlScegliFornit.SelectedIndex = i;
+                        return;
+                    }
+                    i++;
+                }
             }
         }
         protected void BindAllGrid()
@@ -167,43 +192,11 @@ namespace GestioneCantieri
             lblIsRecordInserito.Text = lblIsManodopInserita.Text = lblIsOperInserita.Text =
                lblIsArrotondInserito.Text = lblIsSpesaInserita.Text = lblIsAChiamInserita.Text = lblInsMatDaDDT.Text = "";
         }
-
-        //Fill Ddl
-        protected void FillDdlScegliCant()
-        {
-            ddlScegliCant.Items.Clear();
-            ddlScegliCant.Items.Add(new ListItem("", "-1"));
-            CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked), ref ddlScegliCant);
-        }
-        protected void FillDdlScegliAcquirente()
-        {
-            ddlScegliAcquirente.Items.Clear();
-            ddlScegliAcquirente.Items.Add(new ListItem("", "-1"));
-            OperaioManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliAcquirente);
-        }
-        protected void FillDdlScegliFornit()
-        {
-            ddlScegliFornit.Items.Clear();
-            ddlScegliFornit.Items.Add(new ListItem("", "-1"));
-
-            FornitoriDAO.GetFornitori().ForEach(f =>
-            {
-                ddlScegliFornit.Items.Add(new ListItem(f.RagSocForni, f.IdFornitori.ToString()));
-            });
-        }
         protected void FillDdlScegliDdtMef()
         {
-            DataTable dt = DDTMefDAO.GetDDT(txtFiltroAnnoDDT.Text, txtFiltroN_DDT.Text);
-            List<DDTMef> listDDT = dt.DataTableToList<DDTMef>();
-
             ddlScegliDDTMef.Items.Clear();
             ddlScegliDDTMef.Items.Add(new ListItem("", "-1"));
-
-            foreach (DDTMef ddt in listDDT)
-            {
-                string show = ddt.Data.ToString().Split(' ')[0] + " - " + ddt.N_ddt;
-                ddlScegliDDTMef.Items.Add(new ListItem(show, ddt.Id.ToString()));
-            }
+            DropDownListManager.FillDdlDdtMef(DDTMefDAO.GetByAnnoNumeroDdt(txtFiltroAnnoDDT.Text, txtFiltroN_DDT.Text), ref ddlScegliDDTMef);
         }
         protected void FillDddlScegliListino()
         {
@@ -219,36 +212,40 @@ namespace GestioneCantieri
                 ddlScegliListino.Items.Add(new ListItem(show, mmg.CodArt.ToString()));
             }
         }
-        protected void FillDdlScegliMatCant()
+        protected void FillAllDdl(bool refreshCantieri = true)
         {
-            List<MaterialiCantieri> listMatCant = MaterialiCantieriDAO.GetMaterialeCantiere(ddlScegliCant.SelectedItem.Value, txtFiltroMatCantCodArt.Text, txtFiltroMatCantDescriCodArt.Text);
+            if (refreshCantieri)
+            {
+                // Cantieri
+                ddlScegliCant.Items.Clear();
+                ddlScegliCant.Items.Add(new ListItem("", "-1"));
+                DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked), ref ddlScegliCant);
+            }
 
+            // Operaio / Acquirente
+            List<Operai> items = OperaiDAO.GetAll();
+            ddlScegliAcquirente.Items.Clear();
+            ddlScegliAcquirente.Items.Add(new ListItem("", "-1"));
+            ddlScegliOperaio.Items.Clear();
+            ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
+            DropDownListManager.FillDdlOperaio(items, ref ddlScegliAcquirente);
+            DropDownListManager.FillDdlOperaio(items, ref ddlScegliOperaio);
+
+            // Fornitori
+            ddlScegliFornit.Items.Clear();
+            ddlScegliFornit.Items.Add(new ListItem("", "-1"));
+            DropDownListManager.FillDdlFornitore(FornitoriDAO.GetFornitori(), ref ddlScegliFornit);
+
+            // MaterialiCantieri
             ddlScegliMatCant.Items.Clear();
             ddlScegliMatCant.Items.Add(new ListItem("", "-1"));
+            DropDownListManager.FillDdlMaterialiCantieri(MaterialiCantieriDAO.GetMaterialeCantiere(ddlScegliCant.SelectedItem.Value, txtFiltroMatCantCodArt.Text, txtFiltroMatCantDescriCodArt.Text), ref ddlScegliMatCant);
 
-            foreach (MaterialiCantieri mc in listMatCant)
-            {
-                string show = mc.CodArt + " | " + mc.DescriCodArt + " | " + mc.Qta + " | " + mc.PzzoUniCantiere + " | " + mc.PzzoFinCli;
-                ddlScegliMatCant.Items.Add(new ListItem(show, mc.IdMaterialiCantieri.ToString()));
-            }
+            // Spese
+            ddlScegliSpesa.Items.Clear();
+            ddlScegliSpesa.Items.Add(new ListItem("", "-1"));
+            DropDownListManager.FillDdlSpese(SpeseDAO.GetAll(), ref ddlScegliSpesa);
         }
-
-        //Ogni Helper "Fill" va aggiunto qua dentro per essere richiamato all'apertura dell'applicazione
-        protected void FillAllDdl()
-        {
-            FillDdlScegliCant();
-            FillDdlScegliAcquirente();
-            FillDdlScegliFornit();
-            FillDdlScegliMatCant();
-
-            //Per la sezione Gestione Operaio
-            FillDdlScegliOperaio();
-
-            //Per la sezione Gestione Spese
-            FillDdlScegliSpesa();
-        }
-
-        //Mostra/Nasconde pannelli
         protected void ShowPanels(bool pnlMatDaDDT, bool pnlMatCant, bool pnlManodop, bool pnlOper, bool pnlArrotond, bool pnlSpese, bool pnlChiam, bool pnlAccrediti)
         {
             pnlMascheraMaterialiDaDDT.Visible = pnlMatDaDDT;
@@ -260,21 +257,6 @@ namespace GestioneCantieri
             pnlGestChiamata.Visible = pnlChiam;
             pnlMascheraAccrediti.Visible = pnlAccrediti;
         }
-
-        //Switcha classi css per bottoni di scelta pannello
-        //protected void RemoveActiveClass()
-        //{
-        //    foreach (var b in pnlScegliMaschera.Controls)
-        //    {
-        //        if (b.GetType().Name == "Button")
-        //        {
-        //            (((Button)b).CssClass).Replace(" active", "");
-        //        }
-        //    }
-        //}
-
-        //Controlla che l'intestazione sia completamente compilata prima di inserire il record
-
         protected bool isIntestazioneCompilata()
         {
             if (ddlScegliCant.SelectedIndex != 0 && ddlScegliAcquirente.SelectedIndex != 0 && ddlScegliFornit.SelectedIndex != 0 && (ddlScegliDDTMef.SelectedIndex != 0 || txtNumBolla.Text != "") && txtDataDDT.Text != "" && txtFascia.Text != "" && txtProtocollo.Text != "")
@@ -284,8 +266,6 @@ namespace GestioneCantieri
 
             return false;
         }
-
-        //Controlla che sia stata impostata la data
         protected bool isDateNotSet()
         {
             if (txtDataDDT.Text == "")
@@ -296,11 +276,12 @@ namespace GestioneCantieri
             }
             return false;
         }
+        #endregion
 
-        /* EVENTI CLICK */
+        #region Eventi click
         protected void btnFiltroCant_Click(object sender, EventArgs e)
         {
-            FillDdlScegliCant();
+            FillAllDdl();
             pnlSubIntestazione.Visible = false;
             txtDataDDT.Text = txtNumBolla.Text = txtProtocollo.Text = "";
             ShowPanels(false, false, false, false, false, false, false, false);
@@ -346,17 +327,18 @@ namespace GestioneCantieri
             else if (txtTipDatCant.Text == "RIENTRO")
                 btnInserisciRientro.Focus();
         }
+        #endregion
 
-        /* EVENTI TEXT-CHANGED */
+        #region Eventi text-changed
         protected void ddlScegliCant_TextChanged(object sender, EventArgs e)
         {
             Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
-            txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
-            txtFascia.Text = cant.FasciaTblCantieri.ToString();
 
             if (ddlScegliCant.SelectedIndex != 0)
             {
                 pnlSubIntestazione.Visible = true;
+                txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
+                txtFascia.Text = cant.FasciaTblCantieri.ToString();
             }
             else
             {
@@ -366,8 +348,7 @@ namespace GestioneCantieri
 
             txtDataDDT.Text = txtNumBolla.Text = txtProtocollo.Text = "";
 
-            FillDdlScegliMatCant();
-            FillDdlScegliAcquirente();
+            FillAllDdl(false);
             BindAllGrid();
         }
         protected void txtFiltroAnnoDDT_TextChanged(object sender, EventArgs e)
@@ -390,6 +371,7 @@ namespace GestioneCantieri
                 txtNumBolla.Enabled = true;
             }
         }
+        #endregion
 
         #region Materiali da DDT
         /* HELPERS */
@@ -397,8 +379,8 @@ namespace GestioneCantieri
         {
             if (ddlScegliDDTMef.SelectedItem != null && ddlScegliDDTMef.SelectedItem.Text != "" && ddlScegliDDTMef.SelectedIndex != 0)
             {
-                string nDDT = ddlScegliDDTMef.SelectedItem.Text.Split('-')[1].Trim();
-                List<DDTMef> ddtList = DDTMefDAO.GetDDTByNumDDT(nDDT);
+                int nDDT = Convert.ToInt32(ddlScegliDDTMef.SelectedItem.Text.Split('-')[1].Trim());
+                List<DDTMef> ddtList = DDTMefDAO.GetAll().Where(w => w.N_DDT == nDDT).ToList();
                 grdMostraDDTDaInserire.DataSource = ddtList;
                 grdMostraDDTDaInserire.DataBind();
 
@@ -752,11 +734,11 @@ namespace GestioneCantieri
         }
         protected void txtFiltroMatCantCodArt_TextChanged(object sender, EventArgs e)
         {
-            FillDdlScegliMatCant();
+            FillAllDdl();
         }
         protected void txtFiltroMatCantDescriCodArt_TextChanged(object sender, EventArgs e)
         {
-            FillDdlScegliMatCant();
+            FillAllDdl();
         }
 
         /* EVENTI PER LA GESTIONE DEI ROWCOMMAND */
@@ -927,7 +909,7 @@ namespace GestioneCantieri
         {
             lblTitoloMaschera.Text = "Inserisci Rientro Materiali";
             txtTipDatCant.Text = "RIENTRO";
-            FillDdlScegliMatCant();
+            FillAllDdl();
             ShowForRientro();
             ShowPanels(false, true, false, false, false, false, false, false);
             grdMatCant.Visible = false;
@@ -1670,13 +1652,7 @@ namespace GestioneCantieri
             mc.Note2 = txtOperNote2.Text;
             mc.NumeroBolla = txtNumBolla.Text;
             mc.Fascia = Convert.ToInt32(txtFascia.Text);
-            mc.IdOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value);
-        }
-        protected void FillDdlScegliOperaio()
-        {
-            ddlScegliOperaio.Items.Clear();
-            ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-            OperaioManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
+            mc.IdTblOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value);
         }
         protected void BindGridOper()
         {
@@ -1774,7 +1750,7 @@ namespace GestioneCantieri
 
             ddlScegliAcquirente.SelectedValue = mc.Acquirente;
             ddlScegliFornit.SelectedValue = mc.Fornitore;
-            ddlScegliOperaio.SelectedValue = mc.IdOperaio.ToString();
+            ddlScegliOperaio.SelectedValue = mc.IdTblOperaio.ToString();
             txtTipDatCant.Text = mc.Tipologia;
             txtNumBolla.Text = mc.NumeroBolla.ToString();
             txtDataDDT.Text = mc.Data.ToString("yyyy-MM-dd");
@@ -1801,7 +1777,7 @@ namespace GestioneCantieri
             mc.DescriCodArt = "Manodopera" + op.Operaio;
 
             mc.IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value);
-            mc.IdOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value);
+            mc.IdTblOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value);
             mc.Acquirente = ddlScegliAcquirente.SelectedItem.Value;
             mc.Fornitore = ddlScegliFornit.SelectedItem.Value;
             mc.Tipologia = txtTipDatCant.Text;
@@ -2433,12 +2409,6 @@ namespace GestioneCantieri
             grdSpese.DataSource = mcList;
             grdSpese.DataBind();
         }
-        protected void FillDdlScegliSpesa()
-        {
-            ddlScegliSpesa.Items.Clear();
-            ddlScegliSpesa.Items.Add(new ListItem("", "-1"));
-            SpesaManager.FillDdlSpese(SpeseDAO.GetAll(), ref ddlScegliSpesa);
-        }
         protected void FillMatCantSpese(MaterialiCantieri mc)
         {
             mc.IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value);
@@ -2542,7 +2512,7 @@ namespace GestioneCantieri
         }
         protected void btnCalcolaPzzoUnitSpese_Click(object sender, EventArgs e)
         {
-            if (txtSpesaPrezzoCalcolato.Text != "")
+            if (txtSpesaPrezzoCalcolato.Text != "" && txtSpesaPrezzo.Text != "")
                 txtSpesaPrezzoCalcolato.Text = Math.Round(Convert.ToDecimal(txtSpesaPrezzo.Text.Replace(".", ",")), 2).ToString();
             else
             {

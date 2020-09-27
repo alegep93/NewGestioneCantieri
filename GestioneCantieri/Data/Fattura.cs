@@ -15,8 +15,6 @@ namespace GestioneCantieri.Data
         public bool ReverseCharge { get; set; } = false;
         public bool Riscosso { get; set; } = false;
         public bool IsNotaDiCredito { get; set; } = false;
-
-
         public string Cantieri { get; set; } = "";
         public string Acconti { get; set; } = "";
         public string RagioneSocialeCliente { get; set; } = "";

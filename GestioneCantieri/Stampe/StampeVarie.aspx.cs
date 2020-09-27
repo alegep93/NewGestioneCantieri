@@ -85,15 +85,12 @@ namespace GestioneCantieri
         //Popola la griglia con i dati da SQL
         protected void BindGridStampaDDT()
         {
-            dt = DDTMefDAO.GetDDTForPDF(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, txtNumDDT.Text);
-            List<DDTMef> ddtList = dt.DataTableToList<DDTMef>();
-            grdStampaDDT.DataSource = ddtList;
+            grdStampaDDT.DataSource = DDTMefDAO.GetDDTForPDF(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, txtNumDDT.Text);
             grdStampaDDT.DataBind();
         }
         protected void BindGridStampaMatCant()
         {
-            List<MaterialiCantieri> matCantList = MaterialiCantieriDAO.GetMaterialeCantiere(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, ddlScegliFornitore.SelectedItem.Text, txtNumDDT.Text);
-            grdStampaMateCant.DataSource = matCantList;
+            grdStampaMateCant.DataSource = MaterialiCantieriDAO.GetMaterialeCantiere(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, ddlScegliFornitore.SelectedItem.Text, txtNumDDT.Text);
             grdStampaMateCant.DataBind();
         }
         #endregion
@@ -144,9 +141,7 @@ namespace GestioneCantieri
             decimal totale = 0m;
             decimal totaleFinale = 0m;
             int numDdtAttuale = 0;
-
-            dt = DDTMefDAO.GetDDTForPDF(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, txtNumDDT.Text);
-            List<DDTMef> ddtList = dt.DataTableToList<DDTMef>();
+            List<DDTMef> ddtList = DDTMefDAO.GetDDTForPDF(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, txtNumDDT.Text);
 
             //Apro lo stream verso il file PDF
             Document pdfDoc = new Document(PageSize.A4, 8f, 2f, 0f, 10f);
@@ -199,9 +194,9 @@ namespace GestioneCantieri
             Phrase intestazione = new Phrase();
             for (int k = 0; k < ddtList.Count; k++)
             {
-                if (numDdtAttuale != ddtList[k].N_ddt)
+                if (numDdtAttuale != ddtList[k].N_DDT)
                 {
-                    numDdtAttuale = ddtList[k].N_ddt;
+                    numDdtAttuale = ddtList[k].N_DDT;
                     intestazione = GeneraIntestazioneDDT(ddtList, k);
 
                     //Transfer rows from GridView to table
@@ -430,7 +425,7 @@ namespace GestioneCantieri
         //Intestazione PDF
         protected Phrase GeneraIntestazioneDDT(List<DDTMef> ddtList, int counter)
         {
-            string n_ddt = "N_DDT: " + ddtList[counter].N_ddt;
+            string n_ddt = "N_DDT: " + ddtList[counter].N_DDT;
             string acquirente = "Acquirente: " + ddtList[counter].Acquirente;
             string data = "Data: " + ddtList[counter].Data.ToString().Split(' ')[0];
             string intestazioneObj = n_ddt + "    -    " + acquirente + "    -    " + data;

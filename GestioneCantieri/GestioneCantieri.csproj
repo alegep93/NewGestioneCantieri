@@ -494,6 +494,8 @@
       <DependentUpon>StampaOrdFrutCantExcel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\DBTransaction.cs" />
+    <Compile Include="Utils\FornitoreManager.cs" />
+    <Compile Include="Utils\DropDownListManager.cs" />
     <Compile Include="Utils\OperaioManager.cs" />
     <Compile Include="Utils\SpesaManager.cs" />
   </ItemGroup>

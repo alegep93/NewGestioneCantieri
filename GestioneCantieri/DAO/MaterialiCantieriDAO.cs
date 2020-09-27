@@ -105,7 +105,7 @@ namespace GestioneCantieri.DAO
                 while (dr.Read())
                 {
                     MaterialiCantieri mc = new MaterialiCantieri();
-                    mc.IdMaterialiCantieri = (dr.IsDBNull(0) ? -1 : dr.GetInt32(0));
+                    mc.IdMaterialiCantiere = (dr.IsDBNull(0) ? -1 : dr.GetInt32(0));
                     mc.CodCant = (dr.IsDBNull(1) ? "" : dr.GetString(1));
                     mc.DescriMateriali = (dr.IsDBNull(2) ? "" : dr.GetString(2));
                     mc.Qta = (dr.IsDBNull(3) ? -1.0d : dr.GetDouble(3));
@@ -125,7 +125,7 @@ namespace GestioneCantieri.DAO
                     mc.Note = (dr.IsDBNull(17) ? "" : dr.GetString(17));
                     mc.PzzoFinCli = (dr.IsDBNull(18) ? -1.0m : dr.GetDecimal(18));
                     mc.DescriCodCant = (dr.IsDBNull(19) ? "" : dr.GetString(19));
-                    mc.IdOperaio = (dr.IsDBNull(20) ? -1 : dr.GetInt32(20));
+                    mc.IdTblOperaio = (dr.IsDBNull(20) ? -1 : dr.GetInt32(20));
                     matList.Add(mc);
                 }
 
@@ -540,7 +540,7 @@ namespace GestioneCantieri.DAO
                 SqlCommand cmd = new SqlCommand(sql, cn);
                 cmd.Parameters.Add(new SqlParameter("id", id));
                 cmd.Parameters.Add(new SqlParameter("idCant", mc.IdTblCantieri));
-                cmd.Parameters.Add(new SqlParameter("idOper", mc.IdOperaio));
+                cmd.Parameters.Add(new SqlParameter("idOper", mc.IdTblOperaio));
                 cmd.Parameters.Add(new SqlParameter("descrMat", mc.DescriMateriali));
                 cmd.Parameters.Add(new SqlParameter("qta", mc.Qta));
                 cmd.Parameters.Add(new SqlParameter("visibile", mc.Visibile));
