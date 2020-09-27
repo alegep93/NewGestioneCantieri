@@ -200,17 +200,9 @@ namespace GestioneCantieri
         }
         protected void FillDddlScegliListino()
         {
-            List<Mamg0> listMamg0 = Mamg0DAO.GetListino(txtFiltroCodFSS.Text, txtFiltroAA_Des.Text);
-
             ddlScegliListino.Items.Clear();
             ddlScegliListino.Items.Add(new ListItem("", "-1"));
-
-            foreach (Mamg0 mmg in listMamg0)
-            {
-                string show = String.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
-                    mmg.CodArt, mmg.Desc, mmg.PrezzoNetto, mmg.PrezzoListino, mmg.Sconto1, mmg.Sconto2, mmg.Sconto3);
-                ddlScegliListino.Items.Add(new ListItem(show, mmg.CodArt.ToString()));
-            }
+            DropDownListManager.FillDdlMamg0(Mamg0DAO.GetListino(txtFiltroCodFSS.Text, txtFiltroAA_Des.Text), ref ddlScegliListino);
         }
         protected void FillAllDdl(bool refreshCantieri = true)
         {
@@ -257,24 +249,25 @@ namespace GestioneCantieri
             pnlGestChiamata.Visible = pnlChiam;
             pnlMascheraAccrediti.Visible = pnlAccrediti;
         }
-        protected bool isIntestazioneCompilata()
+        protected bool IsIntestazioneCompilata()
         {
-            if (ddlScegliCant.SelectedIndex != 0 && ddlScegliAcquirente.SelectedIndex != 0 && ddlScegliFornit.SelectedIndex != 0 && (ddlScegliDDTMef.SelectedIndex != 0 || txtNumBolla.Text != "") && txtDataDDT.Text != "" && txtFascia.Text != "" && txtProtocollo.Text != "")
-            {
-                return true;
-            }
-
-            return false;
+            return ddlScegliCant.SelectedIndex != 0 && ddlScegliAcquirente.SelectedIndex != 0 && ddlScegliFornit.SelectedIndex != 0 &&
+                (ddlScegliDDTMef.SelectedIndex != 0 || txtNumBolla.Text != "") && txtDataDDT.Text != "" && txtFascia.Text != "" && txtProtocollo.Text != "";
         }
-        protected bool isDateNotSet()
+        protected bool IsDateNotSet()
         {
+            bool ret = false;
             if (txtDataDDT.Text == "")
             {
                 lblIsRecordInserito.Text = lblIsManodopInserita.Text = lblIsOperInserita.Text = lblIsArrotondInserito.Text = lblIsAChiamInserita.Text = lblIsSpesaInserita.Text = "Inserire un valore per la data";
                 lblIsRecordInserito.ForeColor = lblIsManodopInserita.ForeColor = lblIsOperInserita.ForeColor = lblIsArrotondInserito.ForeColor = lblIsAChiamInserita.ForeColor = lblIsSpesaInserita.ForeColor = Color.Red;
-                return true;
+                ret = true;
             }
-            return false;
+            return ret;
+        }
+        private void CalcolaTotaleValore(List<MaterialiCantieri> mcList)
+        {
+            lblTotaleValoreMatCant_Rientro.Text = $"Totale Valore: {mcList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2} €";
         }
         #endregion
 
@@ -297,8 +290,8 @@ namespace GestioneCantieri
             {
                 if (txtProtocollo.Text != "")
                 {
-                    string[] datePart = txtDataDDT.Text.Split('-');
-                    txtNumBolla.Text = datePart[0].Trim() + datePart[1].Trim() + datePart[2].Trim() + txtProtocollo.Text;
+                    DateTime date = Convert.ToDateTime(txtDataDDT.Text);
+                    txtNumBolla.Text = date.Year.ToString() + date.Month.ToString() + date.Day.ToString() + txtProtocollo.Text;
                 }
                 else
                 {
@@ -315,7 +308,9 @@ namespace GestioneCantieri
         protected void btnCalcolaPrezzoUnit_Click(object sender, EventArgs e)
         {
             if (txtPzzoNettoMef.Text != "")
+            {
                 txtPzzoUnit.Text = Math.Round(Convert.ToDecimal(txtPzzoNettoMef.Text.Replace(".", ",")), 2).ToString();
+            }
             else
             {
                 lblIsRecordInserito.Text = "Inserire un valore nella casella 'Prezzo Netto Mef' per calcolare il 'Prezzo Unitario'";
@@ -323,9 +318,13 @@ namespace GestioneCantieri
             }
 
             if (txtTipDatCant.Text == "MATERIALE")
+            {
                 btnInserisciMatCant.Focus();
+            }
             else if (txtTipDatCant.Text == "RIENTRO")
+            {
                 btnInserisciRientro.Focus();
+            }
         }
         #endregion
 
@@ -385,30 +384,10 @@ namespace GestioneCantieri
                 grdMostraDDTDaInserire.DataBind();
 
                 if (ddtList.Count > 0)
+                {
                     btnInsMatDaDDT.Enabled = true;
+                }
             }
-        }
-        private MaterialiCantieri PopolaMcObject(int numRiga)
-        {
-            MaterialiCantieri mc = new MaterialiCantieri();
-            mc.IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value);
-            mc.DescriMateriali = grdMostraDDTDaInserire.Rows[numRiga].Cells[3].Text;
-            mc.Qta = Convert.ToInt32(grdMostraDDTDaInserire.Rows[numRiga].Cells[4].Text);
-            mc.Data = Convert.ToDateTime(grdMostraDDTDaInserire.Rows[numRiga].Cells[0].Text);
-            mc.PzzoUniCantiere = Convert.ToDecimal(grdMostraDDTDaInserire.Rows[numRiga].Cells[5].Text);
-            mc.CodArt = grdMostraDDTDaInserire.Rows[numRiga].Cells[2].Text;
-            mc.DescriCodArt = grdMostraDDTDaInserire.Rows[numRiga].Cells[3].Text;
-            mc.Tipologia = txtTipDatCant.Text;
-            mc.Fascia = Convert.ToInt32(txtFascia.Text);
-
-            // Recupero l'id dell'acquirente dal nome
-            string acquirente = grdMostraDDTDaInserire.Rows[numRiga].Cells[6].Text;
-            mc.Acquirente = OperaiDAO.GetAll().Where(w => w.NomeOp == acquirente).FirstOrDefault().IdOperaio.ToString();
-            mc.Fornitore = ddlScegliFornit.SelectedItem.Value;
-            mc.NumeroBolla = grdMostraDDTDaInserire.Rows[numRiga].Cells[1].Text;
-            mc.ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text);
-            mc.Visibile = mc.Ricalcolo = mc.RicaricoSiNo = true;
-            return mc;
         }
 
         /* EVENTI CLICK*/
@@ -439,18 +418,29 @@ namespace GestioneCantieri
             {
                 for (int i = 0; i < grdMostraDDTDaInserire.Rows.Count; i++)
                 {
-                    bool daInserire = ((CheckBox)grdMostraDDTDaInserire.Rows[i].FindControl("chkDDTSelezionato")).Checked;
-
-                    if (daInserire)
+                    if (((CheckBox)grdMostraDDTDaInserire.Rows[i].FindControl("chkDDTSelezionato")).Checked)
                     {
-                        MaterialiCantieri mc = PopolaMcObject(i);
-                        MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
-
-                        //lblInsMatDaDDT.Text = "Materiali inseriti con successo";
-                        //lblInsMatDaDDT.ForeColor = Color.Blue;
+                        MaterialiCantieriDAO.InserisciMaterialeCantiere(new MaterialiCantieri
+                        {
+                            IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
+                            DescriMateriali = grdMostraDDTDaInserire.Rows[i].Cells[3].Text,
+                            Qta = Convert.ToInt32(grdMostraDDTDaInserire.Rows[i].Cells[4].Text),
+                            Data = Convert.ToDateTime(grdMostraDDTDaInserire.Rows[i].Cells[0].Text),
+                            PzzoUniCantiere = Convert.ToDecimal(grdMostraDDTDaInserire.Rows[i].Cells[5].Text),
+                            CodArt = grdMostraDDTDaInserire.Rows[i].Cells[2].Text,
+                            DescriCodArt = grdMostraDDTDaInserire.Rows[i].Cells[3].Text,
+                            Tipologia = txtTipDatCant.Text,
+                            Fascia = Convert.ToInt32(txtFascia.Text),
+                            Acquirente = OperaiDAO.GetAll().Where(w => w.NomeOp == grdMostraDDTDaInserire.Rows[i].Cells[6].Text).FirstOrDefault().IdOperaio.ToString(),
+                            Fornitore = ddlScegliFornit.SelectedItem.Value,
+                            NumeroBolla = grdMostraDDTDaInserire.Rows[i].Cells[1].Text,
+                            ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text),
+                            Visibile = true,
+                            Ricalcolo = true,
+                            RicaricoSiNo = true
+                        });
                     }
                 }
-
                 grdMostraDDTDaInserire.DataSource = null;
                 grdMostraDDTDaInserire.DataBind();
                 lblInsMatDaDDT.Text = "";
@@ -497,33 +487,16 @@ namespace GestioneCantieri
             mc.Fornitore = ddlScegliFornit.SelectedItem.Value;
             mc.Note = txtNote.Text;
             mc.Note2 = txtNote_2.Text;
+            mc.Qta = txtQta.Text != "" ? Convert.ToDouble(txtQta.Text) : 0;
+            mc.Fascia = txtFascia.Text != "" ? Convert.ToInt32(txtFascia.Text) : 0;
+            mc.ProtocolloInterno = txtProtocollo.Text != "" ? Convert.ToInt32(txtProtocollo.Text) : 0;
+            mc.NumeroBolla = txtNumBolla.Enabled && txtNumBolla.Text != "" ? txtNumBolla.Text : (ddlScegliDDTMef.SelectedIndex != -1 ? ddlScegliDDTMef.SelectedItem.Text.Split('-')[3] : "");
+            mc.PzzoFinCli = txtPzzoFinCli.Text != "" ? Convert.ToDecimal(txtPzzoFinCli.Text) : 0.0m;
 
-            if (mc.Tipologia == "MATERIALE")
-                mc.Qta = txtQta.Text != "" ? Convert.ToDouble(txtQta.Text) : 0;
-            else if (mc.Tipologia == "RIENTRO")
-                mc.Qta = txtQta.Text != "" ? (Convert.ToDouble(txtQta.Text)) * (-1) : 0;
-
-            if (txtFascia.Text != "")
-                mc.Fascia = Convert.ToInt32(txtFascia.Text);
-            else
-                mc.Fascia = 0;
-
-            if (txtProtocollo.Text != "")
-                mc.ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text);
-            else
-                mc.ProtocolloInterno = 0;
-
-            if (txtNumBolla.Enabled && txtNumBolla.Text != "")
-                mc.NumeroBolla = txtNumBolla.Text;
-            else if (ddlScegliDDTMef.SelectedIndex != -1)
-                mc.NumeroBolla = (ddlScegliDDTMef.SelectedItem.Text).Split('-')[3];
-            else
-                mc.NumeroBolla = "";
-
-            if (txtPzzoFinCli.Text != "")
-                mc.PzzoFinCli = Convert.ToDecimal(txtPzzoFinCli.Text);
-            else
-                mc.PzzoFinCli = 0.0m;
+            if (mc.Tipologia == "RIENTRO")
+            {
+                mc.Qta *= -1;
+            }
         }
         protected void ShowForMatCant()
         {
@@ -545,20 +518,10 @@ namespace GestioneCantieri
                 txtFiltroDescriCodArtGrdMatCant.Text, txtFiltroProtocolloGrdMatCant.Text, txtFiltroFornitoreGrdMatCant.Text, "MATERIALE");
             grdMatCant.DataSource = mcList;
             grdMatCant.DataBind();
-            CalcolaTotaleValore(mcList, grdMatCant);
-        }
-        private void CalcolaTotaleValore(List<MaterialiCantieri> mcList, GridView grid)
-        {
-            double valore = 0;
-
-            for (int i = 0; i < grid.Rows.Count; i++)
-            {
-                valore += Convert.ToDouble(grid.Rows[i].Cells[5].Text) * Convert.ToDouble(grid.Rows[i].Cells[6].Text);
-            }
-
-            lblTotaleValoreMatCant_Rientro.Text = "Totale Valore: " + valore.ToString("N2") + "€";
+            CalcolaTotaleValore(mcList);
         }
 
+        /************************************** TODO **************************************/
         /* EVENTI CLICK */
         protected void btnInserisciMatCant_Click(object sender, EventArgs e)
         {
@@ -569,7 +532,7 @@ namespace GestioneCantieri
             string fornitore = ddlScegliFornit.SelectedItem.Value;
             string numeroBolla = "";
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -593,7 +556,7 @@ namespace GestioneCantieri
                     numeroBolla = (ddlScegliDDTMef.SelectedItem.Text).Split('-')[3];
                 }
 
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                 {
                     if (txtCodArt.Text != "" && txtDescriCodArt.Text != "")
                     {
@@ -903,7 +866,7 @@ namespace GestioneCantieri
                 txtFiltroDescriCodArtGrdMatCant.Text, txtFiltroProtocolloGrdMatCant.Text, txtFiltroFornitoreGrdMatCant.Text, "RIENTRO");
             grdRientro.DataSource = mcList;
             grdRientro.DataBind();
-            CalcolaTotaleValore(mcList, grdRientro);
+            CalcolaTotaleValore(mcList);
         }
         protected void btnRientro_Click(object sender, EventArgs e)
         {
@@ -963,7 +926,7 @@ namespace GestioneCantieri
             string fornitore = ddlScegliFornit.SelectedItem.Value;
             string numeroBolla = "";
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -987,7 +950,7 @@ namespace GestioneCantieri
                     numeroBolla = (ddlScegliDDTMef.SelectedItem.Text).Split('-')[1];
                 }
 
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                 {
                     string[] partiMatCant = ddlScegliMatCant.SelectedItem.Text.Split('|');
                     maxQtaRientro = Convert.ToDecimal(partiMatCant[2].Trim());
@@ -1093,7 +1056,7 @@ namespace GestioneCantieri
                 txtFiltroDescriCodArtGrdMatCant.Text, txtFiltroProtAccrediti.Text, txtFiltroFornAccrediti.Text, "ACCREDITI");
             grdAccrediti.DataSource = mcList;
             grdAccrediti.DataBind();
-            CalcolaTotaleValore(mcList, grdAccrediti);
+            CalcolaTotaleValore(mcList);
         }
         protected void btnAccrediti_Click(object sender, EventArgs e)
         {
@@ -1168,7 +1131,7 @@ namespace GestioneCantieri
             string fornitore = ddlScegliFornit.SelectedItem.Value;
             string numeroBolla = "";
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -1192,7 +1155,7 @@ namespace GestioneCantieri
                     numeroBolla = (ddlScegliDDTMef.SelectedItem.Text).Split('-')[1];
                 }
 
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                 {
                     isInserito = MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
                 }
@@ -1401,7 +1364,7 @@ namespace GestioneCantieri
         {
             bool isInserito = false;
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -1411,7 +1374,7 @@ namespace GestioneCantieri
             {
                 if ((Convert.ToDecimal(txtManodopQta.Text) > 0 && txtManodopQta.Text != ""))
                 {
-                    if (isIntestazioneCompilata())
+                    if (IsIntestazioneCompilata())
                         isInserito = MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
 
                     if (isInserito)
@@ -1669,7 +1632,7 @@ namespace GestioneCantieri
             string idCant = ddlScegliCant.SelectedItem.Value;
             string acquirente = ddlScegliAcquirente.SelectedItem.Value;
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -1677,7 +1640,7 @@ namespace GestioneCantieri
 
             if ((Convert.ToDecimal(txtOperQta.Text) > 0 && txtOperQta.Text != ""))
             {
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                     isInserito = MaterialiCantieriDAO.InserisciOperaio(mc);
 
                 if (isInserito)
@@ -1937,7 +1900,7 @@ namespace GestioneCantieri
         {
             bool isInserito = false;
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -1945,7 +1908,7 @@ namespace GestioneCantieri
 
             if ((Convert.ToDecimal(txtArrotQta.Text) > 0 && txtArrotQta.Text != ""))
             {
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                     isInserito = MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
 
                 if (isInserito)
@@ -2233,7 +2196,7 @@ namespace GestioneCantieri
             string fornitore = ddlScegliFornit.SelectedItem.Value;
             string numeroBolla = "";
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -2257,7 +2220,7 @@ namespace GestioneCantieri
                     numeroBolla = (ddlScegliDDTMef.SelectedItem.Text).Split('-')[3];
                 }
 
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                 {
                     if (txtChiamCodArt.Text != "" && txtChiamDescriCodArt.Text != "")
                     {
@@ -2526,7 +2489,7 @@ namespace GestioneCantieri
         {
             bool isInserito = false;
 
-            if (isDateNotSet())
+            if (IsDateNotSet())
                 return;
 
             MaterialiCantieri mc = new MaterialiCantieri();
@@ -2534,7 +2497,7 @@ namespace GestioneCantieri
 
             if ((Convert.ToDecimal(txtSpeseQta.Text) > 0 && txtSpeseQta.Text != "") && Convert.ToDecimal(txtSpesaPrezzoCalcolato.Text) > 0)
             {
-                if (isIntestazioneCompilata())
+                if (IsIntestazioneCompilata())
                     isInserito = MaterialiCantieriDAO.InserisciMaterialeCantiere(mc);
 
                 if (isInserito)

@@ -63,5 +63,15 @@ namespace GestioneCantieri.Utils
                 ddl.Items.Add(new ListItem(show, item.IdDDTMef.ToString()));
             }
         }
+
+        public static void FillDdlMamg0(List<Mamg0> items, ref DropDownList ddl)
+        {
+            foreach (Mamg0 item in items)
+            {
+                string show = String.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}", 
+                    item.CodArt, item.Desc, item.PrezzoNetto, item.PrezzoListino, item.Sconto1, item.Sconto2, item.Sconto3);
+                ddl.Items.Add(new ListItem(show, item.CodArt.ToString()));
+            }
+        }
     }
 }

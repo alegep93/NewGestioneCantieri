@@ -247,7 +247,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static bool InsertNewDdt(DDTMef ddt)
+        public static bool InsertNewDdt()
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
@@ -260,7 +260,7 @@ namespace GestioneCantieri.DAO
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Execute(sql.ToString(), ddt) > 0;
+                    ret = cn.Execute(sql.ToString(), GetNewDDT()) > 0;
                 }
             }
             catch (Exception ex)
@@ -293,7 +293,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static bool InsertIntoDdtTemp(DDTMef ddt)
+        public static bool InsertIntoDdtTemp(List<DDTMef> ddts)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
@@ -306,7 +306,7 @@ namespace GestioneCantieri.DAO
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Execute(sql.ToString(), ddt) > 0;
+                    ret = cn.Execute(sql.ToString(), ddts) > 0;
                 }
             }
             catch (Exception ex)

@@ -36,7 +36,6 @@ namespace GestioneCantieri
             txtDescriCodArt2.Text = "";
             txtDescriCodArt3.Text = "";
             BindGrid();
-            GetBasicValuesForRecap();
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -51,75 +50,8 @@ namespace GestioneCantieri
                 txtAnnoInizio.Text = "";
                 txtAnnoFine.Text = "";
             }
-            BindGridWithSearch();
-        }
 
-        protected void btn_GeneraDdtDaDbf_Click(object sender, EventArgs e)
-        {
-            //Recupero l'id del fornitore "Mef"
-            int idFornitore = FornitoriDAO.GetFornitori("Mef").FirstOrDefault().IdFornitori;
-
-            // Genero una lista a partire dai dati contenuti nel nuovo file DBF
-            List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
-
-            // Popolo la tabella temporanea
-            InsertIntoDdtTemp(ddtList);
-
-            //Prendo la lista dei DDT non presenti sulla tabella TblDDTMef
-            List<DDTMef> ddtMancanti = DDTMefDAO.GetNewDDT();
-
-            foreach (DDTMef ddt in ddtMancanti)
-            {
-                // Inserisco i nuovi DDT
-                DDTMefDAO.InsertNewDdt(ddt);
-            }
-
-            //Aggiorno i prezzi del mese corrente
-            UpdatePrezzi();
-
-            // Aggiorno la griglia
-            BindGrid();
-        }
-        #endregion
-
-        #region Helpers
-        protected void BindGrid()
-        {
-            grdListaDDTMef.DataSource = DDTMefDAO.GetAll();
-            grdListaDDTMef.DataBind();
-            GetBasicValuesForRecap();
-        }
-
-        private void GetBasicValuesForRecap()
-        {
-            List<DDTMef> listaDdt = DDTMefDAO.GetAll();
-            SetFields(listaDdt);
-        }
-
-        protected void BindGridWithSearch()
-        {
-            DDTMefObject ddt = FillDdtObject();
-
-            // Rigenero la griglia
-            List<DDTMef> listaDdt = DDTMefDAO.GetDdt(ddt);
-            grdListaDDTMef.DataSource = listaDdt;
-            grdListaDDTMef.DataBind();
-
-            // Popolo i campi con i dati filtrati
-            SetFields(listaDdt);
-        }
-
-        private void SetFields(List<DDTMef> items)
-        {
-            txtMedia.Text = (items.Sum(s => s.PrezzoUnitario) / (items.Count() == 0 ? 1 : items.Count())).ToString("0.00") + " €";
-            txtTotDDT.Text = items.Sum(s => s.Importo).ToString("N2") + " €";
-            txtImponibileDDT.Text = items.Sum(s => (s.Importo * 100) / (100 + s.Iva)).ToString("N2") + " €";
-            txtIvaDDT.Text = items.Sum(s => s.Importo - (100 * s.Importo / (100 + s.Iva))).ToString("N2") + " €";
-        }
-
-        protected DDTMefObject FillDdtObject()
-        {
-            return new DDTMefObject
+            BindGrid(new DDTMefObject
             {
                 AnnoInizio = txtAnnoInizio.Text,
                 AnnoFine = txtAnnoFine.Text,
@@ -133,36 +65,47 @@ namespace GestioneCantieri
                 DescriCodArt1 = txtDescriCodArt1.Text,
                 DescriCodArt2 = txtDescriCodArt2.Text,
                 DescriCodArt3 = txtDescriCodArt3.Text
-            };
+            });
         }
 
-        protected void FillDdlClienti()
+        protected void btn_GeneraDdtDaDbf_Click(object sender, EventArgs e)
         {
-            List<Fornitori> listClienti = FornitoriDAO.GetFornitori();
+            //Recupero l'id del fornitore "Mef"
+            int idFornitore = FornitoriDAO.GetFornitori("Mef").FirstOrDefault().IdFornitori;
 
-            ddlFornitore.Items.Clear();
-            ddlFornitore.Items.Add(new ListItem("", "-1"));
+            // Genero una lista a partire dai dati contenuti nel nuovo file DBF
+            List<DDTMef> ddtList = DDTMefDAO.GetDdtFromDBF(filePath, txtAcquirente.Text, idFornitore);
 
-            foreach (Fornitori f in listClienti)
-                ddlFornitore.Items.Add(new ListItem(f.RagSocForni, f.IdFornitori.ToString()));
-        }
-
-        protected void InsertIntoDdtTemp(List<DDTMef> ddtList)
-        {
+            // Popolo la tabella temporanea
             // Svuoto la tabella DDTMefTemp
             DDTMefDAO.DeleteFromDdtTemp();
 
-            // Per ogni elemento della lista
-            foreach (DDTMef ddt in ddtList)
-            {
-                // Popolo la tabella temporanea con i nuovi dati
-                DDTMefDAO.InsertIntoDdtTemp(ddt);
-            }
-        }
+            // Popolo la tabella temporanea con i nuovi dati
+            DDTMefDAO.InsertIntoDdtTemp(ddtList);
 
-        private void UpdatePrezzi()
-        {
+            //Prendo la lista dei DDT non presenti sulla tabella TblDDTMef e li inserisco in TblDdtMef
+            DDTMefDAO.InsertNewDdt();
+
+            //Aggiorno i prezzi del mese corrente
             DDTMefDAO.UpdateDdt();
+
+            // Aggiorno la griglia
+            BindGrid();
+        }
+        #endregion
+
+        #region Helpers
+        protected void BindGrid(DDTMefObject ddt = null)
+        {
+            List<DDTMef> items = ddt == null ? DDTMefDAO.GetAll() : DDTMefDAO.GetDdt(ddt);
+            grdListaDDTMef.DataSource = items;
+            grdListaDDTMef.DataBind();
+
+            // Imposto i campi di riepilogo
+            txtMedia.Text = (items.Sum(s => s.PrezzoUnitario) / (items.Count() == 0 ? 1 : items.Count())).ToString("0.00") + " €";
+            txtTotDDT.Text = items.Sum(s => s.Importo).ToString("N2") + " €";
+            txtImponibileDDT.Text = items.Sum(s => (s.Importo * 100) / (100 + s.Iva)).ToString("N2") + " €";
+            txtIvaDDT.Text = items.Sum(s => s.Importo - (100 * s.Importo / (100 + s.Iva))).ToString("N2") + " €";
         }
         #endregion
     }
