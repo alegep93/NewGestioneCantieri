@@ -4,711 +4,388 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 namespace GestioneCantieri.DAO
 {
     public class MaterialiCantieriDAO : BaseDAO
     {
         //SELECT
-        public static List<MaterialiCantieri> GetMaterialeCantiere(string id)
+        public static List<MaterialiCantieri> GetMaterialeCantiere(string idCantiere, string codiceArticolo = "", string descrizioneCodiceArticolo = "")
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT *");
+            sql.AppendLine($"FROM TblMaterialiCantieri");
+            sql.AppendLine($"WHERE IdTblCantieri = @idCantiere AND CodArt LIKE '%{codiceArticolo}%' AND DescriCodArt LIKE '%{descrizioneCodiceArticolo}%'");
 
             try
             {
-                sql = "SELECT IdMaterialiCantiere,IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore, " +
-                      "NumeroBolla,ProtocolloInterno,Note,PzzoFinCli " +
-                      "FROM TblMaterialiCantieri " +
-                      "WHERE IdTblCantieri = @Id " +
-                      "ORDER BY Tipologia, Data";
-
-                return cn.Query<MaterialiCantieri>(sql, new { Id = id }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero dei materiali di cantiere per singolo cantiere", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
-        public static List<MaterialiCantieri> GetMaterialeCantiere(string id, string codArt, string descr)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            codArt = "%" + codArt + "%";
-            descr = "%" + descr + "%";
-
-            try
-            {
-                sql = "SELECT TOP 1000 IdMaterialiCantiere AS IdMaterialiCantieri,IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore, " +
-                      "NumeroBolla,ProtocolloInterno,Note,PzzoFinCli " +
-                      "FROM TblMaterialiCantieri " +
-                      "WHERE IdTblCantieri = @pIdCant AND CodArt LIKE @codArt AND DescriCodArt LIKE @descriCodArt ";
-
-                return cn.Query<MaterialiCantieri>(sql, new { pIdCant = id, CodArt = codArt, descriCodArt = descr }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { idCantiere }).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei materiali di cantiere", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static List<MaterialiCantieri> GetMaterialeCantiereForGridView(string idCant, string codArt, string descr, string protocollo, string fornitore, string tipol)
+
+        public static List<MaterialiCantieri> GetMaterialeCantiereForGridView(string idCantiere, string codArt, string descriCodArt, string protocollo, string fornitore, string tipologia)
         {
-            SqlConnection cn = GetConnection();
-            SqlDataReader dr = null;
-            List<MaterialiCantieri> matList = new List<MaterialiCantieri>();
-            string sql = "";
-
-            codArt = "%" + codArt + "%";
-            descr = "%" + descr + "%";
-            fornitore = "%" + fornitore + "%";
-
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT {(codArt != "%%" || descriCodArt != "%%" ? "" : "TOP 500")} A.*");
+            sql.AppendLine($"FROM TblMaterialiCantieri AS A");
+            sql.AppendLine($"LEFT JOIN TblCantieri AS B ON(A.IdTblCantieri = b.IdCantieri)");
+            sql.AppendLine($"LEFT JOIN TblOperaio AS C ON(A.Acquirente = C.IdOperaio)");
+            sql.AppendLine($"LEFT JOIN TblForitori AS D ON(A.Fornitore = D.IdFornitori)");
+            sql.AppendLine($"WHERE A.IdTblCantieri = @idCantiere AND ISNULL(A.CodArt,'') LIKE '%{codArt}%'");
+            sql.AppendLine($"AND ISNULL(A.DescriCodArt,'') LIKE '%{descriCodArt}%' AND ISNULL(A.ProtocolloInterno,'') LIKE '%{protocollo}%'");
+            sql.AppendLine($"AND ISNULL(D.RagSocForni,'') LIKE '%{fornitore}%' AND Tipologia = @tipologia");
             try
             {
-                if (codArt != "%%" || descr != "%%")
+                using (SqlConnection cn = GetConnection())
                 {
-                    sql = "SELECT ";
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { idCantiere, tipologia }).ToList();
                 }
-                else
-                {
-                    sql = "SELECT TOP 500 ";
-                }
-
-                sql += "IdMaterialiCantiere,B.CodCant,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                       "ricaricoSiNo,A.Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,C.NomeOp,D.RagSocForni, " +
-                       "NumeroBolla,ProtocolloInterno,Note,PzzoFinCli,B.DescriCodCAnt,IdTblOperaio " +
-                       "FROM TblMaterialiCantieri AS A " +
-                       "LEFT JOIN TblCantieri AS B ON(A.IdTblCantieri = b.IdCantieri) " +
-                       "LEFT JOIN TblOperaio AS C ON(A.Acquirente = C.IdOperaio) " +
-                       "LEFT JOIN TblForitori AS D ON(A.Fornitore = D.IdFornitori) " +
-                       "WHERE A.IdTblCantieri = @idCant AND ISNULL(A.CodArt,'') LIKE @codArt " +
-                       "AND ISNULL(A.DescriCodArt,'') LIKE @descriCodArt AND ISNULL(A.ProtocolloInterno,'') LIKE @protocollo AND ISNULL(D.RagSocForni,'') LIKE @fornitore AND Tipologia = @tipol ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("idCant", idCant));
-                cmd.Parameters.Add(new SqlParameter("codArt", codArt));
-                cmd.Parameters.Add(new SqlParameter("descriCodArt", descr));
-                cmd.Parameters.Add(new SqlParameter("tipol", tipol));
-                cmd.Parameters.Add(new SqlParameter("fornitore", fornitore));
-
-                if (protocollo == "")
-                    cmd.Parameters.Add(new SqlParameter("protocollo", "%%"));
-                else
-                    cmd.Parameters.Add(new SqlParameter("protocollo", protocollo));
-
-                dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    MaterialiCantieri mc = new MaterialiCantieri();
-                    mc.IdMaterialiCantiere = (dr.IsDBNull(0) ? -1 : dr.GetInt32(0));
-                    mc.CodCant = (dr.IsDBNull(1) ? "" : dr.GetString(1));
-                    mc.DescriMateriali = (dr.IsDBNull(2) ? "" : dr.GetString(2));
-                    mc.Qta = (dr.IsDBNull(3) ? -1.0d : dr.GetDouble(3));
-                    mc.Visibile = (dr.IsDBNull(4) ? false : dr.GetBoolean(4));
-                    mc.Ricalcolo = (dr.IsDBNull(5) ? false : dr.GetBoolean(5));
-                    mc.RicaricoSiNo = (dr.IsDBNull(6) ? false : dr.GetBoolean(6));
-                    mc.Data = (dr.IsDBNull(7) ? new DateTime() : dr.GetDateTime(7));
-                    mc.PzzoUniCantiere = (dr.IsDBNull(8) ? -1.0m : dr.GetDecimal(8));
-                    mc.CodArt = (dr.IsDBNull(9) ? "" : dr.GetString(9));
-                    mc.DescriCodArt = (dr.IsDBNull(10) ? "" : dr.GetString(10));
-                    mc.Tipologia = (dr.IsDBNull(11) ? "" : dr.GetString(11));
-                    mc.Fascia = (dr.IsDBNull(12) ? -1 : dr.GetInt32(12));
-                    mc.Acquirente = (dr.IsDBNull(13) ? "" : dr.GetString(13));
-                    mc.Fornitore = (dr.IsDBNull(14) ? "" : dr.GetString(14));
-                    mc.NumeroBolla = (dr.IsDBNull(15) ? "" : dr.GetString(15));
-                    mc.ProtocolloInterno = (dr.IsDBNull(16) ? -1 : dr.GetInt32(16));
-                    mc.Note = (dr.IsDBNull(17) ? "" : dr.GetString(17));
-                    mc.PzzoFinCli = (dr.IsDBNull(18) ? -1.0m : dr.GetDecimal(18));
-                    mc.DescriCodCant = (dr.IsDBNull(19) ? "" : dr.GetString(19));
-                    mc.IdTblOperaio = (dr.IsDBNull(20) ? -1 : dr.GetInt32(20));
-                    matList.Add(mc);
-                }
-
-                return matList;
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei materiali di cantiere", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static List<MaterialiCantieri> GetMaterialeCantiere(string dataInizio, string dataFine, string acquirente, string fornitore, string n_ddt)
+        public static List<MaterialiCantieri> GetMaterialeCantiere(string dataInizio, string dataFine, string acquirente, string fornitore, string nDdt)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            fornitore = "%" + fornitore + "%";
-            acquirente = "%" + acquirente + "%";
-            n_ddt = "%" + n_ddt + "%";
-
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.*, B.RagSocForni AS Fornitore, C.NomeOp AS Acquirente, D.CodCant");
+            sql.AppendLine($"FROM TblMaterialiCantieri AS A");
+            sql.AppendLine($"LEFT JOIN TblForitori AS B ON A.Fornitore = B.IdFornitori");
+            sql.AppendLine($"LEFT JOIN TblOperaio AS C ON A.Acquirente = C.IdOperaio");
+            sql.AppendLine($"LEFT JOIN TblCantieri AS D ON A.IdTblCantieri = D.IdCantieri");
+            sql.AppendLine($"WHERE A.Data BETWEEN Convert(date, @dataInizio) AND Convert(date, @dataFine) AND C.NomeOp LIKE '%{acquirente}%'");
+            sql.AppendLine($"AND B.RagSocForni LIKE '%{fornitore}%' AND NumeroBolla LIKE '%{nDdt}%'");
+            sql.AppendLine($"ORDER BY A.Data, A.NumeroBolla");
             try
             {
-                sql = "SELECT IdMaterialiCantiere,D.CodCant,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,A.Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,C.NomeOp AS 'Acquirente',B.RagSocForni AS 'Fornitore', " +
-                      "NumeroBolla,ProtocolloInterno,Note,PzzoFinCli " +
-                      "FROM TblMaterialiCantieri AS A " +
-                      "LEFT JOIN TblForitori AS B ON(A.Fornitore = B.IdFornitori) " +
-                      "LEFT JOIN TblOperaio AS C ON(A.Acquirente = C.IdOperaio) " +
-                      "LEFT JOIN TblCantieri AS D ON (A.IdTblCantieri = D.IdCantieri)" +
-                      "WHERE (A.Data BETWEEN Convert(date,@pDataInizio) AND Convert(date,@pDataFine)) AND C.NomeOp LIKE @pAcquirente AND B.RagSocForni LIKE @pFornitore AND NumeroBolla LIKE @pN_DDT " +
-                      "ORDER BY A.Data, A.NumeroBolla";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pDataInizio", dataInizio));
-                cmd.Parameters.Add(new SqlParameter("pDataFine", dataFine));
-                cmd.Parameters.Add(new SqlParameter("pAcquirente", acquirente));
-                cmd.Parameters.Add(new SqlParameter("pFornitore", fornitore));
-                cmd.Parameters.Add(new SqlParameter("pN_DDT", n_ddt));
-
-                return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pAcquirente = acquirente, pFornitore = fornitore, pN_DDT = n_ddt }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { dataInizio, dataFine }).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei materiali di cantiere per singolo cantiere", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        //public static List<MaterialiCantieri> GetMatCantPerResocontoOperaio(string dataInizio, string dataFine, string idOperaio)
-        //{
-        //    SqlConnection cn = GetConnection();
-        //    string sql = "";
 
-        //    try
-        //    {
-        //        sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
-        //              "FROM TblMaterialiCantieri AS A " +
-        //              "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-        //              "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
-        //              "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND (A.OperaioPagato = 0 OR A.OperaioPagato IS NULL) AND A.idTblOperaio IS NOT NULL ";
-
-        //        if (idOperaio != "-1")
-        //        {
-        //            sql += "AND A.IdTblOperaio = @pIdOper ";
-        //        }
-
-        //        sql += "ORDER BY A.Data ";
-
-        //        return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio }).ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Errore durante il recupero dei dati per il resoconto operaio", ex);
-        //    }
-        //    finally { CloseResouces(cn, null); }
-        //}
         public static List<MaterialiCantieri> GetMatCantPerResocontoOperaio(string dataInizio, string dataFine, string idOperaio, string codCant = "", int viewStatus = 0)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            codCant = "%" + codCant + "%";
-
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.*, B.CodCant, B.DescriCodCAnt, C.NomeOp AS Acquirente");
+            sql.AppendLine($"FROM TblMaterialiCantieri AS A");
+            sql.AppendLine($"LEFT JOIN TblCantieri AS B ON A.IdTblCantieri = B.IdCantieri");
+            sql.AppendLine($"LEFT JOIN TblOperaio AS C ON A.IdTblOperaio = C.IdOperaio");
+            sql.AppendLine($"WHERE (A.Data BETWEEN Convert(date, @dataInizio) AND Convert(date, @dataFine))");
+            sql.AppendLine($"AND B.CodCant LIKE '%{codCant}%' AND A.idTblOperaio IS NOT NULL");
+            sql.AppendLine(viewStatus != 2 ? $"AND (A.OperaioPagato = @viewStatus {(viewStatus == 0 ? "OR A.OperaioPagato IS NULL" : "")})" : "");
+            sql.AppendLine(idOperaio != "-1" ? $"AND A.IdTblOperaio = @idOperaio" : "");
+            sql.AppendLine($"ORDER BY A.Data, B.CodCant");
             try
             {
-                sql = "SELECT A.Data,C.NomeOp AS Acquirente,B.CodCant,B.DescriCodCAnt,A.Qta,A.PzzoUniCantiere,A.OperaioPagato " +
-                      "FROM TblMaterialiCantieri AS A " +
-                      "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                      "LEFT JOIN TblOperaio AS C ON (A.IdTblOperaio = C.IdOperaio) " +
-                      "WHERE (A.Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) " +
-                      "AND B.CodCant LIKE @codCant AND A.idTblOperaio IS NOT NULL ";
-
-                if (viewStatus != 2)
+                using (SqlConnection cn = GetConnection())
                 {
-                    sql += "AND (A.OperaioPagato = @viewStatus " + (viewStatus == 0 ? "OR A.OperaioPagato IS NULL" : "") + ") ";
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { dataInizio, dataFine, idOperaio, viewStatus }).ToList();
                 }
-
-                if (idOperaio != "-1")
-                {
-                    sql += "AND A.IdTblOperaio = @pIdOper ";
-                }
-
-                sql += "ORDER BY A.Data, B.CodCant ";
-
-                return cn.Query<MaterialiCantieri>(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOper = idOperaio, viewStatus, codCant }).ToList();
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dei dati per il resoconto operaio", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static MaterialiCantieri GetSingleMaterialeCantiere(int id)
+
+        public static List<MaterialiCantieri> GetMaterialeCantierePerTipologia(string idCant, string dataDa, string dataA, string idOper, string tipologia)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.*, B.DescriCodCAnt, B.CodCant, C.RagSocCli, D.NomeOp Acquirente");
+            sql.AppendLine($"FROM TblMaterialiCantieri AS A");
+            sql.AppendLine($"LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri)");
+            sql.AppendLine($"LEFT JOIN TblClienti AS C ON (B.IdTblClienti = C.IdCliente)");
+            sql.AppendLine($"LEFT JOIN TblOperaio AS D ON (A.IdTblOperaio = D.IdOperaio)");
+            sql.AppendLine($"WHERE Tipologia = @tipologia");
+            sql.AppendLine(idCant != "-1" ? $"AND IdTblCantieri = @idCant" : "AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA)");
+            sql.AppendLine(idOper != "-1" ? $"AND A.Acquirente = @idOper" : "");
+            sql.AppendLine($"ORDER BY A.Data, B.CodCant");
 
             try
             {
-                sql = "SELECT IdMaterialiCantiere,IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,A.Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,A.Acquirente,A.Fornitore, " +
-                      "NumeroBolla,ProtocolloInterno,Note,Note2,PzzoFinCli,IdTblOperaio AS IdOperaio " +
-                      "FROM TblMaterialiCantieri AS A " +
-                      "LEFT JOIN TblCantieri AS B ON(A.IdTblCantieri = b.IdCantieri) " +
-                      "LEFT JOIN TblOperaio AS C ON(A.Acquirente = C.IdOperaio) " +
-                      "LEFT JOIN TblForitori AS D ON(A.Fornitore = D.IdFornitori) " +
-                      "WHERE idMaterialiCantiere = @id ";
-
-                return cn.Query<MaterialiCantieri>(sql, new { id }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { tipologia, idCant, dataDa, dataA, idOper }).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero del singolo record dei Materiali Cantieri", ex);
+                throw new Exception("Errore durante il recupero dei materiali di cantiere filtrati per tipologia", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static List<MaterialiCantieri> GetMaterialeCantiereForRicalcoloConti(string idCant, decimal perc)
+
+        public static List<MaterialiCantieri> GetMaterialeCantiereForRicalcoloConti(string idCantiere, decimal percentuale)
         {
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.IdMaterialiCantiere, A.IdTblCantieri, A.IdTblOperaio, A.DescriMateriali, A.Qta, A.Visibile, A.Ricalcolo, A.ricaricoSiNo, A.Data, ");
+            sql.AppendLine($"A.PzzoUniCantiere, A.Rientro, A.CodArt, A.DescriCodArt, A.Tipologia, A.UnitàDiMisura, A.ZOldNumeroBolla, A.Mate, A.Fascia, A.pzzoTemp, A.Acquirente, A.Fornitore, A.NumeroBolla,");
+            sql.AppendLine($"A.ProtocolloInterno, A.Note, A.Note2, A.OperaioPagato,");
+            sql.AppendLine($"(CASE WHEN ISNULL(A.PzzoFinCli, 0) = 0");
+            sql.AppendLine($"      THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN ISNULL(B.ValoreRicalcolo, 0) ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN ISNULL(C.ValoreRicarico, 0) ELSE 0 END))");
+            sql.AppendLine($"      ELSE ISNULL(A.PzzoFinCli, 0)");
+            sql.AppendLine($"END) AS PzzoFinCli,");
+            sql.AppendLine($"(A.Qta * (CASE WHEN ISNULL(A.PzzoFinCli, 0) = 0");
+            sql.AppendLine($"THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN ISNULL(B.ValoreRicalcolo, 0) ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN ISNULL(C.ValoreRicarico, 0) ELSE 0 END))");
+            sql.AppendLine($"ELSE ISNULL(A.PzzoFinCli, 0)");
+            sql.AppendLine($"END)) AS Valore");
+            sql.AppendLine($"FROM (");
+            sql.AppendLine($"  SELECT *");
+            sql.AppendLine($"  FROM TblMaterialiCantieri");
+            sql.AppendLine($"  WHERE Visibile = 1");
+            sql.AppendLine($") AS A");
+            sql.AppendLine($"LEFT JOIN (");
+            sql.AppendLine($"  SELECT IdMaterialiCantiere, IdTblCantieri, ((PzzoUniCantiere * @percentuale) / 100) AS 'ValoreRicalcolo'");
+            sql.AppendLine($"  FROM TblMaterialiCantieri");
+            sql.AppendLine($"  WHERE Visibile = 1 AND Ricalcolo = 1");
+            sql.AppendLine($") AS B ON A.IdMaterialiCantiere = B.IdMaterialiCantiere AND A.IdTblCantieri = B.IdTblCantieri");
+            sql.AppendLine($"LEFT JOIN (");
+            sql.AppendLine($"  SELECT A.IdMaterialiCantiere, A.IdTblCantieri, (((A.PzzoUniCantiere * B.Ricarico) / 100)) AS 'ValoreRicarico'");
+            sql.AppendLine($"  FROM TblMaterialiCantieri AS A");
+            sql.AppendLine($"  LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri)");
+            sql.AppendLine($"  WHERE Visibile = 1 AND ricaricoSiNo = 1");
+            sql.AppendLine($") AS C ON A.IdMaterialiCantiere = C.IdMaterialiCantiere AND A.IdTblCantieri = C.IdTblCantieri");
+            sql.AppendLine($"WHERE A.IdTblCantieri = @idCantiere");
+            sql.AppendLine($"ORDER BY A.IdMaterialiCantiere");
             try
             {
-                string sql = "SELECT A.IdMaterialiCantiere, A.IdTblCantieri, A.IdTblOperaio, A.DescriMateriali, A.Qta, A.Visibile, A.Ricalcolo, A.ricaricoSiNo, A.Data,  " +
-                             "A.PzzoUniCantiere, A.Rientro, A.CodArt, A.DescriCodArt, A.Tipologia, A.UnitàDiMisura, A.ZOldNumeroBolla, A.Mate, A.Fascia, A.pzzoTemp, A.Acquirente, A.Fornitore, A.NumeroBolla, " +
-                             "A.ProtocolloInterno, A.Note, A.Note2, A.OperaioPagato, " +
-                             "(CASE WHEN ISNULL(A.PzzoFinCli, 0) = 0 " +
-                             "      THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN ISNULL(B.ValoreRicalcolo, 0) ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN ISNULL(C.ValoreRicarico, 0) ELSE 0 END)) " +
-                             "      ELSE ISNULL(A.PzzoFinCli, 0) " +
-                             "END) AS PzzoFinCli, " +
-                             "(A.Qta * (CASE WHEN ISNULL(A.PzzoFinCli, 0) = 0 " +
-                             "THEN(A.PzzoUniCantiere + (CASE WHEN A.Visibile = 1 AND A.Ricalcolo = 1 THEN ISNULL(B.ValoreRicalcolo, 0) ELSE 0 END) + (CASE WHEN A.Visibile = 1 AND A.ricaricoSiNo = 1 THEN ISNULL(C.ValoreRicarico, 0) ELSE 0 END)) " +
-                             "ELSE ISNULL(A.PzzoFinCli, 0) " +
-                             "END)) AS Valore " +
-                             "FROM ( " +
-                             "  SELECT * " +
-                             "  FROM TblMaterialiCantieri " +
-                             "  WHERE Visibile = 1 " +
-                             ") AS A " +
-                             "LEFT JOIN ( " +
-                             "  SELECT IdMaterialiCantiere, IdTblCantieri, ((PzzoUniCantiere * @perc)/100) AS 'ValoreRicalcolo' " +
-                             "  FROM TblMaterialiCantieri " +
-                             "  WHERE Visibile = 1 AND Ricalcolo = 1 " +
-                             ") AS B ON A.IdMaterialiCantiere = B.IdMaterialiCantiere AND A.IdTblCantieri = B.IdTblCantieri " +
-                             "LEFT JOIN ( " +
-                             "  SELECT A.IdMaterialiCantiere, A.IdTblCantieri, (((A.PzzoUniCantiere * B.Ricarico)/100)) AS 'ValoreRicarico' " +
-                             "  FROM TblMaterialiCantieri AS A " +
-                             "  LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                             "  WHERE Visibile = 1 AND ricaricoSiNo = 1 " +
-                             ") AS C ON A.IdMaterialiCantiere = C.IdMaterialiCantiere AND A.IdTblCantieri = C.IdTblCantieri " +
-                             "WHERE A.IdTblCantieri = @idCant " +
-                             "ORDER BY A.IdMaterialiCantiere ";
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<MaterialiCantieri>(sql, new { idCant, perc }).ToList();
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { idCantiere, percentuale }).ToList();
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante la GetMaterialeCantiereForRicalcoloConti in MaterialiCantieriDAO", ex);
             }
+            return ret;
         }
 
-        //Recupero i record in base alla tipologia passata come parametro di ingresso
-        public static List<MaterialiCantieri> GetMaterialeCantierePerTipologia(string idCant, string dataDa, string dataA, string idOper, string tipologia)
+        public static MaterialiCantieri GetSingle(int idMaterialiCantiere)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            MaterialiCantieri ret = new MaterialiCantieri();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.* FROM TblMaterialiCantieri WHERE idMaterialiCantiere = @idMaterialiCantiere");
             try
             {
-                sql = "SELECT IdMaterialiCantiere,B.DescriCodCAnt,DescriMateriali,Qta,Visibile,Ricalcolo, " +
-                      "ricaricoSiNo,A.Data,PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,D.NomeOp Acquirente,Fornitore, " +
-                      "NumeroBolla,ProtocolloInterno,A.Note,PzzoFinCli,B.CodCant,C.RagSocCli " +
-                      "FROM TblMaterialiCantieri AS A " +
-                      "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                      "LEFT JOIN TblClienti AS C ON (B.IdTblClienti = C.IdCliente) " +
-                      "LEFT JOIN TblOperaio AS D ON (A.IdTblOperaio = D.IdOperaio) " +
-                      "WHERE Tipologia = @tipologia ";
-
-                if (idCant != "-1")
-                    sql += " AND IdTblCantieri = @idCant ";
-                else
-                    sql += " AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA) ";
-
-                if (idOper != "-1")
-                    sql += " AND A.Acquirente = @idOper ";
-
-                sql += "ORDER BY A.Data, B.CodCant ";
-
-                return cn.Query<MaterialiCantieri>(sql, new { tipologia, idCant, dataDa, dataA, idOper }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { idMaterialiCantiere }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei materiali di cantiere filtrati per tipologia", ex);
+                throw new Exception("Errore durante il recupero del singolo record dei Materiali Cantieri", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         //Calcolo Totali
-        public static decimal TotMaterialeVisibile(string idCant)
+        public static decimal TotaleVisibile(string idCantiere)
         {
-            SqlConnection cn = GetConnection();
-            string sql;
-
+            decimal ret = 0;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT ISNULL(SUM(PzzoUniCantiere * Qta), 0)");
+            sql.AppendLine($"FROM TblMaterialiCantieri");
+            sql.AppendLine($"WHERE (Tipologia = 'MATERIALE' OR Tipologia = 'A CHIAMATA') AND Visibile = 1 AND Ricalcolo = 1 AND PzzoFinCli = 0 AND IdTblCantieri = @idCantiere");
             try
             {
-                sql = "SELECT ISNULL(SUM(PzzoUniCantiere * Qta), 0) AS MatVis " +
-                      "FROM TblMaterialiCantieri " +
-                      "WHERE (Tipologia = 'MATERIALE' OR Tipologia = 'A CHIAMATA') AND Visibile = 1 AND Ricalcolo = 1 AND PzzoFinCli = 0 AND IdTblCantieri = @pIdCant ";
-
-                return cn.Query<decimal>(sql, new { pIdCant = idCant }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<decimal>(sql.ToString(), new { idCantiere }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il calcolo del materiale visibile", ex);
             }
-            finally { CloseResouces(cn, null); }
-        }
-        public static decimal TotNascosto(string idCant)
-        {
-            SqlConnection cn = GetConnection();
-            string sql;
-
-            try
-            {
-                sql = "SELECT ISNULL(SUM(PzzoUniCantiere * Qta), 0) AS MatNasc " +
-                      "FROM TblMaterialiCantieri " +
-                      "WHERE Visibile = 0 AND IdTblCantieri = @pIdCant ";
-
-                return cn.Query<decimal>(sql, new { pIdCant = idCant }).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il calcolo del materiale visibile", ex);
-            }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
-        //Valore Ricalcolo
-        public static List<decimal> CalcolaValoreRicalcolo(string idCant, decimal perc)
+        public static decimal TotaleNascosto(string idCantiere)
         {
-            SqlConnection cn = GetConnection();
-            string sql;
-
+            decimal ret = 0;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT ISNULL(SUM(PzzoUniCantiere * Qta), 0)");
+            sql.AppendLine($"FROM TblMaterialiCantieri");
+            sql.AppendLine($"WHERE Visibile = 0 AND IdTblCantieri = @idCantiere");
             try
             {
-                sql = "SELECT ((PzzoUniCantiere * @pPerc)/100) AS 'Valore Ricalcolo' " +
-                      "FROM TblMaterialiCantieri " +
-                      "WHERE Visibile = 1 AND Ricalcolo = 1 AND IdTblCantieri = @pIdCant " +
-                      "ORDER BY IdMaterialiCantiere";
-
-                return cn.Query<decimal>(sql, new { pIdCant = idCant, pPerc = perc }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<decimal>(sql.ToString(), new { idCantiere }).FirstOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il calcolo del materiale visibile", ex);
+                throw new Exception("Errore durante il calcolo del materiale nascosto", ex);
             }
-            finally { CloseResouces(cn, null); }
-        }
-        //Valore Ricarico
-        public static List<decimal> CalcolaValoreRicarico(string idCant)
-        {
-            SqlConnection cn = GetConnection();
-            string sql;
-
-            try
-            {
-                sql = "SELECT (((A.PzzoUniCantiere * B.Ricarico)/100)) AS 'Valore Ricarico' " +
-                      "FROM TblMaterialiCantieri AS A " +
-                      "LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri) " +
-                      "WHERE Visibile = 1 AND ricaricoSiNo = 1 AND IdTblCantieri = @pIdCant " +
-                      "ORDER BY A.IdMaterialiCantiere";
-
-                return cn.Query<decimal>(sql, new { pIdCant = idCant }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il calcolo del materiale visibile", ex);
-            }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         //INSERT
         public static bool InserisciMaterialeCantiere(MaterialiCantieri mc)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblMaterialiCantieri (IdTblCantieri,IdTblOperaio,DescriMateriali,Qta,Visibile,Ricalcolo,ricaricoSiNo,Data,");
+            sql.AppendLine($"PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore,NumeroBolla,ProtocolloInterno,Note,Note2,pzzoFinCli)");
+            sql.AppendLine($"VALUES (@IdTblCantieri,@IdTblOperaio,@DescriMateriali,@Qta,@Visibile,@Ricalcolo,@RicaricoSiNo,@Data,@PzzoUniCantiere,@CodArt,@DescriCodArt,@Tipologia,@Fascia,");
+            sql.AppendLine($"@Acquirente,@Fornitore,@NumeroBolla,@ProtocolloInterno,@Note,@Note2,@pzzoFinCli)");
             try
             {
-                sql = "INSERT INTO TblMaterialiCantieri (IdTblCantieri,DescriMateriali,Qta,Visibile,Ricalcolo,ricaricoSiNo,Data, " +
-                      "PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore,NumeroBolla,ProtocolloInterno,Note,Note2,pzzoFinCli) " +
-                      "VALUES (@IdTblCantieri,@DescriMateriali,@Qta,@Visibile,@Ricalcolo,@ricaricoSiNo,@Data,@PzzoUniCantiere,@CodArt,@DescriCodArt,@Tipologia,@Fascia, " +
-                      "@Acquirente,@Fornitore,@NumeroBolla,@ProtocolloInterno,@Note,@Note2,@pzzoFinCli)";
-
-                int row = cn.Execute(sql, mc);
-
-                if (row > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), mc) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un materiale cantiere", ex);
             }
-            finally { CloseResouces(cn, null); }
-        }
-        public static bool InserisciOperaio(MaterialiCantieri mc)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
-            try
-            {
-                sql = "INSERT INTO TblMaterialiCantieri (IdTblCantieri,IdTblOperaio,DescriMateriali,Qta,Visibile,Ricalcolo,ricaricoSiNo,Data, " +
-                      "PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore,NumeroBolla,ProtocolloInterno,Note,Note2,pzzoFinCli) " +
-                      "VALUES (@IdTblCantieri,@idOperaio,@DescriMateriali,@Qta,@Visibile,@Ricalcolo,@ricaricoSiNo,@Data,@PzzoUniCantiere,@CodArt,@DescriCodArt,@Tipologia,@Fascia, " +
-                      "@Acquirente,@Fornitore,@NumeroBolla,@ProtocolloInterno,@Note,@Note2,@pzzoFinCli)";
-
-                int row = cn.Execute(sql, mc);
-
-                if (row > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'inserimento di un materiale cantiere", ex);
-            }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         //UPDATE
         public static bool UpdateOperaioPagato(string dataInizio, string dataFine, string idOperaio)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblMaterialiCantieri SET OperaioPagato = 1 WHERE (Data BETWEEN Convert(date, @dataInizio) AND Convert(date, @dataFine)) AND IdTblOperaio = @idOperaio");
             try
             {
-                sql = "UPDATE TblMaterialiCantieri " +
-                      "SET OperaioPagato = 1 " +
-                      "WHERE (Data BETWEEN Convert(date, @pDataInizio) AND Convert(date, @pDataFine)) AND IdTblOperaio = @pIdOperaio ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("pDataInizio", dataInizio));
-                cmd.Parameters.Add(new SqlParameter("pDataFine", dataFine));
-                cmd.Parameters.Add(new SqlParameter("pIdOperaio", idOperaio));
-
-                int rows = cn.Execute(sql, new { pDataInizio = dataInizio, pDataFine = dataFine, pIdOperaio = idOperaio });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { dataInizio, dataFine, idOperaio }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update del campo OperaioPagato", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static bool UpdateOperaio(string id, MaterialiCantieri mc)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
+        public static bool UpdateMatCant(MaterialiCantieri mc)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"UPDATE TblMaterialiCantieri");
+            sql.AppendLine($"SET IdTblCantieri = @IdTblCantieri");
+            sql.AppendLine(mc.IdTblOperaio != 0 ? $",IdTblOperaio = @IdTblOperaio" : "");
+            sql.AppendLine($",DescriMateriali = @DescriMateriali");
+            sql.AppendLine($",Qta = @Qta");
+            sql.AppendLine($",Visibile = @Visibile");
+            sql.AppendLine($",Ricalcolo = @Ricalcolo");
+            sql.AppendLine($",ricaricoSiNo = @RicaricoSiNo");
+            sql.AppendLine($",Data = @Data");
+            sql.AppendLine($",PzzoUniCantiere = @PzzoUniCantiere");
+            sql.AppendLine($",CodArt = @CodArt");
+            sql.AppendLine($",DescriCodArt = @DescriCodArt");
+            sql.AppendLine($",Fascia = @Fascia");
+            sql.AppendLine($",NumeroBolla = @NumeroBolla");
+            sql.AppendLine($",ProtocolloInterno = @ProtocolloInterno");
+            sql.AppendLine($",Note = @Note");
+            sql.AppendLine($",Tipologia = @Tipologia");
+            sql.AppendLine($",PzzoFinCli = @PzzoFinCli");
+            sql.AppendLine($",Acquirente = @Acquirente");
+            sql.AppendLine($",Fornitore = @Fornitore");
+            sql.AppendLine($",Note2 = @Note2");
+            sql.AppendLine($"WHERE IdMaterialiCantiere = @IdMaterialiCantiere");
             try
             {
-                sql = "UPDATE TblMaterialiCantieri " +
-                      "SET IdTblCantieri = @idCant " +
-                      ",IdTblOperaio = @idOper " +
-                      ",DescriMateriali = @descrMat " +
-                      ",Qta = @qta " +
-                      ",Visibile = @visibile " +
-                      ",Ricalcolo = @ricalcolo " +
-                      ",ricaricoSiNo = @ricarico " +
-                      ",Data = @data " +
-                      ",PzzoUniCantiere = @pzzoUni " +
-                      ",CodArt = @codArt " +
-                      ",DescriCodArt = @descriCodArt " +
-                      ",Fascia = @fascia " +
-                      ",NumeroBolla = @numBolla " +
-                      ",ProtocolloInterno = @protocollo " +
-                      ",Note = @note " +
-                      ",Tipologia = @tipol " +
-                      ",PzzoFinCli = @pzzoFinCli " +
-                      ",Acquirente = @acquir " +
-                      ",Fornitore = @fornit " +
-                      ",Note2 = @note2 " +
-                      "WHERE IdMaterialiCantiere = @id ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("id", id));
-                cmd.Parameters.Add(new SqlParameter("idCant", mc.IdTblCantieri));
-                cmd.Parameters.Add(new SqlParameter("idOper", mc.IdTblOperaio));
-                cmd.Parameters.Add(new SqlParameter("descrMat", mc.DescriMateriali));
-                cmd.Parameters.Add(new SqlParameter("qta", mc.Qta));
-                cmd.Parameters.Add(new SqlParameter("visibile", mc.Visibile));
-                cmd.Parameters.Add(new SqlParameter("ricalcolo", mc.Ricalcolo));
-                cmd.Parameters.Add(new SqlParameter("ricarico", mc.RicaricoSiNo));
-                cmd.Parameters.Add(new SqlParameter("data", mc.Data));
-                cmd.Parameters.Add(new SqlParameter("pzzoUni", mc.PzzoUniCantiere));
-                cmd.Parameters.Add(new SqlParameter("codArt", mc.CodArt));
-                cmd.Parameters.Add(new SqlParameter("descriCodArt", mc.DescriCodArt));
-                cmd.Parameters.Add(new SqlParameter("fascia", mc.Fascia));
-                cmd.Parameters.Add(new SqlParameter("numBolla", mc.NumeroBolla));
-                cmd.Parameters.Add(new SqlParameter("protocollo", mc.ProtocolloInterno));
-                cmd.Parameters.Add(new SqlParameter("note", mc.Note));
-                cmd.Parameters.Add(new SqlParameter("tipol", mc.Tipologia));
-                cmd.Parameters.Add(new SqlParameter("pzzoFinCli", mc.PzzoFinCli));
-                cmd.Parameters.Add(new SqlParameter("acquir", mc.Acquirente));
-                cmd.Parameters.Add(new SqlParameter("fornit", mc.Fornitore));
-                cmd.Parameters.Add(new SqlParameter("note2", mc.Note2));
-
-                int rows = cmd.ExecuteNonQuery();
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), mc) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update del record MatCant", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static bool UpdateMatCant(string id, MaterialiCantieri mc)
-        {
-            SqlConnection cn = GetConnection();
-            string sql = "";
 
-            try
-            {
-                sql = "UPDATE TblMaterialiCantieri " +
-                      "SET IdTblCantieri = @idCant " +
-                      ",DescriMateriali = @descrMat " +
-                      ",CodArt = @codArt " +
-                      ",DescriCodArt = @descriCodArt " +
-                      ",Qta = @qta " +
-                      ",Visibile = @visibile " +
-                      ",Ricalcolo = @ricalcolo " +
-                      ",ricaricoSiNo = @ricarico " +
-                      ",Data = @data " +
-                      ",PzzoUniCantiere = @pzzoUni " +
-                      ",Fascia = @fascia " +
-                      ",NumeroBolla = @numBolla " +
-                      ",ProtocolloInterno = @protocollo " +
-                      ",Note = @note " +
-                      ",Tipologia = @tipol " +
-                      ",Acquirente = @acquir " +
-                      ",Fornitore = @fornit " +
-                      ",Note2 = @note2 " +
-                      ",PzzoFinCli = @pzzoFinCli " +
-                      "WHERE IdMaterialiCantiere = @id ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.Add(new SqlParameter("id", id));
-                cmd.Parameters.Add(new SqlParameter("idCant", mc.IdTblCantieri));
-                cmd.Parameters.Add(new SqlParameter("descrMat", mc.DescriMateriali));
-                cmd.Parameters.Add(new SqlParameter("codArt", mc.CodArt));
-                cmd.Parameters.Add(new SqlParameter("DescriCodArt", mc.DescriCodArt));
-                cmd.Parameters.Add(new SqlParameter("qta", mc.Qta));
-                cmd.Parameters.Add(new SqlParameter("visibile", mc.Visibile));
-                cmd.Parameters.Add(new SqlParameter("ricalcolo", mc.Ricalcolo));
-                cmd.Parameters.Add(new SqlParameter("ricarico", mc.RicaricoSiNo));
-                cmd.Parameters.Add(new SqlParameter("data", mc.Data));
-                cmd.Parameters.Add(new SqlParameter("pzzoUni", mc.PzzoUniCantiere));
-                cmd.Parameters.Add(new SqlParameter("fascia", mc.Fascia));
-                cmd.Parameters.Add(new SqlParameter("numBolla", mc.NumeroBolla));
-                cmd.Parameters.Add(new SqlParameter("protocollo", mc.ProtocolloInterno));
-                cmd.Parameters.Add(new SqlParameter("note", mc.Note));
-                cmd.Parameters.Add(new SqlParameter("tipol", mc.Tipologia));
-                cmd.Parameters.Add(new SqlParameter("acquir", mc.Acquirente));
-                cmd.Parameters.Add(new SqlParameter("fornit", mc.Fornitore));
-                cmd.Parameters.Add(new SqlParameter("note2", mc.Note2));
-                cmd.Parameters.Add(new SqlParameter("pzzoFinCli", mc.PzzoFinCli));
-
-                int rows = cmd.ExecuteNonQuery();
-
-                if (rows > 0)
-                    return true;
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'update del record MatCant", ex);
-            }
-            finally { CloseResouces(cn, null); }
-        }
         public static bool UpdateValoreManodopera(string id, string valManodop)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblMaterialiCantieri SET PzzoUniCantiere = @valManodop WHERE IdTblCantieri = @id AND Tipologia = 'MANODOPERA'");
 
             try
             {
-                sql = "UPDATE TblMaterialiCantieri " +
-                      "SET PzzoUniCantiere = @pzzoManodop " +
-                      "WHERE IdTblCantieri = @id AND Tipologia = 'MANODOPERA'";
-
-                int rows = cn.Execute(sql, new { id, pzzoManodop = valManodop });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { id, valManodop }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update del valore della manodopera", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
-        public static bool UpdateCostoOperaio(string idCant, string costoOperaio, string idOper)
+
+        public static bool UpdateCostoOperaio(string idCantiere, string costoOperaio, string idOperaio)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblMaterialiCantieri SET PzzoUniCantiere = @costoOperaio WHERE IdTblCantieri = @idCantiere AND IdTblOperaio = @idOperaio AND Tipologia = 'OPERAIO'");
 
             try
             {
-                sql = "UPDATE TblMaterialiCantieri " +
-                      "SET PzzoUniCantiere = @pzzoOper " +
-                      "WHERE IdTblCantieri = @id AND IdTblOperaio = @idOper AND Tipologia = 'OPERAIO' ";
-
-                int rows = cn.Execute(sql, new { id = idCant, pzzoOper = costoOperaio, idOper });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idCantiere, costoOperaio, idOperaio }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'update del costo Operaio", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
 
         //DELETE
         public static bool DeleteMatCant(int idMatCant)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblMaterialiCantieri WHERE IdMaterialiCantiere = @idMatCant");
             try
             {
-                sql = "DELETE FROM TblMaterialiCantieri " +
-                      "WHERE IdMaterialiCantiere = @id ";
-
-                int rows = cn.Execute(sql, new { id = idMatCant });
-
-                if (rows > 0)
-                    return true;
-
-                return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idMatCant }) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'eliminazione di un record per i materialiCantieri", ex);
             }
-            finally { CloseResouces(cn, null); }
+            return ret;
         }
     }
 }

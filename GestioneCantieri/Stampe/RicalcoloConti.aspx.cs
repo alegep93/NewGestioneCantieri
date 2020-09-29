@@ -32,8 +32,8 @@ namespace GestioneCantieri
         #region Helpers
         public decimal CalcolaPercentualeTotaleMaterialiNascosti()
         {
-            decimal matVisibileConRicalcolo = MaterialiCantieriDAO.TotMaterialeVisibile(idCant);
-            decimal matNascosto = MaterialiCantieriDAO.TotNascosto(idCant);
+            decimal matVisibileConRicalcolo = MaterialiCantieriDAO.TotaleVisibile(idCant);
+            decimal matNascosto = MaterialiCantieriDAO.TotaleNascosto(idCant);
 
             if (matVisibileConRicalcolo != 0)
             {
