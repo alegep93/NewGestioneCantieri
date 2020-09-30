@@ -42,60 +42,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Panel pnlInsFatture;
 
         /// <summary>
-        /// Controllo lblNumeroFattura.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroFattura;
-
-        /// <summary>
-        /// Controllo txtNumeroFattura.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroFattura;
-
-        /// <summary>
-        /// Controllo lblData.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblData;
-
-        /// <summary>
-        /// Controllo txtData.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtData;
-
-        /// <summary>
-        /// Controllo lblNotaCredito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNotaCredito;
-
-        /// <summary>
-        /// Controllo chkNotaCredito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkNotaCredito;
-
-        /// <summary>
         /// Controllo txtFiltroCliente.
         /// </summary>
         /// <remarks>
@@ -112,6 +58,24 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltraCliente;
+
+        /// <summary>
+        /// Controllo lblScegliCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliCliente;
+
+        /// <summary>
+        /// Controllo ddlScegliCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliCliente;
 
         /// <summary>
         /// Controllo txtFiltroCodCantiere.
@@ -139,24 +103,6 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltraCantiere;
-
-        /// <summary>
-        /// Controllo lblScegliCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliCliente;
-
-        /// <summary>
-        /// Controllo ddlScegliCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliCliente;
 
         /// <summary>
         /// Controllo lblScegliCantiere.
@@ -193,6 +139,78 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAggiungiCantiereAllaLista;
+
+        /// <summary>
+        /// Controllo lblValoreAcconto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValoreAcconto;
+
+        /// <summary>
+        /// Controllo txtValoreAcconto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtValoreAcconto;
+
+        /// <summary>
+        /// Controllo lblShowAccontiAggiunti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowAccontiAggiunti;
+
+        /// <summary>
+        /// Controllo btnAggiungiAccontiAllaLista.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAggiungiAccontiAllaLista;
+
+        /// <summary>
+        /// Controllo lblNumeroFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroFattura;
+
+        /// <summary>
+        /// Controllo txtNumeroFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumeroFattura;
+
+        /// <summary>
+        /// Controllo lblData.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblData;
+
+        /// <summary>
+        /// Controllo txtData.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtData;
 
         /// <summary>
         /// Controllo lblScegliAmministratore.
@@ -276,6 +294,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.TextBox txtIva;
 
         /// <summary>
+        /// Controllo lblNotaCredito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNotaCredito;
+
+        /// <summary>
+        /// Controllo chkNotaCredito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkNotaCredito;
+
+        /// <summary>
         /// Controllo lblReverseCharge.
         /// </summary>
         /// <remarks>
@@ -292,42 +328,6 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkReverseCharge;
-
-        /// <summary>
-        /// Controllo lblValoreAcconto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblValoreAcconto;
-
-        /// <summary>
-        /// Controllo txtValoreAcconto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtValoreAcconto;
-
-        /// <summary>
-        /// Controllo lblShowAccontiAggiunti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblShowAccontiAggiunti;
-
-        /// <summary>
-        /// Controllo btnAggiungiAccontiAllaLista.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAggiungiAccontiAllaLista;
 
         /// <summary>
         /// Controllo lblRiscosso.
