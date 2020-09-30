@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -72,21 +73,14 @@ namespace GestioneCantieri
         {
             ddlScegliCliente.Items.Clear();
             ddlScegliCliente.Items.Add(new ListItem("", "-1"));
-
-            ClientiDAO.GetClienti(ragSocCliente).ForEach(f =>
-            {
-                ddlScegliCliente.Items.Add(new ListItem(f.RagSocCli, f.IdCliente.ToString()));
-            });
+            DropDownListManager.FillDdlCliente(ClientiDAO.GetClienti(ragSocCliente), ref ddlScegliCliente);
         }
 
         protected void FillDdlScegliCantiere(string codiceCantiere = "", string descrizioneCantiere = "")
         {
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
-            CantieriDAO.GetCantieri(codiceCantiere, descrizioneCantiere).Where(w => !w.Fatturato && !w.Riscosso && !w.NonRiscuotibile).ToList().ForEach(f =>
-            {
-                ddlScegliCantiere.Items.Add(new ListItem($"{f.CodCant} - {f.DescriCodCant}", f.IdCantieri.ToString()));
-            });
+            DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(codiceCantiere, descrizioneCantiere).Where(w => !w.Fatturato && !w.Riscosso && !w.NonRiscuotibile).ToList(), ref ddlScegliCantiere);
         }
 
         private void ResetToInitial(bool needToUpdateGrid = true)
@@ -183,52 +177,6 @@ namespace GestioneCantieri
             pnlRicercaFatture.Visible = !pnlInsFatture.Visible;
         }
 
-        private void VisualizzaDati(int idFattura)
-        {
-            ResetToInitial();
-            PopolaCampi(idFattura, false);
-            btnInsFattura.Visible = btnModFattura.Visible = false;
-        }
-
-        private void ModificaDati(int idFattura)
-        {
-            ResetToInitial();
-            PopolaCampi(idFattura, true);
-            btnInsFattura.Visible = false;
-            btnModFattura.Visible = true;
-            hfIdFattura.Value = idFattura.ToString();
-        }
-
-        private void Elimina(int idFattura)
-        {
-            bool isDeleted = false;
-            try
-            {
-                FattureAccontiDAO.Delete(idFattura);
-                FattureCantieriDAO.Delete(idFattura);
-                FattureDAO.Delete(idFattura);
-                isDeleted = true;
-            }
-            catch (Exception)
-            {
-                lblMessaggio.Text = "Errore durante l'eliminazione di una fattura";
-                lblMessaggio.ForeColor = Color.Red;
-            }
-
-            if (isDeleted)
-            {
-                lblMessaggio.ForeColor = Color.Blue;
-                lblMessaggio.Text = "Fattura eliminato con successo";
-            }
-            else
-            {
-                lblMessaggio.ForeColor = Color.Red;
-                lblMessaggio.Text = "Errore durante l'eliminazione del Fattura";
-            }
-
-            ResetToInitial();
-        }
-
         protected void btnInsFattura_Click(object sender, EventArgs e)
         {
             Fattura p = new Fattura();
@@ -321,11 +269,48 @@ namespace GestioneCantieri
             hfIdFattura.Value = idFattura.ToString();
 
             if (e.CommandName == "Visualizza")
-                VisualizzaDati(idFattura);
+            {
+                ResetToInitial();
+                PopolaCampi(idFattura, false);
+                btnInsFattura.Visible = btnModFattura.Visible = false;
+            }
             else if (e.CommandName == "Modifica")
-                ModificaDati(idFattura);
+            {
+                ResetToInitial();
+                PopolaCampi(idFattura, true);
+                btnInsFattura.Visible = false;
+                btnModFattura.Visible = !btnInsFattura.Visible;
+                hfIdFattura.Value = idFattura.ToString();
+            }
             else if (e.CommandName == "Elimina")
-                Elimina(idFattura);
+            {
+                bool isDeleted = false;
+                try
+                {
+                    FattureAccontiDAO.Delete(idFattura);
+                    FattureCantieriDAO.Delete(idFattura);
+                    FattureDAO.Delete(idFattura);
+                    isDeleted = true;
+                }
+                catch (Exception)
+                {
+                    lblMessaggio.Text = "Errore durante l'eliminazione di una fattura";
+                    lblMessaggio.ForeColor = Color.Red;
+                }
+
+                if (isDeleted)
+                {
+                    lblMessaggio.ForeColor = Color.Blue;
+                    lblMessaggio.Text = "Fattura eliminato con successo";
+                }
+                else
+                {
+                    lblMessaggio.ForeColor = Color.Red;
+                    lblMessaggio.Text = "Errore durante l'eliminazione del Fattura";
+                }
+
+                ResetToInitial();
+            }
         }
 
         protected void btnFiltraFatture_Click(object sender, EventArgs e)
@@ -351,7 +336,7 @@ namespace GestioneCantieri
             pnlInsFatture.Visible = false;
             pnlRicercaFatture.Visible = !pnlInsFatture.Visible;
             txtFiltroGrdAnno.Text = DateTime.Now.Year.ToString();
-            BindGrid(true);
+            BindGrid();
         }
 
         protected void grdFatture_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -369,7 +354,6 @@ namespace GestioneCantieri
             }
             else if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int rowIndex = e.Row.RowIndex;
                 long rowIdFattura = Convert.ToInt64((e.Row.FindControl("hfRowIdFattura") as HiddenField).Value);
 
                 Fattura fattura = FattureDAO.GetSingle(rowIdFattura);
@@ -402,7 +386,6 @@ namespace GestioneCantieri
         protected void btnAggiungiCantiereAllaLista_Click(object sender, EventArgs e)
         {
             int idCantiere = Convert.ToInt32(ddlScegliCantiere.SelectedValue);
-
             if (idCantiere != -1)
             {
                 lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetSingle(idCantiere).CodCant;

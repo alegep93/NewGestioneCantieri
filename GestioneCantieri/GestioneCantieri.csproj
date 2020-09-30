@@ -387,7 +387,6 @@
     <Compile Include="Stampe\StampeVarie.aspx.designer.cs">
       <DependentUpon>StampeVarie.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Utils\CantiereManager.cs" />
     <Compile Include="Utils\DataTableToListHelper.cs" />
     <Compile Include="Data\Cantieri.cs" />
     <Compile Include="Data\Clienti.cs" />
@@ -494,10 +493,7 @@
       <DependentUpon>StampaOrdFrutCantExcel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utils\DBTransaction.cs" />
-    <Compile Include="Utils\FornitoreManager.cs" />
     <Compile Include="Utils\DropDownListManager.cs" />
-    <Compile Include="Utils\OperaioManager.cs" />
-    <Compile Include="Utils\SpesaManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -73,5 +73,13 @@ namespace GestioneCantieri.Utils
                 ddl.Items.Add(new ListItem(show, item.CodArt.ToString()));
             }
         }
+
+        public static void FillDdlCliente(List<Clienti> items, ref DropDownList ddl)
+        {
+            foreach (Clienti item in items)
+            {
+                ddl.Items.Add(new ListItem(item.RagSocCli, item.IdCliente.ToString()));
+            };
+        }
     }
 }
