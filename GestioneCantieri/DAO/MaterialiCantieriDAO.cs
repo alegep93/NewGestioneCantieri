@@ -191,7 +191,7 @@ namespace GestioneCantieri.DAO
         {
             MaterialiCantieri ret = new MaterialiCantieri();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT A.* FROM TblMaterialiCantieri WHERE idMaterialiCantiere = @idMaterialiCantiere");
+            sql.AppendLine($"SELECT * FROM TblMaterialiCantieri WHERE idMaterialiCantiere = @idMaterialiCantiere");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -254,9 +254,9 @@ namespace GestioneCantieri.DAO
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"INSERT INTO TblMaterialiCantieri (IdTblCantieri,IdTblOperaio,DescriMateriali,Qta,Visibile,Ricalcolo,ricaricoSiNo,Data,");
+            sql.AppendLine($"INSERT INTO TblMaterialiCantieri (IdTblCantieri{(mc.IdTblOperaio != 0 ? ",IdTblOperaio" : "")},DescriMateriali,Qta,Visibile,Ricalcolo,ricaricoSiNo,Data,");
             sql.AppendLine($"PzzoUniCantiere,CodArt,DescriCodArt,Tipologia,Fascia,Acquirente,Fornitore,NumeroBolla,ProtocolloInterno,Note,Note2,pzzoFinCli)");
-            sql.AppendLine($"VALUES (@IdTblCantieri,@IdTblOperaio,@DescriMateriali,@Qta,@Visibile,@Ricalcolo,@RicaricoSiNo,@Data,@PzzoUniCantiere,@CodArt,@DescriCodArt,@Tipologia,@Fascia,");
+            sql.AppendLine($"VALUES (@IdTblCantieri{(mc.IdTblOperaio != 0 ? ",@IdTblOperaio" : "")},@DescriMateriali,@Qta,@Visibile,@Ricalcolo,@RicaricoSiNo,@Data,@PzzoUniCantiere,@CodArt,@DescriCodArt,@Tipologia,@Fascia,");
             sql.AppendLine($"@Acquirente,@Fornitore,@NumeroBolla,@ProtocolloInterno,@Note,@Note2,@pzzoFinCli)");
             try
             {

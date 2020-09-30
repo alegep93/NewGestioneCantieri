@@ -111,22 +111,22 @@
                         </div>
                     </div>
                 </div>
+            </asp:Panel>
 
-                <!-- Pulsantiera per scelta maschera -->
-                <asp:Panel ID="pnlScegliMaschera" CssClass="row mt-3 d-flex justify-content-center align-items-center" runat="server">
-                    <div class="col text-center">
-                        <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-dark" Text="Materiali da DDT" />
-                        <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri" />
-                        <asp:Button ID="btnMatCantAltriFornitori" runat="server" OnClick="btnMatCantAltriFornitori_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri Altri Fornitori" />
-                        <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-dark" Text="Rientro Materiali" />
-                        <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-dark" Text="Accrediti" />
-                        <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-dark" Text="Manodopera" />
-                        <asp:Button ID="btnGestOper" runat="server" OnClick="btnGestOper_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Operaio" />
-                        <asp:Button ID="btnGestArrot" runat="server" OnClick="btnGestArrot_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Arrotond." />
-                        <asp:Button ID="btnGestChiam" runat="server" OnClick="btnGestChiam_Click" CssClass="btn btn-lg btn-dark" Text="Gest. A Chiamata." />
-                        <asp:Button ID="btnGestSpese" runat="server" OnClick="btnGestSpese_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Spese" />
-                    </div>
-                </asp:Panel>
+            <!-- Pulsantiera per scelta maschera -->
+            <asp:Panel ID="pnlScegliMaschera" CssClass="row mt-3 d-flex justify-content-center align-items-center" runat="server">
+                <div class="col text-center">
+                    <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-dark" Text="Materiali da DDT" />
+                    <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri" />
+                    <asp:Button ID="btnMatCantAltriFornitori" runat="server" OnClick="btnMatCantAltriFornitori_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri Altri Fornitori" />
+                    <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-dark" Text="Rientro Materiali" />
+                    <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-dark" Text="Accrediti" />
+                    <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-dark" Text="Manodopera" />
+                    <asp:Button ID="btnGestOper" runat="server" OnClick="btnGestOper_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Operaio" />
+                    <asp:Button ID="btnGestArrot" runat="server" OnClick="btnGestArrot_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Arrotond." />
+                    <asp:Button ID="btnGestChiam" runat="server" OnClick="btnGestChiam_Click" CssClass="btn btn-lg btn-dark" Text="Gest. A Chiamata." />
+                    <asp:Button ID="btnGestSpese" runat="server" OnClick="btnGestSpese_Click" CssClass="btn btn-lg btn-dark" Text="Gest. Spese" />
+                </div>
             </asp:Panel>
         </asp:Panel>
     </div>
@@ -182,14 +182,16 @@
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-10">
                     <div class="row d-flex justify-content-center align-items-center">
-                        <div class="col-3">
+                        <div class="col-2">
                             <asp:Label ID="lblFiltroCod_FSS" Text="Filtro Codice Articolo" runat="server" />
                             <asp:TextBox ID="txtFiltroCodFSS" placeholder="Filtro Codice Articolo" AutoPostBack="true" OnTextChanged="txtFiltroCodFSS_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <asp:Label ID="lblFiltroAA_Des" Text="Filtro Descrizione Articolo" runat="server" />
                             <asp:TextBox ID="txtFiltroAA_Des" placeholder="Filtro Descrizione Articolo" AutoPostBack="true" OnTextChanged="txtFiltroAA_Des_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center">
                         <div class="col-6 matCantDdl">
                             <asp:Label ID="lblScegliListino" Text="Scegli Listino" runat="server" />
                             <asp:DropDownList ID="ddlScegliListino" AutoPostBack="true" OnTextChanged="ddlScegliListino_TextChanged" CssClass="form-control" runat="server" />
@@ -324,21 +326,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualMatCant" CommandName="VisualMatCant" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualMatCant" CommandName="VisualMatCant" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModMatCant" CommandName="ModMatCant" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModMatCant" CommandName="ModMatCant" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimMatCant" CommandName="ElimMatCant" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimMatCant" CommandName="ElimMatCant" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
@@ -358,17 +360,17 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="btnVisualRientro" CommandName="VisualRientro" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" CssClass="btn btn-lg btn-dark" runat="server" Text="Visualizza" />
+                                    <asp:Button ID="btnVisualRientro" CommandName="VisualRientro" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" CssClass="btn btn-lg btn-dark" runat="server" Text="Visualizza" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="btnModRientro" CommandName="ModRientro" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" CssClass="btn btn-lg btn-dark" runat="server" Text="Modifica" />
+                                    <asp:Button ID="btnModRientro" CommandName="ModRientro" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" CssClass="btn btn-lg btn-dark" runat="server" Text="Modifica" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="btnElimRientro" CommandName="ElimRientro" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:Button ID="btnElimRientro" CommandName="ElimRientro" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         CssClass="btn btn-lg btn-dark" runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');" />
                                 </ItemTemplate>
                             </asp:TemplateField>
@@ -494,21 +496,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualRientro" CommandName="VisualAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualRientro" CommandName="VisualAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                     <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModRientro" CommandName="ModAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModRientro" CommandName="ModAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                     <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimRientro" CommandName="ElimAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimRientro" CommandName="ElimAccrediti" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                     <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
@@ -608,21 +610,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualManodop" CommandName="VisualManodop" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualManodop" CommandName="VisualManodop" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModManodop" CommandName="ModManodop" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModManodop" CommandName="ModManodop" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimManodop" CommandName="ElimManodop" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimManodop" CommandName="ElimManodop" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
@@ -726,21 +728,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualOper" CommandName="VisualOper" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualOper" CommandName="VisualOper" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModOper" CommandName="ModOper" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModOper" CommandName="ModOper" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimOper" CommandName="ElimOper" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimOper" CommandName="ElimOper" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
@@ -833,21 +835,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualArrot" CommandName="VisualArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualArrot" CommandName="VisualArrot" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModArrot" CommandName="ModArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModArrot" CommandName="ModArrot" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimArrot" CommandName="ElimArrot" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimArrot" CommandName="ElimArrot" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
@@ -963,21 +965,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualChiam" CommandName="VisualChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualChiam" CommandName="VisualChiam" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModChiam" CommandName="ModChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModChiam" CommandName="ModChiam" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimChiam" CommandName="ElimChiam" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimChiam" CommandName="ElimChiam" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
@@ -1079,21 +1081,21 @@
                             <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00}" />
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVisualSpesa" CommandName="VisualSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Visualizza">
+                                    <asp:LinkButton ID="btnVisualSpesa" CommandName="VisualSpesa" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Visualizza">
                                         <i class="fas fa-eye" style="color: darkblue;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModSpesa" CommandName="ModSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModSpesa" CommandName="ModSpesa" CommandArgument="<%# BindItem.IdMaterialiCantiere %>" runat="server" Text="Modifica">
                                         <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnElimSpesa" CommandName="ElimSpesa" CommandArgument="<%# BindItem.IdMaterialiCantieri %>"
+                                    <asp:LinkButton ID="btnElimSpesa" CommandName="ElimSpesa" CommandArgument="<%# BindItem.IdMaterialiCantiere %>"
                                         runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo record?');">
                                         <i class="fas fa-times" style="color: red;"></i>
                                     </asp:LinkButton>
