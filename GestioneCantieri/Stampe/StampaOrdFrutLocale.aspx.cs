@@ -75,7 +75,7 @@ namespace GestioneCantieri
         {
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
-            CantiereManager.FillDdlCantieri(CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList(),ref ddlScegliCantiere);
+            DropDownListManager.FillDdlCantieri(CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList(),ref ddlScegliCantiere);
         }
 
         protected void GroupGridViewCells()

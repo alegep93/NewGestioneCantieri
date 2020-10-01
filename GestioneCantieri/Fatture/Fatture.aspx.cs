@@ -31,11 +31,11 @@ namespace GestioneCantieri
             if (needToUpdateGrid)
             {
                 int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
+                int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
+
                 List<Fattura> fatture = FattureDAO.GetFatture(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdCliente.Text, txtFiltroGrdCantiere.Text, txtFiltroGrdAmministratore.Text, numeroFattura, Convert.ToInt32(ddlFiltroGrdRiscosso.SelectedValue));
                 grdFatture.DataSource = fatture;
                 grdFatture.DataBind();
-
-                int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
 
                 grdTotaleIvaPerQuarter.DataSource = FattureDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
                 {
@@ -85,7 +85,8 @@ namespace GestioneCantieri
 
         private void ResetToInitial(bool needToUpdateGrid = true)
         {
-            txtFiltroGrdAnno.Text = txtFiltroGrdCliente.Text = txtFiltroGrdCantiere.Text = txtFiltroGrdAmministratore.Text = "";
+            txtFiltroGrdAnno.Text = DateTime.Now.Year.ToString();
+            txtFiltroGrdCliente.Text = txtFiltroGrdCantiere.Text = txtFiltroGrdAmministratore.Text = "";
             txtNumeroFattura.Text = txtShowAmministratore.Text = lblShowCantieriAggiunti.Text = txtData.Text = lblShowAccontiAggiunti.Text = "";
             ddlScegliCliente.SelectedValue = ddlScegliCantiere.SelectedValue = "-1";
             txtImponibile.Text = txtRitenutaAcconto.Text = txtIva.Text = txtConcatenazione.Text = txtValoreAcconto.Text = lblShowAccontiAggiunti.Text = lblShowCantieriAggiunti.Text = "";

@@ -26,7 +26,7 @@ namespace GestioneCantieri
         {
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new ListItem("", "-1"));
-            CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked), ref ddlScegliCant);
+            DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked), ref ddlScegliCant);
         }
         protected void SvuotaCampi(Panel pnl)
         {

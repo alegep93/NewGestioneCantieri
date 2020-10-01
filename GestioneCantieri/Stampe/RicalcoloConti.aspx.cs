@@ -55,7 +55,7 @@ namespace GestioneCantieri
         {
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-            CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
+            DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
         }
         public List<MaterialiCantieri> GetMaterialiCantieri()
         {
@@ -70,22 +70,6 @@ namespace GestioneCantieri
                 return MaterialiCantieriDAO.GetMaterialeCantiereForRicalcoloConti(idCant, perc);
             }
         }
-
-        //public void ExportPDF(List<MaterialiCantieri> matCantList)
-        //{
-        //    grdPDF.DataSource = grd.DataSource;
-        //    grdPDF.DataBind();
-
-        //    //Imposto la colonna del valore
-        //    for (int i = 0; i < grd.Rows.Count; i++)
-        //    {
-        //        grdPDF.Rows[i].Cells[0].Text = grd.Rows[i].Cells[0].Text;
-        //        grdPDF.Rows[i].Cells[1].Text = grd.Rows[i].Cells[1].Text;
-        //        grdPDF.Rows[i].Cells[2].Text = grd.Rows[i].Cells[2].Text;
-        //        grdPDF.Rows[i].Cells[3].Text = grd.Rows[i].Cells[6].Text;
-        //        grdPDF.Rows[i].Cells[4].Text = grd.Rows[i].Cells[7].Text;
-        //    }
-        //}
 
         public void BindGridExcel(GridView grd, GridView grdExcel)
         {

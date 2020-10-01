@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,7 +25,8 @@ namespace GestioneCantieri
 
         private void ResetToInitial(bool needToUpdateGrid = true)
         {
-            txtFiltroGrdAnno.Text = txtFiltroGrdFornitore.Text = txtFiltroGrdDataDa.Text = txtFiltroGrdDataA.Text = txtFiltroGrdNumeroFattura.Text = "";
+            txtFiltroGrdAnno.Text = DateTime.Now.Year.ToString();
+            txtFiltroGrdFornitore.Text = txtFiltroGrdDataDa.Text = txtFiltroGrdDataA.Text = txtFiltroGrdNumeroFattura.Text = "";
             txtFiltroFornitore.Text = "";
             ddlScegliFornitore.SelectedValue = "-1";
             txtNumeroFattura.Text = txtData.Text = "";
@@ -45,11 +47,11 @@ namespace GestioneCantieri
             if (needToUpdateGrid)
             {
                 int numeroFattura = txtFiltroGrdNumeroFattura.Text != "" ? Convert.ToInt32(txtFiltroGrdNumeroFattura.Text) : 0;
+                int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
+
                 List<FatturaAcquisto> fatture = FattureAcquistoDAO.GetFattureAcquisto(txtFiltroGrdAnno.Text, txtFiltroGrdDataDa.Text, txtFiltroGrdDataA.Text, txtFiltroGrdFornitore.Text, numeroFattura);
                 grdFatture.DataSource = fatture;
                 grdFatture.DataBind();
-
-                int anno = txtFiltroGrdAnno.Text == "" ? DateTime.Now.Year : Convert.ToInt32(txtFiltroGrdAnno.Text);
 
                 grdTotaleIvaPerQuarter.DataSource = FattureAcquistoDAO.GetTotaliIvaPerQuarter(anno).Select(s => new
                 {
@@ -81,46 +83,42 @@ namespace GestioneCantieri
             }
         }
 
-        private void SetNumeroFattura()
+        private void SetNumeroFattura(int year = 0)
         {
-            long numeroFattura = FattureAcquistoDAO.GetLastNumber(DateTime.Now.Year);
-
-            if (numeroFattura == 0)
+            string numeroFattura = "";
+            List<FatturaAcquisto> fatture = FattureAcquistoDAO.GetAll().Where(w => w.Data.Year == (year > 0 ? year : DateTime.Now.Year)).ToList();
+            long nuovoNumeroFattura = fatture.Select(s => s.Numero).Max() + 1;
+            if (fatture.Count() == 0)
             {
-                txtNumeroFattura.Text = "001";
+                numeroFattura = "001";
             }
             else
             {
-                if (numeroFattura.ToString().Length == 1)
+                if (nuovoNumeroFattura.ToString().Length == 1)
                 {
-                    txtNumeroFattura.Text = "00" + numeroFattura.ToString();
+                    numeroFattura = "00";
                 }
-                if (numeroFattura.ToString().Length == 2)
+                if (nuovoNumeroFattura.ToString().Length == 2)
                 {
-                    txtNumeroFattura.Text = "0" + numeroFattura.ToString();
+                    numeroFattura = "0";
                 }
             }
+            txtNumeroFattura.Text = numeroFattura + nuovoNumeroFattura.ToString();
         }
 
         protected void FillDdlScegliFornitore(string ragSocFornitore = "")
         {
-            List<Fornitori> fornitori = FornitoriDAO.GetFornitori(ragSocFornitore);
-
             ddlScegliFornitore.Items.Clear();
             ddlScegliFornitore.Items.Add(new ListItem("", "-1"));
-            foreach (Fornitori fornitore in fornitori)
-            {
-                ddlScegliFornitore.Items.Add(new ListItem(fornitore.RagSocForni, fornitore.IdFornitori.ToString()));
-            }
+            DropDownListManager.FillDdlFornitore(FornitoriDAO.GetFornitori(ragSocFornitore), ref ddlScegliFornitore);
         }
 
         private FatturaAcquisto PopolaFatturaObj()
         {
-            int idFornitore = Convert.ToInt32(ddlScegliFornitore.SelectedValue);
             return new FatturaAcquisto
             {
                 IdFattureAcquisto = hfIdFattura.Value != "" ? Convert.ToInt32(hfIdFattura.Value) : 0,
-                IdFornitore = idFornitore,
+                IdFornitore = Convert.ToInt32(ddlScegliFornitore.SelectedValue),
                 Numero = txtNumeroFattura.Text != "" ? Convert.ToInt32(txtNumeroFattura.Text) : 0,
                 Data = Convert.ToDateTime(txtData.Text),
                 Imponibile = (chkNotaCredito.Checked ? -1 : 1) * (txtImponibile.Text != "" ? Convert.ToDouble(txtImponibile.Text.Replace(".", ",")) : 0),
@@ -159,63 +157,16 @@ namespace GestioneCantieri
             pnlRicercaFatture.Visible = !pnlInsFatture.Visible;
         }
 
-        private void VisualizzaDati(int idFattura)
-        {
-            ResetToInitial();
-            PopolaCampi(idFattura, false);
-            btnInsFattura.Visible = btnModFattura.Visible = false;
-        }
-
-        private void ModificaDati(int idFatturaAcquisto)
-        {
-            ResetToInitial();
-            PopolaCampi(idFatturaAcquisto, true);
-            btnInsFattura.Visible = false;
-            btnModFattura.Visible = true;
-            hfIdFattura.Value = idFatturaAcquisto.ToString();
-        }
-
-        private void Elimina(int idFatturaAcquisto)
-        {
-            bool isDeleted = false;
-            try
-            {
-                FattureAcquistoDAO.Delete(idFatturaAcquisto);
-                isDeleted = true;
-            }
-            catch (Exception)
-            {
-                lblMessaggio.Text = "Errore durante l'eliminazione di una fattura acquisto";
-                lblMessaggio.ForeColor = Color.Red;
-            }
-
-            if (isDeleted)
-            {
-                lblMessaggio.ForeColor = Color.Blue;
-                lblMessaggio.Text = "Fattura eliminato con successo";
-            }
-            else
-            {
-                lblMessaggio.ForeColor = Color.Red;
-                lblMessaggio.Text = "Errore durante l'eliminazione della Fattura acquisto";
-            }
-
-            ResetToInitial();
-        }
-
         protected void btnInsFattura_Click(object sender, EventArgs e)
         {
-            FatturaAcquisto fa = new FatturaAcquisto();
             try
             {
                 if (ddlScegliFornitore.SelectedIndex > 0 && txtImponibile.Text != "" && txtData.Text != "")
                 {
-                    fa = PopolaFatturaObj();
-
                     // Inserisco la fattura
-                    fa.IdFattureAcquisto = FattureAcquistoDAO.Insert(fa);
+                    FattureAcquistoDAO.Insert(PopolaFatturaObj());
                     lblMessaggio.ForeColor = Color.Blue;
-                    lblMessaggio.Text = "Fattura Acquisto " + fa.Numero + " inserito con successo";
+                    lblMessaggio.Text = "Fattura Acquisto inserita con successo";
 
                     ResetToInitial();
                 }
@@ -228,7 +179,7 @@ namespace GestioneCantieri
             catch (Exception ex)
             {
                 lblMessaggio.ForeColor = Color.Red;
-                lblMessaggio.Text = "Errore durante l'inserimento della Fattura Acquisto " + fa.Numero + " ===> " + ex.Message;
+                lblMessaggio.Text = $"Errore durante l'inserimento della Fattura Acquisto ===> {ex.Message}";
             }
         }
 
@@ -236,23 +187,21 @@ namespace GestioneCantieri
         {
             try
             {
-                FatturaAcquisto fa = PopolaFatturaObj();
-
-                if (FattureAcquistoDAO.Update(fa))
+                if (FattureAcquistoDAO.Update(PopolaFatturaObj()))
                 {
                     lblMessaggio.ForeColor = Color.Blue;
-                    lblMessaggio.Text = "Fattura Acquisto " + fa.Numero + " aggiornata con successo";
+                    lblMessaggio.Text = "Fattura Acquisto aggiornata con successo";
                 }
                 else
                 {
                     lblMessaggio.ForeColor = Color.Red;
-                    lblMessaggio.Text = "Errore durante l'aggiornamento della Fattura " + fa.Numero;
+                    lblMessaggio.Text = "Errore durante l'aggiornamento della Fattura";
                 }
             }
             catch (Exception ex)
             {
                 lblMessaggio.ForeColor = Color.Red;
-                lblMessaggio.Text = "Errore durante l'aggiornamento del Fattura Acquisto ===> " + ex.Message;
+                lblMessaggio.Text = $"Errore durante l'aggiornamento del Fattura Acquisto ===> {ex.Message}";
             }
 
             ResetToInitial();
@@ -261,23 +210,46 @@ namespace GestioneCantieri
         protected void grdFatture_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int idFattura = Convert.ToInt32(e.CommandArgument.ToString());
-            //hfIdFattura.Value = idFattura.ToString();
-            //if (e.CommandName == "VisualizzaPDF")
-            //{
-            //    string filePath = FattureAcquistoDAO.GetSingle(idFattura).FilePath;
-            //    Response.Redirect(filePath);
-            //}
             if (e.CommandName == "Visualizza")
             {
-                VisualizzaDati(idFattura);
+                ResetToInitial();
+                PopolaCampi(idFattura, false);
+                btnInsFattura.Visible = btnModFattura.Visible = false;
             }
             else if (e.CommandName == "Modifica")
             {
-                ModificaDati(idFattura);
+                ResetToInitial();
+                PopolaCampi(idFattura, true);
+                btnInsFattura.Visible = false;
+                btnModFattura.Visible = !btnInsFattura.Visible;
+                hfIdFattura.Value = idFattura.ToString();
             }
             else if (e.CommandName == "Elimina")
             {
-                Elimina(idFattura);
+                bool isDeleted = false;
+                try
+                {
+                    FattureAcquistoDAO.Delete(idFattura);
+                    isDeleted = true;
+                }
+                catch (Exception)
+                {
+                    lblMessaggio.Text = "Errore durante l'eliminazione di una fattura acquisto";
+                    lblMessaggio.ForeColor = Color.Red;
+                }
+
+                if (isDeleted)
+                {
+                    lblMessaggio.ForeColor = Color.Blue;
+                    lblMessaggio.Text = "Fattura eliminato con successo";
+                }
+                else
+                {
+                    lblMessaggio.ForeColor = Color.Red;
+                    lblMessaggio.Text = "Errore durante l'eliminazione della Fattura acquisto";
+                }
+
+                ResetToInitial();
             }
         }
 
@@ -336,26 +308,14 @@ namespace GestioneCantieri
             }
         }
 
-        protected void btnFiltraFornitore_Click(object sender, EventArgs e)
-        {
-            FillDdlScegliFornitore(txtFiltroFornitore.Text);
-        }
-
         protected void txtData_TextChanged(object sender, EventArgs e)
         {
-            if (hfIdFattura.Value == "")
-            {
-                txtNumeroFattura.Text = FattureAcquistoDAO.GetLastNumber(Convert.ToDateTime(txtData.Text).Year).ToString();
+            SetNumeroFattura(Convert.ToDateTime(txtData.Text).Year);
+        }
 
-                if (txtNumeroFattura.Text.Length == 1)
-                {
-                    txtNumeroFattura.Text = "00" + txtNumeroFattura.Text;
-                }
-                if (txtNumeroFattura.Text.Length == 2)
-                {
-                    txtNumeroFattura.Text = "0" + txtNumeroFattura.Text;
-                }
-            }
+        protected void txtFiltroFornitore_TextChanged(object sender, EventArgs e)
+        {
+            FillDdlScegliFornitore(txtFiltroFornitore.Text);
         }
     }
 }

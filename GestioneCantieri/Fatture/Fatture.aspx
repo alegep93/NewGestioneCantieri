@@ -14,11 +14,9 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 text-center">
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-6 text-right">
+                <div class="col-6 text-center">
                     <asp:Button ID="btnInserisciFatture" CssClass="btn btn-lg btn-dark" Text="Inserisci" OnClick="btnInserisciFatture_Click" runat="server" />
-                </div>
-                <div class="col-6 text-left">
-                    <asp:Button ID="btnRicercaFatture" CssClass="btn btn-lg btn-dark" Text="Ricerca" OnClick="btnRicercaFatture_Click" runat="server" />
+                    <asp:Button ID="btnRicercaFatture" CssClass="btn btn-lg btn-dark ml-3" Text="Ricerca" OnClick="btnRicercaFatture_Click" runat="server" />
                 </div>
             </div>
         </div>

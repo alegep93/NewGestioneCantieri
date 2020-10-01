@@ -24,13 +24,13 @@ namespace GestioneCantieri
         {
             ddlScegliCant.Items.Clear();
             ddlScegliCant.Items.Add(new ListItem("", "-1"));
-            CantiereManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
+            DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
         }
         protected void FillDdlScegliOperaio()
         {
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-            OperaioManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
+            DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
         }
         protected void BindGrid()
         {
