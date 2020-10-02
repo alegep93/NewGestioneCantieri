@@ -1,9 +1,11 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
@@ -18,7 +20,6 @@ namespace GestioneCantieri
                 txtDataDa.Text = DateTime.Now.Year + "-01-01";
                 txtDataA.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 txtDataDa.TextMode = txtDataA.TextMode = TextBoxMode.Date;
-
                 btnPagaOperaio.Visible = false;
             }
         }
@@ -28,31 +29,16 @@ namespace GestioneCantieri
         {
             ddlScegliOperaio.Items.Clear();
             ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-
-            OperaiDAO.GetAll().ForEach(f =>
-            {
-                ddlScegliOperaio.Items.Add(new ListItem($"{f.Operaio} - {f.NomeOp} - {f.DescrOp}", f.IdOperaio.ToString()));
-            });
+            DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
         }
+
         protected void BindGrid()
         {
-            decimal totValore = 0m;
-            decimal totOre = 0;
-            List<MaterialiCantieri> matCantList;
-            matCantList = MaterialiCantieriDAO.GetMatCantPerResocontoOperaio(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value, txtFiltroCantiere.Text, Convert.ToInt32(rblChooseView.SelectedValue));
-            grdResocontoOperaio.DataSource = matCantList;
+            List<MaterialiCantieri> items = MaterialiCantieriDAO.GetMatCantPerResocontoOperaio(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value, txtFiltroCantiere.Text, Convert.ToInt32(rblChooseView.SelectedValue));
+            grdResocontoOperaio.DataSource = items;
             grdResocontoOperaio.DataBind();
-
-            //Imposto la colonna del valore
-            for (int i = 0; i < grdResocontoOperaio.Rows.Count; i++)
-            {
-                decimal valore = Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text) * Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[5].Text);
-                grdResocontoOperaio.Rows[i].Cells[6].Text = Math.Round(valore, 2).ToString();
-                totOre += Convert.ToDecimal(Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[4].Text.Replace(".", ",")));
-                totValore += Convert.ToDecimal(grdResocontoOperaio.Rows[i].Cells[6].Text);
-            }
-
-            lblTotali.Text = "Totale Ore: " + totOre.ToString() + " ||" + "Totale Valore: " + totValore.ToString();
+            lblTotaleOre.Text = $"Totale Ore: {items.Sum(s => s.Qta)}";
+            lblTotaleValore.Text = $"Totale Valore: {items.Sum(s => s.Valore):N2}";
         }
 
         protected void btnStampaResoconto_Click(object sender, EventArgs e)
@@ -61,11 +47,10 @@ namespace GestioneCantieri
             btnPagaOperaio.Visible = true;
             CheckToEnablePagaOperaio();
         }
+
         protected void btnPagaOperaio_Click(object sender, EventArgs e)
         {
-            bool isUpdated = MaterialiCantieriDAO.UpdateOperaioPagato(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value);
-
-            if (isUpdated)
+            if (MaterialiCantieriDAO.UpdateOperaioPagato(txtDataDa.Text, txtDataA.Text, ddlScegliOperaio.SelectedItem.Value))
             {
                 lblIsOperaioPagato.Text = "Campo \"OperaioPagato\" aggiornato con successo";
                 lblIsOperaioPagato.ForeColor = Color.Blue;
@@ -75,7 +60,6 @@ namespace GestioneCantieri
                 lblIsOperaioPagato.Text = "Impossibile aggiornare il campo \"OperaioPagato\"";
                 lblIsOperaioPagato.ForeColor = Color.Red;
             }
-
             BindGrid();
         }
 
@@ -91,14 +75,7 @@ namespace GestioneCantieri
 
         private void CheckToEnablePagaOperaio()
         {
-            if (ddlScegliOperaio.SelectedIndex == 0)
-            {
-                btnPagaOperaio.Enabled = false;
-            }
-            else
-            {
-                btnPagaOperaio.Enabled = true;
-            }
+            btnPagaOperaio.Enabled = ddlScegliOperaio.SelectedIndex != 0;
         }
     }
 }

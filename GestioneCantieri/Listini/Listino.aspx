@@ -45,30 +45,46 @@
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col-3">
-                    <asp:TextBox ID="txtCodArt1" CssClass="form-control" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="txtCodArt2" CssClass="form-control" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="txtCodArt3" CssClass="form-control" runat="server"></asp:TextBox>
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <asp:TextBox ID="txtCodArt1" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="txtCodArt2" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="txtCodArt3" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-3">
-                    <asp:TextBox ID="txtDescriCodArt1" CssClass="form-control" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="txtDescriCodArt2" CssClass="form-control" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="txtDescriCodArt3" CssClass="form-control" runat="server"></asp:TextBox>
+                <div class="col-3 ml-5">
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col">
+                            <asp:TextBox ID="txtDescriCodArt1" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="txtDescriCodArt2" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="txtDescriCodArt3" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                    </div>
                 </div>
-            </div>
+        </div>
 
-            <!-- Cerca e Svuota -->
-            <div class="row mt-1 d-flex justify-content-center align-items-center">
-                <div class="col">
-                    <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" CssClass="btn btn-primary btn-lg" Text="Cerca" />
-                    <asp:Button ID="btnSvuotaTxt" runat="server" OnClick="btnSvuotaTxt_Click" Text="Svuota" CssClass="btn btn-secondary btn-lg" />
-                </div>
+        <!-- Cerca e Svuota -->
+        <div class="row mt-1 d-flex justify-content-center align-items-center">
+            <div class="col">
+                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" CssClass="btn btn-primary btn-lg" Text="Cerca" />
+                <asp:Button ID="btnSvuotaTxt" runat="server" OnClick="btnSvuotaTxt_Click" Text="Svuota" CssClass="btn btn-secondary btn-lg" />
             </div>
+        </div>
         </div>
     </asp:Panel>
 
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
+    <div class="row mt-5 d-flex justify-content-center align-items-center">
         <div class="col text-center table-overflow listino-mef-table">
-            <asp:GridView ID="grdListino" runat="server" ItemType="GestioneCantieri.Data.Mamg0" AutoGenerateColumns="False" 
+            <asp:GridView ID="grdListino" runat="server" ItemType="GestioneCantieri.Data.Mamg0" AutoGenerateColumns="False"
                 HeaderStyle-CssClass="border-bottom-bold" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />

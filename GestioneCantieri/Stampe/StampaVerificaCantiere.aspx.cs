@@ -154,6 +154,7 @@ namespace GestioneCantieri
             rc.GeneraPDFPerContoFinCli(pdfDoc, mc, pTable, materiali, totale);
             pdfDoc.Close();
 
+            pnlViewGridAndLabels.Visible = true;
             BindGrid();
             GroupGridViewCells();
         }
@@ -163,14 +164,8 @@ namespace GestioneCantieri
         /* EVENTI TEXT-CHANGED */
         protected void ddlScegliCant_TextChanged(object sender, EventArgs e)
         {
-            if (ddlScegliCant.SelectedIndex != 0)
-            {
-                btnStampaVerificaCant.Visible = true;
-            }
-            else
-            {
-                btnStampaVerificaCant.Visible = false;
-            }
+            btnStampaVerificaCant.Visible = ddlScegliCant.SelectedIndex != 0;
+            pnlViewGridAndLabels.Visible = false;
         }
         #endregion
 

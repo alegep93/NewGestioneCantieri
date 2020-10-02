@@ -17,15 +17,18 @@ namespace GestioneCantieri.Utils
             };
         }
 
-        public static void FillDdlOperaio(List<Operai> items, ref DropDownList ddl)
+        public static void FillDdlOperaio(List<Operai> items, ref DropDownList ddl, bool selectMau = true)
         {
             foreach (Operai item in items)
             {
                 ddl.Items.Add(new ListItem($"{item.NomeOp} - {item.DescrOp}", item.IdOperaio.ToString()));
 
-                if (item.NomeOp.ToUpper() == "MAURIZIO" || item.NomeOp.ToUpper() == "MAU")
+                if (selectMau)
                 {
-                    ddl.SelectedValue = item.IdOperaio.ToString();
+                    if (item.NomeOp.ToUpper() == "MAURIZIO" || item.NomeOp.ToUpper() == "MAU")
+                    {
+                        ddl.SelectedValue = item.IdOperaio.ToString();
+                    }
                 }
             };
         }
@@ -68,7 +71,7 @@ namespace GestioneCantieri.Utils
         {
             foreach (Mamg0 item in items)
             {
-                string show = String.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}", 
+                string show = String.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
                     item.CodArt, item.Desc, item.PrezzoNetto, item.PrezzoListino, item.Sconto1, item.Sconto2, item.Sconto3);
                 ddl.Items.Add(new ListItem(show, item.CodArt.ToString()));
             }

@@ -22,11 +22,9 @@ namespace GestioneCantieri
         {
             if (!IsPostBack)
             {
-                DateTime firstDayOfCurrentYear = new DateTime(DateTime.Now.Year, 1, 1);
                 FillAllDdl();
                 pnlCampiStampaDDT_MatCant.Visible = false;
-                pnlCampiStampaCliente.Visible = false;
-                txtDataDa.Text = firstDayOfCurrentYear.ToString("yyyy-MM-dd");
+                txtDataDa.Text = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd");
                 txtDataA.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 txtDataDa.TextMode = txtDataA.TextMode = TextBoxMode.Date;
             }
@@ -36,50 +34,30 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillDdlScegliStampa()
         {
-            DataTable dt = StampeDAO.GetNomiStampe();
-            List<Stampe> listStampe = dt.DataTableToList<Stampe>();
-
             ddlScegliStampa.Items.Clear();
             ddlScegliStampa.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            foreach (Stampe st in listStampe)
+            StampeDAO.GetAll().ForEach(f =>
             {
-                ddlScegliStampa.Items.Add(new System.Web.UI.WebControls.ListItem(st.NomeStampa, st.Id.ToString()));
-            }
+                ddlScegliStampa.Items.Add(new System.Web.UI.WebControls.ListItem(f.NomeStampa, f.Id.ToString()));
+            });
         }
         protected void FillDdlScegliFornitore()
         {
-
             ddlScegliFornitore.Items.Clear();
             ddlScegliFornitore.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            FornitoriDAO.GetFornitori().ForEach(f =>
-            {
-                ddlScegliFornitore.Items.Add(new System.Web.UI.WebControls.ListItem(f.RagSocForni, f.IdFornitori.ToString()));
-            });
+            DropDownListManager.FillDdlFornitore(FornitoriDAO.GetFornitori(), ref ddlScegliFornitore);
         }
         protected void FillDdlScegliAcquirente()
         {
             ddlScegliAcquirente.Items.Clear();
             ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-
-            OperaiDAO.GetAll().ForEach(f =>
-            {
-                ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem(f.NomeOp, f.IdOperaio.ToString()));
-            });
-        }
-        protected void FillDdlScegliCantiere()
-        {
-            ddlScegliCant.Items.Clear();
-            ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-            DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked),ref ddlScegliCant);
+            DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliAcquirente, false);
         }
         protected void FillAllDdl()
         {
             FillDdlScegliStampa();
             FillDdlScegliFornitore();
             FillDdlScegliAcquirente();
-            FillDdlScegliCantiere();
         }
 
         //Popola la griglia con i dati da SQL
@@ -96,25 +74,6 @@ namespace GestioneCantieri
         #endregion
 
         #region Stampa PDF
-        protected PdfPTable InitializePdfTableDDT()
-        {
-            float[] columns = { 150f, 220f, 340f, 100f, 150f, 120f };
-            PdfPTable table = new PdfPTable(grdStampaDDT.Columns.Count);
-            table.WidthPercentage = 100;
-            table.SetTotalWidth(columns);
-
-            return table;
-        }
-        protected PdfPTable InitializePdfTableMatCant()
-        {
-            float[] columns = { 170f, 130f, 170f, 160f, 140f, 240f, 110f, 150f, 130f };
-            PdfPTable table = new PdfPTable(grdStampaMateCant.Columns.Count);
-            table.WidthPercentage = 100;
-            table.SetTotalWidth(columns);
-
-            return table;
-        }
-
         protected void AddPageNumber()
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\')[1];
@@ -136,6 +95,20 @@ namespace GestioneCantieri
             File.WriteAllBytes(@"C:\\Users\\" + userName + "\\Downloads\\" + txtNomeFile.Text + ".pdf", bytes);
         }
 
+        protected PdfPTable InitializePdfTableDDT()
+        {
+            float[] columns = { 150f, 220f, 340f, 100f, 150f, 120f };
+            PdfPTable table = new PdfPTable(grdStampaDDT.Columns.Count) { WidthPercentage = 100 };
+            table.SetTotalWidth(columns);
+            return table;
+        }
+        protected PdfPTable InitializePdfTableMatCant()
+        {
+            float[] columns = { 170f, 130f, 170f, 160f, 140f, 240f, 110f, 150f, 130f };
+            PdfPTable table = new PdfPTable(grdStampaMateCant.Columns.Count) { WidthPercentage = 100 };
+            table.SetTotalWidth(columns);
+            return table;
+        }
         protected void ExportToPdfPerDDT()
         {
             decimal totale = 0m;
@@ -149,11 +122,10 @@ namespace GestioneCantieri
             pdfDoc.Open();
 
             PdfPTable table = InitializePdfTableDDT();
-
             Phrase title = new Phrase(txtNomeFile.Text, FontFactory.GetFont("Arial", 22, iTextSharp.text.Font.BOLD, BaseColor.RED));
             pdfDoc.Add(title);
 
-            GeneraPDFPerNumDDT(pdfDoc, ddtList, title, table, totale, numDdtAttuale, totaleFinale);
+            GeneraPDFPerNumDDT(pdfDoc, ddtList, table, totale, numDdtAttuale, totaleFinale);
 
             pdfDoc.Close();
             Response.ContentType = "application/pdf";
@@ -175,12 +147,9 @@ namespace GestioneCantieri
             pdfDoc.Open();
 
             PdfPTable table = InitializePdfTableMatCant();
-
             Phrase title = new Phrase(txtNomeFile.Text, FontFactory.GetFont("Arial", 24, iTextSharp.text.Font.BOLD, BaseColor.RED));
             pdfDoc.Add(title);
-
-            GeneraPDFPerMatCant(pdfDoc, matCantList, title, table, totale, numDdtAttuale, totaleFinale);
-
+            GeneraPDFPerMatCant(pdfDoc, matCantList, table, totale, numDdtAttuale, totaleFinale);
             pdfDoc.Close();
             Response.ContentType = "application/pdf";
             Response.AddHeader("content-disposition", "attachment;filename=" + txtNomeFile.Text + ".pdf");
@@ -188,26 +157,27 @@ namespace GestioneCantieri
             Response.Write(pdfDoc);
             Response.End();
         }
-        protected void GeneraPDFPerNumDDT(Document pdfDoc, List<DDTMef> ddtList, Phrase title, PdfPTable table, decimal totale, int numDdtAttuale, decimal totFin)
+        protected void GeneraPDFPerNumDDT(Document pdfDoc, List<DDTMef> ddtList, PdfPTable table, decimal totale, int numDdtAttuale, decimal totFin)
         {
-            PdfPTable tblTotali = null;
-            Phrase intestazione = new Phrase();
+            PdfPTable tblTotali;
             for (int k = 0; k < ddtList.Count; k++)
             {
                 if (numDdtAttuale != ddtList[k].N_DDT)
                 {
                     numDdtAttuale = ddtList[k].N_DDT;
-                    intestazione = GeneraIntestazioneDDT(ddtList, k);
+                    Phrase intestazione = GeneraIntestazioneDDT(ddtList, k);
 
                     //Transfer rows from GridView to table
                     for (int i = 0; i < grdStampaDDT.Columns.Count; i++)
                     {
                         Phrase cellText = new Phrase(Server.HtmlDecode(grdStampaDDT.Columns[i].HeaderText), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
-                        PdfPCell cell = new PdfPCell(cellText);
-                        cell.BorderWidth = 0;
-                        cell.BorderWidthBottom = 1;
-                        cell.BorderColorBottom = BaseColor.BLUE;
-                        cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        PdfPCell cell = new PdfPCell(cellText)
+                        {
+                            BorderWidth = 0,
+                            BorderWidthBottom = 1,
+                            BorderColorBottom = BaseColor.BLUE,
+                            HorizontalAlignment = Element.ALIGN_LEFT
+                        };
                         table.AddCell(cell);
 
                         if (i == 4 || i == 5)
@@ -226,8 +196,7 @@ namespace GestioneCantieri
                                 {
                                     if (j != 5)
                                     {
-                                        Phrase cellText = new Phrase();
-
+                                        Phrase cellText;
                                         if (j == 4)
                                         {
                                             cellText = new Phrase(Server.HtmlDecode(Math.Round(Convert.ToDecimal(grdStampaDDT.Rows[i].Cells[j].Text), 2).ToString()), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
@@ -237,9 +206,7 @@ namespace GestioneCantieri
                                             cellText = new Phrase(Server.HtmlDecode(grdStampaDDT.Rows[i].Cells[j].Text), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
                                         }
 
-                                        PdfPCell cell = new PdfPCell(cellText);
-                                        cell.BorderWidth = 0;
-
+                                        PdfPCell cell = new PdfPCell(cellText) { BorderWidth = 0 };
                                         switch (j)
                                         {
                                             case 3:
@@ -262,12 +229,9 @@ namespace GestioneCantieri
                                     {
                                         decimal valore = Convert.ToDecimal(Server.HtmlDecode(grdStampaDDT.Rows[i].Cells[3].Text)) * Convert.ToDecimal(Server.HtmlDecode(grdStampaDDT.Rows[i].Cells[4].Text));
                                         Phrase val = new Phrase(Math.Round(valore, 2).ToString(), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
-                                        PdfPCell valCel = new PdfPCell(val);
-                                        valCel.HorizontalAlignment = Element.ALIGN_RIGHT;
-
+                                        PdfPCell valCel = new PdfPCell(val) { HorizontalAlignment = Element.ALIGN_RIGHT };
                                         grdStampaDDT.Rows[i].Cells[5].Text = Math.Round(valore, 2).ToString();
                                         valCel.BorderWidth = 0;
-
                                         table.AddCell(valCel);
                                         totale += Math.Round(valore, 2);
                                     }
@@ -277,17 +241,13 @@ namespace GestioneCantieri
                         }
                     }
 
-                    tblTotali = new PdfPTable(1);
-                    tblTotali.WidthPercentage = 100;
-
+                    tblTotali = new PdfPTable(1) { WidthPercentage = 100 };
                     GeneraTotalePerNumDDT(tblTotali, totale);
-
                     pdfDoc.Add(new Paragraph(""));
                     pdfDoc.Add(intestazione);
                     pdfDoc.Add(table);
                     pdfDoc.Add(new Paragraph(""));
                     pdfDoc.Add(tblTotali);
-
                     totFin += totale;
                     table = InitializePdfTableDDT();
                     totale = 0m;
@@ -298,32 +258,31 @@ namespace GestioneCantieri
                 }
             }
 
-            tblTotali = new PdfPTable(1);
-            tblTotali.WidthPercentage = 100;
+            tblTotali = new PdfPTable(1) { WidthPercentage = 100 };
             GeneraTotaliFinali(tblTotali, totFin);
             pdfDoc.Add(new Paragraph(""));
             pdfDoc.Add(tblTotali);
         }
-        protected void GeneraPDFPerMatCant(Document pdfDoc, List<MaterialiCantieri> matCantList, Phrase title, PdfPTable table, decimal totale, long numDdtAttuale, decimal totFin)
+        protected void GeneraPDFPerMatCant(Document pdfDoc, List<MaterialiCantieri> matCantList, PdfPTable table, decimal totale, long numDdtAttuale, decimal totFin)
         {
-            PdfPTable tblTotali = null;
-            Phrase intestazione = new Phrase();
             for (int k = 0; k < matCantList.Count; k++)
             {
                 if (numDdtAttuale != Convert.ToInt64(matCantList[k].NumeroBolla))
                 {
                     numDdtAttuale = Convert.ToInt64(matCantList[k].NumeroBolla);
-                    intestazione = GeneraIntestazioneMatCant(matCantList, k);
+                    Phrase intestazione = GeneraIntestazioneMatCant(matCantList, k);
 
                     //Transfer rows from GridView to table
                     for (int i = 0; i < grdStampaMateCant.Columns.Count; i++)
                     {
                         Phrase cellText = new Phrase(Server.HtmlDecode(grdStampaMateCant.Columns[i].HeaderText), FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
-                        PdfPCell cell = new PdfPCell(cellText);
-                        cell.BorderWidth = 0;
-                        cell.BorderWidthBottom = 1;
-                        cell.BorderColorBottom = BaseColor.BLUE;
-                        cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        PdfPCell cell = new PdfPCell(cellText)
+                        {
+                            BorderWidth = 0,
+                            BorderWidthBottom = 1,
+                            BorderColorBottom = BaseColor.BLUE,
+                            HorizontalAlignment = Element.ALIGN_LEFT
+                        };
                         table.AddCell(cell);
 
                         if (i == 8 || i == 9)
@@ -342,20 +301,17 @@ namespace GestioneCantieri
                                 {
                                     if (j != 8)
                                     {
-                                        Phrase cellText = new Phrase();
-
+                                        Phrase cellText;
                                         if (j == 7)
                                         {
-                                            cellText = new Phrase(Server.HtmlDecode(String.Format("{0:n}", Math.Round(Convert.ToDecimal(grdStampaMateCant.Rows[i].Cells[j].Text)), 2).ToString()), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
+                                            cellText = new Phrase(Server.HtmlDecode(string.Format("{0:n}", Math.Round(Convert.ToDecimal(grdStampaMateCant.Rows[i].Cells[j].Text)), 2).ToString()), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
                                         }
                                         else
                                         {
                                             cellText = new Phrase(Server.HtmlDecode(grdStampaMateCant.Rows[i].Cells[j].Text), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
                                         }
 
-                                        PdfPCell cell = new PdfPCell(cellText);
-                                        cell.BorderWidth = 0;
-
+                                        PdfPCell cell = new PdfPCell(cellText) { BorderWidth = 0 };
                                         switch (j)
                                         {
                                             case 6:
@@ -378,12 +334,9 @@ namespace GestioneCantieri
                                     {
                                         decimal valore = Convert.ToDecimal(Server.HtmlDecode(grdStampaMateCant.Rows[i].Cells[6].Text)) * Convert.ToDecimal(Server.HtmlDecode(grdStampaMateCant.Rows[i].Cells[7].Text));
                                         Phrase val = new Phrase(String.Format("{0:n}", Math.Round(valore, 2)), FontFactory.GetFont("Arial", 10, BaseColor.BLACK));
-                                        PdfPCell valCel = new PdfPCell(val);
-                                        valCel.HorizontalAlignment = Element.ALIGN_RIGHT;
-
-                                        grdStampaMateCant.Rows[i].Cells[8].Text = String.Format("{0:n}", Math.Round(valore, 2));
+                                        PdfPCell valCel = new PdfPCell(val) { HorizontalAlignment = Element.ALIGN_RIGHT };
+                                        grdStampaMateCant.Rows[i].Cells[8].Text = string.Format("{0:n}", Math.Round(valore, 2));
                                         valCel.BorderWidth = 0;
-
                                         table.AddCell(valCel);
                                         totale += Math.Round(valore, 2);
                                     }
@@ -393,17 +346,13 @@ namespace GestioneCantieri
                         }
                     }
 
-                    tblTotali = new PdfPTable(1);
-                    tblTotali.WidthPercentage = 100;
-
+                    PdfPTable tblTotali = new PdfPTable(1){WidthPercentage = 100};
                     GeneraTotalePerNumDDT(tblTotali, totale);
-
                     pdfDoc.Add(new Paragraph(""));
                     pdfDoc.Add(intestazione);
                     pdfDoc.Add(table);
                     pdfDoc.Add(new Paragraph(""));
                     pdfDoc.Add(tblTotali);
-
                     totFin += totale;
                     table = InitializePdfTableMatCant();
                     totale = 0m;
@@ -413,73 +362,59 @@ namespace GestioneCantieri
                     continue;
                 }
             }
-
-            /* Genero il Totale finale */
-            //tblTotali = new PdfPTable(1);
-            //tblTotali.WidthPercentage = 100;
-            //GeneraTotaliFinali(tblTotali, totFin);
-            //pdfDoc.Add(new Paragraph(""));
-            //pdfDoc.Add(tblTotali);
         }
 
         //Intestazione PDF
         protected Phrase GeneraIntestazioneDDT(List<DDTMef> ddtList, int counter)
         {
-            string n_ddt = "N_DDT: " + ddtList[counter].N_DDT;
-            string acquirente = "Acquirente: " + ddtList[counter].Acquirente;
-            string data = "Data: " + ddtList[counter].Data.ToString().Split(' ')[0];
-            string intestazioneObj = n_ddt + "    -    " + acquirente + "    -    " + data;
-
-            Phrase intestazione = new Phrase(intestazioneObj, FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
-
+            string n_ddt = $"N_DDT: {ddtList[counter].N_DDT}";
+            string acquirente = $"Acquirente: {ddtList[counter].Acquirente}";
+            string data = $"Data: {ddtList[counter].Data.ToString().Split(' ')[0]}";
+            string intestazioneString = $"{n_ddt}    -    {acquirente}    -    {data}";
+            Phrase intestazione = new Phrase(intestazioneString, FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
             return intestazione;
         }
         protected Phrase GeneraIntestazioneMatCant(List<MaterialiCantieri> ddtList, int counter)
         {
-            string n_ddt = "Num Bolla: " + ddtList[counter].NumeroBolla;
-            string data = "Data: " + ddtList[counter].Data.ToString().Split(' ')[0];
-            string intestazioneObj = n_ddt + "    -    " + data;
-
-            Phrase intestazione = new Phrase(intestazioneObj, FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
-
+            string n_ddt = $"Num Bolla: {ddtList[counter].NumeroBolla}";
+            string data = $"Data: {ddtList[counter].Data.ToString().Split(' ')[0]}";
+            string intestazioneString = $"{n_ddt}    -    {data}";
+            Phrase intestazione = new Phrase(intestazioneString, FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
             return intestazione;
         }
-
         protected void GeneraTotalePerNumDDT(PdfPTable tblTotali, decimal totale)
         {
             //Creazione Totali
             //Totale No Iva
-            Phrase totalePerNumDDT = new Phrase("Totale: " + String.Format("{0:n}", totale), FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
-            PdfPCell totPerNumDDTCell = new PdfPCell(totalePerNumDDT);
-
-            totPerNumDDTCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-            totPerNumDDTCell.BorderWidth = 0;
-            totPerNumDDTCell.BorderWidthTop = 1;
-            totPerNumDDTCell.BorderColorTop = BaseColor.BLUE;
-            totPerNumDDTCell.PaddingBottom = 20;
-
+            Phrase totalePerNumDDT = new Phrase("Totale: " + string.Format("{0:n}", totale), FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
+            PdfPCell totPerNumDDTCell = new PdfPCell(totalePerNumDDT)
+            {
+                HorizontalAlignment = Element.ALIGN_RIGHT,
+                BorderWidth = 0,
+                BorderWidthTop = 1,
+                BorderColorTop = BaseColor.BLUE,
+                PaddingBottom = 20
+            };
             tblTotali.AddCell(totPerNumDDTCell);
         }
         protected void GeneraTotaliFinali(PdfPTable tblTotali, decimal totaleFinale)
         {
-            Phrase totFinNoIva = new Phrase("Tot: " + String.Format("{0:n}", totaleFinale), FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
-            PdfPCell totFinNoIvaCell = new PdfPCell(totFinNoIva);
-
             //IVA
-            decimal iva = Math.Round(((totaleFinale * 22) / 100), 2);
-            Phrase ivaPhrase = new Phrase("IVA 22%: " + iva, FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
-            PdfPCell ivaCell = new PdfPCell(ivaPhrase);
+            decimal iva = Math.Round(totaleFinale * 22 / 100, 2);
+            PdfPCell ivaCell = new PdfPCell(new Phrase("IVA 22%: " + iva, FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE)));
 
             //Totale + IVA
-            Phrase totaleConIva = new Phrase("Imponibile: " + String.Format("{0:n}", (totaleFinale + iva)), FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
-            PdfPCell totaleConIvaCell = new PdfPCell(totaleConIva);
+            PdfPCell totaleConIvaCell = new PdfPCell(new Phrase("Imponibile: " + string.Format("{0:n}", totaleFinale + iva), FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE)));
 
             //Stile celle totali
-            totFinNoIvaCell.HorizontalAlignment = ivaCell.HorizontalAlignment = totaleConIvaCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-            totFinNoIvaCell.BorderWidth = ivaCell.BorderWidth = totaleConIvaCell.BorderWidth = 0;
-            totFinNoIvaCell.BorderColorTop = BaseColor.BLUE;
-            totFinNoIvaCell.BorderWidthTop = 1;
-
+            Phrase totFinNoIva = new Phrase("Tot: " + string.Format("{0:n}", totaleFinale), FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.ITALIC, BaseColor.BLUE));
+            PdfPCell totFinNoIvaCell = new PdfPCell(totFinNoIva)
+            {
+                HorizontalAlignment = ivaCell.HorizontalAlignment = totaleConIvaCell.HorizontalAlignment = Element.ALIGN_RIGHT,
+                BorderWidth = ivaCell.BorderWidth = totaleConIvaCell.BorderWidth = 0,
+                BorderColorTop = BaseColor.BLUE,
+                BorderWidthTop = 1
+            };
             tblTotali.AddCell(totFinNoIvaCell);
             tblTotali.AddCell(ivaCell);
             tblTotali.AddCell(totaleConIvaCell);
@@ -532,28 +467,9 @@ namespace GestioneCantieri
                 lblIsNomeFileInserito.ForeColor = Color.Red;
             }
         }
-        protected void btnFiltraCantieri_Click(object sender, EventArgs e)
-        {
-            FillDdlScegliCantiere();
-        }
         protected void btnAggiungiNumPagine_Click(object sender, EventArgs e)
         {
             AddPageNumber();
-        }
-
-        /*********************** INUTILIZZATO ******************************/
-        protected void btnStampaCliente_Click(object sender, EventArgs e)
-        {
-            //if (txtNomeFileStampaCliente.Text != "")
-            //{
-            //    BindGridStampaCliente();
-            //    ExportToPdfPerCliente();
-            //}
-            //else
-            //{
-            //    lblIsNomeFileInserito.Text = "Campo \"Nome File\" obbligatorio!";
-            //    lblIsNomeFileInserito.ForeColor = Color.Red;
-            //}
         }
         #endregion
 
@@ -561,30 +477,20 @@ namespace GestioneCantieri
         /* EVENTI TEXT-CHANGED */
         protected void ddlScegliStampa_TextChanged(object sender, EventArgs e)
         {
-            int index = ddlScegliStampa.SelectedIndex;
-            switch (index)
+            switch (ddlScegliStampa.SelectedIndex)
             {
                 case 0:
                     pnlCampiStampaDDT_MatCant.Visible = false;
-                    pnlCampiStampaCliente.Visible = false;
                     break;
                 case 1:
                     pnlCampiStampaDDT_MatCant.Visible = true;
-                    pnlCampiStampaCliente.Visible = false;
                     btnStampaDDT.Visible = true;
-                    btnStampaMatCant.Visible = false;
+                    btnStampaMatCant.Visible = !btnStampaDDT.Visible;
                     break;
                 case 2:
                     pnlCampiStampaDDT_MatCant.Visible = true;
-                    pnlCampiStampaCliente.Visible = false;
                     btnStampaDDT.Visible = false;
-                    btnStampaMatCant.Visible = true;
-                    break;
-                case 3:
-                    pnlCampiStampaCliente.Visible = true;
-                    pnlCampiStampaDDT_MatCant.Visible = false;
-                    btnStampaDDT.Visible = false;
-                    btnStampaMatCant.Visible = false;
+                    btnStampaMatCant.Visible = !btnStampaDDT.Visible;
                     break;
             }
         }

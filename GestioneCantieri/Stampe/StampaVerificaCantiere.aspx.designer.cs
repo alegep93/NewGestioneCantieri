@@ -7,11 +7,13 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri {
-    
-    
-    public partial class StampaVerificaCantiere {
-        
+namespace GestioneCantieri
+{
+
+
+    public partial class StampaVerificaCantiere
+    {
+
         /// <summary>
         /// Controllo lblAnno.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAnno;
-        
+
         /// <summary>
         /// Controllo txtAnno.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAnno;
-        
+
         /// <summary>
         /// Controllo lblCodCant.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCodCant;
-        
+
         /// <summary>
         /// Controllo txtCodCant.
         /// </summary>
@@ -47,7 +49,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCodCant;
-        
+
         /// <summary>
         /// Controllo lblChiuso.
         /// </summary>
@@ -56,7 +58,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblChiuso;
-        
+
         /// <summary>
         /// Controllo chkChiuso.
         /// </summary>
@@ -65,7 +67,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkChiuso;
-        
+
         /// <summary>
         /// Controllo lblRiscosso.
         /// </summary>
@@ -74,7 +76,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRiscosso;
-        
+
         /// <summary>
         /// Controllo chkRiscosso.
         /// </summary>
@@ -83,7 +85,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkRiscosso;
-        
+
         /// <summary>
         /// Controllo btnFiltraCantieri.
         /// </summary>
@@ -92,7 +94,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltraCantieri;
-        
+
         /// <summary>
         /// Controllo lblScegliCantiere.
         /// </summary>
@@ -101,7 +103,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblScegliCantiere;
-        
+
         /// <summary>
         /// Controllo ddlScegliCant.
         /// </summary>
@@ -110,7 +112,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliCant;
-        
+
         /// <summary>
         /// Controllo btnStampaVerificaCant.
         /// </summary>
@@ -119,7 +121,16 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaVerificaCant;
-        
+
+        /// <summary>
+        /// Controllo pnlViewGridAndLabels.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlViewGridAndLabels;
+
         /// <summary>
         /// Controllo lblIntestStampa.
         /// </summary>
@@ -128,7 +139,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblIntestStampa;
-        
+
         /// <summary>
         /// Controllo grdStampaVerificaCant.
         /// </summary>
@@ -137,7 +148,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdStampaVerificaCant;
-        
+
         /// <summary>
         /// Controllo lblTotContoCliente.
         /// </summary>
@@ -146,7 +157,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotContoCliente;
-        
+
         /// <summary>
         /// Controllo lblTotMate.
         /// </summary>
@@ -155,7 +166,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotMate;
-        
+
         /// <summary>
         /// Controllo lblTotRientro.
         /// </summary>
@@ -164,7 +175,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotRientro;
-        
+
         /// <summary>
         /// Controllo lblTotOper.
         /// </summary>
@@ -173,7 +184,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotOper;
-        
+
         /// <summary>
         /// Controllo lblTotArrot.
         /// </summary>
@@ -182,7 +193,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotArrot;
-        
+
         /// <summary>
         /// Controllo lblTotAChiamata.
         /// </summary>
@@ -191,7 +202,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotAChiamata;
-        
+
         /// <summary>
         /// Controllo lblTotGuadagno.
         /// </summary>
@@ -200,7 +211,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotGuadagno;
-        
+
         /// <summary>
         /// Controllo lblTotSpese.
         /// </summary>
@@ -209,7 +220,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotSpese;
-        
+
         /// <summary>
         /// Controllo lblTotManodop.
         /// </summary>
@@ -218,7 +229,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotManodop;
-        
+
         /// <summary>
         /// Controllo lblTotGuadagnoConManodop.
         /// </summary>
@@ -227,7 +238,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotGuadagnoConManodop;
-        
+
         /// <summary>
         /// Controllo lblTotGuadagnoOrarioManodop.
         /// </summary>
@@ -236,7 +247,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotGuadagnoOrarioManodop;
-        
+
         /// <summary>
         /// Controllo grdStampaMateCant.
         /// </summary>
@@ -245,7 +256,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdStampaMateCant;
-        
+
         /// <summary>
         /// Controllo grdStampaMateCantPDF.
         /// </summary>

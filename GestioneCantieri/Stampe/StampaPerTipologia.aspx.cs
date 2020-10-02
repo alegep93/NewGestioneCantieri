@@ -40,6 +40,8 @@ namespace GestioneCantieri
             string idOperaio = ddlScegliOperaio.SelectedItem.Value;
             List<MaterialiCantieri> mcList = new List<MaterialiCantieri>();
 
+            pnlShowGridAndLabel.Visible = true;
+
             if (rdbManodop.Checked)
                 mcList = MaterialiCantieriDAO.GetMaterialeCantierePerTipologia(idCantiere, txtDataDa.Text, txtDataA.Text, idOperaio, "MANODOPERA");
             else if (rdbOper.Checked)
@@ -73,5 +75,10 @@ namespace GestioneCantieri
             BindGrid();
         }
         #endregion
+
+        protected void ddlScegliCant_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pnlShowGridAndLabel.Visible = false;
+        }
     }
 }

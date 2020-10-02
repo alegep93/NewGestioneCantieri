@@ -28,7 +28,7 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton ID="btnMostraCompGruppo" CommandName="MostraCompGruppo" CommandArgument='<%# BindItem.Id %>' runat="server" Text="Visualizza Componenti">
-                                <i class="fas fa-eye" style="color: darkcyan;"></i>
+                                <i class="fas fa-eye" style="color: darkblue;"></i>
                             </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>

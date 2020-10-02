@@ -50,9 +50,9 @@
 
     <asp:HiddenField ID="hidIdPrev" runat="server" />
 
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
+    <div class="row d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlFiltriCant" CssClass="col-6 text-center" runat="server">
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col">
                     <asp:Label ID="lblFiltroAnno" runat="server" Text="Anno"></asp:Label>
                     <asp:TextBox ID="txtFiltroAnno" CssClass="form-control" runat="server"></asp:TextBox>

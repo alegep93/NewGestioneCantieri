@@ -96,24 +96,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Button btnFiltraCantieri;
 
         /// <summary>
-        /// Controllo lblScegliTipoNote.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliTipoNote;
-
-        /// <summary>
-        /// Controllo ddlScegliTipoNote.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliTipoNote;
-
-        /// <summary>
         /// Controllo lblScegliCantiere.
         /// </summary>
         /// <remarks>
@@ -130,6 +112,24 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliCant;
+
+        /// <summary>
+        /// Controllo lblScegliTipoNote.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliTipoNote;
+
+        /// <summary>
+        /// Controllo ddlScegliTipoNote.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliTipoNote;
 
         /// <summary>
         /// Controllo btnStampaContoCliente.

@@ -89,7 +89,7 @@ namespace GestioneCantieri.DAO
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT A.*, B.CodCant, B.DescriCodCAnt, C.NomeOp AS Acquirente");
+            sql.AppendLine($"SELECT A.*, B.CodCant, B.DescriCodCAnt, C.NomeOp AS Acquirente, (A.Qta * A.PzzoUniCantiere) AS Valore");
             sql.AppendLine($"FROM TblMaterialiCantieri AS A");
             sql.AppendLine($"LEFT JOIN TblCantieri AS B ON A.IdTblCantieri = B.IdCantieri");
             sql.AppendLine($"LEFT JOIN TblOperaio AS C ON A.IdTblOperaio = C.IdOperaio");

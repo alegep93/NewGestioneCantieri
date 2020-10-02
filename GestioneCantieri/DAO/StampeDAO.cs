@@ -1,39 +1,31 @@
-﻿using System;
-using System.Data;
+﻿using Dapper;
+using GestioneCantieri.Data;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
     public class StampeDAO : BaseDAO
     {
-        public static DataTable GetNomiStampe()
+        public static List<Stampe> GetAll()
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            List<Stampe> ret = new List<Stampe>();
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblStampe ORDER BY id");
             try
             {
-                sql = "SELECT id,nomeStampa " +
-                      "FROM TblStampe " +
-                      "ORDER BY id ";
-
-                SqlCommand cmd = new SqlCommand(sql, cn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-
-                return table;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Stampe>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero dei nomi delle stampe", ex);
+                throw new Exception("Errore durante la GetAll in StampeDAO", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

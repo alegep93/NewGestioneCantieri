@@ -122,7 +122,7 @@ namespace GestioneCantieri.DAO
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<Cantieri>(sql.ToString(), new { anno, chiuso, riscosso, fatturato, nonRiscuotibile }).ToList();
+                    ret = cn.Query<Cantieri>(sql.ToString(), new { anno, idCliente, chiuso, riscosso, fatturato, nonRiscuotibile }).ToList();
                 }
             }
             catch (Exception ex)

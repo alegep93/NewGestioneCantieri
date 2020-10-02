@@ -33,12 +33,10 @@ namespace GestioneCantieri
         }
         protected void CompilaCampi(string idCantiere)
         {
+
             //Popolo il campo Conto/Preventivo
             Cantieri c = CantieriDAO.GetSingle(Convert.ToInt32(idCantiere));
-            if (c.Preventivo)
-                txtContoPreventivo.Text += String.Format("{0:n}", c.ValorePreventivo);
-            else
-                txtContoPreventivo.Text += Math.Round(RicalcoloConti.totRicalcoloConti, 2).ToString();
+            txtContoPreventivo.Text = c.Preventivo ? string.Format("{0:n}", c.ValorePreventivo) : Math.Round(RicalcoloConti.totRicalcoloConti, 2).ToString();
 
             //Popolo il campo Tot. Acconti
             decimal totAcconti = 0m;

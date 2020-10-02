@@ -1,7 +1,9 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -20,34 +22,29 @@ namespace GestioneCantieri
 
         private void FillDdlScegliFornitori()
         {
-            List<Fornitori> fornitori = FornitoriDAO.GetFornitori();
             ddlScegliFornitore.Items.Clear();
             ddlScegliFornitore.Items.Add(new ListItem("", "-1"));
-            fornitori.ForEach(f => ddlScegliFornitore.Items.Add(new ListItem(f.RagSocForni, f.IdFornitori.ToString())));
-
-            ddlFiltroFornitore.Items.Clear();
-            ddlFiltroFornitore.Items.Add(new ListItem("", "-1"));
-            fornitori.ForEach(f => ddlFiltroFornitore.Items.Add(new ListItem(f.RagSocForni, f.IdFornitori.ToString())));
+            List<Fornitori> fornitori = FornitoriDAO.GetFornitori();
+            DropDownListManager.FillDdlFornitore(fornitori, ref ddlScegliFornitore);
+            DropDownListManager.FillDdlFornitore(fornitori, ref ddlFiltroFornitore);
         }
 
         private void ResetToInitial()
         {
+            List<Bolletta> bollette = BolletteDAO.GetAll();
             txtDataBolletta.Text = DateTime.Now.ToString("yyyy-MM-dd");
             txtDataScadenza.Text = txtDataPagamento.Text = txtTotaleBolletta.Text = "";
-            txtProgressivo.Text = BolletteDAO.GetMaxProgressivo(DateTime.Now.Year).ToString();
+            txtProgressivo.Text = GetProgressivo();
             ddlScegliFornitore.SelectedIndex = 0;
             btnAggiungiBolletta.Visible = true;
             btnModificaBolletta.Visible = false;
-
             hfIdBolletta.Value = "";
-
-            grdBollette.DataSource = BolletteDAO.GetAll();
-            grdBollette.DataBind();
+            BindGrid(bollette);
         }
 
-        private void BindGrid(int anno, int idFornitore)
+        private void BindGrid(List<Bolletta> bollette)
         {
-            grdBollette.DataSource = BolletteDAO.GetAll(anno, idFornitore);
+            grdBollette.DataSource = bollette;
             grdBollette.DataBind();
         }
 
@@ -130,15 +127,20 @@ namespace GestioneCantieri
         {
             if (hfIdBolletta.Value == "")
             {
-                txtProgressivo.Text = BolletteDAO.GetMaxProgressivo(Convert.ToDateTime(txtDataBolletta.Text).Year).ToString();
+                txtProgressivo.Text = GetProgressivo(Convert.ToDateTime(txtDataBolletta.Text).Year);
             }
+        }
+
+        private string GetProgressivo(int anno = 0)
+        {
+            return ((BolletteDAO.GetAll().Where(w => w.DataBolletta.Year == (anno > 0 ? anno : DateTime.Now.Year))?.Select(s => s.Progressivo).Max() ?? 0) + 1).ToString();
         }
 
         protected void btnFiltraBollette_Click(object sender, EventArgs e)
         {
             int anno = txtFiltroAnno.Text != "" ? Convert.ToInt32(txtFiltroAnno.Text) : 0;
             int idFornitore = ddlFiltroFornitore.SelectedValue != "" ? Convert.ToInt32(ddlFiltroFornitore.SelectedValue) : 0;
-            BindGrid(anno, idFornitore);
+            BindGrid(BolletteDAO.GetAll(anno, idFornitore));
         }
     }
 }

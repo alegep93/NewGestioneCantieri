@@ -574,9 +574,9 @@
             </div>
 
             <!-- Filtri su griglia Spese -->
-            <asp:Panel ID="pnlFiltriSpese" CssClass="row mt-3 d-flex justify-content-center align-items-center" DefaultButton="btnFiltraGrdSpese" runat="server">
+            <asp:Panel ID="pnlFiltriSpese" CssClass="row d-flex justify-content-center align-items-center" DefaultButton="btnFiltraGrdSpese" runat="server">
                 <div class="col-3 text-center">
-                    <div class="row mt-3 d-flex justify-content-center align-items-center">
+                    <div class="row d-flex justify-content-center align-items-center">
                         <asp:Label ID="lblFiltroSpesaDescr" runat="server" Text="Filtro Descrizione Spesa" />
                         <asp:TextBox ID="txtFiltroSpesaDescr" CssClass="form-control" runat="server"></asp:TextBox>
                         <asp:Button ID="btnFiltraGrdSpese" OnClick="btnFiltraGrdSpese_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Spese" />
@@ -585,7 +585,7 @@
             </asp:Panel>
 
             <!-- Griglia di visualizzazione record Spese -->
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center table-container">
                     <asp:GridView ID="grdSpese" OnRowCommand="grdSpese_RowCommand" AutoGenerateColumns="false"
                         ItemType="GestioneCantieri.Data.Spese" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
