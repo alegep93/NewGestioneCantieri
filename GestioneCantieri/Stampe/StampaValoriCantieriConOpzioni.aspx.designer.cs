@@ -186,15 +186,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblMsg;
 
         /// <summary>
-        /// Controllo grdStampaConOpzioni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdStampaConOpzioni;
-
-        /// <summary>
         /// Controllo lblTotaleGeneraleStampa.
         /// </summary>
         /// <remarks>
@@ -202,6 +193,15 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotaleGeneraleStampa;
+
+        /// <summary>
+        /// Controllo grdStampaConOpzioni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdStampaConOpzioni;
 
         /// <summary>
         /// Controllo grdStampaMateCant.

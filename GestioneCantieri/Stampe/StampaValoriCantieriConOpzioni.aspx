@@ -69,12 +69,20 @@
             <br />
             <asp:Label ID="lblMsg" runat="server"></asp:Label>
         </div>
+    </div>    
+
+    <%-- Label Totale --%>
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col text-center">
+            <asp:Label ID="lblTotaleGeneraleStampa" CssClass="font-weight-bold lblIntestazione" runat="server"></asp:Label>
+        </div>
     </div>
 
     <!-- Griglia di visualizzazione -->
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
+            <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false" 
+                ItemType="GestioneCantieri.Data.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
                     <asp:BoundField HeaderText="Descrizione Cantiere" DataField="DescriCodCAnt" />
@@ -84,12 +92,6 @@
                     <asp:BoundField HeaderText="Totale Finale" DataField="TotaleFinale" />
                 </Columns>
             </asp:GridView>
-        </div>
-    </div>
-
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <div class="col text-center">
-            <asp:Label ID="lblTotaleGeneraleStampa" CssClass="font-weight-bold lblIntestazione" runat="server"></asp:Label>
         </div>
     </div>
 

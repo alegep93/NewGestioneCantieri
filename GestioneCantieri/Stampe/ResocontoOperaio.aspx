@@ -57,7 +57,7 @@
     </div>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <div class="col text-center tableContainer table-responsive">
+        <div class="col text-center table-container">
             <asp:GridView ID="grdResocontoOperaio" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
                 <Columns>

@@ -276,6 +276,7 @@ input[type="checkbox"] {
 .listino-hts-table {
     max-height: 450px;
 }
+
 .ddt-fornitori-table {
     max-height: 550px;
 }
@@ -289,8 +290,5 @@ input[type="checkbox"] {
 .label-totali-resoconto-operaio,
 .lblIntestazione {
     font-size: 24px;
-}
-
-.lblIntestazione {
     color: #000;
 }

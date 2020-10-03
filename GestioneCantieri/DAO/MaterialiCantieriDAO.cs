@@ -12,11 +12,47 @@ namespace GestioneCantieri.DAO
     public class MaterialiCantieriDAO : BaseDAO
     {
         //SELECT
+        public static List<MaterialiCantieri> GetByIdCantiere(long idCantiere)
+        {
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblMaterialiCantieri WHERE IdTblCantieri = @idCantiere");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { idCantiere }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll in MaterialiCantieriDAO", ex);
+            }
+            return ret;
+        }
+
+        public static List<MaterialiCantieri> GetByListOfCantieri(string idCantieri)
+        {
+            List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblMaterialiCantieri WHERE IdTblCantieri IN ({idCantieri})");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetByListOfCantieri in MaterialiCantieriDAO", ex);
+            }
+            return ret;
+        }
+
         public static List<MaterialiCantieri> GetMaterialeCantiere(string idCantiere, string codiceArticolo = "", string descrizioneCodiceArticolo = "")
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT *");
+            sql.AppendLine($"SELECT *, (Qta * PzzoUniCantiere) AS Valore");
             sql.AppendLine($"FROM TblMaterialiCantieri");
             sql.AppendLine($"WHERE IdTblCantieri = @idCantiere AND CodArt LIKE '%{codiceArticolo}%' AND DescriCodArt LIKE '%{descrizioneCodiceArticolo}%'");
 
@@ -112,7 +148,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static List<MaterialiCantieri> GetMaterialeCantierePerTipologia(string idCant, string dataDa, string dataA, string idOper, string tipologia)
+        public static List<MaterialiCantieri> GetMaterialeCantierePerTipologia(int idCant, string dataDa, string dataA, int idOper, string tipologia)
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
             StringBuilder sql = new StringBuilder();
@@ -122,8 +158,8 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"LEFT JOIN TblClienti AS C ON (B.IdTblClienti = C.IdCliente)");
             sql.AppendLine($"LEFT JOIN TblOperaio AS D ON (A.IdTblOperaio = D.IdOperaio)");
             sql.AppendLine($"WHERE Tipologia = @tipologia");
-            sql.AppendLine(idCant != "-1" ? $"AND IdTblCantieri = @idCant" : "AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA)");
-            sql.AppendLine(idOper != "-1" ? $"AND A.Acquirente = @idOper" : "");
+            sql.AppendLine(idCant != -1 ? $"AND IdTblCantieri = @idCant" : "AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA)");
+            sql.AppendLine(idOper != -1 ? $"AND A.Acquirente = @idOper" : "");
             sql.AppendLine($"ORDER BY A.Data, B.CodCant");
 
             try
@@ -140,7 +176,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static List<MaterialiCantieri> GetMaterialeCantiereForRicalcoloConti(string idCantiere, decimal percentuale)
+        public static List<MaterialiCantieri> GetMaterialeCantiereForRicalcoloConti(int idCantiere, decimal percentuale)
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
             StringBuilder sql = new StringBuilder();

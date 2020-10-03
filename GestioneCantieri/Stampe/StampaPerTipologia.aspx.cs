@@ -4,6 +4,7 @@ using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
@@ -34,34 +35,15 @@ namespace GestioneCantieri
         }
         protected void BindGrid()
         {
-            decimal totale = 0m;
-            decimal totaleOre = 0m;
-            string idCantiere = ddlScegliCant.SelectedItem.Value;
-            string idOperaio = ddlScegliOperaio.SelectedItem.Value;
-            List<MaterialiCantieri> mcList = new List<MaterialiCantieri>();
-
             pnlShowGridAndLabel.Visible = true;
-
-            if (rdbManodop.Checked)
-                mcList = MaterialiCantieriDAO.GetMaterialeCantierePerTipologia(idCantiere, txtDataDa.Text, txtDataA.Text, idOperaio, "MANODOPERA");
-            else if (rdbOper.Checked)
-                mcList = MaterialiCantieriDAO.GetMaterialeCantierePerTipologia(idCantiere, txtDataDa.Text, txtDataA.Text, idOperaio, "OPERAIO");
+            string tipologia = rdbManodop.Checked ? "MANODOPERA" : "OPERAIO";
+            List<MaterialiCantieri> mcList = MaterialiCantieriDAO.GetMaterialeCantierePerTipologia(Convert.ToInt32(ddlScegliCant.SelectedItem.Value), txtDataDa.Text, txtDataA.Text, Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value), tipologia.ToUpper());
 
             grdStampaPerTipologia.DataSource = mcList;
             grdStampaPerTipologia.DataBind();
 
-            for (int i = 0; i < grdStampaPerTipologia.Rows.Count; i++)
-            {
-                decimal qta = Convert.ToDecimal(grdStampaPerTipologia.Rows[i].Cells[4].Text);
-                decimal prezzoUnitario = Convert.ToDecimal(grdStampaPerTipologia.Rows[i].Cells[5].Text);
-                decimal valore = qta * prezzoUnitario;
-
-                totaleOre += qta;
-                totale += valore;
-            }
-
-            lblTotOre.Text = "<strong>Totale Ore</strong>: " + Math.Round(totaleOre, 2);
-            lblTotale.Text = "<strong>Totale Valore</strong>: " + Math.Round(totale, 2);
+            lblTotOre.Text = $"<strong>Totale Ore</strong>: {Math.Round(mcList.Sum(s => (decimal)s.Qta), 2)}";
+            lblTotale.Text = $"<strong>Totale Valore</strong>: {Math.Round(mcList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere), 2)}";
         }
         #endregion
 
