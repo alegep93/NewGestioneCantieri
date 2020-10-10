@@ -150,15 +150,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Button btnFiltra;
 
         /// <summary>
-        /// Controllo grdResocontoOperaio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdResocontoOperaio;
-
-        /// <summary>
         /// Controllo lblTotaleOre.
         /// </summary>
         /// <remarks>
@@ -175,5 +166,14 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotaleValore;
+
+        /// <summary>
+        /// Controllo grdResocontoOperaio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdResocontoOperaio;
     }
 }

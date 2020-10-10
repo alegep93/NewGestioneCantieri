@@ -87,38 +87,11 @@
                     <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
                     <asp:BoundField HeaderText="Descrizione Cantiere" DataField="DescriCodCAnt" />
                     <asp:BoundField HeaderText="Cliente" DataField="RagSocCli" />
-                    <asp:BoundField HeaderText="Totale Conto" DataField="TotaleConto" />
-                    <asp:BoundField HeaderText="Totale Acconti" DataField="TotaleAcconti" />
-                    <asp:BoundField HeaderText="Totale Finale" DataField="TotaleFinale" />
+                    <asp:BoundField HeaderText="Totale Conto" DataField="TotaleConto" DataFormatString="{0:0.00}" />
+                    <asp:BoundField HeaderText="Totale Acconti" DataField="TotaleAcconti" DataFormatString="{0:0.00}" />
+                    <asp:BoundField HeaderText="Totale Finale" DataField="TotaleFinale" DataFormatString="{0:0.00}" />
                 </Columns>
             </asp:GridView>
         </div>
     </div>
-
-    <!-- GridView di appoggio -->
-    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-dark text-center scrollable-table" Visible="false">
-        <Columns>
-            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-            <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />
-            <asp:BoundField DataField="Qta" HeaderText="Qta" />
-            <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Pzzo Unit." DataFormatString="{0:0.00}" />
-            <asp:BoundField DataField="ValoreRicarico" HeaderText="Valore Ricarico" />
-            <asp:BoundField DataField="ValoreRicalcolo" HeaderText="Valore Ricalcolo" />
-            <asp:BoundField DataField="PzzoFinCli" HeaderText="Pzzo Unit Fin Cli" />
-            <asp:BoundField DataField="Valore" HeaderText="Valore" />
-            <asp:BoundField DataField="Visibile" HeaderText="Visibile" />
-            <asp:BoundField DataField="Ricalcolo" HeaderText="Ricalcolo" />
-            <asp:BoundField DataField="RicaricoSiNo" HeaderText="RicaricoSiNo" />
-        </Columns>
-    </asp:GridView>
-
-    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-striped table-dark text-center scrollable-table" Visible="false">
-        <Columns>
-            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-            <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />
-            <asp:BoundField DataField="Qta" HeaderText="Qta" />
-            <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Pzzo Unit." DataFormatString="{0:0.00}" />
-            <asp:BoundField DataField="Valore" HeaderText="Valore" />
-        </Columns>
-    </asp:GridView>
 </asp:Content>

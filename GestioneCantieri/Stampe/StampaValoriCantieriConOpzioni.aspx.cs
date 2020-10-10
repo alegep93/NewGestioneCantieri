@@ -51,7 +51,7 @@ namespace GestioneCantieri
                     objStampa.TotaleAcconti = objStampa.TotaleConto = objStampa.TotaleFinale = 0m;
 
                     //Popolo il campo Conto/Preventivo
-                    objStampa.TotaleConto = cantiere.Preventivo ? cantiere.ValorePreventivo : Math.Round(materiali.Sum(s => s.Valore), 2);
+                    objStampa.TotaleConto = cantiere.Preventivo ? cantiere.ValorePreventivo : Math.Round(RicalcoloContiManager.GetMaterialiCantieri(cantiere.IdCantieri).Sum(s => s.Valore), 2);
 
                     //Popolo il campo Tot. Acconti
                     decimal totAcconti = 0m;
@@ -82,10 +82,10 @@ namespace GestioneCantieri
 
                 for (int i = 0; i < grdStampaConOpzioni.Rows.Count; i++)
                 {
-                    if (grdStampaConOpzioni.Rows[i].Cells[5].Text == "0")
-                    {
-                        grdStampaConOpzioni.Rows[i].Visible = false;
-                    }
+                    //if (grdStampaConOpzioni.Rows[i].Cells[5].Text == "0")
+                    //{
+                    //    grdStampaConOpzioni.Rows[i].Visible = false;
+                    //}
 
                     // Se il totale Conto mostra un valore palesemente errato, la cella viene modificata mostrando l'errore invece del valore del cantiere
                     if (grdStampaConOpzioni.Rows[i].Cells[3].Text == "-999,99")

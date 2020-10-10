@@ -81,6 +81,15 @@
 
     <asp:Panel ID="pnlShowGridAndLabel" Visible="false" runat="server">
         <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="col text-center">
+                <asp:Label ID="lblTotOre" CssClass="lblIntestazione" runat="server" Text=""></asp:Label>
+            </div>
+            <div class="col text-center">
+                <asp:Label ID="lblTotale" CssClass="lblIntestazione" runat="server" Text=""></asp:Label>
+            </div>
+        </div>
+
+        <div class="row mt-3 d-flex justify-content-center align-items-center">
             <div class="table-container col text-center">
                 <asp:GridView ID="grdStampaPerTipologia" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
                     <Columns>
@@ -93,14 +102,6 @@
                         <asp:BoundField DataField="Acquirente" HeaderText="Operaio" />
                     </Columns>
                 </asp:GridView>
-            </div>
-        </div>
-
-        <div class="row mt-3 d-flex justify-content-center align-items-center">
-            <div class="col text-center text-right">
-                <asp:Label ID="lblTotOre" CssClass="lblIntestazione" runat="server" Text=""></asp:Label>
-                <br />
-                <asp:Label ID="lblTotale" CssClass="lblIntestazione" runat="server" Text=""></asp:Label>
             </div>
         </div>
     </asp:Panel>

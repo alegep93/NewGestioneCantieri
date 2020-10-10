@@ -33,7 +33,7 @@ namespace GestioneCantieri.DAO
         public static List<MaterialiCantieri> GetByListOfCantieri(string idCantieri)
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
-            StringBuilder sql = new StringBuilder($"SELECT * FROM TblMaterialiCantieri WHERE IdTblCantieri IN ({idCantieri})");
+            StringBuilder sql = new StringBuilder($"SELECT *, (Qta * PzzoUniCantiere) AS Valore FROM TblMaterialiCantieri WHERE IdTblCantieri IN ({idCantieri})");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -104,7 +104,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"LEFT JOIN TblForitori AS B ON A.Fornitore = B.IdFornitori");
             sql.AppendLine($"LEFT JOIN TblOperaio AS C ON A.Acquirente = C.IdOperaio");
             sql.AppendLine($"LEFT JOIN TblCantieri AS D ON A.IdTblCantieri = D.IdCantieri");
-            sql.AppendLine($"WHERE A.Data BETWEEN Convert(date, @dataInizio) AND Convert(date, @dataFine) AND C.NomeOp LIKE '%{acquirente}%'");
+            sql.AppendLine($"WHERE A.Data BETWEEN Convert(date, @dataInizio) AND Convert(date, @dataFine) AND C.NomeOp LIKE '%{acquirente.Split('-')[0].Trim()}%'");
             sql.AppendLine($"AND B.RagSocForni LIKE '%{fornitore}%' AND NumeroBolla LIKE '%{nDdt}%'");
             sql.AppendLine($"ORDER BY A.Data, A.NumeroBolla");
             try

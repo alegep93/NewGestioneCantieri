@@ -135,7 +135,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"SELECT IdDDTMef, Anno, Data, N_DDT, CodArt,");
             sql.AppendLine($"DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT");
             sql.AppendLine($"FROM TblDDTMef");
-            sql.AppendLine($"WHERE (Data BETWEEN Convert(date,@dataInizio) AND Convert(date,@dataFine)) AND Acquirente LIKE '%{acquirente}%' AND N_DDT LIKE '%{nDdt}%'");
+            sql.AppendLine($"WHERE (Data BETWEEN Convert(date,@dataInizio) AND Convert(date,@dataFine)) AND Acquirente LIKE '%{acquirente.Split('-')[0].Trim()}%' AND N_DDT LIKE '%{nDdt}%'");
             sql.AppendLine($"ORDER BY Data, N_DDT, CodArt");
             try
             {

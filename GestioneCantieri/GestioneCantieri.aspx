@@ -56,7 +56,7 @@
             <asp:Panel ID="pnlSubIntestazione" CssClass="row d-flex justify-content-center align-items-center" runat="server">
                 <div class="col text-center">
                     <div class="row d-flex align-items-center">
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="row d-flex align-items-center">
                                 <div class="col">
                                     <asp:Label ID="lblFiltroAnnoDDT" Text="Filtro Anno DDT" runat="server" />
@@ -71,32 +71,26 @@
                     </div>
 
                     <div class="row d-flex justify-content-center align-items-center">
-                        <div class="col-3 text-center">
+                        <div class="col-2 text-center">
                             <asp:Label ID="lblScegliDDTMef" Text="Scegli DDT" runat="server" />
                             <asp:DropDownList ID="ddlScegliDDTMef" AutoPostBack="true" OnTextChanged="ddlScegliDDTMef_TextChanged" CssClass="form-control" runat="server" />
                         </div>
                         <div class="col text-center">
                             <asp:Label ID="lblDataDDT" Text="Data DDT" runat="server" />
-                            <asp:TextBox ID="txtDataDDT" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtDataDDT" AutoPostBack="true" OnTextChanged="txtDataDDT_TextChanged" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col text-center">
                             <asp:Label ID="lblNumBolla" Text="Numero Bolla" runat="server" />
                             <asp:TextBox ID="txtNumBolla" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
-                        <div class="col text-center">
+                        <div class="col text-center d-none">
                             <asp:Label ID="lblFascia" Text="Fascia" runat="server" />
                             <asp:TextBox ID="txtFascia" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col">
                             <asp:Label ID="lblProtocollo" Text="Protocollo" runat="server" />
-                            <asp:TextBox ID="txtProtocollo" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtProtocollo" AutoPostBack="true" OnTextChanged="txtProtocollo_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
-                        <div class="col">
-                            <asp:Button ID="btnGenetaNumBolla" CssClass="btn btn-lg btn-dark" OnClick="btnGenetaNumBolla_Click" runat="server" Text="Genera num. bolla" />
-                        </div>
-                    </div>
-
-                    <div class="row d-flex justify-content-center align-items-center">
                         <div class="col">
                             <asp:Label ID="lblAcquirente" Text="Acquirente" runat="server" />
                             <asp:DropDownList ID="ddlScegliAcquirente" CssClass="form-control" runat="server" />

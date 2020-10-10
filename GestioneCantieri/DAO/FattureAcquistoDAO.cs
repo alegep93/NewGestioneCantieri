@@ -22,7 +22,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"WHERE B.RagSocForni LIKE '%{fornitore}%' {whereData}");
             sql.AppendLine(anno != "" ? "AND DATEPART(YEAR, A.data) = @anno" : "");
             sql.AppendLine(numeroFattura > 0 ? "AND A.numero = @numeroFattura" : "");
-            sql.AppendLine($"ORDER BY A.data, A.numero");
+            sql.AppendLine($"ORDER BY A.numero");
 
             try
             {

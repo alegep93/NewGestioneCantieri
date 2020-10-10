@@ -202,23 +202,5 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdStampaConOpzioni;
-
-        /// <summary>
-        /// Controllo grdStampaMateCant.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdStampaMateCant;
-
-        /// <summary>
-        /// Controllo grdStampaMateCantPDF.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdStampaMateCantPDF;
     }
 }

@@ -222,15 +222,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Panel pnlShowGridAndLabel;
 
         /// <summary>
-        /// Controllo grdStampaPerTipologia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdStampaPerTipologia;
-
-        /// <summary>
         /// Controllo lblTotOre.
         /// </summary>
         /// <remarks>
@@ -247,5 +238,14 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotale;
+
+        /// <summary>
+        /// Controllo grdStampaPerTipologia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdStampaPerTipologia;
     }
 }

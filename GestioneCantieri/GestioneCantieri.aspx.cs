@@ -269,6 +269,11 @@ namespace GestioneCantieri
         {
             lblTotaleValoreMatCant_Rientro.Text = $"Totale Valore: {mcList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2} €";
         }
+        private void GeneraNumeroBolla()
+        {
+            DateTime date = Convert.ToDateTime(txtDataDDT.Text);
+            txtNumBolla.Text = date.Year.ToString() + date.Month.ToString() + date.Day.ToString() + txtProtocollo.Text;
+        }
         #endregion
 
         #region Eventi click
@@ -283,27 +288,6 @@ namespace GestioneCantieri
         protected void btnSvuotaIntestazione_Click(object sender, EventArgs e)
         {
             SvuotaIntestazione();
-        }
-        protected void btnGenetaNumBolla_Click(object sender, EventArgs e)
-        {
-            if (txtDataDDT.Text != "")
-            {
-                if (txtProtocollo.Text != "")
-                {
-                    DateTime date = Convert.ToDateTime(txtDataDDT.Text);
-                    txtNumBolla.Text = date.Year.ToString() + date.Month.ToString() + date.Day.ToString() + txtProtocollo.Text;
-                }
-                else
-                {
-                    lblErroreGeneraNumBolla.Text = "Devi prima compilare il campo Protocollo";
-                    lblErroreGeneraNumBolla.ForeColor = Color.Red;
-                }
-            }
-            else
-            {
-                lblErroreGeneraNumBolla.Text = "Devi prima compilare il campo Data DDT";
-                lblErroreGeneraNumBolla.ForeColor = Color.Red;
-            }
         }
         protected void btnCalcolaPrezzoUnit_Click(object sender, EventArgs e)
         {
@@ -338,6 +322,7 @@ namespace GestioneCantieri
                 pnlSubIntestazione.Visible = true;
                 txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
                 txtFascia.Text = cant.FasciaTblCantieri.ToString();
+                txtProtocollo.Text = (MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri).Select(s => s.ProtocolloInterno).Max() + 1).ToString();
             }
             else
             {
@@ -345,7 +330,7 @@ namespace GestioneCantieri
                 pnlMascheraGestCant.Visible = false;
             }
 
-            txtDataDDT.Text = txtNumBolla.Text = txtProtocollo.Text = "";
+            txtDataDDT.Text = txtNumBolla.Text = "";
 
             FillAllDdl(false);
             BindAllGrid();
@@ -369,6 +354,14 @@ namespace GestioneCantieri
             {
                 txtNumBolla.Enabled = true;
             }
+        }
+        protected void txtDataDDT_TextChanged(object sender, EventArgs e)
+        {
+            GeneraNumeroBolla();
+        }
+        protected void txtProtocollo_TextChanged(object sender, EventArgs e)
+        {
+            GeneraNumeroBolla();
         }
         #endregion
 

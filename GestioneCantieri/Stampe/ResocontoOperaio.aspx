@@ -29,7 +29,7 @@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col text-center">
                 <asp:Button ID="btnStampaResoconto" CssClass="btn btn-lg btn-primary pull-right" OnClick="btnStampaResoconto_Click" runat="server" Text="Stampa Resoconto" />
-                <asp:Button ID="btnPagaOperaio" CssClass="btn btn-lg btn-primary pull-right btnPagaOperaio" OnClick="btnPagaOperaio_Click" runat="server" Text="Paga Operaio" /><br />
+                <asp:Button ID="btnPagaOperaio" CssClass="btn btn-lg btn-primary pull-right btnPagaOperaio" OnClick="btnPagaOperaio_Click" OnClientClick="return confirm('Vuoi veramente pagare questo operaio?')" runat="server" Text="Paga Operaio" /><br />
                 <asp:Label ID="lblIsOperaioPagato" runat="server" Text=""></asp:Label>
             </div>
         </div>
@@ -57,6 +57,19 @@
     </div>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col text-center">
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <strong><asp:Label ID="lblTotaleOre" runat="server" Text="" CssClass="label-totali-resoconto-operaio"></asp:Label></strong>
+                </div>
+                <div class="col">
+                    <strong><asp:Label ID="lblTotaleValore" runat="server" Text="" CssClass="label-totali-resoconto-operaio ml-3"></asp:Label></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
             <asp:GridView ID="grdResocontoOperaio" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
@@ -71,19 +84,6 @@
                     <asp:BoundField DataField="OperaioPagato" HeaderText="Operaio Pagato" />
                 </Columns>
             </asp:GridView>
-        </div>
-    </div>
-
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <div class="col text-center">
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col">
-                    <strong><asp:Label ID="lblTotaleOre" runat="server" Text="" CssClass="label-totali-resoconto-operaio"></asp:Label></strong>
-                </div>
-                <div class="col">
-                    <strong><asp:Label ID="lblTotaleValore" runat="server" Text="" CssClass="label-totali-resoconto-operaio ml-3"></asp:Label></strong>
-                </div>
-            </div>
         </div>
     </div>
 </asp:Content>

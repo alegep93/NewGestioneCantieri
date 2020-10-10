@@ -26,6 +26,7 @@ namespace GestioneCantieri
             if (anno != 0)
             {
                 fatture = fatture.Where(w => w.Data.Year == anno).ToList();
+                fattureAcquisto = fattureAcquisto.Where(w => w.Data.Year == anno).ToList();
             }
 
             if (fatture.Count() > 0)

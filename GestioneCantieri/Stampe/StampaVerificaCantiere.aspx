@@ -57,23 +57,7 @@
             </div>
         </div>
 
-        <div class="row mt-3 d-flex justify-content-center align-items-center">
-            <div class="table-container col text-center">
-                <asp:GridView ID="grdStampaVerificaCant" runat="server"
-                    ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table"
-                    AllowSorting="true" OnSorting="grdStampaVerificaCant_Sorting">
-                    <Columns>
-                        <asp:BoundField DataField="Tipologia" HeaderText="Tipologia" />
-                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
-                        <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
-                        <asp:BoundField DataField="NumeroBolla" HeaderText="Numero Bolla" />
-                        <asp:BoundField DataField="Qta" HeaderText="Qta" />
-                        <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Pzzo Unit." DataFormatString="{0:0.00}" />
-                        <asp:BoundField DataField="Valore" HeaderText="Valore" />
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
+
 
         <div class="row mt-3 d-flex justify-content-center align-items-center">
             <div class="col text-center">
@@ -126,6 +110,24 @@
                         <asp:Label ID="lblTotGuadagnoOrarioManodop" runat="server" CssClass="lblIntestazione" Text=""></asp:Label>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 d-flex justify-content-center align-items-center">
+            <div class="table-container col text-center">
+                <asp:GridView ID="grdStampaVerificaCant" runat="server"
+                    ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table"
+                    AllowSorting="true" OnSorting="grdStampaVerificaCant_Sorting">
+                    <Columns>
+                        <asp:BoundField DataField="Tipologia" HeaderText="Tipologia" />
+                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
+                        <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
+                        <asp:BoundField DataField="NumeroBolla" HeaderText="Numero Bolla" />
+                        <asp:BoundField DataField="Qta" HeaderText="Qta" />
+                        <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Pzzo Unit." DataFormatString="{0:0.00}" />
+                        <asp:BoundField DataField="Valore" HeaderText="Valore" />
+                    </Columns>
+                </asp:GridView>
             </div>
         </div>
     </asp:Panel>

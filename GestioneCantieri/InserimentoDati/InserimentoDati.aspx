@@ -415,7 +415,7 @@
                 </div>
                 <div class="col-2 form-group">
                     <asp:Label ID="lblIvaCant" runat="server" Text="Iva" />
-                    <asp:TextBox ID="txtIvaCant" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtIvaCant" CssClass="form-control" Text="22" runat="server"></asp:TextBox>
                 </div>
             </div>
 
@@ -446,7 +446,7 @@
                 </div>
                 <div class="col-2 form-group">
                     <asp:Label ID="lblFasciaCant" runat="server" Text="Fascia Cantiere" />
-                    <asp:TextBox ID="txtFasciaCant" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtFasciaCant" CssClass="form-control" Text="4" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-3 form-group">
                     <asp:Label ID="lblConcatenazioneCant" runat="server" Text="Concatenazione Cantiere" />

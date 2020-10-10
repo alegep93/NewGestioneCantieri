@@ -141,15 +141,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblIntestStampa;
 
         /// <summary>
-        /// Controllo grdStampaVerificaCant.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdStampaVerificaCant;
-
-        /// <summary>
         /// Controllo lblTotContoCliente.
         /// </summary>
         /// <remarks>
@@ -247,6 +238,15 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotGuadagnoOrarioManodop;
+
+        /// <summary>
+        /// Controllo grdStampaVerificaCant.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdStampaVerificaCant;
 
         /// <summary>
         /// Controllo grdStampaMateCant.

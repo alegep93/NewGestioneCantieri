@@ -35,7 +35,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine(anno != "" ? "AND DATEPART(YEAR, A.data) = @anno " : " ");
             sql.AppendLine(numeroFattura > 0 ? "AND A.numero = @numeroFattura " : "");
             sql.AppendLine(riscosso == 1 ? "" : (riscosso == 2 ? " AND A.riscosso = 1 " : " AND A.riscosso = 0"));
-            sql.AppendLine($"ORDER BY A.data, A.numero");
+            sql.AppendLine($"ORDER BY A.numero");
             try
             {
                 using (SqlConnection cn = GetConnection())

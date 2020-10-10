@@ -67,8 +67,8 @@
             <asp:GridView ID="grdBollette" AutoGenerateColumns="false"
                 ItemType="GestioneCantieri.Data.Bolletta" OnRowCommand="grdBollette_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                 <Columns>
-                    <asp:BoundField HeaderText="Fornitore" DataField="RagSocForni" />
                     <asp:BoundField HeaderText="Progressivo" DataField="Progressivo" />
+                    <asp:BoundField HeaderText="Fornitore" DataField="RagSocForni" />
                     <asp:BoundField HeaderText="Data Bolletta" DataField="DataBolletta" DataFormatString="{0:d}" />
                     <asp:BoundField HeaderText="Data Scadenza" DataField="DataScadenza" DataFormatString="{0:d}" />
                     <asp:BoundField HeaderText="Data Pagamento" DataField="DataPagamento" DataFormatString="{0:d}" />
