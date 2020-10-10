@@ -96,6 +96,7 @@ namespace GestioneCantieri
             btnInsFattura.Visible = true;
             btnModFattura.Visible = false;
             txtData.ReadOnly = false;
+            hfIdCantieriDaAggiungere.Value = hfValoriAccontiDaAggiungere.Value = "";
             SetNumeroFattura();
             FillDdlScegliCliente();
             FillDdlScegliCantiere();
