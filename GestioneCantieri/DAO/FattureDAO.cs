@@ -15,7 +15,7 @@ namespace GestioneCantieri.DAO
             List<Fattura> ret = new List<Fattura>();
             StringBuilder sql = new StringBuilder();
             string whereData = (dataDa == "" && dataA == "") ? "" : ((dataDa != "" && dataA == "") ? " AND A.data >= @dataDa " : ((dataDa == "" && dataA != "") ? " AND A.data <= @dataA " : " AND A.Data BETWEEN @dataDa AND @dataA "));
-            string whereAmministratore = "(" + (amministratore == "%%" ? "D.nome IS NULL OR " : "") + $" D.nome LIKE '%{amministratore}%') ";
+            string whereAmministratore = "(" + (amministratore == "%%" ? "D.nome IS NULL OR " : "") + $" D.nome LIKE '%{amministratore}%' OR D.nome IS NULL) ";
 
             sql.AppendLine($"SELECT DISTINCT A.id_fatture, E.RagSocCli AS RagioneSocialeCliente, B.Cantieri, C.Acconti, D.nome AS NomeAmministratore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.riscosso, A.is_nota_di_credito");
             sql.AppendLine($"FROM TblFatture AS A");
