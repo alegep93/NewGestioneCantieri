@@ -53,7 +53,7 @@
     </div>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <asp:Panel ID="pnlInserisciDati" CssClass="col-6 text-center" runat="server">
+        <asp:Panel ID="pnlInserisciDati" CssClass="col-2 text-center" runat="server">
             <asp:Label ID="lblScegliLocale" runat="server" Text="Scegli Locale"></asp:Label>
             <asp:DropDownList ID="ddlScegliLocale" CssClass="form-control" OnTextChanged="ddlScegliLocale_TextChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
         </asp:Panel>

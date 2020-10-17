@@ -292,3 +292,7 @@ input[type="checkbox"] {
     font-size: 24px;
     color: #000;
 }
+
+select option {
+    font-size: 24px;
+}
