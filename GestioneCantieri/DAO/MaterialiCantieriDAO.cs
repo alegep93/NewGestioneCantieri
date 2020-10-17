@@ -125,7 +125,7 @@ namespace GestioneCantieri.DAO
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT A.*, B.CodCant, B.DescriCodCAnt, C.NomeOp AS Acquirente, (A.Qta * A.PzzoUniCantiere) AS Valore");
+            sql.AppendLine($"SELECT A.Data, A.Qta, A.PzzoUniCantiere, B.CodCant, B.DescriCodCAnt, C.NomeOp AS Acquirente, (A.Qta * A.PzzoUniCantiere) AS Valore, A.OperaioPagato");
             sql.AppendLine($"FROM TblMaterialiCantieri AS A");
             sql.AppendLine($"LEFT JOIN TblCantieri AS B ON A.IdTblCantieri = B.IdCantieri");
             sql.AppendLine($"LEFT JOIN TblOperaio AS C ON A.IdTblOperaio = C.IdOperaio");
@@ -133,6 +133,12 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"AND B.CodCant LIKE '%{codCant}%' AND A.idTblOperaio IS NOT NULL");
             sql.AppendLine(viewStatus != 2 ? $"AND (A.OperaioPagato = @viewStatus {(viewStatus == 0 ? "OR A.OperaioPagato IS NULL" : "")})" : "");
             sql.AppendLine(idOperaio != "-1" ? $"AND A.IdTblOperaio = @idOperaio" : "");
+            sql.AppendLine($"UNION");
+            sql.AppendLine($"SELECT A.Data, 0 AS Qta, 0 AS PzzoUniCantiere, 'Acconto' AS CodCant, 'Acconto' AS DescriCodCAnt, B.NomeOp AS Acquirente, (A.Importo * -1) AS Valore, A.Pagato");
+            sql.AppendLine($"FROM TblAccontiOperai A");
+            sql.AppendLine($"LEFT JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio");
+            sql.AppendLine($"WHERE(A.Data BETWEEN Convert(date, @dataInizio) AND Convert(date, @dataFine)) AND A.IdOperaio = @idOperaio");
+            sql.AppendLine(viewStatus != 2 ? $"AND A.Pagato = @viewStatus" : "");
             sql.AppendLine($"ORDER BY A.Data, B.CodCant");
             try
             {

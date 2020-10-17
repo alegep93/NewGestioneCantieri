@@ -65,28 +65,36 @@ namespace GestioneCantieri
         }
         protected void btnInserisciFrutto_Click(object sender, EventArgs e)
         {
-            if (txtQtaFrutto.Text != "" && Convert.ToInt32(txtQtaFrutto.Text) > 0)
+            if (ddlScegliFrutto.SelectedValue != "-1")
             {
-                int? idGruppoOrdine = (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
-                bool isInserito = OrdineFruttiDAO.InserisciFruttoNonInGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, ddlScegliFrutto.SelectedItem.Value, txtQtaFrutto.Text, idGruppoOrdine);
-
-                if (isInserito)
+                if (txtQtaFrutto.Text != "" && Convert.ToInt32(txtQtaFrutto.Text) > 0)
                 {
-                    lblIsFruttoInserito.Text = "Frutto inserito con successo";
-                    lblIsFruttoInserito.ForeColor = Color.Blue;
+                    int? idGruppoOrdine = (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
+                    bool isInserito = OrdineFruttiDAO.InserisciFruttoNonInGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, ddlScegliFrutto.SelectedItem.Value, txtQtaFrutto.Text, idGruppoOrdine);
+
+                    if (isInserito)
+                    {
+                        lblIsFruttoInserito.Text = "Frutto inserito con successo";
+                        lblIsFruttoInserito.ForeColor = Color.Blue;
+                    }
+                    else
+                    {
+                        lblIsFruttoInserito.Text = "Errore durante l'inserimento del frutto";
+                        lblIsFruttoInserito.ForeColor = Color.Red;
+                    }
+
+                    ddlScegliFrutto.SelectedIndex = 0;
+                    txtQtaFrutto.Text = "";
                 }
                 else
                 {
-                    lblIsFruttoInserito.Text = "Errore durante l'inserimento del frutto";
+                    lblIsFruttoInserito.Text = "Il campo quantità deve essere compilato e deve essere inserito un valore maggiore di 0";
                     lblIsFruttoInserito.ForeColor = Color.Red;
                 }
-
-                ddlScegliFrutto.SelectedIndex = 0;
-                txtQtaFrutto.Text = "";
             }
             else
             {
-                lblIsFruttoInserito.Text = "Il campo quantità deve essere compilato e deve essere inserito un valore maggiore di 0";
+                lblIsFruttoInserito.Text = "È necessario scegliere un frutto prima di inserirlo";
                 lblIsFruttoInserito.ForeColor = Color.Red;
             }
             PopolaListe();

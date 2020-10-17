@@ -87,7 +87,7 @@ namespace GestioneCantieri
         {
             txtFiltroGrdAnno.Text = DateTime.Now.Year.ToString();
             txtFiltroGrdCliente.Text = txtFiltroGrdCantiere.Text = txtFiltroGrdAmministratore.Text = "";
-            txtNumeroFattura.Text = txtShowAmministratore.Text = lblShowCantieriAggiunti.Text = txtData.Text = lblShowAccontiAggiunti.Text = "";
+            txtNumeroFattura.Text = lblShowCantieriAggiunti.Text = txtData.Text = lblShowAccontiAggiunti.Text = "";
             ddlScegliCliente.SelectedValue = ddlScegliCantiere.SelectedValue = "-1";
             txtImponibile.Text = txtRitenutaAcconto.Text = txtIva.Text = txtConcatenazione.Text = txtValoreAcconto.Text = lblShowAccontiAggiunti.Text = lblShowCantieriAggiunti.Text = "";
             chkNotaCredito.Checked = chkReverseCharge.Checked = chkRiscosso.Checked = false;
@@ -154,7 +154,6 @@ namespace GestioneCantieri
 
             txtNumeroFattura.Text = fatt.Numero.ToString();
             ddlScegliCliente.SelectedValue = fatt.IdClienti.ToString();
-            txtShowAmministratore.Text = fatt.IdAmministratori.ToString();
             fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetSingle(f.IdCantieri).CodCant);
             txtData.Text = fatt.Data.ToString("yyyy-MM-dd");
             txtData.TextMode = TextBoxMode.Date;
@@ -411,7 +410,7 @@ namespace GestioneCantieri
             FillDdlScegliCantiere(txtFiltroCodCantiere.Text, txtFiltroDescrizioneCantiere.Text);
         }
 
-        protected void btnFiltraCliente_Click(object sender, EventArgs e)
+        protected void txtFiltroCliente_TextChanged(object sender, EventArgs e)
         {
             FillDdlScegliCliente(txtFiltroCliente.Text);
         }

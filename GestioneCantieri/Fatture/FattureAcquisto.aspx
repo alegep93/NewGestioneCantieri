@@ -75,14 +75,14 @@
                 </div>
             </div>
 
-            <div class="row d-flex justify-content-center align-items-center">
+            <%--<div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center form-group">
                     <asp:FileUpload ID="fuUploadFattura" Style="opacity: 0;" Width="0" runat="server" />
                     <label for="body_fuUploadFattura" style="cursor: pointer;">
                         <i class="fas fa-upload" style="font-size: 50px; color: #333;"></i>
                     </label>
                 </div>
-            </div>
+            </div>--%>
 
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center form-group">

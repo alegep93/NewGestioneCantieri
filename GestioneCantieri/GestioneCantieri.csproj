@@ -78,6 +78,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Acconti\AccontiOperaio.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -103,7 +104,7 @@
     <Content Include="GestioneAppunti.aspx" />
     <Content Include="GestioneCantieri.aspx" />
     <Content Include="GestioneLocali.aspx" />
-    <Content Include="GestionePagamenti.aspx" />
+    <Content Include="Acconti\GestionePagamenti.aspx" />
     <Content Include="GruppiFrutti\GestisciFrutti.aspx" />
     <Content Include="GruppiFrutti\GestisciGruppiFrutti.aspx" />
     <Content Include="Images\BackgroundGradient.png" />
@@ -203,7 +204,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acconti\AccontiOperaio.aspx.cs">
+      <DependentUpon>AccontiOperaio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Acconti\AccontiOperaio.aspx.designer.cs">
+      <DependentUpon>AccontiOperaio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\AccontiOperaiDAO.cs" />
     <Compile Include="DAO\BolletteDAO.cs" />
+    <Compile Include="Data\AccontoOperaio.cs" />
     <Compile Include="Data\Bolletta.cs" />
     <Compile Include="Fatture\Bollette.aspx.cs">
       <DependentUpon>Bollette.aspx</DependentUpon>
@@ -303,11 +313,11 @@
     <Compile Include="GestioneLocali.aspx.designer.cs">
       <DependentUpon>GestioneLocali.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestionePagamenti.aspx.cs">
+    <Compile Include="Acconti\GestionePagamenti.aspx.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestionePagamenti.aspx.designer.cs">
+    <Compile Include="Acconti\GestionePagamenti.aspx.designer.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
     </Compile>
     <Compile Include="InserimentoDati\Amministratori.aspx.cs">

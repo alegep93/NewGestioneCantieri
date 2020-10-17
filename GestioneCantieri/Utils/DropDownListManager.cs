@@ -38,6 +38,11 @@ namespace GestioneCantieri.Utils
             foreach (Fornitori item in items)
             {
                 ddl.Items.Add(new ListItem(item.RagSocForni, item.IdFornitori.ToString()));
+
+                if (item.RagSocForni.ToUpper() == "MEF")
+                {
+                    ddl.SelectedValue = item.IdFornitori.ToString();
+                }
             };
         }
 

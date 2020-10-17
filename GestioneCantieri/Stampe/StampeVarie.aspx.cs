@@ -51,7 +51,7 @@ namespace GestioneCantieri
         {
             ddlScegliAcquirente.Items.Clear();
             ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
-            DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliAcquirente, false);
+            DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliAcquirente);
         }
         protected void FillAllDdl()
         {

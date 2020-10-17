@@ -90,7 +90,7 @@ namespace GestioneCantieri
                     // Se il totale Conto mostra un valore palesemente errato, la cella viene modificata mostrando l'errore invece del valore del cantiere
                     if (grdStampaConOpzioni.Rows[i].Cells[3].Text == "-999,99")
                     {
-                        grdStampaConOpzioni.Rows[i].Cells[3].Text = grdStampaConOpzioni.Rows[i].Cells[4].Text = grdStampaConOpzioni.Rows[i].Cells[5].Text = "--- ERRORE ---";
+                        grdStampaConOpzioni.Rows[i].Cells[3].Text = grdStampaConOpzioni.Rows[i].Cells[4].Text = grdStampaConOpzioni.Rows[i].Cells[5].Text = "VEDI VALORI NON VISIBILI";
                     }
                 }
 

@@ -81,7 +81,13 @@
                             </ul>
                         </li>
                         <li><a class="nav-link" href="/GestioneCantieri.aspx">Gestione Cantieri</a></li>
-                        <li><a class="nav-link" href="/GestionePagamenti.aspx">Gestione Pagamenti</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Acconti<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/Acconti/GestionePagamenti.aspx">Acconti Cliente</a></li>
+                                <li><a class="dropdown-item" href="/ACconti/AccontiOperaio.aspx">Acconti Operaio</a></li>
+                            </ul>
+                        </li>
                         <li><a class="nav-link" href="/Preventivi.aspx">Preventivi</a></li>
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fatture<span class="caret"></span></a>

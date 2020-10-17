@@ -24,103 +24,109 @@
 
     <asp:Panel ID="pnlInsFatture" DefaultButton="btnInsFattura" CssClass="row mt-4 d-flex justify-content-center align-items-center" runat="server">
         <div class="col text-center">
-            <div class="row mt-5 d-flex justify-content-center align-items-center">
-                <div class="col-4">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-1">
+                    <asp:Label ID="lblNumeroFattura" runat="server" Text="Numero Fattura" />
+                    <asp:TextBox ID="txtNumeroFattura" CssClass="form-control text-center text-center" ReadOnly="true" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-2">
+                    <asp:Label ID="lblData" runat="server" Text="Data" />
+                    <asp:TextBox ID="txtData" TextMode="Date" CssClass="form-control text-center" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-4" style="margin-left: 150px">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
-                            <asp:TextBox ID="txtFiltroCliente" CssClass="form-control" placeholder="Filtro Ragione Sociale Cliente" runat="server"></asp:TextBox>
+                            <asp:Label ID="lblFiltroCliente" Text="Filtro Ragione Sociale Cliente" runat="server"></asp:Label>
+                            <asp:TextBox ID="txtFiltroCliente" CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtFiltroCliente_TextChanged" runat="server"></asp:TextBox>
                         </div>
-                        <div class="col">
-                            <asp:Button ID="btnFiltraCliente" CssClass="btn btn-dark" OnClick="btnFiltraCliente_Click" Text="Filtra Clienti" runat="server"></asp:Button>
-                        </div>
-                    </div>
-                    <div class="row d-flex justify-content-center">
                         <div class="col">
                             <asp:Label ID="lblScegliCliente" runat="server" Text="Scegli Cliente" />
-                            <asp:DropDownList ID="ddlScegliCliente" CssClass="form-control" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlScegliCliente" CssClass="form-control text-center" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+            </div>
+
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-8">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
-                            <asp:TextBox ID="txtFiltroCodCantiere" CssClass="form-control" placeholder="Filtro Codice Cantiere" runat="server"></asp:TextBox>
+                            <asp:Label ID="lblFiltroCodCantiere" runat="server" Text="Filtro Codice Cantiere" />
+                            <asp:TextBox ID="txtFiltroCodCantiere" CssClass="form-control text-center" runat="server"></asp:TextBox>
                         </div>
                         <div class="col">
-                            <asp:TextBox ID="txtFiltroDescrizioneCantiere" CssClass="form-control" placeholder="Filtro Descrizione Cantiere" runat="server"></asp:TextBox>
+                            <asp:Label ID="lblFiltroDescrizioneCantiere" runat="server" Text="Filtro Descrizione Cantiere" />
+                            <asp:TextBox ID="txtFiltroDescrizioneCantiere" CssClass="form-control text-center" runat="server"></asp:TextBox>
                         </div>
                         <div class="col">
+                            <br />
                             <asp:Button ID="btnFiltraCantiere" CssClass="btn btn-dark" Text="Filtra Cantieri" OnClick="btnFiltraCantiere_Click" runat="server"></asp:Button>
                         </div>
-                    </div>
-                    <div class="row d-flex justify-content-center align-items-center">
-                        <div class="col-8">
+                        <div class="col">
                             <asp:Label ID="lblScegliCantiere" runat="server" Text="Scegli Cantiere" />
-                            <asp:DropDownList ID="ddlScegliCantiere" CssClass="form-control" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlScegliCantiere" CssClass="form-control text-center" runat="server"></asp:DropDownList>
                             <asp:Label ID="lblShowCantieriAggiunti" Style="font-style: italic;" runat="server"></asp:Label>
                         </div>
                         <div class="col">
-                            <asp:Button ID="btnAggiungiCantiereAllaLista" CssClass="btn btn-lg btn-primary" Text="Aggiungi a lista" OnClick="btnAggiungiCantiereAllaLista_Click" runat="server"></asp:Button>
+                            <br />
+                            <asp:Button ID="btnAggiungiCantiereAllaLista" CssClass="btn btn btn-primary" Text="Aggiungi a lista" OnClick="btnAggiungiCantiereAllaLista_Click" runat="server"></asp:Button>
                         </div>
                     </div>
+                    <div class="row d-flex justify-content-center align-items-center">
+                    </div>
                 </div>
-                <div class="col">
+            </div>
+
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-2">
+                    <asp:Label ID="lblImponibile" runat="server" Text="Imponibile" />
+                    <asp:TextBox ID="txtImponibile" CssClass="form-control text-center" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblRitenutaAcconto" runat="server" Text="Rit. Acconto" />
+                    <asp:TextBox ID="txtRitenutaAcconto" CssClass="form-control text-center" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblIva" runat="server" Text="Iva" />
+                    <asp:TextBox ID="txtIva" CssClass="form-control text-center" runat="server">22</asp:TextBox>
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblNotaCredito" runat="server" Text="Nota di credito" />
+                    <asp:CheckBox ID="chkNotaCredito" CssClass="form-control text-center" runat="server"></asp:CheckBox>
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblReverseCharge" runat="server" Text="Reverse charge" />
+                    <asp:CheckBox ID="chkReverseCharge" CssClass="form-control text-center" runat="server"></asp:CheckBox>
+                </div>
+                <div class="col-1">
+                    <asp:Label ID="lblRiscosso" runat="server" Text="Riscosso" />
+                    <asp:CheckBox ID="chkRiscosso" CssClass="form-control text-center" runat="server"></asp:CheckBox>
+                </div>
+            </div>
+
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-4">
                     <div class="row d-flex justify-content-center align-items-center">
                         <div class="col">
                             <asp:Label ID="lblValoreAcconto" runat="server" Text="Valore Acconto" />
-                            <asp:TextBox ID="txtValoreAcconto" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtValoreAcconto" CssClass="form-control text-center" runat="server"></asp:TextBox>
                             <asp:Label ID="lblShowAccontiAggiunti" Style="font-style: italic;" runat="server"></asp:Label>
                         </div>
                         <div class="col">
+                            <br />
                             <asp:Button ID="btnAggiungiAccontiAllaLista" CssClass="btn btn-primary" Text="Aggiungi a lista" OnClick="btnAggiungiAccontiAllaLista_Click" runat="server"></asp:Button>
                         </div>
                     </div>
                 </div>
             </div>
 
+
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col">
-                    <asp:Label ID="lblNumeroFattura" runat="server" Text="Numero Fattura" />
-                    <asp:TextBox ID="txtNumeroFattura" CssClass="form-control" ReadOnly="true" runat="server"></asp:TextBox>
-                </div>
-                <div class="col">
-                    <asp:Label ID="lblData" runat="server" Text="Data" />
-                    <asp:TextBox ID="txtData" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col">
-                    <asp:Label ID="lblScegliAmministratore" runat="server" Text="Amministratore" />
-                    <asp:TextBox ID="txtShowAmministratore" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
-                    <asp:HiddenField ID="hfIdAmministratore" runat="server"></asp:HiddenField>
-                </div>
-                <div class="col">
-                    <asp:Label ID="lblImponibile" runat="server" Text="Imponibile" />
-                    <asp:TextBox ID="txtImponibile" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col">
-                    <asp:Label ID="lblRitenutaAcconto" runat="server" Text="Ritenuta d'acconto" />
-                    <asp:TextBox ID="txtRitenutaAcconto" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>
-                <div class="col">
-                    <asp:Label ID="lblIva" runat="server" Text="Iva" />
-                    <asp:TextBox ID="txtIva" CssClass="form-control" runat="server">22</asp:TextBox>
-                </div>
-                <div class="col-1">
-                    <asp:Label ID="lblNotaCredito" runat="server" Text="Nota di credito" />
-                    <asp:CheckBox ID="chkNotaCredito" CssClass="form-control" runat="server"></asp:CheckBox>
-                </div>
-                <div class="col-1">
-                    <asp:Label ID="lblReverseCharge" runat="server" Text="Reverse charge" />
-                    <asp:CheckBox ID="chkReverseCharge" CssClass="form-control" runat="server"></asp:CheckBox>
-                </div>
-                <div class="col-1">
-                    <asp:Label ID="lblRiscosso" runat="server" Text="Riscosso" />
-                    <asp:CheckBox ID="chkRiscosso" CssClass="form-control" runat="server"></asp:CheckBox>
-                </div>
-                <div class="col">
+                <div class="col-4">
                     <asp:Label ID="lblConcatenazione" runat="server" Text="Concatenazione" />
-                    <asp:TextBox ID="txtConcatenazione" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtConcatenazione" ReadOnly="true" CssClass="form-control text-center" runat="server"></asp:TextBox>
                 </div>
             </div>
 
@@ -142,35 +148,35 @@
         <div class="row mt-5 d-flex justify-content-center align-items-center">
             <div class="col">
                 <asp:Label ID="lblFiltroGrdAnno" runat="server" Text="Anno"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdAnno" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdAnno" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdCliente" runat="server" Text="Cliente"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdCliente" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdCliente" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdCantiere" runat="server" Text="Cantiere"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdCantiere" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdCantiere" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdAmministratore" runat="server" Text="Amministratore"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdAmministratore" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdAmministratore" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdDataDa" runat="server" Text="Data Da"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdDataDa" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdDataDa" TextMode="Date" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdDataA" runat="server" Text="Data A"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdDataA" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdDataA" TextMode="Date" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdNumeroFattura" runat="server" Text="Numero Fattura"></asp:Label>
-                <asp:TextBox ID="txtFiltroGrdNumeroFattura" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFiltroGrdNumeroFattura" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
                 <asp:Label ID="lblFiltroGrdRiscosso" runat="server" Text="Numero Fattura"></asp:Label>
-                <asp:DropDownList ID="ddlFiltroGrdRiscosso" CssClass="form-control" runat="server">
+                <asp:DropDownList ID="ddlFiltroGrdRiscosso" CssClass="form-control text-center" runat="server">
                     <asp:ListItem Value="1">Tutte</asp:ListItem>
                     <asp:ListItem Value="2">Riscosse</asp:ListItem>
                     <asp:ListItem Value="3">Da Riscuotere</asp:ListItem>
@@ -258,7 +264,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.IdFatture %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo fattura?');">
+                                <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.IdFatture %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questa fattura?');">
                                     <i class="fas fa-times" style="color: red;"></i>
                                 </asp:LinkButton>
                             </ItemTemplate>

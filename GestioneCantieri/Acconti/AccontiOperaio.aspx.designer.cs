@@ -7,57 +7,30 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri
+namespace GestioneCantieri.Acconti
 {
 
 
-    public partial class ResocontoOperaio
+    public partial class AccontiOperaio
     {
 
         /// <summary>
-        /// Controllo pnlResocontoOperaio.
+        /// Controllo lblData.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlResocontoOperaio;
+        protected global::System.Web.UI.WebControls.Label lblData;
 
         /// <summary>
-        /// Controllo lblDataDa.
+        /// Controllo txtData.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDataDa;
-
-        /// <summary>
-        /// Controllo txtDataDa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDataDa;
-
-        /// <summary>
-        /// Controllo lblDataA.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDataA;
-
-        /// <summary>
-        /// Controllo txtDataA.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDataA;
+        protected global::System.Web.UI.WebControls.TextBox txtData;
 
         /// <summary>
         /// Controllo lblScegliOperaio.
@@ -78,120 +51,84 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliOperaio;
 
         /// <summary>
-        /// Controllo btnStampaResoconto.
+        /// Controllo lblImportoAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStampaResoconto;
+        protected global::System.Web.UI.WebControls.Label lblImportoAcconto;
 
         /// <summary>
-        /// Controllo btnResocontoRaggruppato.
+        /// Controllo txtImportoAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnResocontoRaggruppato;
+        protected global::System.Web.UI.WebControls.TextBox txtImportoAcconto;
 
         /// <summary>
-        /// Controllo btnPagaOperaio.
+        /// Controllo btnSalvaAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPagaOperaio;
+        protected global::System.Web.UI.WebControls.Button btnSalvaAcconto;
 
         /// <summary>
-        /// Controllo lblIsOperaioPagato.
+        /// Controllo btnModificaAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIsOperaioPagato;
+        protected global::System.Web.UI.WebControls.Button btnModificaAcconto;
 
         /// <summary>
-        /// Controllo pnlFiltri.
+        /// Controllo lblMsg.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFiltri;
+        protected global::System.Web.UI.WebControls.Label lblMsg;
 
         /// <summary>
-        /// Controllo lblFiltroCantiere.
+        /// Controllo hfIdAccontoOperaio.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFiltroCantiere;
+        protected global::System.Web.UI.WebControls.HiddenField hfIdAccontoOperaio;
 
         /// <summary>
-        /// Controllo txtFiltroCantiere.
+        /// Controllo lblFiltroScegliOperaio.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroCantiere;
+        protected global::System.Web.UI.WebControls.Label lblFiltroScegliOperaio;
 
         /// <summary>
-        /// Controllo rblChooseView.
+        /// Controllo ddlFiltroScegliOperaio.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblChooseView;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroScegliOperaio;
 
         /// <summary>
-        /// Controllo btnFiltra.
+        /// Controllo grdAccontiOperai.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFiltra;
-
-        /// <summary>
-        /// Controllo lblTotaleOre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotaleOre;
-
-        /// <summary>
-        /// Controllo lblTotaleValore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotaleValore;
-
-        /// <summary>
-        /// Controllo grdResocontoOperaio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdResocontoOperaio;
-
-        /// <summary>
-        /// Controllo grdResocontoRaggruppato.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdResocontoRaggruppato;
+        protected global::System.Web.UI.WebControls.GridView grdAccontiOperai;
     }
 }

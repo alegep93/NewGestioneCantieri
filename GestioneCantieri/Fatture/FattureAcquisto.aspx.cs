@@ -125,8 +125,8 @@ namespace GestioneCantieri
                 Iva = txtIva.Text != "" ? Convert.ToInt32(txtIva.Text) : 0,
                 RitenutaAcconto = txtRitenutaAcconto.Text != "" ? Convert.ToInt32(txtRitenutaAcconto.Text) : 0,
                 ReverseCharge = chkReverseCharge.Checked,
-                IsNotaDiCredito = chkNotaCredito.Checked,
-                FilePath = Server.MapPath(fuUploadFattura.FileName)
+                IsNotaDiCredito = chkNotaCredito.Checked
+                //FilePath = Server.MapPath(fuUploadFattura.FileName)
             };
         }
 

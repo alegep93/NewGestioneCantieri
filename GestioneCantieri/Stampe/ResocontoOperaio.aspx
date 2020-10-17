@@ -28,8 +28,9 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col text-center">
-                <asp:Button ID="btnStampaResoconto" CssClass="btn btn-lg btn-primary pull-right" OnClick="btnStampaResoconto_Click" runat="server" Text="Stampa Resoconto" />
-                <asp:Button ID="btnPagaOperaio" CssClass="btn btn-lg btn-primary pull-right btnPagaOperaio" OnClick="btnPagaOperaio_Click" OnClientClick="return confirm('Vuoi veramente pagare questo operaio?')" runat="server" Text="Paga Operaio" /><br />
+                <asp:Button ID="btnStampaResoconto" CssClass="btn btn-lg btn-primary" OnClick="btnStampaResoconto_Click" runat="server" Text="Stampa Resoconto" />
+                <asp:Button ID="btnResocontoRaggruppato" CssClass="btn btn-lg btn-primary ml-3" OnClick="btnResocontoRaggruppato_Click" runat="server" Text="Resoconto Raggruppato" />
+                <asp:Button ID="btnPagaOperaio" CssClass="btn btn-lg btn-dark ml-3" OnClick="btnPagaOperaio_Click" OnClientClick="return confirm('Vuoi veramente pagare questo operaio?')" runat="server" Text="Paga Operaio" /><br />
                 <asp:Label ID="lblIsOperaioPagato" runat="server" Text=""></asp:Label>
             </div>
         </div>
@@ -78,6 +79,22 @@
                     <asp:BoundField DataField="Acquirente" HeaderText="Operaio" />
                     <asp:BoundField DataField="CodCant" HeaderText="CodCant" />
                     <asp:BoundField DataField="DescriCodCant" HeaderText="DescriCodCant" />
+                    <asp:BoundField DataField="Qta" HeaderText="Qta" />
+                    <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Pzzo Unit. Cant" DataFormatString="{0:0.00}" />
+                    <asp:BoundField DataField="Valore" HeaderText="Valore" />
+                    <asp:BoundField DataField="OperaioPagato" HeaderText="Operaio Pagato" />
+                </Columns>
+            </asp:GridView>
+        </div>
+    </div>
+
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col text-center table-container">
+            <asp:GridView ID="grdResocontoRaggruppato" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+                AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
+                <Columns>
+                    <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
+                    <asp:BoundField DataField="Acquirente" HeaderText="Operaio" />
                     <asp:BoundField DataField="Qta" HeaderText="Qta" />
                     <asp:BoundField DataField="PzzoUniCantiere" HeaderText="Pzzo Unit. Cant" DataFormatString="{0:0.00}" />
                     <asp:BoundField DataField="Valore" HeaderText="Valore" />

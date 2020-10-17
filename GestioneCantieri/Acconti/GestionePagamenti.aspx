@@ -1,48 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/layout.Master" CodeBehind="GestionePagamenti.aspx.cs" Inherits="GestioneCantieri.GestionePagamenti" %>
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
-    <title>Gestione Pagamenti</title>
-    <%--<style type="text/css">
-        span.form-control {
-            border: none;
-            background-color: transparent;
-            box-shadow: none;
-            -webkit-box-shadow: none;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            position: relative;
-            left: -10px;
-        }
-
-        input.btn.btn-lg.btn-primary.pull-left {
-            position: relative;
-            top: 6px;
-        }
-
-        span.pull-right {
-            position: relative;
-            top: 13px;
-            right: 10px;
-        }
-
-        select, input {
-            font-size: 20px !important;
-            min-height: 40px;
-        }
-
-        h2 {
-            margin-top: 0 !important;
-        }
-    </style>--%>
+    <title>Acconti Clienti</title>
 </asp:Content>
 
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center">
-            <h1>Gestione Pagamenti</h1>
+            <h1>Acconti Clienti</h1>
         </div>
     </div>
 
