@@ -82,7 +82,7 @@ namespace GestioneCantieri
         protected void BindGrid()
         {
             List<Mamg0> listaDDT = new List<Mamg0>();
-            listaDDT = Mamg0DAO.getAll();
+            listaDDT = Mamg0DAO.GetAll();
             grdListino.DataSource = listaDDT;
             grdListino.DataBind();
         }

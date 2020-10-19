@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -12,24 +13,19 @@ namespace GestioneCantieri.DAO
         public static List<Bolletta> GetAll(int anno = 0, int idFornitore = 0)
         {
             List<Bolletta> ret = new List<Bolletta>();
-            string where = "";
-            if(anno > 0 || idFornitore > 0)
-            {
-                where = "WHERE ";
-                where += anno > 0 ? $" DATEPART(YEAR, data_bolletta) = {anno} " : "";
-                where += (anno > 0 && idFornitore > 0 ? " AND " : "") + (idFornitore > 0 ? $" A.id_fornitori = {idFornitore}" : "");
-            }
-            
+            StringBuilder sql = new StringBuilder();
             try
             {
-                string sql = "SELECT A.*, B.RagSocForni " +
-                             "FROM TblBollette AS A " +
-                             "INNER JOIN TblForitori AS B ON A.id_fornitori = B.IdFornitori " +
-                             where +
-                             "ORDER BY DATEPART(YEAR, data_bolletta), progressivo";
+                sql.AppendLine($"SELECT A.*, B.RagSocForni");
+                sql.AppendLine($"FROM TblBollette AS A");
+                sql.AppendLine($"INNER JOIN TblForitori AS B ON A.id_fornitori = B.IdFornitori");
+                sql.AppendLine(anno > 0 || idFornitore > 0 ? "WHERE" : "");
+                sql.AppendLine(anno > 0 ? $" DATEPART(YEAR, data_bolletta) = {anno} " : "");
+                sql.AppendLine(anno > 0 && idFornitore > 0 ? $" AND {(idFornitore > 0 ? $"A.id_fornitori = {idFornitore}" : "")}" : "");
+                sql.AppendLine($"ORDER BY DATEPART(YEAR, data_bolletta), progressivo");
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<Bolletta>(sql).ToList();
+                    ret = cn.Query<Bolletta>(sql.ToString()).ToList();
                 }
             }
             catch (Exception ex)
@@ -42,34 +38,12 @@ namespace GestioneCantieri.DAO
         public static Bolletta GetSingle(long idBolletta)
         {
             Bolletta ret = new Bolletta();
-
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblBollette WHERE id_bollette = @idBolletta");
             try
             {
-                string sql = "SELECT * FROM TblBollette WHERE id_bollette = @idBolletta ";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<Bolletta>(sql, new { idBolletta }).FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante la GetSingle in BolletteDAO", ex);
-            }
-            return ret;
-        }
-
-        public static int GetMaxProgressivo(int anno)
-        {
-            int ret = 0;
-
-            try
-            {
-                string sql = "SELECT ISNULL(MAX(progressivo)+1, 1) FROM TblBollette WHERE DATEPART(YEAR, data_bolletta) = @anno ";
-
-                using (SqlConnection cn = GetConnection())
-                {
-                    ret = cn.Query<int>(sql, new { anno }).FirstOrDefault();
+                    ret = cn.Query<Bolletta>(sql.ToString(), new { idBolletta }).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -81,31 +55,32 @@ namespace GestioneCantieri.DAO
 
         public static decimal GetTotale(int anno)
         {
+            decimal ret = 0;
+            StringBuilder sql = new StringBuilder("SELECT SUM(totale_bolletta) FROM TblBollette");
             try
             {
-                string sql = "SELECT SUM(totale_bolletta) FROM TblBollette";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    return cn.Query<decimal>(sql).FirstOrDefault();
+                    ret = cn.Query<decimal>(sql.ToString()).FirstOrDefault();
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante la GetTotale in BolletteDAO", ex);
             }
+            return ret;
         }
 
         public static void Insert(Bolletta item)
         {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblBollette (id_fornitori, data_bolletta, data_scadenza, data_pagamento, totale_bolletta, progressivo)");
+            sql.AppendLine($"VALUES (@IdFornitori, @DataBolletta, @DataScadenza, @DataPagamento, @TotaleBolletta, @Progressivo)");
             try
             {
-                string sql = "INSERT INTO TblBollette (id_fornitori, data_bolletta, data_scadenza, data_pagamento, totale_bolletta, progressivo) " +
-                             "VALUES (@IdFornitori, @DataBolletta, @DataScadenza, @DataPagamento, @TotaleBolletta, @Progressivo)";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, item);
+                    cn.Execute(sql.ToString(), item);
                 }
             }
             catch (Exception ex)
@@ -116,14 +91,14 @@ namespace GestioneCantieri.DAO
 
         public static void Update(Bolletta item)
         {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"UPDATE TblBollette SET id_fornitori = @IdFornitori, data_bolletta = @DataBolletta, data_scadenza = @DataScadenza,");
+            sql.AppendLine($"data_pagamento = @DataPagamento, totale_bolletta = @TotaleBolletta, progressivo = @Progressivo WHERE id_bollette = @IdBollette");
             try
             {
-                string sql = "UPDATE TblBollette SET id_fornitori = @IdFornitori, data_bolletta = @DataBolletta, data_scadenza = @DataScadenza, " +
-                             "data_pagamento = @DataPagamento, totale_bolletta = @TotaleBolletta, progressivo = @Progressivo WHERE id_bollette = @IdBollette";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, item);
+                    cn.Execute(sql.ToString(), item);
                 }
             }
             catch (Exception ex)
@@ -134,13 +109,12 @@ namespace GestioneCantieri.DAO
 
         public static void Delete(long idBolletta)
         {
+            StringBuilder sql = new StringBuilder("DELETE FROM TblBollette WHERE id_bollette = @idBolletta");
             try
             {
-                string sql = "DELETE FROM TblBollette WHERE id_bollette = @idBolletta ";
-
                 using (SqlConnection cn = GetConnection())
                 {
-                    cn.Execute(sql, new { idBolletta });
+                    cn.Execute(sql.ToString(), new { idBolletta });
                 }
             }
             catch (Exception ex)

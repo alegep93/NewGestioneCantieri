@@ -15,7 +15,6 @@ namespace GestioneCantieri.DAO
         {
             List<Spese> ret = new List<Spese>();
             StringBuilder sql = new StringBuilder("SELECT * FROM TblSpese ORDER BY Descrizione");
-
             try
             {
                 using (SqlConnection cn = GetConnection())

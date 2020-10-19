@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace GestioneCantieri.DAO
 {
@@ -12,172 +13,134 @@ namespace GestioneCantieri.DAO
         // SELECT
         public static List<DDTFornitori> GetAllDDT()
         {
-            List<DDTFornitori> retList = new List<DDTFornitori>();
-            string sql = "";
-            SqlConnection cn = GetConnection();
+            List<DDTFornitori> ret = new List<DDTFornitori>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.Id, B.RagSocForni 'ragSocFornitore', A.Data, A.Protocollo, A.NumeroDDT, A.Articolo, A.DescrizioneFornitore, A.DescrizioneMau, A.Qta, A.Valore");
+            sql.AppendLine($"FROM TblDDTFornitori AS A");
+            sql.AppendLine($"INNER JOIN TblForitori AS B ON A.IdFornitore = B.IdFornitori");
+            sql.AppendLine($"ORDER BY B.RagSocForni, A.Data, A.Protocollo");
             try
             {
-                sql = "SELECT A.Id, B.RagSocForni 'ragSocFornitore', A.Data, A.Protocollo, A.NumeroDDT, A.Articolo, A.DescrizioneFornitore, A.DescrizioneMau, A.Qta, A.Valore " +
-                      "FROM TblDDTFornitori AS A " +
-                      "INNER JOIN TblForitori AS B ON A.IdFornitore = B.IdFornitori " +
-                      "ORDER BY B.RagSocForni, A.Data, A.Protocollo ";
-
-                return cn.Query<DDTFornitori>(sql).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<DDTFornitori>(sql.ToString()).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dell'elenco dei DDT dei Fornitori", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
+
         public static List<DDTFornitori> GetAllDDT(DDTFornitori filters)
         {
-            List<DDTFornitori> retList = new List<DDTFornitori>();
-            string sql = "";
-            SqlConnection cn = GetConnection();
-
-            filters.NumeroDDT = "%" + filters.NumeroDDT + "%";
-            filters.Articolo = "%" + filters.Articolo + "%";
-            filters.DescrizioneFornitore = "%" + filters.DescrizioneFornitore + "%";
-            filters.DescrizioneMau  = "%" + filters.DescrizioneMau + "%";
-
+            List<DDTFornitori> ret = new List<DDTFornitori>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.Id, B.RagSocForni 'ragSocFornitore', A.Data, A.Protocollo, A.NumeroDDT, A.Articolo, A.DescrizioneFornitore, A.DescrizioneMau, A.Qta, A.Valore");
+            sql.AppendLine($"FROM TblDDTFornitori AS A");
+            sql.AppendLine($"INNER JOIN TblForitori AS B ON A.IdFornitore = B.IdFornitori");
+            sql.AppendLine($"WHERE A.NumeroDDT LIKE '%{filters.NumeroDDT}%' AND A.Articolo LIKE '%{filters.Articolo}%'");
+            sql.AppendLine($"AND A.DescrizioneFornitore LIKE '%{filters.DescrizioneFornitore}%' AND A.DescrizioneMau LIKE '%{filters.DescrizioneMau}%'");
+            sql.AppendLine(filters.IdFornitore != -1 ? $"AND A.IdFornitore = @IdFornitore" : "");
+            sql.AppendLine(filters.Protocollo != -1 ? $"AND A.Protocollo = @Protocollo" : "");
+            sql.AppendLine(filters.Qta != -1 ? $"AND A.Qta = @Qta" : "");
+            sql.AppendLine($"ORDER BY B.RagSocForni, A.Data, A.Protocollo");
             try
             {
-                sql = "SELECT A.Id, B.RagSocForni 'ragSocFornitore', A.Data, A.Protocollo, A.NumeroDDT, A.Articolo, A.DescrizioneFornitore, A.DescrizioneMau, A.Qta, A.Valore " +
-                      "FROM TblDDTFornitori AS A " +
-                      "INNER JOIN TblForitori AS B ON A.IdFornitore = B.IdFornitori " +
-                      "WHERE A.NumeroDDT LIKE @NumeroDDT AND A.Articolo LIKE @Articolo AND A.DescrizioneFornitore LIKE @DescrizioneFornitore AND A.DescrizioneMau LIKE @DescrizioneMau ";
-
-                if (filters.IdFornitore != -1)
-                    sql += "AND A.IdFornitore = @IdFornitore ";
-                if (filters.Protocollo != -1)
-                    sql += "AND A.Protocollo = @Protocollo ";
-                if (filters.Qta != -1)
-                    sql += "AND A.Qta = @Qta ";
-
-                sql += "ORDER BY B.RagSocForni, A.Data, A.Protocollo ";
-
-                retList = cn.Query<DDTFornitori>(sql, filters).ToList();
-                return retList;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<DDTFornitori>(sql.ToString(), filters).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero dell'elenco filtrato dei DDT dei Fornitori", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
+
         public static DDTFornitori GetDDT(int id)
         {
-            DDTFornitori ddt = new DDTFornitori();
-            string sql = "";
-            //SqlDataReader dr = null;
-            SqlConnection cn = GetConnection();
+            DDTFornitori ret = new DDTFornitori();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT Id, IdFornitore, Data, Protocollo, NumeroDDT, Articolo, DescrizioneFornitore, DescrizioneMau, Qta, Valore");
+            sql.AppendLine($"FROM TblDDTFornitori");
+            sql.AppendLine($"WHERE Id = @id");
             try
             {
-                sql = "SELECT Id, IdFornitore, Data, Protocollo, NumeroDDT, Articolo, DescrizioneFornitore, DescrizioneMau, Qta, Valore " +
-                      "FROM TblDDTFornitori " +
-                      "WHERE Id = @Id ";
-
-                return cn.Query<DDTFornitori>(sql, new { Id = id }).SingleOrDefault();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<DDTFornitori>(sql.ToString(), new { id }).SingleOrDefault();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante il recupero del DDT Fornitori con id = " + id, ex);
+                throw new Exception($"Errore durante il recupero del DDT Fornitori con id = {id}", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // INSERT
         public static bool InsertNewFornitore(DDTFornitori ddt)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblDDTFornitori (IdFornitore, Data, Protocollo, NumeroDDT, Articolo, DescrizioneFornitore, DescrizioneMau, Qta, Valore)");
+            sql.AppendLine($"VALUES (@IdFornitore, @Data, @Protocollo, @NumeroDDT, @Articolo, @DescrizioneFornitore, @DescrizioneMau, @Qta, @Valore)");
             try
             {
-                sql = "INSERT INTO TblDDTFornitori (IdFornitore, Data, Protocollo, NumeroDDT, Articolo, DescrizioneFornitore, DescrizioneMau, Qta, Valore) " +
-                      "VALUES (@IdFornitore, @Data, @Protocollo, @NumeroDDT, @Articolo, @DescrizioneFornitore, @DescrizioneMau, @Qta, @Valore) ";
-
-                int rows = cn.Execute(sql, ddt);
-
-                if (rows > 0)
-                    return true;
-                else
-                    return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), ddt) > 0;
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento di un nuovo DDT Fornitore ", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // UPDATE
         public static bool UpdateDDTFornitore(DDTFornitori ddt)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"UPDATE TblDDTFornitori SET IdFornitore = @IdFornitore, Data = @Data, Protocollo = @Protocollo, NumeroDDT = @NumeroDDT, Articolo = @Articolo,");
+            sql.AppendLine($"DescrizioneFornitore = @DescrizioneFornitore, DescrizioneMau = @DescrizioneMau, Qta = @Qta, Valore = @Valore");
+            sql.AppendLine($"WHERE Id = @Id");
             try
             {
-                sql = "UPDATE TblDDTFornitori SET IdFornitore = @IdFornitore, Data = @Data, Protocollo = @Protocollo, NumeroDDT = @NumeroDDT, Articolo = @Articolo, " +
-                      "DescrizioneFornitore = @DescrizioneFornitore, DescrizioneMau = @DescrizioneMau, Qta = @Qta, Valore = @Valore " +
-                      "WHERE Id = @Id ";
-
-                int rows = cn.Execute(sql, ddt);
-
-                if (rows > 0)
-                    return true;
-                else
-                    return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), ddt) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'aggiornamento del DDT Fornitore " + ddt.Id, ex);
+                throw new Exception($"Errore durante l'aggiornamento del DDT Fornitore {ddt.Id}", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
 
         // DELETE
         public static bool DeleteDDTFornitore(int id)
         {
-            SqlConnection cn = GetConnection();
-            string sql = "";
-
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("DELETE FROM TblDDTFornitori WHERE Id = @id");
             try
             {
-                sql = "DELETE FROM TblDDTFornitori WHERE Id = @Id ";
-
-                int rows = cn.Execute(sql, new { Id = id });
-
-                if (rows > 0)
-                    return true;
-                else
-                    return false;
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { id }) > 0;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione del DDT Fornitore con id = " + id, ex);
+                throw new Exception($"Errore durante l'eliminazione del DDT Fornitore con id = {id}", ex);
             }
-            finally
-            {
-                CloseResouces(cn, null);
-            }
+            return ret;
         }
     }
 }

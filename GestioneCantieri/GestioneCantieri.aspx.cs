@@ -202,7 +202,7 @@ namespace GestioneCantieri
         {
             ddlScegliListino.Items.Clear();
             ddlScegliListino.Items.Add(new ListItem("", "-1"));
-            DropDownListManager.FillDdlMamg0(Mamg0DAO.GetListino(txtFiltroCodFSS.Text, txtFiltroAA_Des.Text), ref ddlScegliListino);
+            DropDownListManager.FillDdlMamg0(Mamg0DAO.GetListino(txtFiltroCodFSS.Text, "", "", txtFiltroAA_Des.Text,  "", ""), ref ddlScegliListino);
         }
         protected void FillAllDdl(bool refreshCantieri = true)
         {
