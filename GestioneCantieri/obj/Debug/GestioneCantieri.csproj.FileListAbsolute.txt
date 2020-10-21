@@ -34,7 +34,6 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Dapper.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Dapper.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.xml
-C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csprojAssemblyReference.cache
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CoreCompileInputs.cache
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.dll

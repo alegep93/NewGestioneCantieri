@@ -23,10 +23,12 @@ namespace GestioneCantieri
         private void FillDdlScegliFornitori()
         {
             ddlScegliFornitore.Items.Clear();
+            ddlFiltroFornitore.Items.Clear();
             ddlScegliFornitore.Items.Add(new ListItem("", "-1"));
+            ddlFiltroFornitore.Items.Add(new ListItem("", "-1"));
             List<Fornitori> fornitori = FornitoriDAO.GetFornitori();
             DropDownListManager.FillDdlFornitore(fornitori, ref ddlScegliFornitore);
-            DropDownListManager.FillDdlFornitore(fornitori, ref ddlFiltroFornitore);
+            DropDownListManager.FillDdlFornitore(fornitori, ref ddlFiltroFornitore, false);
         }
 
         private void ResetToInitial()
@@ -39,6 +41,7 @@ namespace GestioneCantieri
             btnAggiungiBolletta.Visible = true;
             btnModificaBolletta.Visible = false;
             hfIdBolletta.Value = "";
+            txtFiltroAnno.Text = DateTime.Today.Year.ToString();
             BindGrid(bollette);
         }
 

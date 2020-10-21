@@ -33,13 +33,13 @@ namespace GestioneCantieri.Utils
             };
         }
 
-        public static void FillDdlFornitore(List<Fornitori> items, ref DropDownList ddl)
+        public static void FillDdlFornitore(List<Fornitori> items, ref DropDownList ddl, bool selectMef = true)
         {
             foreach (Fornitori item in items)
             {
                 ddl.Items.Add(new ListItem(item.RagSocForni, item.IdFornitori.ToString()));
 
-                if (item.RagSocForni.ToUpper() == "MEF")
+                if (selectMef && item.RagSocForni.ToUpper() == "MEF")
                 {
                     ddl.SelectedValue = item.IdFornitori.ToString();
                 }

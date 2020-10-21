@@ -56,7 +56,7 @@
                     <asp:DropDownList ID="ddlFiltroFornitore" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
                 <div class="col-1">
-                    <asp:Button ID="btnFiltraBollette" CssClass="btn btn-lg btn-dark" OnClick="btnFiltraBollette_Click" Text="Filtra" runat="server" />
+                    <asp:Button ID="btnFiltraBollette" CssClass="btn btn-lg btn-dark mt-3" OnClick="btnFiltraBollette_Click" Text="Filtra" runat="server" />
                 </div>
             </div>
         </div>
