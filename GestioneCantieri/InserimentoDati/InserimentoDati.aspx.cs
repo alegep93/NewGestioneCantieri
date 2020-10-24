@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,7 +36,7 @@ namespace GestioneCantieri
         {
             ddlScegliAmministratore.Items.Clear();
             ddlScegliAmministratore.Items.Add(new ListItem("", "-1"));
-            AmministratoriDAO.GetAll().ForEach(a => ddlScegliAmministratore.Items.Add(new ListItem(a.Nome, a.IdAmministratori.ToString())));
+            DropDownListManager.FillDdlAmministratore(AmministratoriDAO.GetAll(), ref ddlScegliAmministratore);
         }
 
         #region Clienti

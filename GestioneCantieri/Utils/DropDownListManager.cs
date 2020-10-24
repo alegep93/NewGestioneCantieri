@@ -89,5 +89,13 @@ namespace GestioneCantieri.Utils
                 ddl.Items.Add(new ListItem(item.RagSocCli, item.IdCliente.ToString()));
             };
         }
+
+        public static void FillDdlAmministratore(List<Amministratore> items, ref DropDownList ddl)
+        {
+            foreach (Amministratore item in items)
+            {
+                ddl.Items.Add(new ListItem(item.Nome, item.IdAmministratori.ToString()));
+            }
+        }
     }
 }
