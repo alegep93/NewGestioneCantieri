@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
 {
-    public partial class GestioneCantieri : System.Web.UI.Page
+    public partial class GestioneCantieri : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -274,6 +274,12 @@ namespace GestioneCantieri
             DateTime date = Convert.ToDateTime(txtDataDDT.Text);
             txtNumBolla.Text = date.Year.ToString() + date.Month.ToString() + date.Day.ToString() + txtProtocollo.Text;
         }
+        private void GeneraNuovoProtocollo(Cantieri cant)
+        {
+            List<MaterialiCantieri> items = MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri);
+            txtProtocollo.Text = (items.Count > 0 ? items.Select(s => s.ProtocolloInterno).Max() + 1 : 1).ToString();
+            txtDataDDT.Text = txtNumBolla.Text = "";
+        }
         #endregion
 
         #region Eventi click
@@ -322,17 +328,13 @@ namespace GestioneCantieri
                 pnlSubIntestazione.Visible = true;
                 txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
                 txtFascia.Text = cant.FasciaTblCantieri.ToString();
-
-                List<MaterialiCantieri> items = MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri);
-                txtProtocollo.Text = (items.Count > 0 ? items.Select(s => s.ProtocolloInterno).Max() + 1 : 1).ToString();
             }
             else
             {
                 pnlSubIntestazione.Visible = false;
                 pnlMascheraGestCant.Visible = false;
             }
-
-            txtDataDDT.Text = txtNumBolla.Text = "";
+            GeneraNuovoProtocollo(cant);
 
             FillAllDdl(false);
             BindAllGrid();
@@ -2372,5 +2374,11 @@ namespace GestioneCantieri
             }
         }
         #endregion
+
+        protected void btnNuovoProtocollo_Click(object sender, EventArgs e)
+        {
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
+            GeneraNuovoProtocollo(cant);
+        }
     }
 }

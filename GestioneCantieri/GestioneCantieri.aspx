@@ -68,6 +68,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="offset-3 col-2">
+                            <asp:Button ID="btnNuovoProtocollo" CssClass="btn btn-dark ml-5" OnClick="btnNuovoProtocollo_Click" Text="Nuovo Protocollo" runat="server" />
+                        </div>
                     </div>
 
                     <div class="row d-flex justify-content-center align-items-center">

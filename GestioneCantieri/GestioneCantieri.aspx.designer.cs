@@ -213,6 +213,15 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.TextBox txtFiltroN_DDT;
 
         /// <summary>
+        /// Controllo btnNuovoProtocollo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNuovoProtocollo;
+
+        /// <summary>
         /// Controllo lblScegliDDTMef.
         /// </summary>
         /// <remarks>
