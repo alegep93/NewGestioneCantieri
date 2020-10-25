@@ -69,8 +69,10 @@
                             </div>
                         </div>
 
-                        <div class="offset-3 col-2">
+                        <div class="offset-2 col-4">
                             <asp:Button ID="btnNuovoProtocollo" CssClass="btn btn-dark ml-5" OnClick="btnNuovoProtocollo_Click" Text="Nuovo Protocollo" runat="server" />
+                            <asp:Button ID="btnStampaProtocollo" CssClass="btn btn-dark ml-2" OnClick="btnStampaProtocollo_Click" Text="Stampa Protocollo" runat="server" /><br />
+                            <asp:Label ID="lblMsg" runat="server"></asp:Label>
                         </div>
                     </div>
 

@@ -222,6 +222,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Button btnNuovoProtocollo;
 
         /// <summary>
+        /// Controllo btnStampaProtocollo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStampaProtocollo;
+
+        /// <summary>
+        /// Controllo lblMsg.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsg;
+
+        /// <summary>
         /// Controllo lblScegliDDTMef.
         /// </summary>
         /// <remarks>

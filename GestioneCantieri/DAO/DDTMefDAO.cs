@@ -16,8 +16,7 @@ namespace GestioneCantieri.DAO
         {
             List<DDTMef> ret = new List<DDTMef>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT {(rows > 0 ? $"TOP {rows}" : "")} IdDDTMef, Anno, Data, N_DDT, CodArt,");
-            sql.AppendLine($"DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT");
+            sql.AppendLine($"SELECT {(rows > 0 ? $"TOP {rows}" : "")} *");
             sql.AppendLine($"FROM TblDDTMef");
             sql.AppendLine($"ORDER BY Anno, Data, N_DDT, CodArt");
             try

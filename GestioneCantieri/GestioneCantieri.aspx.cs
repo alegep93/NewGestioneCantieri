@@ -8,11 +8,24 @@ using System.Drawing;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using iText.IO.Font.Constants;
+using iText.IO.Util;
+using iText.Kernel.Font;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using System.Configuration;
+using iTextSharp.text.pdf.parser;
 
 namespace GestioneCantieri
 {
     public partial class GestioneCantieri : Page
     {
+        readonly string pdfProtocolloBasePath = ConfigurationManager.AppSettings["PdfProtocollo"];
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -167,7 +180,7 @@ namespace GestioneCantieri
             }
             else
             {
-                foreach (ListItem li in ddlScegliFornit.Items)
+                foreach (System.Web.UI.WebControls.ListItem li in ddlScegliFornit.Items)
                 {
                     if (li.Text == nomeFornitore)
                     {
@@ -195,14 +208,14 @@ namespace GestioneCantieri
         protected void FillDdlScegliDdtMef()
         {
             ddlScegliDDTMef.Items.Clear();
-            ddlScegliDDTMef.Items.Add(new ListItem("", "-1"));
+            ddlScegliDDTMef.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlDdtMef(DDTMefDAO.GetByAnnoNumeroDdt(txtFiltroAnnoDDT.Text, txtFiltroN_DDT.Text), ref ddlScegliDDTMef);
         }
         protected void FillDddlScegliListino()
         {
             ddlScegliListino.Items.Clear();
-            ddlScegliListino.Items.Add(new ListItem("", "-1"));
-            DropDownListManager.FillDdlMamg0(Mamg0DAO.GetListino(txtFiltroCodFSS.Text, "", "", txtFiltroAA_Des.Text,  "", ""), ref ddlScegliListino);
+            ddlScegliListino.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
+            DropDownListManager.FillDdlMamg0(Mamg0DAO.GetListino(txtFiltroCodFSS.Text, "", "", txtFiltroAA_Des.Text, "", ""), ref ddlScegliListino);
         }
         protected void FillAllDdl(bool refreshCantieri = true)
         {
@@ -210,32 +223,32 @@ namespace GestioneCantieri
             {
                 // Cantieri
                 ddlScegliCant.Items.Clear();
-                ddlScegliCant.Items.Add(new ListItem("", "-1"));
+                ddlScegliCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
                 DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtFiltroCantAnno.Text, txtFiltroCantCodCant.Text, txtFiltroCantDescrCodCant.Text, chkFiltroCantChiuso.Checked, chkFiltroCantRiscosso.Checked), ref ddlScegliCant);
             }
 
             // Operaio / Acquirente
             List<Operai> items = OperaiDAO.GetAll();
             ddlScegliAcquirente.Items.Clear();
-            ddlScegliAcquirente.Items.Add(new ListItem("", "-1"));
+            ddlScegliAcquirente.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             ddlScegliOperaio.Items.Clear();
-            ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
+            ddlScegliOperaio.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlOperaio(items, ref ddlScegliAcquirente);
             DropDownListManager.FillDdlOperaio(items, ref ddlScegliOperaio);
 
             // Fornitori
             ddlScegliFornit.Items.Clear();
-            ddlScegliFornit.Items.Add(new ListItem("", "-1"));
+            ddlScegliFornit.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlFornitore(FornitoriDAO.GetFornitori(), ref ddlScegliFornit);
 
             // MaterialiCantieri
             ddlScegliMatCant.Items.Clear();
-            ddlScegliMatCant.Items.Add(new ListItem("", "-1"));
+            ddlScegliMatCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlMaterialiCantieri(MaterialiCantieriDAO.GetMaterialeCantiere(ddlScegliCant.SelectedItem.Value, txtFiltroMatCantCodArt.Text, txtFiltroMatCantDescriCodArt.Text), ref ddlScegliMatCant);
 
             // Spese
             ddlScegliSpesa.Items.Clear();
-            ddlScegliSpesa.Items.Add(new ListItem("", "-1"));
+            ddlScegliSpesa.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlSpese(SpeseDAO.GetAll(), ref ddlScegliSpesa);
         }
         protected void ShowPanels(bool pnlMatDaDDT, bool pnlMatCant, bool pnlManodop, bool pnlOper, bool pnlArrotond, bool pnlSpese, bool pnlChiam, bool pnlAccrediti)
@@ -314,6 +327,27 @@ namespace GestioneCantieri
             else if (txtTipDatCant.Text == "RIENTRO")
             {
                 btnInserisciRientro.Focus();
+            }
+        }
+        protected void btnNuovoProtocollo_Click(object sender, EventArgs e)
+        {
+            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
+            GeneraNuovoProtocollo(cant);
+        }
+        protected void btnStampaProtocollo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
+                string filePath = System.IO.Path.Combine(pdfProtocolloBasePath, $"{cant.CodCant}_{cant.DescriCodCant}_{txtProtocollo.Text}.pdf");
+                FileInfo file = new FileInfo(filePath);
+                file.Directory.Create();
+                CreatePdf(filePath, cant);
+            }
+            catch (Exception ex)
+            {
+                lblMsg.Text = $"Errore durante la stampa del protocollo {ex.Message}";
+                lblMsg.ForeColor = Color.DarkRed;
             }
         }
         #endregion
@@ -2375,10 +2409,38 @@ namespace GestioneCantieri
         }
         #endregion
 
-        protected void btnNuovoProtocollo_Click(object sender, EventArgs e)
+        #region Generate PDF
+        public virtual void CreatePdf(string dest, Cantieri cant)
         {
-            Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
-            GeneraNuovoProtocollo(cant);
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf, PageSize.A4.Rotate());
+            document.SetMargins(20, 20, 20, 20);
+            PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+            PdfFont bold = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+            iText.Layout.Element.Table table = new iText.Layout.Element.Table(5).UseAllAvailableWidth();
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+
+            List<MaterialiCantieri> items = MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri);
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Articolo").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Descrizione").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Quantità").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Prezzo Unitario").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Totale").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+
+            items.ForEach(f =>
+            {
+                table.StartNewRow();
+                table.AddCell(f.CodArt).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddCell(f.DescriCodArt).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddCell(f.Qta.ToString()).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddCell($"€ {f.PzzoUniCantiere:N2}").SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddCell($"€ {(decimal)f.Qta * f.PzzoUniCantiere:N2}").SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+            });
+
+            document.Add(table);
+            document.Close();
         }
+        #endregion
     }
 }
