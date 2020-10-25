@@ -99,7 +99,7 @@ namespace GestioneCantieri
         #region Helpers
         protected void BindGrid(DDTMefObject ddt = null)
         {
-            List<DDTMef> items = ddt == null ? DDTMefDAO.GetAll() : DDTMefDAO.GetDdt(ddt);
+            List<DDTMef> items = ddt == null ? DDTMefDAO.GetAll(500) : DDTMefDAO.GetDdt(ddt);
             grdListaDDTMef.DataSource = items;
             grdListaDDTMef.DataBind();
 

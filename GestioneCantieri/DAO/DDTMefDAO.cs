@@ -12,11 +12,11 @@ namespace GestioneCantieri.DAO
 {
     public class DDTMefDAO : BaseDAO
     {
-        public static List<DDTMef> GetAll()
+        public static List<DDTMef> GetAll(int rows = 0)
         {
             List<DDTMef> ret = new List<DDTMef>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT TOP 500 IdDDTMef, Anno, Data, N_DDT, CodArt,");
+            sql.AppendLine($"SELECT {(rows > 0 ? $"TOP {rows}" : "")} IdDDTMef, Anno, Data, N_DDT, CodArt,");
             sql.AppendLine($"DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT");
             sql.AppendLine($"FROM TblDDTMef");
             sql.AppendLine($"ORDER BY Anno, Data, N_DDT, CodArt");
