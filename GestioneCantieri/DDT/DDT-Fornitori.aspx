@@ -72,7 +72,7 @@
         </div>
         <div class="col">
             <asp:Label ID="lblFiltraArticolo" Text="Filtro Articolo" runat="server"></asp:Label>
-            <asp:TextBox ID="txtFiltraArticolo" TextMode="Number" CssClass="form-control" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtFiltraArticolo" CssClass="form-control" runat="server"></asp:TextBox>
         </div>
         <div class="col">
             <asp:Label ID="lblFiltraQta" Text="Filtro Quantità" runat="server"></asp:Label>

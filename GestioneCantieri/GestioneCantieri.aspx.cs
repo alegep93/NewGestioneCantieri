@@ -322,7 +322,9 @@ namespace GestioneCantieri
                 pnlSubIntestazione.Visible = true;
                 txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
                 txtFascia.Text = cant.FasciaTblCantieri.ToString();
-                txtProtocollo.Text = (MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri).Select(s => s.ProtocolloInterno).Max() + 1).ToString();
+
+                List<MaterialiCantieri> items = MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri);
+                txtProtocollo.Text = (items.Count > 0 ? items.Select(s => s.ProtocolloInterno).Max() + 1 : 1).ToString();
             }
             else
             {

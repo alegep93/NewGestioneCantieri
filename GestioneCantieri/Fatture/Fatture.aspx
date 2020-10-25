@@ -175,7 +175,7 @@
                 <asp:TextBox ID="txtFiltroGrdNumeroFattura" CssClass="form-control text-center" runat="server"></asp:TextBox>
             </div>
             <div class="col">
-                <asp:Label ID="lblFiltroGrdRiscosso" runat="server" Text="Numero Fattura"></asp:Label>
+                <asp:Label ID="lblFiltroGrdRiscosso" runat="server" Text="Riscosso"></asp:Label>
                 <asp:DropDownList ID="ddlFiltroGrdRiscosso" CssClass="form-control text-center" runat="server">
                     <asp:ListItem Value="1">Tutte</asp:ListItem>
                     <asp:ListItem Value="2">Riscosse</asp:ListItem>
