@@ -37,7 +37,7 @@ namespace GestioneCantieri.Acconti
             grdAccontiOperai.DataSource = AccontiOperaiDAO.GetAcconti(idOperaio);
             grdAccontiOperai.DataBind();
 
-            txtData.Text = txtImportoAcconto.Text = "";
+            txtData.Text = txtImportoAcconto.Text = txtDescrizioneAcconto.Text = "";
             btnSalvaAcconto.Visible = true;
             btnModificaAcconto.Visible = !btnSalvaAcconto.Visible;
         }
