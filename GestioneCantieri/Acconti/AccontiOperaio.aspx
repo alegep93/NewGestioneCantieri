@@ -25,6 +25,10 @@
                     <asp:Label ID="lblImportoAcconto" runat="server" Text="Importo Acconto"></asp:Label>
                     <asp:TextBox ID="txtImportoAcconto" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
+                <div class="col">
+                    <asp:Label ID="lblDescrizioneAcconto" runat="server" Text="Descrizione Acconto"></asp:Label>
+                    <asp:TextBox ID="txtDescrizioneAcconto" CssClass="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
+                </div>
                 <div class="col text-center">
                     <asp:Button ID="btnSalvaAcconto" CssClass="btn btn-lg btn-primary" OnClick="btnSalvaAcconto_Click" Text="Inserisci" runat="server" />
                     <asp:Button ID="btnModificaAcconto" CssClass="btn btn-lg btn-primary" OnClick="btnModificaAcconto_Click" Text="Modifica" runat="server" />

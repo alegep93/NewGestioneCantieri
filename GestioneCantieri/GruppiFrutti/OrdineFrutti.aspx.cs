@@ -13,6 +13,7 @@ namespace GestioneCantieri
         /* Lista pubblica per la visualizzazione dinamica di record */
         public List<MatOrdFrut> compList = new List<MatOrdFrut>();
         public List<MatOrdFrut> fruttiList = new List<MatOrdFrut>();
+        int progressivo = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -310,6 +311,18 @@ namespace GestioneCantieri
             {
                 lblMsg.Text = "Errore durante l'eliminazione dell'ordine ==> " + ex.Message;
                 lblMsg.ForeColor = Color.Red;
+            }
+        }
+
+        protected void grdOrdini_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[0].Text = "Progressivo";
+            }
+            else if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Cells[0].Text = (++progressivo).ToString();
             }
         }
     }

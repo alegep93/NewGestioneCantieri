@@ -50,7 +50,8 @@ namespace GestioneCantieri.Acconti
                 {
                     Data = Convert.ToDateTime(txtData.Text),
                     IdOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedValue),
-                    Importo = Convert.ToDecimal(txtImportoAcconto.Text)
+                    Importo = Convert.ToDecimal(txtImportoAcconto.Text),
+                    Descrizione = txtDescrizioneAcconto.Text
                 });
 
                 lblMsg.Text = $"Acconto inserito con successo";
@@ -74,7 +75,8 @@ namespace GestioneCantieri.Acconti
                     IdAccontoOperaio = Convert.ToInt64(hfIdAccontoOperaio.Value),
                     Data = Convert.ToDateTime(txtData.Text),
                     IdOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedValue),
-                    Importo = Convert.ToDecimal(txtImportoAcconto.Text)
+                    Importo = Convert.ToDecimal(txtImportoAcconto.Text),
+                    Descrizione = txtDescrizioneAcconto.Text
                 });
 
                 lblMsg.Text = $"Acconto modificato con successo";
@@ -134,6 +136,7 @@ namespace GestioneCantieri.Acconti
             txtData.Text = item.Data.ToString("yyyy-MM-dd");
             ddlScegliOperaio.SelectedValue = item.IdOperaio.ToString();
             txtImportoAcconto.Text = item.Importo.ToString("N2");
+            txtDescrizioneAcconto.Text = item.Descrizione;
         }
 
         protected void grdAccontiOperai_RowDataBound(object sender, GridViewRowEventArgs e)

@@ -133,9 +133,14 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="tableContainer col-12 table-responsive">
-            <asp:GridView ID="grdOrdini" runat="server" ItemType="GestioneCantieri.Data.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" 
+            <asp:GridView ID="grdOrdini" runat="server" ItemType="GestioneCantieri.Data.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" OnRowDataBound="grdOrdini_RowDataBound"
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
                 <Columns>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="lblProgressivo" runat="server"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField DataField="DescrCant" HeaderText="Cantiere" />
                     <asp:BoundField DataField="Appartamento" HeaderText="Locale" />
                     <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />

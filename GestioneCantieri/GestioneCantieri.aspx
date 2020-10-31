@@ -529,7 +529,7 @@
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col">
                     <asp:Label ID="lblManodopQta" Text="Quantità" runat="server" />
-                    <asp:TextBox ID="txtManodopQta" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtManodopQta_TextChanged" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtManodopQta" CssClass="form-control" AutoPostBack="false" OnTextChanged="txtManodopQta_TextChanged" runat="server"></asp:TextBox>
                 </div>
                 <div class="col">
                     <asp:Label ID="lblPzzoManodop" Text="Prezzo Manodopera" runat="server" />

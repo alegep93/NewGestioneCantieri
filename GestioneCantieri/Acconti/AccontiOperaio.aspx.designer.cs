@@ -69,6 +69,24 @@ namespace GestioneCantieri.Acconti
         protected global::System.Web.UI.WebControls.TextBox txtImportoAcconto;
 
         /// <summary>
+        /// Controllo lblDescrizioneAcconto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDescrizioneAcconto;
+
+        /// <summary>
+        /// Controllo txtDescrizioneAcconto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescrizioneAcconto;
+
+        /// <summary>
         /// Controllo btnSalvaAcconto.
         /// </summary>
         /// <remarks>

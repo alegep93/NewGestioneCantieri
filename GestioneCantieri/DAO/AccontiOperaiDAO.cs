@@ -54,7 +54,7 @@ namespace GestioneCantieri.DAO
 
         public static void Insert(AccontoOperaio item)
         {
-            StringBuilder sql = new StringBuilder($"INSERT INTO TblAccontiOperai(IdOperaio,Data,Importo) VALUES (@IdOperaio,@Data,@Importo)");
+            StringBuilder sql = new StringBuilder($"INSERT INTO TblAccontiOperai(IdOperaio,Data,Importo,Descrizione) VALUES (@IdOperaio,@Data,@Importo,@Descrizione)");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -72,7 +72,7 @@ namespace GestioneCantieri.DAO
         {
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"UPDATE TblAccontiOperai");
-            sql.AppendLine($"SET IdOperaio = @IdOperaio, Data = @Data, Importo = @Importo");
+            sql.AppendLine($"SET IdOperaio = @IdOperaio, Data = @Data, Importo = @Importo, Descrizione = @Descrizione");
             sql.AppendLine($"WHERE IdAccontoOperaio = @IdAccontoOperaio");
             try
             {
