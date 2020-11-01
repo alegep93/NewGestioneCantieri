@@ -30,7 +30,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static List<Frutti> GetFrutti(string filtroDescr1, string filtroDescr2, string filtroDescr3)
+        public static List<Frutti> GetFrutti(string filtroDescr1 = "", string filtroDescr2 = "", string filtroDescr3 = "")
         {
             StringBuilder sql = new StringBuilder();
             filtroDescr1 = "%" + filtroDescr1 + "%";

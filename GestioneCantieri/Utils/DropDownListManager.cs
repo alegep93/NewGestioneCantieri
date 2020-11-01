@@ -97,5 +97,21 @@ namespace GestioneCantieri.Utils
                 ddl.Items.Add(new ListItem(item.Nome, item.IdAmministratori.ToString()));
             }
         }
+
+        public static void FillDdlGruppi(List<GruppiFrutti> items, ref DropDownList ddl)
+        {
+            foreach (GruppiFrutti item in items)
+            {
+                ddl.Items.Add(new ListItem(item.NomeGruppo, item.Id.ToString()));
+            }
+        }
+
+        public static void FillDdlFrutti(List<Frutti> items, ref DropDownList ddl)
+        {
+            foreach (Frutti item in items)
+            {
+                ddl.Items.Add(new ListItem(item.Descr001, item.Id1.ToString()));
+            }
+        }
     }
 }

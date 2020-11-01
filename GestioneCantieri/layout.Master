@@ -58,10 +58,11 @@
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestione Gruppi e Frutti<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/GruppiFrutti/GestisciFrutti.aspx">Gestisci Frutti</a></li>
-                                <li><a class="dropdown-item" href="/GruppiFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
-                                <li><a class="dropdown-item" href="/GruppiFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
-                                <li><a class="dropdown-item" href="/GruppiFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/GestisciFrutti.aspx">Gestisci Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/GestisciGruppi.aspx">Gestisci Gruppi</a></li>
+                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
+                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -117,6 +118,15 @@
         </div>
 
         <form id="frmGestioneCantieri" runat="server">
+            <asp:Panel ID="pnlAlert" CssClass="row mt-3 d-flex justify-content-center align-items-center" Visible="false" runat="server">
+                <div class="col text-center">
+                    <asp:Label ID="lblAlert" runat="server"></asp:Label>
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </asp:Panel>
+
             <asp:ContentPlaceHolder ID="body" runat="server">
             </asp:ContentPlaceHolder>
         </form>

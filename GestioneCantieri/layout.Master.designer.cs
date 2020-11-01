@@ -7,11 +7,13 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri {
-    
-    
-    public partial class layout {
-        
+namespace GestioneCantieri
+{
+
+
+    public partial class layout
+    {
+
         /// <summary>
         /// Controllo title.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder title;
-        
+
         /// <summary>
         /// Controllo frmGestioneCantieri.
         /// </summary>
@@ -29,7 +31,25 @@ namespace GestioneCantieri {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm frmGestioneCantieri;
-        
+
+        /// <summary>
+        /// Controllo pnlAlert.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAlert;
+
+        /// <summary>
+        /// Controllo lblAlert.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAlert;
+
         /// <summary>
         /// Controllo body.
         /// </summary>

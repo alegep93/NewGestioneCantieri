@@ -121,6 +121,24 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static GruppiFrutti GetByNome(string nomeGruppo)
+        {
+            GruppiFrutti ret = new GruppiFrutti();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblGruppiFrutti WHERE NomeGruppo = @nomeGruppo");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<GruppiFrutti>(sql.ToString(), new { nomeGruppo }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetByNome in GruppiFruttiDAO", ex);
+            }
+            return ret;
+        }
+
         public static bool UpdateGruppo(GruppiFrutti item)
         {
             bool ret = false;
