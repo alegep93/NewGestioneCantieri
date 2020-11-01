@@ -31,9 +31,37 @@
 
     <asp:HiddenField ID="hfIdGruppo" runat="server" />
 
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
+    <div class="row mt-5 d-flex justify-content-center align-items-center">
+        <div class="col-6 text-center">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col text-center">
+                    <asp:TextBox ID="txtFiltroGruppo1" placeholder="Filtro 1" OnTextChanged="txtFiltroGruppo_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col text-center">
+                    <asp:TextBox ID="txtFiltroGruppo2" placeholder="Filtro 2" OnTextChanged="txtFiltroGruppo_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col text-center">
+                    <asp:TextBox ID="txtFiltroGruppo3" placeholder="Filtro 3" OnTextChanged="txtFiltroGruppo_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-6 text-center">
+            <div class="col text-center">
+                <asp:Label ID="lblScegliGruppo" Text="Scegli gruppo" runat="server"></asp:Label>
+                <asp:DropDownList ID="ddlScegliGruppo" CssClass="form-control" runat="server"></asp:DropDownList>
+            </div>
+            <div class="col text-center">
+                <asp:Button ID="btnClonaGruppo" CssClass="btn btn-dark" OnClick="btnClonaGruppo_Click" Text="Clona Gruppo" runat="server" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdGruppi" ItemType="GestioneCantieri.Data.GruppiFrutti" OnRowCommand="grdGruppi_RowCommand" CssClass="table table-dark table-striped" AutoGenerateColumns="false" runat="server">
+            <asp:GridView ID="grdGruppi" ItemType="GestioneCantieri.Data.GruppiFrutti" OnRowCommand="grdGruppi_RowCommand" CssClass="table table-dark table-striped scrollable-table" AutoGenerateColumns="false" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Gruppo" DataField="NomeGruppo" />
                     <asp:BoundField HeaderText="Descrizione Gruppo" DataField="Descrizione" />

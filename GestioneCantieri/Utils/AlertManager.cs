@@ -7,7 +7,7 @@ namespace GestioneCantieri.Utils
         public static void ShowAlert(Panel pnlMsg, Label lblMsg, string cssClass, string message)
         {
             pnlMsg.Visible = true;
-            pnlMsg.CssClass += $" alert {cssClass} text-center";
+            pnlMsg.CssClass = $"row mt-3 d-flex justify-content-center align-items-center alert {cssClass} text-center";
             lblMsg.Text = message;
         }
     }

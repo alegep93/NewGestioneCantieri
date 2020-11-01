@@ -78,6 +78,60 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.HiddenField hfIdGruppo;
 
         /// <summary>
+        /// Controllo txtFiltroGruppo1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppo1;
+
+        /// <summary>
+        /// Controllo txtFiltroGruppo2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppo2;
+
+        /// <summary>
+        /// Controllo txtFiltroGruppo3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroGruppo3;
+
+        /// <summary>
+        /// Controllo lblScegliGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliGruppo;
+
+        /// <summary>
+        /// Controllo ddlScegliGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliGruppo;
+
+        /// <summary>
+        /// Controllo btnClonaGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClonaGruppo;
+
+        /// <summary>
         /// Controllo grdGruppi.
         /// </summary>
         /// <remarks>

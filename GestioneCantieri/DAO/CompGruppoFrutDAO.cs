@@ -12,6 +12,29 @@ namespace GestioneCantieri.DAO
     public class CompGruppoFrutDAO : BaseDAO
     {
         // SELECT
+        public static CompGruppoFrut GetSingle(int idCompGruppoFrutto)
+        {
+            CompGruppoFrut ret = new CompGruppoFrut();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto, Qta");
+            sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("WHERE Id = @idCompGruppoFrutto");
+            sql.AppendLine("ORDER BY CGF.Id ASC");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<CompGruppoFrut>(sql.ToString(), new { idCompGruppoFrutto }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetSingle in CompGruppoFrutDAO", ex);
+            }
+            return ret;
+        }
+
         public static List<CompGruppoFrut> GetCompGruppo(int idGruppo)
         {
             List<CompGruppoFrut> ret = new List<CompGruppoFrut>();
@@ -61,20 +84,58 @@ namespace GestioneCantieri.DAO
         }
 
         // INSERT
-        public static bool InserisciCompGruppo(int idGruppo, int idFrutto, string qta)
+        public static bool Insert(CompGruppoFrut item)
         {
             bool ret = false;
-            StringBuilder sql = new StringBuilder("INSERT INTO TblCompGruppoFrut(IdTblGruppo,IdTblFrutto,Qta) VALUES (@idGruppo,@idFrutto,@qta)");
+            StringBuilder sql = new StringBuilder("INSERT INTO TblCompGruppoFrut(IdTblGruppo,IdTblFrutto,Qta) VALUES (@IdTblGruppo,@IdTblFrutto,@Qta)");
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Execute(sql.ToString(), new { idGruppo, idFrutto, qta }) > 0;
+                    ret = cn.Execute(sql.ToString(), item) > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la InserisciCompGruppo in CompGruppoFrutDAO", ex);
+                throw new Exception("Errore durante la Insert in CompGruppoFrutDAO", ex);
+            }
+            return ret;
+
+        }
+
+        public static bool InsertList(List<CompGruppoFrut> items)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO TblCompGruppoFrut(IdTblGruppo,IdTblFrutto,Qta) VALUES (@IdTblGruppo,@IdTblFrutto,@Qta)");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), items) > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la InsertList in CompGruppoFrutDAO", ex);
+            }
+            return ret;
+        }
+
+        // UPDATE
+        public static bool Update(CompGruppoFrut item)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("UPDATE TblCompGruppoFrut SET IdTblGruppo = @IdTblGruppo, IdTblFrutto = @IdTblFrutto, Qta = @Qta WHERE Id = @Id");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), item) > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la Update in CompGruppoFrutDAO", ex);
             }
             return ret;
         }

@@ -16,16 +16,25 @@ namespace GestioneCantieri
             }
         }
 
+        private void FillDdlGruppi()
+        {
+            ddlScegliGruppo.Items.Clear();
+            ddlScegliGruppo.Items.Add(new ListItem("", "-1"));
+            DropDownListManager.FillDdlGruppi(GruppiFruttiDAO.GetGruppi(txtFiltroGruppo1.Text, txtFiltroGruppo2.Text, txtFiltroGruppo3.Text), ref ddlScegliGruppo);
+        }
+
         private void BindGrid()
         {
             try
             {
-                grdGruppi.DataSource = GruppiFruttiDAO.GetAll();
+                grdGruppi.DataSource = GruppiFruttiDAO.GetGruppi(txtFiltroGruppo1.Text, txtFiltroGruppo2.Text, txtFiltroGruppo3.Text);
                 grdGruppi.DataBind();
 
                 txtNomeGruppo.Text = txtDescrizioneGruppo.Text = "";
                 btnInserisciGruppo.Visible = true;
                 btnModificaGruppo.Visible = !btnInserisciGruppo.Visible;
+
+                FillDdlGruppi();
             }
             catch (Exception ex)
             {
@@ -41,12 +50,14 @@ namespace GestioneCantieri
                 GruppiFrutti gruppo = GruppiFruttiDAO.GetSingle(idGruppo);
                 if (e.CommandName == "Visualizza")
                 {
+                    txtNomeGruppo.Enabled = txtDescrizioneGruppo.Enabled = false;
                     txtNomeGruppo.Text = gruppo.NomeGruppo;
                     txtDescrizioneGruppo.Text = gruppo.Descrizione;
                     btnInserisciGruppo.Visible = btnModificaGruppo.Visible = false;
                 }
                 if (e.CommandName == "Modifica")
                 {
+                    txtNomeGruppo.Enabled = txtDescrizioneGruppo.Enabled = true;
                     txtNomeGruppo.Text = gruppo.NomeGruppo;
                     txtDescrizioneGruppo.Text = gruppo.Descrizione;
                     hfIdGruppo.Value = idGruppo.ToString();
@@ -55,9 +66,16 @@ namespace GestioneCantieri
                 }
                 if (e.CommandName == "Elimina")
                 {
-                    GruppiFruttiDAO.DeleteGruppo(idGruppo);
-                    (Master as layout).SetAlert("alert-success", $"Gruppo {gruppo.NomeGruppo} eliminato con successo");
-                    BindGrid();
+                    if (CompGruppoFrutDAO.GetCompGruppo(idGruppo).Count <= 0)
+                    {
+                        GruppiFruttiDAO.DeleteGruppo(idGruppo);
+                        (Master as layout).SetAlert("alert-success", $"Gruppo {gruppo.NomeGruppo} eliminato con successo");
+                        BindGrid();
+                    }
+                    else
+                    {
+                        (Master as layout).SetAlert("alert-danger", $"Impossibile eliminare il gruppo, perchè contiene dei componenti");
+                    }
                 }
             }
             catch (Exception ex)
@@ -101,6 +119,28 @@ namespace GestioneCantieri
             {
                 (Master as layout).SetAlert("alert-danger", $"Errore durante il btnInserisciGruppo_Click in GestisciGruppi - {ex.Message}");
             }
+        }
+
+        protected void btnClonaGruppo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idGruppo = Convert.ToInt32(ddlScegliGruppo.SelectedItem.Value);
+                GruppiFrutti gf = GruppiFruttiDAO.GetSingle(idGruppo);
+                int idGruppoCopia = GruppiFruttiDAO.InserisciGruppo("Copia" + gf.NomeGruppo, gf.Descrizione);
+                CompGruppoFrutDAO.InsertList(CompGruppoFrutDAO.GetCompGruppo(idGruppo));
+                (Master as layout).SetAlert("alert-success", "Gruppo clonato con successo");
+                BindGrid();
+            }
+            catch (Exception ex)
+            {
+                (Master as layout).SetAlert("alert-danger", $"Errore durante la clonazione del gruppo selezionato - {ex.Message}");
+            }
+        }
+
+        protected void txtFiltroGruppo_TextChanged(object sender, EventArgs e)
+        {
+            BindGrid();
         }
     }
 }

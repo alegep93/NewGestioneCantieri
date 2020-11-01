@@ -34,7 +34,6 @@ namespace GestioneCantieri.DAO
         {
             int ret = 0;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("IF NOT EXISTS(SELECT NomeGruppo FROM TblGruppiFrutti WHERE NomeGruppo = @nomeGruppo)");
             sql.AppendLine("INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@nomeGruppo,@descr,0)");
             sql.AppendLine("SELECT CAST(scope_identity() AS int)");
 
@@ -56,17 +55,11 @@ namespace GestioneCantieri.DAO
         {
             List<GruppiFrutti> ret = new List<GruppiFrutti>();
             StringBuilder sql = new StringBuilder();
-
-            filtroNome1 = "%" + filtroNome1 + "%";
-            filtroNome2 = "%" + filtroNome2 + "%";
-            filtroNome3 = "%" + filtroNome3 + "%";
-
             sql.AppendLine($"SELECT Id,NomeGruppo,Descrizione");
             sql.AppendLine($"FROM TblGruppiFrutti");
-            sql.AppendLine($"WHERE NomeGruppo LIKE @filtroNome1 AND NomeGruppo LIKE @filtroNome2 AND NomeGruppo LIKE @filtroNome3");
+            sql.AppendLine($"WHERE NomeGruppo LIKE '%{filtroNome1}%' AND NomeGruppo LIKE '%{filtroNome2}%' AND NomeGruppo LIKE '%{filtroNome3}%'");
             sql.AppendLine(gruppiNonCompletati ? "AND Completato = 0" : "");
             sql.AppendLine($"ORDER BY NomeGruppo ASC");
-
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -166,7 +159,6 @@ namespace GestioneCantieri.DAO
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("IF NOT EXISTS(SELECT Id FROM TblCompGruppoFrut WHERE IdTblGruppo = @idGruppo)");
             sql.AppendLine("DELETE FROM TblGruppiFrutti WHERE Id = @idGruppo ");
             try
             {

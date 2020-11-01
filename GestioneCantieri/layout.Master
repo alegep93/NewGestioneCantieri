@@ -118,7 +118,7 @@
         </div>
 
         <form id="frmGestioneCantieri" runat="server">
-            <asp:Panel ID="pnlAlert" CssClass="row mt-3 d-flex justify-content-center align-items-center" Visible="false" runat="server">
+            <asp:Panel ID="pnlAlert" Visible="false" runat="server">
                 <div class="col text-center">
                     <asp:Label ID="lblAlert" runat="server"></asp:Label>
                 </div>
