@@ -25,6 +25,8 @@ namespace GestioneCantieri.Utils
             response.AddHeader("Content-Disposition", "attachment;filename=" + fileName);
             gridView.GridLines = GridLines.Both;
             gridView.HeaderStyle.Font.Bold = true;
+            string style = @"<style> td { mso-number-format:\@;} </style>";
+            response.Write(style);
             gridView.RenderControl(htmltextwrtter);
             response.Write(strwritter.ToString());
             response.End();
