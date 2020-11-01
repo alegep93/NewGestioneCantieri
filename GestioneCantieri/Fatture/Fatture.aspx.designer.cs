@@ -420,6 +420,15 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Panel pnlRicercaFatture;
 
         /// <summary>
+        /// Controllo btnStampaExcel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnStampaExcel;
+
+        /// <summary>
         /// Controllo lblFiltroGrdAnno.
         /// </summary>
         /// <remarks>

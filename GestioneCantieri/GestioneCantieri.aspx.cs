@@ -341,11 +341,14 @@ namespace GestioneCantieri
             {
                 Cantieri cant = CantieriDAO.GetSingle(Convert.ToInt32(ddlScegliCant.SelectedItem.Value));
                 string numeroProtocolloCompleto = GeneraNumeroProtocollo(txtProtocollo.Text);
-                string fileName = $"{cant.CodCant}_{cant.DescriCodCant}_{numeroProtocolloCompleto}.pdf";
+                string fileName = $"{cant.CodCant}-{cant.DescriCodCant}_{numeroProtocolloCompleto}.pdf";
                 string filePath = System.IO.Path.Combine(pdfProtocolloBasePath, fileName);
                 FileInfo file = new FileInfo(filePath);
                 file.Directory.Create();
                 CreatePdf(filePath, fileName, cant);
+
+                lblMsg.Text = $"Stampa del protocollo avvenuta con successo";
+                lblMsg.ForeColor = Color.DarkBlue;
             }
             catch (Exception ex)
             {
@@ -2415,40 +2418,42 @@ namespace GestioneCantieri
         #region Generate PDF
         public void CreatePdf(string filePath, string fileName, Cantieri cant)
         {
+            int tableDimension = 7;
             PdfWriter writer = new PdfWriter(filePath);
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf, PageSize.A4.Rotate());
             document.SetMargins(20, 20, 20, 20);
             PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
             PdfFont bold = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-            iText.Layout.Element.Table table = new iText.Layout.Element.Table(5).UseAllAvailableWidth();
+            iText.Layout.Element.Table table = new iText.Layout.Element.Table(tableDimension).UseAllAvailableWidth();
             table.SetHorizontalAlignment(HorizontalAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
 
-            int totalColspan = 5;
             List<Operai> operai = OperaiDAO.GetAll();
             List<MaterialiCantieri> items = MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri).Where(w => w.ProtocolloInterno == Convert.ToInt32(txtProtocollo.Text)).ToList();
-            Cell emptyCellManodopera = new Cell(1, totalColspan).Add(new Paragraph("\n\n"));
-            Cell emptyCellOperaio = new Cell(1, totalColspan).Add(new Paragraph("\n\n"));
+            Cell emptyCellManodopera = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
+            Cell emptyCellOperaio = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
             //Cell emptyCellMateriale = new Cell(1, totalColspan).Add(new Paragraph("\n"));
 
             if (items.Count > 0)
             {
                 // Data e nome e numero protocollo
-                table.AddHeaderCell(new Cell(1, totalColspan).Add(new Paragraph(items.FirstOrDefault().Data.ToString("dd/MM/yyyy")).SetFont(font)));
-                table.AddHeaderCell(new Cell(1, totalColspan).Add(new Paragraph(fileName.Replace(".pdf", "")).SetFont(font)));
+                table.AddHeaderCell(new Cell(1, tableDimension).Add(new Paragraph(items.FirstOrDefault().Data.ToString("dd/MM/yyyy")).SetFont(font)));
+                table.AddHeaderCell(new Cell(1, tableDimension).Add(new Paragraph(fileName.Replace(".pdf", "")).SetFont(font)));
 
                 // Intestazioni
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Articolo").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Descrizione").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Quantità").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Prezzo Unitario").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Note 1").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Note 2").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Totale").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
 
                 // Dati in tabella
                 List<MaterialiCantieri> manodoperaList = items.Where(w => w.Tipologia == "MANODOPERA").ToList();
                 if (manodoperaList.Count > 0)
                 {
-                    table.AddCell(new Cell(1, 4).Add(new Paragraph("MANODOPERA").SetFont(bold)));
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph("MANODOPERA").SetFont(bold)));
                     table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {manodoperaList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
                     InsertDataIntoPdfTable(ref table, manodoperaList, operai, font);
                     table.AddCell(emptyCellManodopera);
@@ -2457,7 +2462,7 @@ namespace GestioneCantieri
                 List<MaterialiCantieri> operaioList = items.Where(w => w.Tipologia == "OPERAIO").ToList();
                 if (operaioList.Count > 0)
                 {
-                    table.AddCell(new Cell(1, 4).Add(new Paragraph("OPERAIO")).SetFont(bold));
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph("OPERAIO")).SetFont(bold));
                     table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {operaioList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
                     InsertDataIntoPdfTable(ref table, operaioList, operai, font);
                     table.AddCell(emptyCellOperaio);
@@ -2466,7 +2471,7 @@ namespace GestioneCantieri
                 List<MaterialiCantieri> materialeList = items.Where(w => w.Tipologia == "MATERIALE").ToList();
                 if (materialeList.Count > 0)
                 {
-                    table.AddCell(new Cell(1, 4).Add(new Paragraph("MATERIALE")).SetFont(bold));
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph("MATERIALE")).SetFont(bold));
                     table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {materialeList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
                     InsertDataIntoPdfTable(ref table, materialeList, operai, font);
                     //table.AddCell(emptyCellMateriale);
@@ -2485,6 +2490,8 @@ namespace GestioneCantieri
                 table.AddCell(item.Tipologia == "OPERAIO" ? operai.Where(w => w.IdOperaio == item.IdTblOperaio).FirstOrDefault().NomeOp : item.DescriCodArt).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddCell(item.Qta.ToString()).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddCell($"€ {item.PzzoUniCantiere:N2}").SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddCell(item.Note).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
+                table.AddCell(item.Note2).SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddCell($"€ {(decimal)item.Qta * item.PzzoUniCantiere:N2}").SetFont(font).SetTextAlignment(TextAlignment.CENTER).SetVerticalAlignment(VerticalAlignment.MIDDLE);
             }
         }

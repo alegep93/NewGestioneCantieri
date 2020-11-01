@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="Fatture.aspx.cs" Inherits="GestioneCantieri.Fatture" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="Fatture.aspx.cs" Inherits="GestioneCantieri.Fatture" EnableEventValidation="false" %>
 
 <asp:Content ID="Head" ContentPlaceHolderID="title" runat="server">
     <title>Fatture Emesse</title>
@@ -145,6 +145,11 @@
     <asp:HiddenField ID="hfValoriAccontiDaAggiungere" runat="server" />
 
     <asp:Panel ID="pnlRicercaFatture" runat="server" Visible="false">
+        <%-- Icona stampa Excel --%>
+        <asp:LinkButton ID="btnStampaExcel" CssClass="excel-icon" OnClick="btnStampaExcel_Click" runat="server">
+            <i class="fas fa-file-excel"></i>
+        </asp:LinkButton>
+
         <div class="row mt-5 d-flex justify-content-center align-items-center">
             <div class="col">
                 <asp:Label ID="lblFiltroGrdAnno" runat="server" Text="Anno"></asp:Label>

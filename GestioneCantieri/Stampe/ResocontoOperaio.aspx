@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/layout.Master" CodeBehind="ResocontoOperaio.aspx.cs" Inherits="GestioneCantieri.ResocontoOperaio" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/layout.Master" CodeBehind="ResocontoOperaio.aspx.cs" Inherits="GestioneCantieri.ResocontoOperaio" EnableEventValidation="false" %>
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
     <title>Resoconto Operaio</title>
@@ -8,6 +8,15 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center">
             <h1>Resoconto Operaio</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
+        <div class="col text-center">
+            <%-- Icona stampa Excel --%>
+            <asp:LinkButton ID="btnStampaExcel" CssClass="excel-icon" OnClick="btnStampaExcel_Click" runat="server">
+        <i class="fas fa-file-excel"></i>
+            </asp:LinkButton>
         </div>
     </div>
 
@@ -61,10 +70,12 @@
         <div class="col text-center">
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col">
-                    <strong><asp:Label ID="lblTotaleOre" runat="server" Text="" CssClass="label-totali-resoconto-operaio"></asp:Label></strong>
+                    <strong>
+                        <asp:Label ID="lblTotaleOre" runat="server" Text="" CssClass="label-totali-resoconto-operaio"></asp:Label></strong>
                 </div>
                 <div class="col">
-                    <strong><asp:Label ID="lblTotaleValore" runat="server" Text="" CssClass="label-totali-resoconto-operaio ml-3"></asp:Label></strong>
+                    <strong>
+                        <asp:Label ID="lblTotaleValore" runat="server" Text="" CssClass="label-totali-resoconto-operaio ml-3"></asp:Label></strong>
                 </div>
             </div>
         </div>

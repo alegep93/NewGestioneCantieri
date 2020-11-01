@@ -33,7 +33,8 @@ namespace GestioneCantieri
 
         private void ResetToInitial()
         {
-            List<Bolletta> bollette = BolletteDAO.GetAll();
+            int currentYear = DateTime.Today.Year;
+            List<Bolletta> bollette = BolletteDAO.GetAll(currentYear);
             txtDataBolletta.Text = DateTime.Now.ToString("yyyy-MM-dd");
             txtDataScadenza.Text = txtDataPagamento.Text = txtTotaleBolletta.Text = "";
             txtProgressivo.Text = GetProgressivo();
@@ -41,7 +42,7 @@ namespace GestioneCantieri
             btnAggiungiBolletta.Visible = true;
             btnModificaBolletta.Visible = false;
             hfIdBolletta.Value = "";
-            txtFiltroAnno.Text = DateTime.Today.Year.ToString();
+            txtFiltroAnno.Text = currentYear.ToString();
             BindGrid(bollette);
         }
 

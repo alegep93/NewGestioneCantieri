@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
@@ -108,6 +109,25 @@ namespace GestioneCantieri
             catch (Exception ex)
             {
                 lblIsOperaioPagato.Text = $"Errore durante il btnResocontoRaggruppato_Click - {ex.Message}";
+                lblIsOperaioPagato.ForeColor = Color.Red;
+            }
+        }
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            //required to avoid the runtime error "  
+            //Control 'GridView1' of type 'GridView' must be placed inside a form tag with runat=server."  
+        }
+
+        protected void btnStampaExcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ExcelManager.ExportGridToExcel(Response, grdResocontoOperaio.Visible ? grdResocontoOperaio : grdResocontoRaggruppato, "resoconto-operaio");
+            }
+            catch (Exception ex)
+            {
+                lblIsOperaioPagato.Text = $"Errore durante la stampa excel - {ex.Message}";
                 lblIsOperaioPagato.ForeColor = Color.Red;
             }
         }

@@ -296,3 +296,13 @@ input[type="checkbox"] {
 select option {
     font-size: 24px;
 }
+
+/* Icona Stampa Excel */
+.excel-icon {
+    font-size: 60px;
+    color: #006B1B;
+}
+
+    .excel-icon:hover {
+        color: #005916;
+    }
