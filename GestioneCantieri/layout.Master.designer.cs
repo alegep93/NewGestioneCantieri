@@ -51,6 +51,15 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblAlert;
 
         /// <summary>
+        /// Controllo lblModalText.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalText;
+
+        /// <summary>
         /// Controllo body.
         /// </summary>
         /// <remarks>

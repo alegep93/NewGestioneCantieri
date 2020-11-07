@@ -270,8 +270,7 @@ namespace GestioneCantieri
             bool ret = false;
             if (txtDataDDT.Text == "")
             {
-                lblIsRecordInserito.Text = lblIsManodopInserita.Text = lblIsOperInserita.Text = lblIsArrotondInserito.Text = lblIsAChiamInserita.Text = lblIsSpesaInserita.Text = "Inserire un valore per la data";
-                lblIsRecordInserito.ForeColor = lblIsManodopInserita.ForeColor = lblIsOperInserita.ForeColor = lblIsArrotondInserito.ForeColor = lblIsAChiamInserita.ForeColor = lblIsSpesaInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Inserire un valore per la data");
                 ret = true;
             }
             return ret;
@@ -317,8 +316,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsRecordInserito.Text = "Inserire un valore nella casella 'Prezzo Netto Mef' per calcolare il 'Prezzo Unitario'";
-                lblIsRecordInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Inserire un valore nella casella \"Prezzo Netto Mef\" per calcolare il \"Prezzo Unitario\"");
             }
 
             if (txtTipDatCant.Text == "MATERIALE")
@@ -352,8 +350,7 @@ namespace GestioneCantieri
             }
             catch (Exception ex)
             {
-                lblMsg.Text = $"Errore durante la stampa del protocollo {ex.Message}";
-                lblMsg.ForeColor = Color.DarkRed;
+                (Master as layout).SetModal($"Errore durante la stampa del protocollo {ex.Message}");
             }
         }
         #endregion
@@ -484,8 +481,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblInsMatDaDDT.Text = "È necessario specificare il protocollo prima di inserire i materiali";
-                lblInsMatDaDDT.ForeColor = Color.Red;
+                (Master as layout).SetModal($"È necessario specificare il protocollo prima di inserire i materiali");
             }
         }
         protected void btnSelezionaTutto_Click(object sender, EventArgs e)
@@ -573,8 +569,7 @@ namespace GestioneCantieri
                 {
                     if (txtNumBolla.Text == "")
                     {
-                        lblIsRecordInserito.Text = "Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"";
-                        lblIsRecordInserito.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"");
                         return;
                     }
                 }
@@ -585,22 +580,19 @@ namespace GestioneCantieri
                     {
                         if (!MaterialiCantieriDAO.InserisciMaterialeCantiere(mc))
                         {
-                            lblIsRecordInserito.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.";
-                            lblIsRecordInserito.ForeColor = Color.Red;
+                            (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata");
                         }
                     }
                     else
                     {
-                        lblIsRecordInserito.Text = "Codice Articolo e Descrizione Codice Articolo obbligatori!";
-                        lblIsRecordInserito.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Codice Articolo e Descrizione Codice Articolo obbligatori");
                         return;
                     }
                 }
             }
             else
             {
-                lblIsRecordInserito.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblIsRecordInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
 
             BindGridMatCant();
@@ -735,8 +727,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsRecordInserito.Text = "Errore durante l'eliminazione del record";
-                    lblIsRecordInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
                 BindGridMatCant();
             }
@@ -815,8 +806,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsRecordInserito.Text = "Errore durante la modifica del record";
-                    lblIsRecordInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridMatCant();
@@ -828,8 +818,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsRecordInserito.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblIsRecordInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
         }
         #endregion
@@ -882,8 +871,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsRecordInserito.Text = "Errore durante la modifica del record";
-                    lblIsRecordInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridMatCant("RIENTRO");
@@ -895,8 +883,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsRecordInserito.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblIsRecordInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
         }
         protected void btnInserisciRientro_Click(object sender, EventArgs e)
@@ -912,8 +899,7 @@ namespace GestioneCantieri
                 {
                     if (txtNumBolla.Text == "")
                     {
-                        lblIsRecordInserito.Text = "Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"";
-                        lblIsRecordInserito.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"");
                         return;
                     }
                 }
@@ -931,8 +917,7 @@ namespace GestioneCantieri
                     }
                     else
                     {
-                        lblIsRecordInserito.Text = "La quantità non deve superare quella specificata nel record di materiale cantiere";
-                        lblIsRecordInserito.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"La quantità non deve superare quella specificata nel record di materiale cantiere");
                         return;
                     }
                 }
@@ -944,14 +929,12 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsRecordInserito.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata";
-                    lblIsRecordInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata");
                 }
             }
             else
             {
-                lblIsRecordInserito.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblIsRecordInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
 
             BindGridMatCant("RIENTRO");
@@ -991,8 +974,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsRecordInserito.Text = "Errore durante l'eliminazione del record";
-                    lblIsRecordInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
 
                 BindGridMatCant("RIENTRO");
@@ -1059,8 +1041,7 @@ namespace GestioneCantieri
                 {
                     if (txtNumBolla.Text == "")
                     {
-                        lblIsRecordInserito.Text = "Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"";
-                        lblIsRecordInserito.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"");
                         return;
                     }
                 }
@@ -1098,14 +1079,12 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblMsgAccrediti.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata";
-                    lblMsgAccrediti.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata");
                 }
             }
             else
             {
-                lblMsgAccrediti.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblMsgAccrediti.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
 
             BindGridAccrediti();
@@ -1147,8 +1126,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblMsgAccrediti.Text = "Errore durante la modifica del record";
-                    lblMsgAccrediti.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridAccrediti();
@@ -1160,8 +1138,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblMsgAccrediti.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblMsgAccrediti.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
         }
         protected void btnFiltraAccrediti_Click(object sender, EventArgs e)
@@ -1223,8 +1200,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblMsgAccrediti.Text = "Errore durante l'eliminazione del record";
-                lblMsgAccrediti.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Errore durante l'eliminazione del record");
             }
 
             BindGridAccrediti();
@@ -1246,8 +1222,7 @@ namespace GestioneCantieri
                 txtPrezzoUniAccrediti.Text = Math.Round(Convert.ToDecimal(txtPrezzoNettoAccrediti.Text.Replace(".", ",")), 2).ToString();
             else
             {
-                lblMsgAccrediti.Text = "Inserire un valore nella casella 'Prezzo Netto Mef' per calcolare il 'Prezzo Unitario'";
-                lblMsgAccrediti.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Inserire un valore nella casella \"Prezzo Netto Mef\" per calcolare il \"Prezzo Unitario\"");
             }
         }
         #endregion
@@ -1302,20 +1277,17 @@ namespace GestioneCantieri
                     }
                     else
                     {
-                        lblIsManodopInserita.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.";
-                        lblIsManodopInserita.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.");
                     }
                 }
                 else
                 {
-                    lblIsManodopInserita.Text = "La quantità deve essere maggiore di '0'";
-                    lblIsManodopInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"La quantità deve essere maggiore di \"0\"");
                 }
             }
             else
             {
-                lblIsManodopInserita.Text = "Inserire un valore per la data";
-                lblIsManodopInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Inserire un valore per la data");
             }
 
             BindGridManodop();
@@ -1377,8 +1349,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsManodopInserita.Text = "Errore durante l'eliminazione del record";
-                    lblIsManodopInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
 
                 BindGridManodop();
@@ -1447,8 +1418,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsManodopInserita.Text = "Errore durante la modifica del record";
-                    lblIsManodopInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridManodop();
@@ -1460,8 +1430,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsManodopInserita.Text = "La Quantità deve essere maggiore di 0";
-                lblIsManodopInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"La Quantità deve essere maggiore di 0");
             }
         }
 
@@ -1484,14 +1453,12 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsManodopInserita.Text = "Errore durante la modifica del valore della manodopera";
-                    lblIsManodopInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del valore della manodopera");
                 }
             }
             else
             {
-                lblIsManodopInserita.Text = "Il campo \"Nuovo Valore Manodopera\" NON può essere nè vuoto nè 0";
-                lblIsManodopInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Il campo \"Nuovo Valore Manodopera\" NON può essere nè vuoto nè 0");
             }
 
             BindGridManodop();
@@ -1550,14 +1517,12 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsOperInserita.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.";
-                    lblIsOperInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.");
                 }
             }
             else
             {
-                lblIsOperInserita.Text = "Il valore della quantità deve essere maggiore di '0'";
-                lblIsOperInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"La Quantità deve essere maggiore di 0");
             }
 
             BindGridOper();
@@ -1621,8 +1586,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsOperInserita.Text = "Errore durante l'eliminazione del record";
-                    lblIsOperInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
 
                 BindGridOper();
@@ -1688,8 +1652,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsOperInserita.Text = "Errore durante la modifica del record";
-                    lblIsOperInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridOper();
@@ -1701,8 +1664,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsOperInserita.Text = "La Quantità deve essere maggiore di 0";
-                lblIsOperInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"La Quantità deve essere maggiore di 0");
             }
         }
 
@@ -1721,20 +1683,17 @@ namespace GestioneCantieri
                     }
                     else
                     {
-                        lblIsOperInserita.Text = "Errore durante la modifica del costo operaio";
-                        lblIsOperInserita.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Errore durante la modifica del costo operaio");
                     }
                 }
                 else
                 {
-                    lblIsOperInserita.Text = "Il campo \"Nuovo Costo Operaio\" NON può essere nè vuoto nè 0";
-                    lblIsOperInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Il campo \"Nuovo Costo Operaio\" NON può essere nè vuoto nè 0");
                 }
             }
             else
             {
-                lblIsOperInserita.Text = "È necessario scegliere un Operaio prima di modificarne il costo";
-                lblIsOperInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"È necessario scegliere un Operaio prima di modificarne il costo");
             }
 
             BindGridOper();
@@ -1816,15 +1775,13 @@ namespace GestioneCantieri
                     }
                     else
                     {
-                        lblIsArrotondInserito.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.";
-                        lblIsArrotondInserito.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.");
                     }
                 }
             }
             else
             {
-                lblIsArrotondInserito.Text = "Il valore della quantità deve essere maggiore di '0'";
-                lblIsArrotondInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"La Quantità deve essere maggiore di 0");
             }
 
             BindGridArrot();
@@ -1861,8 +1818,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsArrotondInserito.Text = "Errore durante la modifica del record";
-                    lblIsArrotondInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridArrot();
@@ -1874,8 +1830,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsArrotondInserito.Text = "La Quantità deve essere maggiore di 0";
-                lblIsArrotondInserito.ForeColor = Color.Red;
+                (Master as layout).SetModal($"La Quantità deve essere maggiore di 0");
             }
         }
         protected void btnGestArrot_Click(object sender, EventArgs e)
@@ -1929,8 +1884,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsArrotondInserito.Text = "Errore durante l'eliminazione del record";
-                    lblIsArrotondInserito.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
 
                 BindGridArrot();
@@ -1984,8 +1938,7 @@ namespace GestioneCantieri
                 txtChiamPzzoUnit.Text = Math.Round(Convert.ToDecimal(txtChiamPzzoNetto.Text.Replace(".", ",")), 2).ToString();
             else
             {
-                lblIsAChiamInserita.Text = "Inserire un valore nella casella 'Prezzo Netto Mef' per calcolare il 'Prezzo Unitario'";
-                lblIsAChiamInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Inserire un valore nella casella \"Prezzo Netto Mef\" per calcolare il \"Prezzo Unitario\"");
             }
         }
         protected void btnInsAChiam_Click(object sender, EventArgs e)
@@ -2001,8 +1954,7 @@ namespace GestioneCantieri
                 {
                     if (txtNumBolla.Text == "")
                     {
-                        lblIsAChiamInserita.Text = "Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"";
-                        lblIsAChiamInserita.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Scegliere un DDT dal menù a discesa o compilare il campo \"Numero Bolla\"");
                         return;
                     }
                 }
@@ -2038,8 +1990,7 @@ namespace GestioneCantieri
                     }
                     else
                     {
-                        lblIsAChiamInserita.Text = "Codice Articolo e Descrizione Codice Articolo obbligatori!";
-                        lblIsAChiamInserita.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Codice Articolo e Descrizione Codice Articolo obbligatori");
                         return;
                     }
                 }
@@ -2051,14 +2002,12 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsAChiamInserita.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.";
-                    lblIsAChiamInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.");
                 }
             }
             else
             {
-                lblIsAChiamInserita.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblIsAChiamInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
 
             BindGridChiamata();
@@ -2111,8 +2060,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsAChiamInserita.Text = "Errore durante l'eliminazione del record";
-                    lblIsAChiamInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
 
                 BindGridChiamata();
@@ -2157,8 +2105,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsAChiamInserita.Text = "Errore durante la modifica del record";
-                    lblIsAChiamInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridChiamata();
@@ -2171,8 +2118,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsAChiamInserita.Text = "Quantità e/o Prezzo Unitario devono essere maggiori di 0";
-                lblIsAChiamInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
         }
 
@@ -2245,8 +2191,7 @@ namespace GestioneCantieri
                 txtSpesaPrezzoCalcolato.Text = Math.Round(Convert.ToDecimal(txtSpesaPrezzo.Text.Replace(".", ",")), 2).ToString();
             else
             {
-                lblIsSpesaInserita.Text = "Inserire un valore nella casella 'Prezzo' per calcolare il 'Prezzo Calcolato'";
-                lblIsSpesaInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Inserire un valore nella casella \"Prezzo\" per calcolare il \"Prezzo Calcolato\"");
             }
 
             btnInsAChiam.Focus();
@@ -2289,16 +2234,14 @@ namespace GestioneCantieri
                     }
                     else
                     {
-                        lblIsSpesaInserita.Text = "Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.";
-                        lblIsSpesaInserita.ForeColor = Color.Red;
+                        (Master as layout).SetModal($"Errore durante l'inserimento del record. L'intestazione deve essere interamente compilata.");
                         return;
                     }
                 }
             }
             else
             {
-                lblIsSpesaInserita.Text = "Il valore della quantità e/o del prezzo devono essere maggiori di '0'";
-                lblIsSpesaInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"Il valore della quantità e/o del prezzo devono essere maggiori di \"0\"");
                 return;
             }
 
@@ -2356,8 +2299,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsSpesaInserita.Text = "Errore durante l'eliminazione del record";
-                    lblIsSpesaInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante l'eliminazione del record");
                 }
 
                 BindGridSpese();
@@ -2394,8 +2336,7 @@ namespace GestioneCantieri
                 }
                 else
                 {
-                    lblIsSpesaInserita.Text = "Errore durante la modifica del record";
-                    lblIsSpesaInserita.ForeColor = Color.Red;
+                    (Master as layout).SetModal($"Errore durante la modifica del record");
                 }
 
                 BindGridSpese();
@@ -2407,8 +2348,7 @@ namespace GestioneCantieri
             }
             else
             {
-                lblIsSpesaInserita.Text = "La Quantità deve essere maggiore di 0";
-                lblIsSpesaInserita.ForeColor = Color.Red;
+                (Master as layout).SetModal($"La Quantità deve essere maggiore di 0");
             }
         }
         #endregion

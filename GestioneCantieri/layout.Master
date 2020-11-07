@@ -6,6 +6,8 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+    <title>Gestione Cantieri</title>
+
     <%-- Jquery --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -44,6 +46,11 @@
                 return false;
             });
         });
+
+        function openModal(messaggio) {
+            $('#pnlModal').modal('show');
+            $('#lblModalText').text(messaggio);
+        }
     </script>
 
     <asp:ContentPlaceHolder ID="title" runat="server">
@@ -138,6 +145,8 @@
         </div>
 
         <form id="frmGestioneCantieri" runat="server">
+
+            <%-- Alert --%>
             <asp:Panel ID="pnlAlert" Visible="false" runat="server">
                 <div class="col text-center">
                     <asp:Label ID="lblAlert" runat="server"></asp:Label>
@@ -146,6 +155,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </asp:Panel>
+
+            <!-- Modal -->
+            <div id="pnlModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pnlModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="modalTitle" class="modal-title">ERRORE!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <asp:Label ID="lblModalText" runat="server"></asp:Label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Chiudi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <asp:ContentPlaceHolder ID="body" runat="server">
             </asp:ContentPlaceHolder>
