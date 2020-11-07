@@ -124,7 +124,7 @@
     <Content Include="Css\DdtMef.css" />
     <Content Include="Fatture\Bollette.aspx" />
     <Content Include="Fatture\TotaliFatture.aspx" />
-    <Content Include="GestioneGruppiFrutti\ControlloGruppi.aspx" />
+    <Content Include="GestioneOrdineFrutti\ControlloGruppi.aspx" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
@@ -139,11 +139,11 @@
     <Content Include="Fatture\FattureAcquisto.aspx" />
     <Content Include="GestioneAppunti.aspx" />
     <Content Include="GestioneCantieri.aspx" />
-    <Content Include="GestioneLocali.aspx" />
+    <Content Include="GestioneOrdineFrutti\GestioneLocali.aspx" />
     <Content Include="Acconti\GestionePagamenti.aspx" />
-    <Content Include="GestioneGruppiFrutti\GestisciFrutti.aspx" />
-    <Content Include="GestioneGruppiFrutti\GestisciGruppi.aspx" />
-    <Content Include="GestioneGruppiFrutti\GestisciGruppiFrutti.aspx" />
+    <Content Include="GestioneOrdineFrutti\GestisciFrutti.aspx" />
+    <Content Include="GestioneOrdineFrutti\GestisciGruppi.aspx" />
+    <Content Include="GestioneOrdineFrutti\GestisciGruppiFrutti.aspx" />
     <Content Include="Images\BackgroundGradient.png" />
     <Content Include="Images\spinner.gif" />
     <Content Include="InserimentoDati\Amministratori.aspx" />
@@ -151,7 +151,7 @@
     <Content Include="layout.Master" />
     <Content Include="Listini\Listino.aspx" />
     <Content Include="Listini\ListinoHTS.aspx" />
-    <Content Include="GestioneGruppiFrutti\OrdineFrutti.aspx" />
+    <Content Include="GestioneOrdineFrutti\OrdineFrutti.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -266,11 +266,11 @@
     <Compile Include="Fatture\TotaliFatture.aspx.designer.cs">
       <DependentUpon>TotaliFatture.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\ControlloGruppi.aspx.cs">
+    <Compile Include="GestioneOrdineFrutti\ControlloGruppi.aspx.cs">
       <DependentUpon>ControlloGruppi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\ControlloGruppi.aspx.designer.cs">
+    <Compile Include="GestioneOrdineFrutti\ControlloGruppi.aspx.designer.cs">
       <DependentUpon>ControlloGruppi.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAO\BaseDAO.cs" />
@@ -343,11 +343,11 @@
     <Compile Include="GestioneCantieri.aspx.designer.cs">
       <DependentUpon>GestioneCantieri.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestioneLocali.aspx.cs">
+    <Compile Include="GestioneOrdineFrutti\GestioneLocali.aspx.cs">
       <DependentUpon>GestioneLocali.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestioneLocali.aspx.designer.cs">
+    <Compile Include="GestioneOrdineFrutti\GestioneLocali.aspx.designer.cs">
       <DependentUpon>GestioneLocali.aspx</DependentUpon>
     </Compile>
     <Compile Include="Acconti\GestionePagamenti.aspx.cs">
@@ -357,11 +357,11 @@
     <Compile Include="Acconti\GestionePagamenti.aspx.designer.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\GestisciGruppi.aspx.cs">
+    <Compile Include="GestioneOrdineFrutti\GestisciGruppi.aspx.cs">
       <DependentUpon>GestisciGruppi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\GestisciGruppi.aspx.designer.cs">
+    <Compile Include="GestioneOrdineFrutti\GestisciGruppi.aspx.designer.cs">
       <DependentUpon>GestisciGruppi.aspx</DependentUpon>
     </Compile>
     <Compile Include="InserimentoDati\Amministratori.aspx.cs">
@@ -470,18 +470,18 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\GestisciFrutti.aspx.cs">
+    <Compile Include="GestioneOrdineFrutti\GestisciFrutti.aspx.cs">
       <DependentUpon>GestisciFrutti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\GestisciFrutti.aspx.designer.cs">
+    <Compile Include="GestioneOrdineFrutti\GestisciFrutti.aspx.designer.cs">
       <DependentUpon>GestisciFrutti.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\GestisciGruppiFrutti.aspx.cs">
+    <Compile Include="GestioneOrdineFrutti\GestisciGruppiFrutti.aspx.cs">
       <DependentUpon>GestisciGruppiFrutti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\GestisciGruppiFrutti.aspx.designer.cs">
+    <Compile Include="GestioneOrdineFrutti\GestisciGruppiFrutti.aspx.designer.cs">
       <DependentUpon>GestisciGruppiFrutti.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -513,11 +513,11 @@
     <Compile Include="Listini\Listino.aspx.designer.cs">
       <DependentUpon>Listino.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\OrdineFrutti.aspx.cs">
+    <Compile Include="GestioneOrdineFrutti\OrdineFrutti.aspx.cs">
       <DependentUpon>OrdineFrutti.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GestioneGruppiFrutti\OrdineFrutti.aspx.designer.cs">
+    <Compile Include="GestioneOrdineFrutti\OrdineFrutti.aspx.designer.cs">
       <DependentUpon>OrdineFrutti.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

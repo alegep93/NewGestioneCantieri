@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Utils;
 
 namespace GestioneCantieri.DAO
 {
@@ -43,6 +44,24 @@ namespace GestioneCantieri.DAO
                 {
                     ret = cn.Query<int>(sql.ToString(), new { nomeGruppo, descr }).FirstOrDefault();
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la creazione di un nuovo gruppo", ex);
+            }
+            return ret;
+        }
+
+        public static int InserisciGruppo(string nomeGruppo, string descr, DBTransaction tr)
+        {
+            int ret = 0;
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("INSERT INTO TblGruppiFrutti(NomeGruppo,Descrizione,Completato) VALUES (@nomeGruppo,@descr,0)");
+            sql.AppendLine("SELECT CAST(scope_identity() AS int)");
+
+            try
+            {
+                ret = tr.Connection.Query<int>(sql.ToString(), new { nomeGruppo, descr }, tr.Transaction).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -106,6 +125,21 @@ namespace GestioneCantieri.DAO
                 {
                     ret = cn.Query<GruppiFrutti>(sql.ToString(), new { idGruppo }).FirstOrDefault();
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetSingle in GruppiFruttiDAO", ex);
+            }
+            return ret;
+        }
+
+        public static GruppiFrutti GetSingle(int idGruppo, DBTransaction tr)
+        {
+            GruppiFrutti ret = new GruppiFrutti();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblGruppiFrutti WHERE Id = @idGruppo");
+            try
+            {
+                ret = tr.Connection.Query<GruppiFrutti>(sql.ToString(), new { idGruppo }, tr.Transaction).FirstOrDefault();
             }
             catch (Exception ex)
             {

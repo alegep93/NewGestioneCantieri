@@ -26,6 +26,26 @@
     <%-- FontAwesome --%>
     <script src="https://kit.fontawesome.com/42ac00650f.js" crossorigin="anonymous"></script>
 
+    <script type="text/javascript">
+        $(function () {
+            $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+                if (!$(this).next().hasClass('show')) {
+                    $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+                }
+                var $subMenu = $(this).next(".dropdown-menu");
+                $subMenu.toggleClass('show');
+
+
+                $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+                    $('.dropdown-submenu .show').removeClass("show");
+                });
+
+
+                return false;
+            });
+        });
+    </script>
+
     <asp:ContentPlaceHolder ID="title" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -56,24 +76,24 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestione Gruppi e Frutti<span class="caret"></span></a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestione Ordine Frutti<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/GestisciFrutti.aspx">Gestisci Frutti</a></li>
-                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/GestisciGruppi.aspx">Gestisci Gruppi</a></li>
-                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
-                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
-                                <li><a class="dropdown-item" href="/GestioneGruppiFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciFrutti.aspx">Gestisci Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppi.aspx">Gestisci Gruppi</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestioneLocali.aspx">Gestione Locali</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
+                                <li class="dropdown-submenu dropright">
+                                    <a href="#" class="dropdown-item dropdown-toggle">Stampa Gruppi e Frutti<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/Stampe/StampaFruttiGruppi.aspx">Stampa Frutti Gruppi</a></li>
+                                        <li><a class="dropdown-item" href="/Stampe/StampaOrdFrutLocale.aspx">Stampa Ord Frut Loc</a></li>
+                                        <li><a class="dropdown-item" href="/Stampe/StampaOrdFrutCantExcel.aspx">Stampa Ord Frut Cant Excel</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stampa Gruppi e Frutti<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/Stampe/StampaFruttiGruppi.aspx">Stampa Frutti Gruppi</a></li>
-                                <li><a class="dropdown-item" href="/Stampe/StampaOrdFrutLocale.aspx">Stampa Ord Frut Loc</a></li>
-                                <li><a class="dropdown-item" href="/Stampe/StampaOrdFrutCantExcel.aspx">Stampa Ord Frut Cant Excel</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="nav-link" href="/GestioneLocali.aspx">Gestione Locali</a></li>
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Inserimento Dati<span class="caret"></span></a>
                             <ul class="dropdown-menu">

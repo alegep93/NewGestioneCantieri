@@ -2,7 +2,9 @@
 using GestioneCantieri.Data;
 using GestioneCantieri.Utils;
 using System;
+using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using Utils;
 
 namespace GestioneCantieri
 {
@@ -123,19 +125,26 @@ namespace GestioneCantieri
 
         protected void btnClonaGruppo_Click(object sender, EventArgs e)
         {
+            DBTransaction tr = new DBTransaction();
+            tr.Begin();
             try
             {
                 int idGruppo = Convert.ToInt32(ddlScegliGruppo.SelectedItem.Value);
-                GruppiFrutti gf = GruppiFruttiDAO.GetSingle(idGruppo);
-                int idGruppoCopia = GruppiFruttiDAO.InserisciGruppo("Copia" + gf.NomeGruppo, gf.Descrizione);
-                CompGruppoFrutDAO.InsertList(CompGruppoFrutDAO.GetCompGruppo(idGruppo));
-                (Master as layout).SetAlert("alert-success", "Gruppo clonato con successo");
-                BindGrid();
+                GruppiFrutti gf = GruppiFruttiDAO.GetSingle(idGruppo, tr);
+                int idGruppoCopia = GruppiFruttiDAO.InserisciGruppo("Copia" + gf.NomeGruppo, gf.Descrizione, tr);
+                List<CompGruppoFrut> components = CompGruppoFrutDAO.GetCompGruppo(idGruppo, tr);
+                components.ForEach(f => f.IdTblGruppo = idGruppoCopia);
+                CompGruppoFrutDAO.InsertList(components, tr);
+                tr.Commit();
             }
             catch (Exception ex)
             {
+                tr.Rollback();
                 (Master as layout).SetAlert("alert-danger", $"Errore durante la clonazione del gruppo selezionato - {ex.Message}");
             }
+
+            (Master as layout).SetAlert("alert-success", "Gruppo clonato con successo");
+            BindGrid();
         }
 
         protected void txtFiltroGruppo_TextChanged(object sender, EventArgs e)

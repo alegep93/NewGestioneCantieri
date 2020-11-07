@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Utils;
 
 namespace GestioneCantieri.DAO
 {
@@ -50,6 +51,26 @@ namespace GestioneCantieri.DAO
                 {
                     ret = cn.Query<CompGruppoFrut>(sql.ToString(), new { idGruppo }).ToList();
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetCompGruppo in CompGruppoFrutDAO", ex);
+            }
+            return ret;
+        }
+
+        public static List<CompGruppoFrut> GetCompGruppo(int idGruppo, DBTransaction tr)
+        {
+            List<CompGruppoFrut> ret = new List<CompGruppoFrut>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto, Qta");
+            sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("WHERE IdTblGruppo = @idGruppo");
+            sql.AppendLine("ORDER BY CGF.Id ASC");
+            try
+            {
+                ret = tr.Connection.Query<CompGruppoFrut>(sql.ToString(), new { idGruppo }, tr.Transaction).ToList();
             }
             catch (Exception ex)
             {
@@ -113,6 +134,21 @@ namespace GestioneCantieri.DAO
                 {
                     ret = cn.Execute(sql.ToString(), items) > 0;
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la InsertList in CompGruppoFrutDAO", ex);
+            }
+            return ret;
+        }
+
+        public static bool InsertList(List<CompGruppoFrut> items, DBTransaction tr)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO TblCompGruppoFrut(IdTblGruppo,IdTblFrutto,Qta) VALUES (@IdTblGruppo,@IdTblFrutto,@Qta)");
+            try
+            {
+                ret = tr.Connection.Execute(sql.ToString(), items, tr.Transaction) > 0;
             }
             catch (Exception ex)
             {
