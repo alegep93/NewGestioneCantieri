@@ -1757,6 +1757,29 @@ namespace GestioneCantieri
             grdArrot.DataSource = mcList;
             grdArrot.DataBind();
         }
+        private void PopolaCampiArrot(int idArrot, bool enableControls)
+        {
+            MaterialiCantieri mc = MaterialiCantieriDAO.GetSingle(idArrot);
+
+            //Rendo i textbox abilitati/disabilitati
+            EnableDisableControls(enableControls, pnlGestArrotond);
+
+            ddlScegliAcquirente.SelectedValue = mc.Acquirente;
+            ddlScegliFornit.SelectedValue = mc.Fornitore;
+            txtTipDatCant.Text = mc.Tipologia;
+            txtNumBolla.Text = mc.NumeroBolla.ToString();
+            txtDataDDT.Text = mc.Data.ToString("yyyy-MM-dd");
+            txtDataDDT.TextMode = TextBoxMode.Date;
+            txtFascia.Text = mc.Fascia.ToString();
+            txtArrotCodArt.Text = mc.CodArt;
+            txtArrotDescriCodArt.Text = mc.DescriCodArt;
+            txtProtocollo.Text = mc.ProtocolloInterno.ToString();
+            txtArrotQta.Text = mc.Qta.ToString();
+            txtArrotPzzoUnit.Text = mc.PzzoUniCantiere.ToString();
+            chkArrotVisibile.Checked = mc.Visibile;
+            chkArrotRicalcolo.Checked = mc.Ricalcolo;
+            chkArrotRicaricoSiNo.Checked = mc.RicaricoSiNo;
+        }
 
         /* EVENTI CLICK */
         protected void btnInsArrot_Click(object sender, EventArgs e)
@@ -1771,17 +1794,20 @@ namespace GestioneCantieri
                     bool isInserito = MaterialiCantieriDAO.InserisciMaterialeCantiere(new MaterialiCantieri
                     {
                         IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
-                        Qta = Convert.ToDouble(txtArrotQta.Text),
-                        Tipologia = txtTipDatCant.Text,
-                        CodArt = txtArrotCodArt.Text,
-                        DescriCodArt = txtArrotDescriCodArt.Text,
-                        Data = Convert.ToDateTime(txtDataDDT.Text),
-                        ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text),
-                        NumeroBolla = txtNumBolla.Text,
-                        Fascia = Convert.ToInt32(txtFascia.Text),
                         Acquirente = ddlScegliAcquirente.SelectedItem.Value,
                         Fornitore = ddlScegliFornit.SelectedItem.Value,
-                        PzzoUniCantiere = txtArrotPzzoUnit.Text != "" ? Convert.ToDecimal(txtArrotPzzoUnit.Text.Replace('.', ',')) : 0
+                        Tipologia = txtTipDatCant.Text,
+                        NumeroBolla = txtNumBolla.Text,
+                        Data = Convert.ToDateTime(txtDataDDT.Text),
+                        Fascia = Convert.ToInt32(txtFascia.Text),
+                        ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text),
+                        Qta = Convert.ToDouble(txtArrotQta.Text),
+                        PzzoUniCantiere = Convert.ToDecimal(txtArrotPzzoUnit.Text.Replace('.', ',')),
+                        CodArt = txtArrotCodArt.Text,
+                        DescriCodArt = txtArrotDescriCodArt.Text,
+                        Visibile = chkArrotVisibile.Checked,
+                        Ricalcolo = chkArrotRicalcolo.Checked,
+                        RicaricoSiNo = chkArrotRicaricoSiNo.Checked
                     });
                     if (isInserito)
                     {
@@ -1804,7 +1830,54 @@ namespace GestioneCantieri
             BindGridArrot();
             SvuotaCampi(pnlGestArrotond);
         }
-        //Visibilità pannello
+        protected void btnModArrot_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToDecimal(txtArrotQta.Text) > 0 && txtArrotQta.Text != "")
+            {
+                bool isUpdated = MaterialiCantieriDAO.UpdateMatCant(new MaterialiCantieri
+                {
+                    IdMaterialiCantiere = Convert.ToInt32(hidArrot.Value),
+                    IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
+                    Acquirente = ddlScegliAcquirente.SelectedItem.Value,
+                    Fornitore = ddlScegliFornit.SelectedItem.Value,
+                    Tipologia = txtTipDatCant.Text,
+                    NumeroBolla = txtNumBolla.Text,
+                    Data = Convert.ToDateTime(txtDataDDT.Text),
+                    Fascia = Convert.ToInt32(txtFascia.Text),
+                    ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text),
+                    Qta = Convert.ToDouble(txtArrotQta.Text),
+                    PzzoUniCantiere = Convert.ToDecimal(txtArrotPzzoUnit.Text.Replace('.', ',')),
+                    CodArt = txtArrotCodArt.Text,
+                    DescriCodArt = txtArrotDescriCodArt.Text,
+                    Visibile = chkArrotVisibile.Checked,
+                    Ricalcolo = chkArrotRicalcolo.Checked,
+                    RicaricoSiNo = chkArrotRicaricoSiNo.Checked
+                });
+
+                if (isUpdated)
+                {
+                    lblIsArrotondInserito.Text = "Record modificato con successo";
+                    lblIsArrotondInserito.ForeColor = Color.Blue;
+                }
+                else
+                {
+                    lblIsArrotondInserito.Text = "Errore durante la modifica del record";
+                    lblIsArrotondInserito.ForeColor = Color.Red;
+                }
+
+                BindGridArrot();
+                SvuotaCampi(pnlGestArrotond);
+
+                btnInsArrot.Visible = true;
+                btnModArrot.Visible = !btnInsArrot.Visible;
+                lblTitoloMaschera.Text = "Inserisci Arrotondamento";
+            }
+            else
+            {
+                lblIsArrotondInserito.Text = "La Quantità deve essere maggiore di 0";
+                lblIsArrotondInserito.ForeColor = Color.Red;
+            }
+        }
         protected void btnGestArrot_Click(object sender, EventArgs e)
         {
             lblTitoloMaschera.Text = "Gestione Arrotondamenti";
@@ -1818,12 +1891,12 @@ namespace GestioneCantieri
             HideMessageLabels();
             txtFiltroAnnoDDT.Text = txtFiltroN_DDT.Text = "";
         }
-
-        /* EVENTI PER IL ROWCOMMAND */
         protected void btnArrotFiltraGrd_Click(object sender, EventArgs e)
         {
             BindGridArrot();
         }
+
+        /* EVENTI PER IL ROWCOMMAND */
         protected void grdArrot_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int idArrot = Convert.ToInt32(e.CommandArgument.ToString());
@@ -1861,81 +1934,6 @@ namespace GestioneCantieri
                 }
 
                 BindGridArrot();
-            }
-        }
-        private void PopolaCampiArrot(int idArrot, bool enableControls)
-        {
-            MaterialiCantieri mc = MaterialiCantieriDAO.GetSingle(idArrot);
-
-            //Rendo i textbox abilitati/disabilitati
-            EnableDisableControls(enableControls, pnlGestArrotond);
-
-            ddlScegliAcquirente.SelectedValue = mc.Acquirente;
-            ddlScegliFornit.SelectedValue = mc.Fornitore;
-            txtTipDatCant.Text = mc.Tipologia;
-            txtNumBolla.Text = mc.NumeroBolla.ToString();
-            txtDataDDT.Text = mc.Data.ToString("yyyy-MM-dd");
-            txtDataDDT.TextMode = TextBoxMode.Date;
-            txtFascia.Text = mc.Fascia.ToString();
-            txtArrotCodArt.Text = mc.CodArt;
-            txtArrotDescriCodArt.Text = mc.DescriCodArt;
-            txtProtocollo.Text = mc.ProtocolloInterno.ToString();
-            txtArrotQta.Text = mc.Qta.ToString();
-            txtArrotPzzoUnit.Text = mc.PzzoUniCantiere.ToString();
-            chkVisibile.Checked = mc.Visibile;
-            chkRicalcolo.Checked = mc.Ricalcolo;
-            chkRicarico.Checked = mc.RicaricoSiNo;
-            txtNote1.Text = mc.Note;
-            txtNote2.Text = mc.Note2;
-        }
-        protected void btnModArrot_Click(object sender, EventArgs e)
-        {
-            if (Convert.ToDecimal(txtArrotQta.Text) > 0 && txtArrotQta.Text != "")
-            {
-                bool isUpdated = MaterialiCantieriDAO.UpdateMatCant(new MaterialiCantieri
-                {
-                    IdMaterialiCantiere = Convert.ToInt32(hidArrot.Value),
-                    IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
-                    Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                    Fornitore = ddlScegliFornit.SelectedItem.Value,
-                    Tipologia = txtTipDatCant.Text,
-                    NumeroBolla = txtNumBolla.Text,
-                    Data = Convert.ToDateTime(txtDataDDT.Text),
-                    Fascia = Convert.ToInt32(txtFascia.Text),
-                    ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text),
-                    Note = txtNote1.Text,
-                    Note2 = txtNote2.Text,
-                    Qta = Convert.ToDouble(txtArrotQta.Text),
-                    PzzoUniCantiere = Convert.ToDecimal(txtArrotPzzoUnit.Text.Replace('.', ',')),
-                    CodArt = txtArrotCodArt.Text,
-                    DescriCodArt = txtArrotDescriCodArt.Text,
-                    Visibile = chkVisibile.Checked,
-                    Ricalcolo = chkRicalcolo.Checked,
-                    RicaricoSiNo = chkRicarico.Checked
-                });
-
-                if (isUpdated)
-                {
-                    lblIsArrotondInserito.Text = "Record modificato con successo";
-                    lblIsArrotondInserito.ForeColor = Color.Blue;
-                }
-                else
-                {
-                    lblIsArrotondInserito.Text = "Errore durante la modifica del record";
-                    lblIsArrotondInserito.ForeColor = Color.Red;
-                }
-
-                BindGridArrot();
-                SvuotaCampi(pnlGestArrotond);
-
-                btnInsArrot.Visible = true;
-                btnModArrot.Visible = !btnInsArrot.Visible;
-                lblTitoloMaschera.Text = "Inserisci Arrotondamento";
-            }
-            else
-            {
-                lblIsArrotondInserito.Text = "La Quantità deve essere maggiore di 0";
-                lblIsArrotondInserito.ForeColor = Color.Red;
             }
         }
         #endregion
