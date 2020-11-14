@@ -870,40 +870,22 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.TextBox txtDescrCodCant;
 
         /// <summary>
-        /// Controllo lblIndirizzoCant.
+        /// Controllo lblCodiceRiferimentoCant.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIndirizzoCant;
+        protected global::System.Web.UI.WebControls.Label lblCodiceRiferimentoCant;
 
         /// <summary>
-        /// Controllo txtIndirizzoCant.
+        /// Controllo txtCodiceRiferimentoCant.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIndirizzoCant;
-
-        /// <summary>
-        /// Controllo lblCittaCant.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCittaCant;
-
-        /// <summary>
-        /// Controllo txtCittaCant.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCittaCant;
+        protected global::System.Web.UI.WebControls.TextBox txtCodiceRiferimentoCant;
 
         /// <summary>
         /// Controllo lblRicaricoCant.

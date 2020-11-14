@@ -17,11 +17,7 @@ namespace GestioneCantieri.DAO
         public static List<Cantieri> GetAll()
         {
             List<Cantieri> ret = new List<Cantieri>();
-            StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT *");
-            sql.AppendLine($"FROM TblCantieri");
-            sql.AppendLine($"ORDER BY CodCant ASC");
-
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblCantieri ORDER BY CodCant");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -232,6 +228,22 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        internal static void SetDiCo(int idCantiere, long numDiCo)
+        {
+            StringBuilder sql = new StringBuilder($"UPDATE TblCantieri SET NumDiCo = @numDiCo WHERE IdCantieri = @idCantiere");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idCantiere, numDiCo });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Errore durante il SetDiCo del cantiere {idCantiere}", ex);
+            }
+        }
+
         // DELETE
         public static bool EliminaCantiere(int idCant)
         {
@@ -249,6 +261,22 @@ namespace GestioneCantieri.DAO
                 throw new Exception("Errore durante l'eliminazione del cantiere", ex);
             }
             return ret;
+        }
+
+        public static void DeleteDiCo(int idCantiere)
+        {
+            StringBuilder sql = new StringBuilder("UPDATE TblCantieri SET NumDiCo = NULL WHERE IdCantieri = @idCantiere");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    cn.Execute(sql.ToString(), new { idCantiere });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Errore durante il DeleteDiCo del cantiere {idCantiere}", ex);
+            }
         }
     }
 }

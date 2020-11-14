@@ -147,6 +147,7 @@
     <Content Include="Images\BackgroundGradient.png" />
     <Content Include="Images\spinner.gif" />
     <Content Include="InserimentoDati\Amministratori.aspx" />
+    <Content Include="InserimentoDati\DichiarazioneConformita.aspx" />
     <Content Include="InserimentoDati\InserimentoDati.aspx" />
     <Content Include="layout.Master" />
     <Content Include="Listini\Listino.aspx" />
@@ -370,6 +371,13 @@
     </Compile>
     <Compile Include="InserimentoDati\Amministratori.aspx.designer.cs">
       <DependentUpon>Amministratori.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InserimentoDati\DichiarazioneConformita.aspx.cs">
+      <DependentUpon>DichiarazioneConformita.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InserimentoDati\DichiarazioneConformita.aspx.designer.cs">
+      <DependentUpon>DichiarazioneConformita.aspx</DependentUpon>
     </Compile>
     <Compile Include="Listini\ListinoHTS.aspx.cs">
       <DependentUpon>ListinoHTS.aspx</DependentUpon>

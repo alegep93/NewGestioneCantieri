@@ -28,5 +28,6 @@ namespace GestioneCantieri.Data
         public bool Fatturato { get; set; } = false;
         public bool NonRiscuotibile { get; set; } = false;
         public DateTime Data { get; set; } = DateTime.Now;
+        public long? NumDiCo { get; set; } = null;
     }
 }

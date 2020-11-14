@@ -1,2 +1,2 @@
-ALTER TABLE TblAccontiOperai ADD Descrizione nvarchar(200) NULL
+ALTER TABLE TblCantieri ADD NumDiCo bigint NULL
 GO

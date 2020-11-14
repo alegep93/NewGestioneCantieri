@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
 {
-    public partial class InserimentoDati : System.Web.UI.Page
+    public partial class InserimentoDati : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -457,8 +457,8 @@ namespace GestioneCantieri
                     Data = Convert.ToDateTime(txtDataInserCant.Text),
                     CodCant = txtCodCant.Text,
                     DescriCodCant = txtDescrCodCant.Text,
-                    Indirizzo = txtIndirizzoCant.Text,
-                    Città = txtCittaCant.Text,
+                    //Indirizzo = txtIndirizzoCant.Text,
+                    //Città = txtCittaCant.Text,
                     Ricarico = Convert.ToInt32(txtRicaricoCant.Text),
                     PzzoManodopera = Convert.ToDecimal(txtPzzoManodopCant.Text),
                     Chiuso = chkCantChiuso.Checked,
@@ -473,7 +473,8 @@ namespace GestioneCantieri
                     Fatturato = chkFatturato.Checked,
                     NonRiscuotibile = chkNonRiscuotibile.Checked,
                     FasciaTblCantieri = Convert.ToInt32(txtFasciaCant.Text),
-                    CodRiferCant = CostruisciCodRiferCant()
+                    //CodRiferCant = CostruisciCodRiferCant()
+                    CodRiferCant = txtCodiceRiferimentoCant.Text
                 });
 
                 if (isInserito)
@@ -507,8 +508,8 @@ namespace GestioneCantieri
                 Data = Convert.ToDateTime(txtDataInserCant.Text),
                 CodCant = txtCodCant.Text,
                 DescriCodCant = txtDescrCodCant.Text,
-                Indirizzo = txtIndirizzoCant.Text,
-                Città = txtCittaCant.Text,
+                //Indirizzo = txtIndirizzoCant.Text,
+                //Città = txtCittaCant.Text,
                 Ricarico = Convert.ToInt32(txtRicaricoCant.Text),
                 PzzoManodopera = Convert.ToDecimal(txtPzzoManodopCant.Text),
                 Chiuso = chkCantChiuso.Checked,
@@ -523,7 +524,8 @@ namespace GestioneCantieri
                 Fatturato = chkFatturato.Checked,
                 NonRiscuotibile = chkNonRiscuotibile.Checked,
                 FasciaTblCantieri = Convert.ToInt32(txtFasciaCant.Text),
-                CodRiferCant = CostruisciCodRiferCant()
+                CodRiferCant = txtCodiceRiferimentoCant.Text
+                //CodRiferCant = CostruisciCodRiferCant()
             });
 
             if (isUpdated)
@@ -587,8 +589,9 @@ namespace GestioneCantieri
             txtDataInserCant.TextMode = TextBoxMode.Date;
             txtCodCant.Text = cant.CodCant;
             txtDescrCodCant.Text = cant.DescriCodCant;
-            txtIndirizzoCant.Text = cant.Indirizzo;
-            txtCittaCant.Text = cant.Città;
+            txtCodiceRiferimentoCant.Text = cant.CodRiferCant;
+            //txtIndirizzoCant.Text = cant.Indirizzo;
+            //txtCittaCant.Text = cant.Città;
             txtRicaricoCant.Text = cant.Ricarico.ToString();
             txtPzzoManodopCant.Text = cant.PzzoManodopera.ToString("N2");
             txtNumeroCant.Text = cant.Numero.ToString();

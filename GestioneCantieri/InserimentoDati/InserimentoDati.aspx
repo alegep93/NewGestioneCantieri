@@ -376,14 +376,18 @@
                             <asp:Label ID="lblDescrCodCant" runat="server" Text="Descrizione Cantiere" />
                             <asp:TextBox ID="txtDescrCodCant" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
-                        <div class="col-2 form-group">
+                        <div class="col form-group">
+                            <asp:Label ID="lblCodiceRiferimentoCant" runat="server" Text="Codice riferimento cantiere" />
+                            <asp:TextBox ID="txtCodiceRiferimentoCant" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <%--<div class="col-2 form-group">
                             <asp:Label ID="lblIndirizzoCant" runat="server" Text="Indirizzo" />
                             <asp:TextBox ID="txtIndirizzoCant" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col-2 form-group">
                             <asp:Label ID="lblCittaCant" runat="server" Text="Città" />
                             <asp:TextBox ID="txtCittaCant" CssClass="form-control" runat="server"></asp:TextBox>
-                        </div>
+                        </div>--%>
                     </div>
                 </asp:Panel>
             </div>
