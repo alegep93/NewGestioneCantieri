@@ -1,13 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/layout.Master" CodeBehind="StampaPerTipologia.aspx.cs" Inherits="GestioneCantieri.StampaPerTipologia" %>
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
-    <title>Stampa Verifica Cantiere</title>
+    <title>Stampa Manodopera</title>
 </asp:Content>
 
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col">
-            <h1>Stampa Per Tipologia</h1>
+            <h1>Stampa Manodopera</h1>
         </div>
     </div>
 
@@ -39,14 +39,10 @@
     </div>
 
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-6 text-center">
+        <div class="col text-center">
             <asp:Label ID="lblScegliCantiere" runat="server" Text="Scegli Cantiere"></asp:Label>
             <asp:DropDownList ID="ddlScegliCant" AutoPostBack="true" OnSelectedIndexChanged="ddlScegliCant_SelectedIndexChanged" CssClass="form-control" runat="server"></asp:DropDownList>
         </div>
-    </div>
-
-    <!-- Stampa Per Data -->
-    <div class="row d-flex justify-content-center align-items-center">
         <div class="col">
             <asp:Label ID="lblDataDa" runat="server" Text="Data Da:"></asp:Label>
             <asp:TextBox ID="txtDataDa" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
@@ -56,21 +52,21 @@
             <asp:TextBox ID="txtDataA" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
         </div>
         <!-- Scelta Operaio -->
-        <div class="col text-center">
+        <%--<div class="col text-center">
             <asp:Label ID="lblScegliOperaio" runat="server" Text="Scegli Operaio"></asp:Label>
             <asp:DropDownList ID="ddlScegliOperaio" CssClass="form-control" runat="server"></asp:DropDownList>
-        </div>
+        </div>--%>
     </div>
 
     <!-- Tipologie -->
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
+    <%--<div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center">
             <asp:Label ID="lblManodop" runat="server" Text="Manodopera"></asp:Label>
             <asp:RadioButton ID="rdbManodop" GroupName="rdbTipol" Checked="true" runat="server" />
             <asp:Label ID="lblOperaio" CssClass="ml-5" runat="server" Text="Operaio"></asp:Label>
             <asp:RadioButton ID="rdbOper" GroupName="rdbTipol" runat="server" />
         </div>
-    </div>
+    </div>--%>
 
     <!-- Bottone di stampa -->
     <div class="row mt-3 d-flex justify-content-center align-items-center">

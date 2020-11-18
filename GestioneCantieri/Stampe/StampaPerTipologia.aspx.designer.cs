@@ -150,60 +150,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.TextBox txtDataA;
 
         /// <summary>
-        /// Controllo lblScegliOperaio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliOperaio;
-
-        /// <summary>
-        /// Controllo ddlScegliOperaio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliOperaio;
-
-        /// <summary>
-        /// Controllo lblManodop.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblManodop;
-
-        /// <summary>
-        /// Controllo rdbManodop.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdbManodop;
-
-        /// <summary>
-        /// Controllo lblOperaio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOperaio;
-
-        /// <summary>
-        /// Controllo rdbOper.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdbOper;
-
-        /// <summary>
         /// Controllo btnStampaPerTipologia.
         /// </summary>
         /// <remarks>

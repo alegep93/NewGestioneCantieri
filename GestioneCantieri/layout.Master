@@ -134,7 +134,7 @@
                                 <li><a class="dropdown-item" href="/Stampe/StampaVerificaCantiere.aspx">Stampa Verifica Cantiere</a></li>
                                 <li><a class="dropdown-item" href="/Stampe/StampaValoriCantieri.aspx">Stampa Valori Cantieri</a></li>
                                 <li><a class="dropdown-item" href="/Stampe/StampaValoriCantieriConOpzioni.aspx">Stampa Valori Cantieri Con Opzioni</a></li>
-                                <li><a class="dropdown-item" href="/Stampe/StampaPerTipologia.aspx">Stampa Per Tipologia</a></li>
+                                <li><a class="dropdown-item" href="/Stampe/StampaPerTipologia.aspx">Stampa Manodopera</a></li>
                             </ul>
                         </li>
                     </ul>

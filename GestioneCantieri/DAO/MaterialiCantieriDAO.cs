@@ -154,7 +154,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static List<MaterialiCantieri> GetMaterialeCantierePerTipologia(int idCant, string dataDa, string dataA, int idOper, string tipologia)
+        public static List<MaterialiCantieri> GetMaterialeCantierePerTipologia(int idCant, string dataDa, string dataA, string tipologia)
         {
             List<MaterialiCantieri> ret = new List<MaterialiCantieri>();
             StringBuilder sql = new StringBuilder();
@@ -163,16 +163,15 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"LEFT JOIN TblCantieri AS B ON (A.IdTblCantieri = B.IdCantieri)");
             sql.AppendLine($"LEFT JOIN TblClienti AS C ON (B.IdTblClienti = C.IdCliente)");
             sql.AppendLine($"LEFT JOIN TblOperaio AS D ON (A.IdTblOperaio = D.IdOperaio)");
-            sql.AppendLine($"WHERE Tipologia = @tipologia");
-            sql.AppendLine(idCant != -1 ? $"AND IdTblCantieri = @idCant" : "AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA)");
-            sql.AppendLine(idOper != -1 ? $"AND A.Acquirente = @idOper" : "");
+            sql.AppendLine($"WHERE Tipologia = @tipologia AND A.Data BETWEEN CONVERT(date, @dataDa) AND CONVERT(date, @dataA)");
+            sql.AppendLine(idCant != -1 ? $"AND IdTblCantieri = @idCant" : "");
             sql.AppendLine($"ORDER BY A.Data, B.CodCant");
 
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { tipologia, idCant, dataDa, dataA, idOper }).ToList();
+                    ret = cn.Query<MaterialiCantieri>(sql.ToString(), new { tipologia, idCant, dataDa, dataA }).ToList();
                 }
             }
             catch (Exception ex)

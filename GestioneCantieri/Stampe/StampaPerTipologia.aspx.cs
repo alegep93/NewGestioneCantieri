@@ -16,7 +16,7 @@ namespace GestioneCantieri
             if (!IsPostBack)
             {
                 FillDdlScegliCantiere();
-                FillDdlScegliOperaio();
+                //FillDdlScegliOperaio();
             }
         }
 
@@ -27,17 +27,16 @@ namespace GestioneCantieri
             ddlScegliCant.Items.Add(new ListItem("", "-1"));
             DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
         }
-        protected void FillDdlScegliOperaio()
-        {
-            ddlScegliOperaio.Items.Clear();
-            ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
-            DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
-        }
+        //protected void FillDdlScegliOperaio()
+        //{
+        //    ddlScegliOperaio.Items.Clear();
+        //    ddlScegliOperaio.Items.Add(new ListItem("", "-1"));
+        //    DropDownListManager.FillDdlOperaio(OperaiDAO.GetAll(), ref ddlScegliOperaio);
+        //}
         protected void BindGrid()
         {
             pnlShowGridAndLabel.Visible = true;
-            string tipologia = rdbManodop.Checked ? "MANODOPERA" : "OPERAIO";
-            List<MaterialiCantieri> mcList = MaterialiCantieriDAO.GetMaterialeCantierePerTipologia(Convert.ToInt32(ddlScegliCant.SelectedItem.Value), txtDataDa.Text, txtDataA.Text, Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value), tipologia.ToUpper());
+            List<MaterialiCantieri> mcList = MaterialiCantieriDAO.GetMaterialeCantierePerTipologia(Convert.ToInt32(ddlScegliCant.SelectedItem.Value), txtDataDa.Text, txtDataA.Text, "MANODOPERA");
 
             grdStampaPerTipologia.DataSource = mcList;
             grdStampaPerTipologia.DataBind();
