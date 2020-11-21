@@ -557,6 +557,7 @@
     </Compile>
     <Compile Include="Utils\DBTransaction.cs" />
     <Compile Include="Utils\DropDownListManager.cs" />
+    <Compile Include="Utils\Enumeratori.cs" />
     <Compile Include="Utils\ExcelManager.cs" />
     <Compile Include="Utils\RicalcoloContiManager.cs" />
   </ItemGroup>

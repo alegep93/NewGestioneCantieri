@@ -2370,7 +2370,12 @@ namespace GestioneCantieri
             List<MaterialiCantieri> items = MaterialiCantieriDAO.GetByIdCantiere(cant.IdCantieri).Where(w => w.ProtocolloInterno == Convert.ToInt32(txtProtocollo.Text)).ToList();
             Cell emptyCellManodopera = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
             Cell emptyCellOperaio = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
-            //Cell emptyCellMateriale = new Cell(1, totalColspan).Add(new Paragraph("\n"));
+            Cell emptyCellMateriale = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
+            Cell emptyCellSpese = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
+            Cell emptyCellAChiamata = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
+            Cell emptyCellArrotondamento = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
+            Cell emptyCellAccrediti = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
+            //Cell emptyCellRientro = new Cell(1, tableDimension).Add(new Paragraph("\n\n"));
 
             if (items.Count > 0)
             {
@@ -2387,32 +2392,87 @@ namespace GestioneCantieri
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Note 2").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Totale").SetFont(bold)).SetTextAlignment(TextAlignment.CENTER)).SetVerticalAlignment(VerticalAlignment.MIDDLE);
 
+                string tipologia = "";
+
                 // Dati in tabella
-                List<MaterialiCantieri> manodoperaList = items.Where(w => w.Tipologia == "MANODOPERA").ToList();
+                tipologia = Enumeratori.tipologie.MANODOPERA.ToString().Replace("_", " ");
+                List<MaterialiCantieri> manodoperaList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (manodoperaList.Count > 0)
                 {
-                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph("MANODOPERA").SetFont(bold)));
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia).SetFont(bold)));
                     table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {manodoperaList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
                     InsertDataIntoPdfTable(ref table, manodoperaList, operai, font);
                     table.AddCell(emptyCellManodopera);
                 }
 
-                List<MaterialiCantieri> operaioList = items.Where(w => w.Tipologia == "OPERAIO").ToList();
+                tipologia = Enumeratori.tipologie.OPERAIO.ToString().Replace("_", " ");
+                List<MaterialiCantieri> operaioList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (operaioList.Count > 0)
                 {
-                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph("OPERAIO")).SetFont(bold));
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
                     table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {operaioList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
                     InsertDataIntoPdfTable(ref table, operaioList, operai, font);
                     table.AddCell(emptyCellOperaio);
                 }
 
-                List<MaterialiCantieri> materialeList = items.Where(w => w.Tipologia == "MATERIALE").ToList();
+                tipologia = Enumeratori.tipologie.MATERIALE.ToString().Replace("_", " ");
+                List<MaterialiCantieri> materialeList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (materialeList.Count > 0)
                 {
-                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph("MATERIALE")).SetFont(bold));
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
                     table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {materialeList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
                     InsertDataIntoPdfTable(ref table, materialeList, operai, font);
-                    //table.AddCell(emptyCellMateriale);
+                    table.AddCell(emptyCellMateriale);
+                }
+
+                tipologia = Enumeratori.tipologie.SPESE.ToString().Replace("_", " ");
+                List<MaterialiCantieri> speseList = items.Where(w => w.Tipologia == tipologia).ToList();
+                if (speseList.Count > 0)
+                {
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
+                    table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {speseList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
+                    InsertDataIntoPdfTable(ref table, speseList, operai, font);
+                    table.AddCell(emptyCellSpese);
+                }
+
+                tipologia = Enumeratori.tipologie.A_CHIAMATA.ToString().Replace("_", " ");
+                List<MaterialiCantieri> aChiamataList = items.Where(w => w.Tipologia == tipologia).ToList();
+                if (aChiamataList.Count > 0)
+                {
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
+                    table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {aChiamataList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
+                    InsertDataIntoPdfTable(ref table, aChiamataList, operai, font);
+                    table.AddCell(emptyCellAChiamata);
+                }
+
+                tipologia = Enumeratori.tipologie.ARROTONDAMENTO.ToString().Replace("_", " ");
+                List<MaterialiCantieri> arrotondamentoList = items.Where(w => w.Tipologia == tipologia).ToList();
+                if (arrotondamentoList.Count > 0)
+                {
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
+                    table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {arrotondamentoList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
+                    InsertDataIntoPdfTable(ref table, arrotondamentoList, operai, font);
+                    table.AddCell(emptyCellArrotondamento);
+                }
+
+                tipologia = Enumeratori.tipologie.ACCREDITI.ToString().Replace("_", " ");
+                List<MaterialiCantieri> accreditiList = items.Where(w => w.Tipologia == tipologia).ToList();
+                if (accreditiList.Count > 0)
+                {
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
+                    table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {accreditiList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
+                    InsertDataIntoPdfTable(ref table, accreditiList, operai, font);
+                    table.AddCell(emptyCellAccrediti);
+                }
+
+                tipologia = Enumeratori.tipologie.RIENTRO.ToString().Replace("_", " ");
+                List<MaterialiCantieri> rientroList = items.Where(w => w.Tipologia == tipologia).ToList();
+                if (rientroList.Count > 0)
+                {
+                    table.AddCell(new Cell(1, tableDimension - 1).Add(new Paragraph(tipologia)).SetFont(bold));
+                    table.AddCell(new Cell(1, 1).Add(new Paragraph($"€ {rientroList.Sum(s => (decimal)s.Qta * s.PzzoUniCantiere):N2}").SetFont(bold)));
+                    InsertDataIntoPdfTable(ref table, rientroList, operai, font);
+                    //table.AddCell(emptyCellRientro);
                 }
             }
             document.Add(table);
