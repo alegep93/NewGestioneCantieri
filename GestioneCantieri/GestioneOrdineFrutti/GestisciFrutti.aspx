@@ -33,6 +33,18 @@
                         <asp:Label ID="lblIsFruttoInserito" runat="server" Text="" CssClass="pull-right"></asp:Label>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <asp:TextBox ID="txtFiltroFruttiIns1" placeholder="Filtro 1" OnTextChanged="txtFiltroListaFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-4">
+                        <asp:TextBox ID="txtFiltroFruttiIns2" placeholder="Filtro 2" OnTextChanged="txtFiltroListaFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-4">
+                        <asp:TextBox ID="txtFiltroFruttiIns3" placeholder="Filtro 3" OnTextChanged="txtFiltroListaFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                </div>
             </div>
         </div>
     </asp:Panel>
@@ -42,13 +54,13 @@
             <div class="col-4 text-center">
                 <div class="row">
                     <div class="col-4">
-                        <asp:TextBox ID="txtFiltroFruttiMod1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFiltroFruttiMod1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-4">
-                        <asp:TextBox ID="txtFiltroFruttiMod2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFiltroFruttiMod2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-4">
-                        <asp:TextBox ID="txtFiltroFruttiMod3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFiltroFruttiMod3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 
@@ -70,13 +82,13 @@
             <div class="col-4 text-center">
                 <div class="row">
                     <div class="col-4">
-                        <asp:TextBox ID="txtFiltroFruttiDel1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti1_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFiltroFruttiDel1" placeholder="Filtro 1" OnTextChanged="txtFiltroFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-4">
-                        <asp:TextBox ID="txtFiltroFruttiDel2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti2_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFiltroFruttiDel2" placeholder="Filtro 2" OnTextChanged="txtFiltroFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-4">
-                        <asp:TextBox ID="txtFiltroFruttiDel3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti3_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtFiltroFruttiDel3" placeholder="Filtro 3" OnTextChanged="txtFiltroFrutti_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
 

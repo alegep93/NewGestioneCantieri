@@ -96,6 +96,33 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblIsFruttoInserito;
 
         /// <summary>
+        /// Controllo txtFiltroFruttiIns1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiIns1;
+
+        /// <summary>
+        /// Controllo txtFiltroFruttiIns2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiIns2;
+
+        /// <summary>
+        /// Controllo txtFiltroFruttiIns3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroFruttiIns3;
+
+        /// <summary>
         /// Controllo pnlModifica.
         /// </summary>
         /// <remarks>

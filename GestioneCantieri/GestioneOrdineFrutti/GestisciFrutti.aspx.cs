@@ -3,6 +3,7 @@ using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Web.UI.WebControls;
 
 namespace GestioneCantieri
@@ -143,17 +144,13 @@ namespace GestioneCantieri
 
             lblSaveModFrutto.Text = "";
         }
-        protected void txtFiltroFrutti1_TextChanged(object sender, EventArgs e)
+        protected void txtFiltroFrutti_TextChanged(object sender, EventArgs e)
         {
             FillDdlFrutti();
         }
-        protected void txtFiltroFrutti2_TextChanged(object sender, EventArgs e)
+        protected void txtFiltroListaFrutti_TextChanged(object sender, EventArgs e)
         {
-            FillDdlFrutti();
-        }
-        protected void txtFiltroFrutti3_TextChanged(object sender, EventArgs e)
-        {
-            FillDdlFrutti();
+            fruttiList = FruttiDAO.GetFrutti(txtFiltroFruttiIns1.Text, txtFiltroFruttiIns2.Text, txtFiltroFruttiIns3.Text);
         }
         protected void ddlDelFrutto_TextChanged(object sender, EventArgs e)
         {

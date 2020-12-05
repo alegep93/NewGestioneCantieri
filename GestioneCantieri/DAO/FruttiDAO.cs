@@ -33,14 +33,10 @@ namespace GestioneCantieri.DAO
         public static List<Frutti> GetFrutti(string filtroDescr1 = "", string filtroDescr2 = "", string filtroDescr3 = "")
         {
             StringBuilder sql = new StringBuilder();
-            filtroDescr1 = "%" + filtroDescr1 + "%";
-            filtroDescr2 = "%" + filtroDescr2 + "%";
-            filtroDescr3 = "%" + filtroDescr3 + "%";
-
-            sql.AppendLine("SELECT ID1, descr001");
-            sql.AppendLine("FROM TblFrutti");
-            sql.AppendLine("WHERE descr001 LIKE @filtroDescr1 AND descr001 LIKE @filtroDescr2 AND descr001 LIKE @filtroDescr3");
-            sql.AppendLine("ORDER BY descr001 ASC");
+            sql.AppendLine($"SELECT ID1, descr001");
+            sql.AppendLine($"FROM TblFrutti");
+            sql.AppendLine($"WHERE descr001 LIKE '%{filtroDescr1}%' AND descr001 LIKE '%{filtroDescr2}%' AND descr001 LIKE '%{filtroDescr3}%'");
+            sql.AppendLine($"ORDER BY descr001 ASC");
 
             try
             {
