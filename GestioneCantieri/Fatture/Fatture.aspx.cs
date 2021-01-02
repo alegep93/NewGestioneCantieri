@@ -106,24 +106,25 @@ namespace GestioneCantieri
         private void SetNumeroFattura()
         {
             string numeroFattura = "";
+            string nuovoNumeroFattura = "";
             List<Fattura> fatture = FattureDAO.GetAll().Where(w => w.Data.Year == DateTime.Now.Year).ToList();
-            long nuovoNumeroFattura = fatture.Select(s => s.Numero).Max() + 1;
             if (fatture.Count() == 0)
             {
                 numeroFattura = "001";
             }
             else
             {
-                if (nuovoNumeroFattura.ToString().Length == 1)
+                nuovoNumeroFattura = (fatture.Select(s => s.Numero).Max() + 1).ToString();
+                if (nuovoNumeroFattura.Length == 1)
                 {
                     numeroFattura = "00";
                 }
-                if (nuovoNumeroFattura.ToString().Length == 2)
+                if (nuovoNumeroFattura.Length == 2)
                 {
                     numeroFattura = "0";
                 }
             }
-            txtNumeroFattura.Text = numeroFattura + nuovoNumeroFattura.ToString();
+            txtNumeroFattura.Text = $"{numeroFattura} {nuovoNumeroFattura}";
         }
 
         private Fattura PopolaFatturaObj()
