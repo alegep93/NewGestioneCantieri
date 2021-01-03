@@ -107,7 +107,8 @@ namespace GestioneCantieri
         {
             string numeroFattura = "";
             string nuovoNumeroFattura = "";
-            List<Fattura> fatture = FattureDAO.GetAll().Where(w => w.Data.Year == DateTime.Now.Year).ToList();
+            int annoFattura = (txtData.Text != "" ? Convert.ToDateTime(txtData.Text).Year : DateTime.Now.Year);
+            List<Fattura> fatture = FattureDAO.GetAll().Where(w => w.Data.Year == annoFattura).ToList();
             if (fatture.Count() == 0)
             {
                 numeroFattura = "001";
@@ -124,7 +125,7 @@ namespace GestioneCantieri
                     numeroFattura = "0";
                 }
             }
-            txtNumeroFattura.Text = $"{numeroFattura} {nuovoNumeroFattura}";
+            txtNumeroFattura.Text = $"{numeroFattura}{nuovoNumeroFattura}";
         }
 
         private Fattura PopolaFatturaObj()
@@ -425,6 +426,19 @@ namespace GestioneCantieri
         protected void btnStampaExcel_Click(object sender, EventArgs e)
         {
             ExcelManager.ExportGridToExcel(Response, grdFatture, "fatture-emesse");
+        }
+
+        protected void txtData_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SetNumeroFattura();
+            }
+            catch (Exception ex)
+            {
+                lblMessaggio.Text = $"Errore durante il cambio della data ===> {ex.Message}";
+                lblMessaggio.ForeColor = Color.Red;
+            }
         }
     }
 }

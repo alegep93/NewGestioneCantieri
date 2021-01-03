@@ -1,0 +1,44 @@
+﻿.quarter-total-table {
+    width: 250px;
+    position: absolute;
+    top: 60px;
+}
+
+    .quarter-total-table tr th,
+    .quarter-total-table tr td {
+        font-size: 16px;
+        padding: 2px !important;
+    }
+
+    .quarter-total-table.iva-quarter-total-table {
+        left: 15px;
+    }
+
+    .quarter-total-table.imponibile-quarter-total-table {
+        left: 280px;
+    }
+
+    .quarter-total-table.importo-quarter-total-table {
+        left: 545px;
+    }
+
+.total-table {
+    position: absolute;
+    width: 350px;
+    top: 60px;
+    right: 15px
+}
+
+    .total-table tr th,
+    .total-table tr td {
+        font-size: 20px;
+        padding: 2px !important;
+    }
+
+
+.excel-icon {
+    position: absolute;
+    right: 550px;
+    top: 130px;
+    z-index: 99;
+}

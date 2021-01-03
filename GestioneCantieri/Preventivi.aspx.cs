@@ -54,20 +54,19 @@ namespace GestioneCantieri
 
         private void SetNumPrev()
         {
-            int anno = txtAnno.Text != "" ? Convert.ToInt32(txtAnno.Text) : DateTime.Now.Year;
-            List<Preventivo> items = PreventiviDAO.GetAll().Where(w => w.Anno == anno).ToList();
-
-            long numeroPrev = items.Select(s => s.Numero).Max() + 1;
+            string numeroPrev = ""; 
             string numeroPreventivo = "";
+            int anno = (txtAnno.Text != "" ? Convert.ToInt32(txtAnno.Text) : DateTime.Now.Year);
+            List<Preventivo> items = PreventiviDAO.GetAll().Where(w => w.Anno == anno).ToList();
             if (items.Count() == 0)
             {
                 numeroPreventivo = "001";
             }
             else
             {
-                numeroPreventivo = numeroPrev.ToString().Substring(0, 2) == txtAnno.Text.Substring(2, 2) ? numeroPrev.ToString().Substring(2, 3) : numeroPrev.ToString();
+                numeroPrev = (items.Select(s => s.Numero).Max() + 1).ToString();
+                numeroPreventivo = (numeroPrev.Substring(0, 2) == txtAnno.Text.Substring(2, 2) ? numeroPrev.Substring(2, 3) : numeroPrev);
             }
-
             txtNumeroPreventivo.Text = numeroPreventivo;
         }
 

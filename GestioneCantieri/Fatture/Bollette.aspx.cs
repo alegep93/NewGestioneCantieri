@@ -137,7 +137,13 @@ namespace GestioneCantieri
 
         private string GetProgressivo(int anno = 0)
         {
-            return ((BolletteDAO.GetAll().Where(w => w.DataBolletta.Year == (anno > 0 ? anno : DateTime.Now.Year))?.Select(s => s.Progressivo).Max() ?? 0) + 1).ToString();
+            int progressivo = 1;
+            List<Bolletta> items = BolletteDAO.GetAll().Where(w => w.DataBolletta.Year == (anno > 0 ? anno : DateTime.Now.Year)).ToList();
+            if(items.Count > 0)
+            {
+                progressivo = items.Select(s => s.Progressivo).Max() + 1;
+            }
+            return progressivo.ToString();
         }
 
         protected void btnFiltraBollette_Click(object sender, EventArgs e)

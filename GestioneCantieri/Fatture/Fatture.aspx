@@ -33,7 +33,7 @@
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-2">
                     <asp:Label ID="lblData" runat="server" Text="Data" />
-                    <asp:TextBox ID="txtData" TextMode="Date" CssClass="form-control text-center" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtData" TextMode="Date" CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtData_TextChanged" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-4" style="margin-left: 150px">
                     <div class="row d-flex justify-content-center">
