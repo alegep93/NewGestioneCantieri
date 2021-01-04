@@ -106,9 +106,9 @@ namespace GestioneCantieri.Utils
             }
         }
 
-        public static void FillDdlFrutti(List<Frutti> items, ref DropDownList ddl)
+        public static void FillDdlFrutti(List<Frutto> items, ref DropDownList ddl)
         {
-            foreach (Frutti item in items)
+            foreach (Frutto item in items)
             {
                 ddl.Items.Add(new ListItem(item.Descr001, item.Id1.ToString()));
             }

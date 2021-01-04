@@ -10,6 +10,43 @@ namespace GestioneCantieri.DAO
 {
     public class FruttiDAO : BaseDAO
     {
+        public static List<Frutto> GetFrutti(string filtroDescr1 = "", string filtroDescr2 = "", string filtroDescr3 = "")
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT ID1, descr001");
+            sql.AppendLine($"FROM TblFrutti");
+            sql.AppendLine($"WHERE descr001 LIKE '%{filtroDescr1}%' AND descr001 LIKE '%{filtroDescr2}%' AND descr001 LIKE '%{filtroDescr3}%'");
+            sql.AppendLine($"ORDER BY descr001 ASC");
+
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Frutto>(sql.ToString(), new { filtroDescr1, filtroDescr2, filtroDescr3 }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetFrutti in FruttiDAO", ex);
+            }
+        }
+
+        public static Frutto GetSingle(int idFrutto)
+        {
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblFrutti WHERE ID1 = @idFrutto");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    return cn.Query<Frutto>(sql.ToString(), new { idFrutto }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetSingle in FruttiDAO", ex);
+            }
+        }
+
         public static bool InserisciFrutto(string nomeFrutto)
         {
             bool ret = false;
@@ -30,28 +67,7 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static List<Frutti> GetFrutti(string filtroDescr1 = "", string filtroDescr2 = "", string filtroDescr3 = "")
-        {
-            StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT ID1, descr001");
-            sql.AppendLine($"FROM TblFrutti");
-            sql.AppendLine($"WHERE descr001 LIKE '%{filtroDescr1}%' AND descr001 LIKE '%{filtroDescr2}%' AND descr001 LIKE '%{filtroDescr3}%'");
-            sql.AppendLine($"ORDER BY descr001 ASC");
-
-            try
-            {
-                using (SqlConnection cn = GetConnection())
-                {
-                    return cn.Query<Frutti>(sql.ToString(), new { filtroDescr1, filtroDescr2, filtroDescr3 }).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante la GetFrutti in FruttiDAO", ex);
-            }
-        }
-
-        public static bool UpdateFrutto(Frutti item)
+        public static bool UpdateFrutto(Frutto item)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder("UPDATE TblFrutti SET descr001 = @Descr001 WHERE ID1 = @Id1");

@@ -3,193 +3,129 @@ using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace GestioneCantieri
 {
-    public partial class GestisciFrutti : System.Web.UI.Page
+    public partial class GestisciFrutti : Page
     {
-        public List<Frutti> fruttiList = new List<Frutti>();
+        public List<Frutto> fruttiList = new List<Frutto>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                FillDdlFrutti();
-                pnlModifica.Visible = pnlElimina.Visible = false;
-                pnlModFrutto.Visible = false;
-                MostraListaFruttiInseriti();
-                lblTitle.Text = "Inserisci Frutto";
-                FillDdlFrutti();
-                txtInsNomeFrutto.Text = "";
-                btnDelFrutto.Visible = false;
-                lblIsFruttoInserito.Text = lblSaveModFrutto.Text = lblIsDelFrutto.Text = "";
+                BindGrid();
+                txtNomeFrutto.Text = "";
+                lblMsg.Text = "";
             }
-            MostraListaFruttiInseriti();
         }
 
         /* EVENTI CLICK */
         protected void btnInsFrutto_Click(object sender, EventArgs e)
         {
-            if (txtInsNomeFrutto.Text != "")
+            if (txtNomeFrutto.Text != "")
             {
-                bool isAggiunto = FruttiDAO.InserisciFrutto(txtInsNomeFrutto.Text);
+                bool isAggiunto = FruttiDAO.InserisciFrutto(txtNomeFrutto.Text);
 
                 if (isAggiunto)
                 {
-                    lblIsFruttoInserito.Text = "Frutto '" + txtInsNomeFrutto.Text + "' inserito correttamente!";
-                    lblIsFruttoInserito.ForeColor = Color.Blue;
+                    lblMsg.Text = "Frutto '" + txtNomeFrutto.Text + "' inserito correttamente!";
+                    lblMsg.ForeColor = Color.Blue;
                 }
                 else
                 {
-                    lblIsFruttoInserito.Text = "Esiste già un frutto con lo stesso nome";
-                    lblIsFruttoInserito.ForeColor = Color.Red;
+                    lblMsg.Text = "Esiste già un frutto con lo stesso nome";
+                    lblMsg.ForeColor = Color.Red;
                 }
 
-                txtInsNomeFrutto.Text = "";
-                FillDdlFrutti();
-                MostraListaFruttiInseriti();
+                txtNomeFrutto.Text = "";
+                BindGrid();
             }
             else
             {
-                lblIsFruttoInserito.Text = "Il campo 'Nome Frutto' deve essere compilato";
-                lblIsFruttoInserito.ForeColor = Color.Red;
+                lblMsg.Text = "Il campo 'Nome Frutto' deve essere compilato";
+                lblMsg.ForeColor = Color.Red;
             }
         }
-        protected void btnApriInserisci_Click(object sender, EventArgs e)
-        {
-            pnlInserisci.Visible = true;
-            pnlModifica.Visible = false;
-            pnlElimina.Visible = false;
-            MostraListaFruttiInseriti();
-            lblTitle.Text = "Inserisci Frutto";
-            txtInsNomeFrutto.Text = lblIsFruttoInserito.Text = "";
-        }
-        protected void btnApriModifica_Click(object sender, EventArgs e)
-        {
-            pnlInserisci.Visible = pnlElimina.Visible = pnlModFrutto.Visible = false;
-            pnlModifica.Visible = true;
-            MostraListaFruttiInseriti();
-            lblTitle.Text = "Modifica Frutto";
-            ddlModScegliFrutto.SelectedIndex = -1;
-            txtModNomeFrutto.Text = "";
-            lblSaveModFrutto.Text = "";
-        }
-        protected void btnApriElimina_Click(object sender, EventArgs e)
-        {
-            pnlInserisci.Visible = false;
-            pnlModifica.Visible = false;
-            pnlElimina.Visible = true;
-            MostraListaFruttiInseriti();
-            lblTitle.Text = "Elimina Frutto";
-            ddlDelFrutto.SelectedIndex = -1;
-            btnDelFrutto.Visible = false;
-            lblIsDelFrutto.Text = "";
-        }
+
         protected void btnSaveModFrutto_Click(object sender, EventArgs e)
         {
-            if (txtModNomeFrutto.Text != "")
+            if (txtNomeFrutto.Text != "")
             {
-                bool isSaved = FruttiDAO.UpdateFrutto(new Frutti { Id1 = Convert.ToInt32(ddlModScegliFrutto.SelectedItem.Value), Descr001 = txtModNomeFrutto.Text });
+                bool isSaved = FruttiDAO.UpdateFrutto(new Frutto { Id1 = Convert.ToInt32(hfIdFrutto.Value), Descr001 = txtNomeFrutto.Text });
                 if (isSaved)
                 {
-                    lblSaveModFrutto.Text = "Frutto modificato con successo in '" + txtModNomeFrutto.Text + "'";
-                    lblSaveModFrutto.ForeColor = Color.Blue;
+                    lblMsg.Text = $"Frutto modificato con successo in '{txtNomeFrutto.Text}'";
+                    lblMsg.ForeColor = Color.Blue;
                 }
                 else
                 {
-                    lblSaveModFrutto.Text = "Errore durante la modifica del frutto";
-                    lblSaveModFrutto.ForeColor = Color.Red;
+                    lblMsg.Text = "Errore durante la modifica del frutto";
+                    lblMsg.ForeColor = Color.Red;
                 }
-                txtModNomeFrutto.Text = "";
-                FillDdlFrutti();
-                MostraListaFruttiInseriti();
+                txtNomeFrutto.Text = "";
+                BindGrid();
             }
             else
             {
-                lblSaveModFrutto.Text = "Il campo 'Nome Frutto' deve essere compilato";
-                lblSaveModFrutto.ForeColor = Color.Red;
+                lblMsg.Text = "Il campo 'Nome Frutto' deve essere compilato";
+                lblMsg.ForeColor = Color.Red;
             }
-        }
-        protected void btnDelFrutto_Click(object sender, EventArgs e)
-        {
-            bool isDeleted = FruttiDAO.DeleteFrutto(Convert.ToInt32(ddlDelFrutto.SelectedItem.Value));
-            if (isDeleted)
-            {
-                lblIsDelFrutto.Text = "Frutto '" + ddlDelFrutto.SelectedItem.Text + "' eliminato con successo";
-                lblIsDelFrutto.ForeColor = Color.Blue;
-            }
-            else
-            {
-                lblIsDelFrutto.Text = "Impossibile eliminare il frutto in quanto è referenziato in altre tabelle";
-                lblIsDelFrutto.ForeColor = Color.Red;
-            }
-            ddlDelFrutto.SelectedIndex = -1;
-            FillDdlFrutti();
-            MostraListaFruttiInseriti();
-            btnDelFrutto.Visible = false;
         }
 
         /* EVENTI TEXT-CAHNGED */
-        protected void ddlModScegliFrutto_TextChanged(object sender, EventArgs e)
-        {
-            if (ddlModScegliFrutto.SelectedIndex != 0)
-            {
-                pnlModFrutto.Visible = true;
-                txtModNomeFrutto.Text = ddlModScegliFrutto.SelectedItem.Text;
-            }
-            else
-                pnlModFrutto.Visible = false;
-
-            lblSaveModFrutto.Text = "";
-        }
-        protected void txtFiltroFrutti_TextChanged(object sender, EventArgs e)
-        {
-            FillDdlFrutti();
-        }
         protected void txtFiltroListaFrutti_TextChanged(object sender, EventArgs e)
         {
-            fruttiList = FruttiDAO.GetFrutti(txtFiltroFruttiIns1.Text, txtFiltroFruttiIns2.Text, txtFiltroFruttiIns3.Text);
-        }
-        protected void ddlDelFrutto_TextChanged(object sender, EventArgs e)
-        {
-            if (ddlDelFrutto.SelectedItem.Text != "")
-                btnDelFrutto.Visible = true;
-            else
-                btnDelFrutto.Visible = false;
-
-            lblIsDelFrutto.Text = "";
+            BindGrid();
         }
 
         /* HELPERS */
-        protected void FillDdlFrutti()
+        private void BindGrid()
         {
-            string filtro1 = pnlModifica.Visible == true ? txtFiltroFruttiMod1.Text : txtFiltroFruttiDel1.Text;
-            string filtro2 = pnlModifica.Visible == true ? txtFiltroFruttiMod2.Text : txtFiltroFruttiDel2.Text;
-            string filtro3 = pnlModifica.Visible == true ? txtFiltroFruttiMod3.Text : txtFiltroFruttiDel3.Text;
+            grdFrutti.DataSource = FruttiDAO.GetFrutti(txtFiltroFrutti1.Text, txtFiltroFrutti2.Text, txtFiltroFrutti3.Text);
+            grdFrutti.DataBind();
 
-            List<Frutti> listFrutti = FruttiDAO.GetFrutti(filtro1, filtro2, filtro3);
-            ddlModScegliFrutto.Items.Clear();
-            ddlDelFrutto.Items.Clear();
-
-            //Il primo parametro ("") corrisponde al valore e il secondo alla chiave (il valore è quello che viene visualizzato nella form)
-            ddlModScegliFrutto.Items.Add(new ListItem("", "-1"));
-            ddlDelFrutto.Items.Add(new ListItem("", "-1"));
-
-            foreach (Frutti f in listFrutti)
-            {
-                string descrFrutto = f.Descr001;
-                ddlModScegliFrutto.Items.Add(new ListItem(descrFrutto, f.Id1.ToString())); //new ListItem(valore, chiave);
-                ddlDelFrutto.Items.Add(new ListItem(descrFrutto, f.Id1.ToString())); //new ListItem(valore, chiave);
-            }
+            // Ripristino la visibilità del pulsante di inserimento frutti
+            btnInsFrutto.Visible = true;
+            btnSaveModFrutto.Visible = !btnInsFrutto.Visible;
         }
-        protected void MostraListaFruttiInseriti()
+
+        /* GRID VIEW EVENTS */
+        protected void grdFrutti_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            string filtro1 = pnlModifica.Visible == true ? txtFiltroFruttiMod1.Text : txtFiltroFruttiDel1.Text;
-            string filtro2 = pnlModifica.Visible == true ? txtFiltroFruttiMod2.Text : txtFiltroFruttiDel2.Text;
-            string filtro3 = pnlModifica.Visible == true ? txtFiltroFruttiMod3.Text : txtFiltroFruttiDel3.Text;
-            fruttiList = FruttiDAO.GetFrutti(filtro1, filtro2, filtro3);
+            try
+            {
+                int idFrutto = Convert.ToInt32(e.CommandArgument);
+                if (e.CommandName == "Modifica")
+                {
+                    Frutto frutto = FruttiDAO.GetSingle(idFrutto);
+                    txtNomeFrutto.Text = frutto.Descr001;
+                    hfIdFrutto.Value = frutto.Id1.ToString();
+                    btnInsFrutto.Visible = false;
+                    btnSaveModFrutto.Visible = !btnInsFrutto.Visible;
+                }
+                else if (e.CommandName == "Elimina")
+                {
+                    bool isDeleted = FruttiDAO.DeleteFrutto(idFrutto);
+                    if (isDeleted)
+                    {
+                        lblMsg.Text = $"Frutto eliminato con successo";
+                        lblMsg.ForeColor = Color.Blue;
+                    }
+                    else
+                    {
+                        lblMsg.Text = $"Impossibile eliminare il frutto, verificare che non sia referenziato in altre tabelle";
+                        lblMsg.ForeColor = Color.Red;
+                    }
+                    BindGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMsg.Text = $"Errore durante il grdFrutti_RowCommand in GestisciFrutti.aspx.cs ===> {ex.Message}";
+            }
         }
     }
 }

@@ -256,11 +256,11 @@ namespace GestioneCantieri
         }
         protected void FillDdlFrutti()
         {
-            List<Frutti> listFrutti = FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text);
+            List<Frutto> listFrutti = FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text);
             ddlScegliFrutto.Items.Clear();
             ddlScegliFrutto.Items.Add(new ListItem("", "-1"));
 
-            foreach (Frutti f in listFrutti)
+            foreach (Frutto f in listFrutti)
             {
                 ddlScegliFrutto.Items.Add(new ListItem(f.Descr001, f.Id1.ToString()));
             }

@@ -457,7 +457,7 @@
     <Compile Include="Data\CompGruppoFrut.cs" />
     <Compile Include="Data\DDTMef.cs" />
     <Compile Include="Data\Fornitori.cs" />
-    <Compile Include="Data\Frutti.cs" />
+    <Compile Include="Data\Frutto.cs" />
     <Compile Include="Data\GruppiFrutti.cs" />
     <Compile Include="Data\Locali.cs" />
     <Compile Include="Data\Mamg0.cs" />
