@@ -144,6 +144,7 @@
     <Content Include="GestioneOrdineFrutti\GestisciFrutti.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciGruppi.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciGruppiFrutti.aspx" />
+    <Content Include="GestioneOrdineFrutti\GestisciSerie.aspx" />
     <Content Include="Images\BackgroundGradient.png" />
     <Content Include="Images\spinner.gif" />
     <Content Include="InserimentoDati\Amministratori.aspx" />
@@ -252,8 +253,11 @@
     </Compile>
     <Compile Include="DAO\AccontiOperaiDAO.cs" />
     <Compile Include="DAO\BolletteDAO.cs" />
+    <Compile Include="DAO\SerieDAO.cs" />
     <Compile Include="Data\AccontoOperaio.cs" />
     <Compile Include="Data\Bolletta.cs" />
+    <Compile Include="Data\FuttoSerie.cs" />
+    <Compile Include="Data\Serie.cs" />
     <Compile Include="Fatture\Bollette.aspx.cs">
       <DependentUpon>Bollette.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -365,6 +369,13 @@
     </Compile>
     <Compile Include="GestioneOrdineFrutti\GestisciGruppi.aspx.designer.cs">
       <DependentUpon>GestisciGruppi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\GestisciSerie.aspx.cs">
+      <DependentUpon>GestisciSerie.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\GestisciSerie.aspx.designer.cs">
+      <DependentUpon>GestisciSerie.aspx</DependentUpon>
     </Compile>
     <Compile Include="InserimentoDati\Amministratori.aspx.cs">
       <DependentUpon>Amministratori.aspx</DependentUpon>
