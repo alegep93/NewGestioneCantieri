@@ -12,5 +12,6 @@ namespace GestioneCantieri.Data
         public string CodArt { get; set; } = "";
         public string Desc { get; set; } = "";
         public string UnitMis { get; set; } = "";
+        public string CodiceListinoUnivoco { get; set; } = "";
     }
 }

@@ -20,7 +20,7 @@ namespace GestioneCantieri.DAO
             List<Mamg0> ret = new List<Mamg0>();
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"SELECT TOP 500 (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
-            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto");
+            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
             sql.AppendLine($"FROM MAMG0");
             sql.AppendLine($"ORDER BY CodArt ASC");
             try
@@ -42,7 +42,7 @@ namespace GestioneCantieri.DAO
             List<Mamg0> ret = new List<Mamg0>();
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"SELECT (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
-            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto");
+            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
             sql.AppendLine($"FROM MAMG0");
             sql.AppendLine($"WHERE (AA_SIGF + AA_CODF) LIKE '%{codArt1}%' AND (AA_SIGF + AA_CODF) LIKE '%{codArt2}%' AND (AA_SIGF + AA_CODF) LIKE '%{codArt3}%'");
             sql.AppendLine($"AND AA_DES LIKE '%{desc1}%' AND AA_DES LIKE '%{desc2}%' AND AA_DES LIKE '%{desc3}%'");
@@ -57,6 +57,29 @@ namespace GestioneCantieri.DAO
             catch (Exception ex)
             {
                 throw new Exception("Errore durante il recupero del listino con i filtri", ex);
+            }
+            return ret;
+        }
+
+        public static Mamg0 GetSingle(string codiceListinoUnivoco)
+        {
+            Mamg0 ret = new Mamg0();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
+            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
+            sql.AppendLine($"FROM MAMG0");
+            sql.AppendLine($"WHERE (AA_SIGF + AA_CODF) = @codiceListinoUnivoco");
+            sql.AppendLine($"ORDER BY CodArt ASC");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Mamg0>(sql.ToString(), new { codiceListinoUnivoco }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero del listino", ex);
             }
             return ret;
         }

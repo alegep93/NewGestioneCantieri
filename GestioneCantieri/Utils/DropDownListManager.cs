@@ -76,9 +76,19 @@ namespace GestioneCantieri.Utils
         {
             foreach (Mamg0 item in items)
             {
-                string show = String.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
+                string show = string.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
                     item.CodArt, item.Desc, item.PrezzoNetto, item.PrezzoListino, item.Sconto1, item.Sconto2, item.Sconto3);
                 ddl.Items.Add(new ListItem(show, item.CodArt.ToString()));
+            }
+        }
+
+        public static void FillDdlMamg0WithCodiceListinoUnivoco(List<Mamg0> items, ref DropDownList ddl)
+        {
+            foreach (Mamg0 item in items)
+            {
+                string show = string.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
+                    item.CodArt, item.Desc, item.PrezzoNetto, item.PrezzoListino, item.Sconto1, item.Sconto2, item.Sconto3);
+                ddl.Items.Add(new ListItem(show, item.CodiceListinoUnivoco.ToString()));
             }
         }
 
@@ -111,6 +121,14 @@ namespace GestioneCantieri.Utils
             foreach (Frutto item in items)
             {
                 ddl.Items.Add(new ListItem(item.Descr001, item.Id1.ToString()));
+            }
+        }
+
+        public static void FillDdlSerie(List<Serie> items, ref DropDownList ddl)
+        {
+            foreach (Serie item in items)
+            {
+                ddl.Items.Add(new ListItem(item.NomeSerie, item.IdSerie.ToString()));
             }
         }
     }

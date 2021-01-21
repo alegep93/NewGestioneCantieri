@@ -104,7 +104,7 @@ namespace GestioneCantieri
                     numeroFattura = "0";
                 }
             }
-            txtNumeroFattura.Text = $"{numeroFattura} {nuovoNumeroFattura}";
+            txtNumeroFattura.Text = $"{numeroFattura}{nuovoNumeroFattura}";
         }
 
         protected void FillDdlScegliFornitore(string ragSocFornitore = "")

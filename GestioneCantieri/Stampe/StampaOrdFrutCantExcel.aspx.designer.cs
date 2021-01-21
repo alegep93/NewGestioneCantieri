@@ -42,6 +42,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Button btnPrint;
 
         /// <summary>
+        /// Controllo pnlLocaliWrapper.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlLocaliWrapper;
+
+        /// <summary>
+        /// Controllo rptLocali.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptLocali;
+
+        /// <summary>
         /// Controllo grdFruttiInLocale.
         /// </summary>
         /// <remarks>
@@ -49,23 +67,5 @@ namespace GestioneCantieri
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdFruttiInLocale;
-
-        /// <summary>
-        /// Controllo grdGruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdGruppi;
-
-        /// <summary>
-        /// Controllo grdFruttiNonInGruppo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdFruttiNonInGruppo;
     }
 }

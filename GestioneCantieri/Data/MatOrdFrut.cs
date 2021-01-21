@@ -7,7 +7,7 @@ namespace GestioneCantieri.Data
         public int Id { get; set; } = 0;
         public int IdCantiere { get; set; } = 0;
         public int IdGruppiFrutti { get; set; } = 0;
-        public int IdLocali { get; set; } = 0;
+        public int IdLocale { get; set; } = 0;
         public int IdFrutto { get; set; } = 0;
         public int QtaFrutti { get; set; } = 0;
         public DateTime DataOrdine { get; set; } = DateTime.Now;
@@ -18,5 +18,6 @@ namespace GestioneCantieri.Data
         public string NomeFrutto { get; set; } = "";
         public int IdTblMatOrdFrutGroup { get; set; } = 0;
         public string DescrizioneGruppoOrdine { get; set; } = "";
+        public string NomeLocale { get; set; } = "";
     }
 }

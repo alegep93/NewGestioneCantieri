@@ -8,5 +8,9 @@ namespace GestioneCantieri.Data
         public string NomeLocale { get; set; } = "";
         public string NomeGruppo { get; set; } = "";
         public string DescrizioneGruppoOrdine { get; set; } = "";
+        public string ArticoloSerie { get; set; } = "";
+        public string DescrizioneSerie { get; set; } = "";
+        public float PrezzoNetto { get; set; } = 0;
+        public float Valore { get; set; } = 0;
     }
 }

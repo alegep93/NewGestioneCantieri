@@ -253,10 +253,11 @@
     </Compile>
     <Compile Include="DAO\AccontiOperaiDAO.cs" />
     <Compile Include="DAO\BolletteDAO.cs" />
+    <Compile Include="DAO\FruttiSerieDAO.cs" />
     <Compile Include="DAO\SerieDAO.cs" />
     <Compile Include="Data\AccontoOperaio.cs" />
     <Compile Include="Data\Bolletta.cs" />
-    <Compile Include="Data\FuttoSerie.cs" />
+    <Compile Include="Data\FruttoSerie.cs" />
     <Compile Include="Data\Serie.cs" />
     <Compile Include="Fatture\Bollette.aspx.cs">
       <DependentUpon>Bollette.aspx</DependentUpon>

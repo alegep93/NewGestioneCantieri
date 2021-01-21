@@ -227,6 +227,12 @@ input[type="checkbox"] {
     height: 20px;
 }
 
+    input[type="checkbox"] + label {
+        position: relative;
+        top: -4px;
+        left: 5px;
+    }
+
 .form-control:focus {
     border-color: red !important;
     border-width: 2px !important;
