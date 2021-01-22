@@ -15,7 +15,8 @@ namespace GestioneCantieri.DAO
             List<FruttoSerie> ret = new List<FruttoSerie>();
             StringBuilder sql = new StringBuilder();
 
-            sql.AppendLine($"SELECT A.IdFruttoSerie, A.IdSerie, A.IdFrutto, A.CodiceListinoUnivoco, C.NomeSerie, B.descr001 AS NomeFrutto, AA_DES AS DescrizioneListino");
+            sql.AppendLine($"SELECT A.IdFruttoSerie, A.IdSerie, A.IdFrutto, A.CodiceListinoUnivoco, C.NomeSerie,");
+            sql.AppendLine($"       B.descr001 AS NomeFrutto, (AA_SIGF + AA_CODF) AS CodiceListino, AA_DES AS DescrizioneListino");
             sql.AppendLine($"FROM TblFruttiSerie A");
             sql.AppendLine($"INNER JOIN TblFrutti B ON A.IdFrutto = B.ID1");
             sql.AppendLine($"INNER JOIN TblSerie C ON A.IdSerie = C.IdSerie");

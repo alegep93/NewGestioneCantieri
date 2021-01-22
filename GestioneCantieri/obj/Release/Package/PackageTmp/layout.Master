@@ -85,7 +85,8 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciFrutti.aspx">Gestisci Frutti</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppi.aspx">Gestisci Gruppi</a></li>
-                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestioneLocali.aspx">Gestione Locali</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestioneLocali.aspx">Gestisci Locali</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciSerie.aspx">Gestisci Serie</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>

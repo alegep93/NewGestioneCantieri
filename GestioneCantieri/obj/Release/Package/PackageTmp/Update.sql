@@ -1,1 +1,0 @@
-update TblMaterialiCantieri set Tipologia = 'ARROTONDAMENTO' WHERE Tipologia = 'ARROTODNAMENTO'

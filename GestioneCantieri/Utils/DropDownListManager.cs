@@ -131,5 +131,21 @@ namespace GestioneCantieri.Utils
                 ddl.Items.Add(new ListItem(item.NomeSerie, item.IdSerie.ToString()));
             }
         }
+
+        public static void FillDdlLocali(List<Locali> items, ref DropDownList ddl)
+        {
+            foreach (Locali item in items)
+            {
+                ddl.Items.Add(new ListItem(item.NomeLocale, item.IdLocali.ToString()));
+            }
+        }
+
+        public static void FillDdlMatOrdFrutGroup(List<MatOrdFrutGroup> items, ref DropDownList ddl)
+        {
+            foreach (MatOrdFrutGroup item in items)
+            {
+                ddl.Items.Add(new ListItem(item.Descrizione, item.IdMatOrdFrutGroup.ToString()));
+            }
+        }
     }
 }

@@ -81,7 +81,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.Id %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questa fattura?');">
+                            <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.Id %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo gruppo?');">
                                     <i class="fas fa-times" style="color: red;"></i>
                             </asp:LinkButton>
                         </ItemTemplate>

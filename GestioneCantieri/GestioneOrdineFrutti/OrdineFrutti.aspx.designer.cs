@@ -150,6 +150,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Panel pnlScegliGruppo;
 
         /// <summary>
+        /// Controllo lblScegliSerie.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliSerie;
+
+        /// <summary>
+        /// Controllo ddlScegliSerie.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliSerie;
+
+        /// <summary>
         /// Controllo lblFiltro1.
         /// </summary>
         /// <remarks>

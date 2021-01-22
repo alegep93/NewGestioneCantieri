@@ -11,17 +11,17 @@ namespace GestioneCantieri.DAO
 {
     public class OrdineFruttiDAO : BaseDAO
     {
-        public static bool InserisciGruppo(string idCantiere, string idGruppoFrutto, string idLocale, int? idTblMatOrdFrutGroup)
+        public static bool InserisciGruppo(string idCantiere, string idGruppoFrutto, string idLocale, int? idTblMatOrdFrutGroup, long? idSerie)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("INSERT INTO TblMatOrdFrut(IdCantiere,IdGruppiFrutti,IdLocale,IdTblMatOrdFrutGroup)");
-            sql.AppendLine("VALUES (@idCantiere,@idGruppoFrutto,@idLocale,@idTblMatOrdFrutGroup)");
+            sql.AppendLine("INSERT INTO TblMatOrdFrut(IdCantiere,IdGruppiFrutti,IdLocale,IdTblMatOrdFrutGroup,IdSerie)");
+            sql.AppendLine("VALUES (@idCantiere,@idGruppoFrutto,@idLocale,@idTblMatOrdFrutGroup,@idSerie)");
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Execute(sql.ToString(), new { idCantiere, idGruppoFrutto, idLocale, idTblMatOrdFrutGroup }) > 0;
+                    ret = cn.Execute(sql.ToString(), new { idCantiere, idGruppoFrutto, idLocale, idTblMatOrdFrutGroup, idSerie }) > 0;
                 }
             }
             catch (Exception ex)
@@ -31,17 +31,17 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
-        public static bool InserisciFruttoNonInGruppo(string idCantiere, string idLocale, string idFrutto, string qtaFrutti, int? idTblMatOrdFrutGroup)
+        public static bool InserisciFruttoNonInGruppo(string idCantiere, string idLocale, string idFrutto, string qtaFrutti, int? idTblMatOrdFrutGroup, long? idSerie)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("INSERT INTO TblMatOrdFrut(IdCantiere,IdLocale,IdFrutto,QtaFrutti,IdTblMatOrdFrutGroup)");
-            sql.AppendLine("VALUES (@idCantiere,@idLocale,@idFrutto,@qtaFrutti,@idTblMatOrdFrutGroup)");
+            sql.AppendLine("INSERT INTO TblMatOrdFrut(IdCantiere,IdLocale,IdFrutto,QtaFrutti,IdTblMatOrdFrutGroup,IdSerie)");
+            sql.AppendLine("VALUES (@idCantiere,@idLocale,@idFrutto,@qtaFrutti,@idTblMatOrdFrutGroup,@idSerie)");
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Execute(sql.ToString(), new { idCantiere, idLocale, idFrutto, qtaFrutti, idTblMatOrdFrutGroup }) > 0;
+                    ret = cn.Execute(sql.ToString(), new { idCantiere, idLocale, idFrutto, qtaFrutti, idTblMatOrdFrutGroup, idSerie }) > 0;
                 }
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using GestioneCantieri.DAO;
 using GestioneCantieri.Data;
+using GestioneCantieri.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -25,6 +26,7 @@ namespace GestioneCantieri
                 lblQtaFrutto.Visible = txtQtaFrutto.Visible = btnInserisciFrutto.Visible = false;
                 FillDdlScegliCantiere();
                 FillDdlScegliLocale();
+                FillDdlScegliSerie();
                 FillDdlGruppi();
                 FillDdlFrutti();
                 FillNomiGruppoOrdine();
@@ -47,7 +49,8 @@ namespace GestioneCantieri
         protected void btnInserisciGruppo_Click(object sender, EventArgs e)
         {
             int? idGruppoOrdine = (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
-            bool isAggiunto = OrdineFruttiDAO.InserisciGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliGruppo.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, idGruppoOrdine);
+            long? idSerie = ddlScegliSerie.SelectedValue != "-1" ? Convert.ToInt64(ddlScegliSerie.SelectedValue) : (long?)null;
+            bool isAggiunto = OrdineFruttiDAO.InserisciGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliGruppo.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, idGruppoOrdine, idSerie);
 
             if (isAggiunto)
             {
@@ -71,7 +74,8 @@ namespace GestioneCantieri
                 if (txtQtaFrutto.Text != "" && Convert.ToInt32(txtQtaFrutto.Text) > 0)
                 {
                     int? idGruppoOrdine = (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
-                    bool isInserito = OrdineFruttiDAO.InserisciFruttoNonInGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, ddlScegliFrutto.SelectedItem.Value, txtQtaFrutto.Text, idGruppoOrdine);
+                    long? idSerie = ddlScegliSerie.SelectedValue != "-1" ? Convert.ToInt64(ddlScegliSerie.SelectedValue) : (long?)null;
+                    bool isInserito = OrdineFruttiDAO.InserisciFruttoNonInGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, ddlScegliFrutto.SelectedItem.Value, txtQtaFrutto.Text, idGruppoOrdine, idSerie);
 
                     if (isInserito)
                     {
@@ -212,70 +216,44 @@ namespace GestioneCantieri
         /* HELPERS */
         protected void FillDdlScegliCantiere()
         {
-            List<Cantieri> listCantieri = CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList();
-
             ddlScegliCantiere.Items.Clear();
-
-            //Il primo parametro ("") corrisponde al valore e il secondo alla chiave (il valore è quello che viene visualizzato nella form)
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
-
-            foreach (Cantieri c in listCantieri)
-            {
-                string cantiere = c.CodCant + " - " + c.DescriCodCant;
-                ddlScegliCantiere.Items.Add(new ListItem(cantiere, c.IdCantieri.ToString())); //new ListItem(valore, chiave);
-            }
+            DropDownListManager.FillDdlCantieri(CantieriDAO.GetAll().Where(w => !w.Chiuso).ToList(), ref ddlScegliCantiere);
         }
         protected void FillDdlScegliLocale()
         {
-            List<Locali> listLocali = LocaliDAO.GetAll();
-
             ddlScegliLocale.Items.Clear();
-
-            //Il primo parametro ("") corrisponde al valore e il secondo alla chiave (il valore è quello che viene visualizzato nella form)
             ddlScegliLocale.Items.Add(new ListItem("", "-1"));
-
-            foreach (Locali l in listLocali)
-            {
-                ddlScegliLocale.Items.Add(new ListItem(l.NomeLocale, l.IdLocali.ToString())); //new ListItem(valore, chiave);
-            }
+            DropDownListManager.FillDdlLocali(LocaliDAO.GetAll(), ref ddlScegliLocale);
+        }
+        protected void FillDdlScegliSerie()
+        {
+            ddlScegliSerie.Items.Clear();
+            ddlScegliSerie.Items.Add(new ListItem("", "-1"));
+            DropDownListManager.FillDdlSerie(SerieDAO.GetAll(), ref ddlScegliSerie);
         }
         protected void FillDdlGruppi()
         {
             List<GruppiFrutti> listGruppiFrutti = GruppiFruttiDAO.GetGruppi(txtFiltroGruppo1.Text, txtFiltroGruppo2.Text, txtFiltroGruppo3.Text);
-
             ddlScegliGruppo.Items.Clear();
-
-            //Il primo parametro ("") corrisponde al valore e il secondo alla chiave (il valore è quello che viene visualizzato nella form)
             ddlScegliGruppo.Items.Add(new ListItem("", "-1"));
-
             foreach (GruppiFrutti gf in listGruppiFrutti)
             {
                 string nomeDescrGruppo = gf.NomeGruppo + " - " + gf.Descrizione;
-                ddlScegliGruppo.Items.Add(new ListItem(nomeDescrGruppo, gf.Id.ToString())); //new ListItem(valore, chiave);
+                ddlScegliGruppo.Items.Add(new ListItem(nomeDescrGruppo, gf.Id.ToString()));
             }
         }
         protected void FillDdlFrutti()
         {
-            List<Frutto> listFrutti = FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text);
             ddlScegliFrutto.Items.Clear();
             ddlScegliFrutto.Items.Add(new ListItem("", "-1"));
-
-            foreach (Frutto f in listFrutti)
-            {
-                ddlScegliFrutto.Items.Add(new ListItem(f.Descr001, f.Id1.ToString()));
-            }
+            DropDownListManager.FillDdlFrutti(FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text), ref ddlScegliFrutto);
         }
         protected void FillNomiGruppoOrdine()
         {
-            List<MatOrdFrutGroup> list = MatOrdFrutGroupDAO.GetAll();
             ddlScegliGruppoOrdine.Items.Clear();
-
             ddlScegliGruppoOrdine.Items.Add(new ListItem("", "-1"));
-
-            foreach (MatOrdFrutGroup g in list)
-            {
-                ddlScegliGruppoOrdine.Items.Add(new ListItem(g.Descrizione, g.IdMatOrdFrutGroup.ToString()));
-            }
+            DropDownListManager.FillDdlMatOrdFrutGroup(MatOrdFrutGroupDAO.GetAll(), ref ddlScegliGruppoOrdine);
         }
         protected void PopolaListe()
         {
