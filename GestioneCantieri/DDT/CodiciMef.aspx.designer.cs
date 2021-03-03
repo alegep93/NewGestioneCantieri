@@ -11,61 +11,52 @@ namespace GestioneCantieri
 {
 
 
-    public partial class layout
+    public partial class CodiciMef
     {
 
         /// <summary>
-        /// title control.
+        /// lblAnnoDa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder title;
+        protected global::System.Web.UI.WebControls.Label lblAnnoDa;
 
         /// <summary>
-        /// frmGestioneCantieri control.
+        /// txtAnnoDa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmGestioneCantieri;
+        protected global::System.Web.UI.WebControls.TextBox txtAnnoDa;
 
         /// <summary>
-        /// pnlAlert control.
+        /// lblAnnoA control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAlert;
+        protected global::System.Web.UI.WebControls.Label lblAnnoA;
 
         /// <summary>
-        /// lblAlert control.
+        /// txtAnnoA control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAlert;
+        protected global::System.Web.UI.WebControls.TextBox txtAnnoA;
 
         /// <summary>
-        /// lblModalText control.
+        /// grdCodiciMef control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalText;
-
-        /// <summary>
-        /// body control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder body;
+        protected global::System.Web.UI.WebControls.GridView grdCodiciMef;
     }
 }

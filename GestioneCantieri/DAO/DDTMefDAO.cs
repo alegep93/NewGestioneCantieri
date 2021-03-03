@@ -228,6 +228,25 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static List<string> GetCodiciMef(int annoInizio, int annoFine)
+        {
+            List<string> ret = new List<string>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT DISTINCT LEFT(CodArt, 3) FROM TblDdtMef WHERE Anno BETWEEN @annoInizio AND @annoFine");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<string>(sql.ToString(), new { annoInizio, annoFine }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero dei DDT Mef", ex);
+            }
+            return ret;
+        }
+
         public static bool CheckIfDdtExistBetweenData(string nDdt, string dataInizio, string dataFine)
         {
             bool ret = false;

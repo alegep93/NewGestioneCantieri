@@ -291,7 +291,7 @@
                 </div>
                 <div class="col form-group">
                     <asp:Label ID="lblOperaio" runat="server" Text="Operaio" />
-                    <asp:TextBox ID="txtOperaio" CssClass="form-control" MaxLength="4" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtOperaio" CssClass="form-control" Enabled="false" MaxLength="4" runat="server"></asp:TextBox>
                 </div>
                 <div class="col form-group">
                     <asp:Label ID="lblCostoOperaio" runat="server" Text="Costo Operaio" />
@@ -305,6 +305,23 @@
                     <asp:Button ID="btnModOper" OnClick="btnModOper_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Modifica Operaio" />
                     <asp:Button ID="btnInsOper" OnClick="btnInsOper_Click" CssClass="btn btn-lg btn-primary pull-right" runat="server" Text="Inserisci Operaio" />
                     <asp:Label ID="lblIsOperaioInserito" CssClass="pull-right labelConferma" runat="server" Text=""></asp:Label>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-3 text-center form-group">
+                    <asp:Label ID="lblFiltroNomeOperaio" runat="server" Text="Filtro Nome" />
+                    <asp:TextBox ID="txtFiltroNomeOperaio" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-3 text-center form-group">
+                    <asp:Label ID="lblFiltroDescrOperaio" runat="server" Text="Filtro Descrizione" />
+                    <asp:TextBox ID="txtFiltroDescrOperaio" CssClass="form-control" runat="server"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col text-center form-group">
+                    <asp:Button ID="btnFiltraOperai" OnClick="btnFiltraOperai_Click" CssClass="btn btn-lg btn-primary" runat="server" Text="Filtra" />
                 </div>
             </div>
 
@@ -328,7 +345,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnModOper" CommandName="ModOper" CommandArgument="<%# BindItem.IdOperaio %>" runat="server" Text="Modifica">
+                                    <asp:LinkButton ID="btnModOperOnGrid" CommandName="ModOper" CommandArgument="<%# BindItem.IdOperaio %>" runat="server" Text="Modifica">
                                             <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                                     </asp:LinkButton>
                                 </ItemTemplate>

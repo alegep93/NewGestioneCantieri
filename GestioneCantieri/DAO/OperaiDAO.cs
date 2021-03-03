@@ -11,16 +11,16 @@ namespace GestioneCantieri.DAO
 {
     public class OperaiDAO : BaseDAO
     {
-        public static List<Operai> GetAll()
+        public static List<Operai> GetAll(string nome = "", string descrizione = "")
         {
             List<Operai> ret = new List<Operai>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT *");
-            sql.AppendLine($"FROM TblOperaio");
-            sql.AppendLine($"ORDER BY NomeOp");
-
             try
             {
+                sql.AppendLine($"SELECT *");
+                sql.AppendLine($"FROM TblOperaio");
+                sql.AppendLine($"WHERE NomeOp LIKE '%{nome}%' AND DescrOP LIKE '%{descrizione}%'");
+                sql.AppendLine($"ORDER BY NomeOp");
                 using (SqlConnection cn = GetConnection())
                 {
                     ret = cn.Query<Operai>(sql.ToString()).ToList();
@@ -37,12 +37,12 @@ namespace GestioneCantieri.DAO
         {
             Operai ret = new Operai();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT *");
-            sql.AppendLine($"FROM TblOperaio");
-            sql.AppendLine($"WHERE IdOperaio = @idOperaio");
-            sql.AppendLine($"ORDER BY NomeOp");
             try
             {
+                sql.AppendLine($"SELECT *");
+                sql.AppendLine($"FROM TblOperaio");
+                sql.AppendLine($"WHERE IdOperaio = @idOperaio");
+                sql.AppendLine($"ORDER BY NomeOp");
                 using (SqlConnection cn = GetConnection())
                 {
                     ret = cn.Query<Operai>(sql.ToString(), new { idOperaio }).FirstOrDefault();

@@ -352,6 +352,8 @@ namespace GestioneCantieri
 
                 BindGridOperai();
                 ResettaCampi(pnlInsOperai);
+                txtOperaio.Text = $"Op{OperaiDAO.GetAll().Select(s => s.IdOperaio).Max() + 1}";
+                txtOperaio.Enabled = false;
             }
             else
             {
@@ -384,12 +386,25 @@ namespace GestioneCantieri
 
             ResettaCampi(pnlInsOperai);
             BindGridOperai();
+            txtOperaio.Text = $"Op{OperaiDAO.GetAll().Select(s => s.IdOperaio).Max() + 1}";
+            txtOperaio.Enabled = false;
             btnModOper.Visible = false;
             btnInsOper.Visible = true;
         }
-        protected void BindGridOperai()
+        protected void btnFiltraOperai_Click(object sender, EventArgs e)
         {
-            grdOperai.DataSource = OperaiDAO.GetAll();
+            try
+            {
+                BindGridOperai(txtFiltroNomeOperaio.Text, txtFiltroDescrOperaio.Text);
+            }
+            catch (Exception ex)
+            {
+                (Master as layout).SetAlert("alert-danger", $"Errore => {ex.Message}");
+            }
+        }
+        protected void BindGridOperai(string nome = "", string descrizione = "")
+        {
+            grdOperai.DataSource = OperaiDAO.GetAll(nome, descrizione);
             grdOperai.DataBind();
         }
         protected void PopolaCampiOperaio(int idOperaio, bool isControlEnabled)
@@ -403,6 +418,9 @@ namespace GestioneCantieri
             txtSuffOper.Text = operaio.Suffisso;
             txtOperaio.Text = operaio.Operaio;
             txtCostoOperaio.Text = operaio.CostoOperaio.ToString();
+
+            // Lascio disabilitato il campo che viene compilato in automatico
+            txtOperaio.Enabled = false;
         }
         protected void grdOperai_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -856,6 +874,8 @@ namespace GestioneCantieri
             lblIsOperaioInserito.Text = "";
             MostraPannello(false, false, true, false, false);
             ResettaCampi(pnlInsOperai);
+            txtOperaio.Text = $"Op{OperaiDAO.GetAll().Select(s => s.IdOperaio).Max() + 1}";
+            txtOperaio.Enabled = false;
             btnInsOper.Visible = true;
             btnModOper.Visible = false;
         }
