@@ -61,6 +61,14 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlScegliGruppo" CssClass="col" runat="server">
+
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-2 text-center" runat="server">
+                    <asp:Label ID="lblScegliSerie" runat="server" Text="Scegli Serie"></asp:Label>
+                    <asp:DropDownList ID="ddlScegliSerie" CssClass="form-control" runat="server"></asp:DropDownList>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-6 text-center">
                     <div class="row d-flex justify-content-center align-items-center">

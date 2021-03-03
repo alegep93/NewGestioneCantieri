@@ -152,7 +152,7 @@
                 <Columns>
                     <asp:BoundField HeaderText="Serie" DataField="NomeSerie" />
                     <asp:BoundField HeaderText="Frutto" DataField="NomeFrutto" />
-                    <asp:BoundField HeaderText="Codice Listino" DataField="CodiceListinoUnivoco" />
+                    <asp:BoundField HeaderText="Codice Listino" DataField="CodiceListino" />
                     <asp:BoundField HeaderText="Descrizione Listino" DataField="DescrizioneListino" />
                     <asp:TemplateField>
                         <ItemTemplate>
