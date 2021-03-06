@@ -33,22 +33,10 @@ namespace GestioneCantieri
             DropDownListManager.FillDdlCantieri(CantieriDAO.GetCantieri(txtAnno.Text, txtCodCant.Text, "", chkChiuso.Checked, chkRiscosso.Checked), ref ddlScegliCant);
         }
 
-        public void BindGridExcel(GridView grd, GridView grdExcel)
+        public void BindGridExcel()
         {
-            grdExcel.DataSource = grd.DataSource;
-            grdExcel.DataBind();
-
-            //Imposto la colonna del valore
-            for (int i = 0; i < grd.Rows.Count; i++)
-            {
-                grdExcel.Rows[i].Cells[0].Text = grd.Rows[i].Cells[0].Text;
-                grdExcel.Rows[i].Cells[1].Text = grd.Rows[i].Cells[1].Text;
-                grdExcel.Rows[i].Cells[2].Text = grd.Rows[i].Cells[2].Text;
-                grdExcel.Rows[i].Cells[3].Text = grd.Rows[i].Cells[6].Text;
-                grdExcel.Rows[i].Cells[4].Text = grd.Rows[i].Cells[7].Text;
-                grdExcel.Rows[i].Cells[5].Text = grd.Rows[i].Cells[11].Text;
-                grdExcel.Rows[i].Cells[6].Text = grd.Rows[i].Cells[12].Text;
-            }
+            grdStampaMateCantExcel.DataSource = RicalcoloContiManager.GetMaterialiCantieri(Convert.ToInt32(ddlScegliCant.SelectedValue));
+            grdStampaMateCantExcel.DataBind();
         }
 
         protected void CreateExcel()
@@ -130,8 +118,7 @@ namespace GestioneCantieri
         }
         protected void btnStampaExcel_Click(object sender, EventArgs e)
         {
-            RicalcoloContiManager.GetMaterialiCantieri(Convert.ToInt32(ddlScegliCant.SelectedValue));
-            BindGridExcel(grdStampaMateCant, grdStampaMateCantExcel);
+            BindGridExcel();
             CreateExcel();
         }
         #endregion

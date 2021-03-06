@@ -65,7 +65,7 @@
     </div>
 
     <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False"
-        CssClass="table table-dark table-striped text-center scrollable-table" Visible="true">
+        CssClass="table table-dark table-striped text-center scrollable-table" Visible="false">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
             <asp:BoundField DataField="DescriCodArt" HeaderText="Descr. CodArt" />

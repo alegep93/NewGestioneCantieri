@@ -16,6 +16,11 @@ namespace GestioneCantieri
             AlertManager.ShowAlert(pnlAlert, lblAlert, cssClass, messaggio);
         }
 
+        public void HideAlert()
+        {
+            AlertManager.HideAlert(pnlAlert);
+        }
+
         public void SetModal(string messaggio)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", $"openModal('{messaggio}');", true);
