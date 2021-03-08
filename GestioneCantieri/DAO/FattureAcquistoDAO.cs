@@ -16,13 +16,14 @@ namespace GestioneCantieri.DAO
             StringBuilder sql = new StringBuilder();
             string whereData = (dataDa == "" && dataA == "") ? "" : ((dataDa != "" && dataA == "") ? " AND A.data >= @dataDa " : ((dataDa == "" && dataA != "") ? " AND A.data <= @dataA " : " AND A.Data BETWEEN @dataDa AND @dataA "));
 
-            sql.AppendLine($"SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito");
+            sql.AppendLine($"SELECT DISTINCT A.id_fatture_acquisto, B.RagSocForni AS RagioneSocialeFornitore, A.numero, A.data, YEAR(A.data),");
+            sql.AppendLine($"                A.imponibile, A.iva, A.ritenuta_acconto, A.reverse_charge, A.is_nota_di_credito");
             sql.AppendLine($"FROM TblFattureAcquisto AS A");
             sql.AppendLine($"INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori");
             sql.AppendLine($"WHERE B.RagSocForni LIKE '%{fornitore}%' {whereData}");
             sql.AppendLine(anno != "" ? "AND DATEPART(YEAR, A.data) = @anno" : "");
             sql.AppendLine(numeroFattura > 0 ? "AND A.numero = @numeroFattura" : "");
-            sql.AppendLine($"ORDER BY A.numero");
+            sql.AppendLine($"ORDER BY YEAR(A.data), A.numero");
 
             try
             {

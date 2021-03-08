@@ -404,7 +404,7 @@ namespace GestioneCantieri
         }
         protected void BindGridOperai(string nome = "", string descrizione = "")
         {
-            grdOperai.DataSource = OperaiDAO.GetAll(nome, descrizione);
+            grdOperai.DataSource = OperaiDAO.GetAll(nome, descrizione).OrderBy(o => o.Operaio).ToList();
             grdOperai.DataBind();
         }
         protected void PopolaCampiOperaio(int idOperaio, bool isControlEnabled)

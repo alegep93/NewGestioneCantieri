@@ -38,10 +38,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/19/2019 17:56:08</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>03/03/2021 12:13:47</publishTime>
+      <publishTime>03/08/2021 19:05:27</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>03/03/2021 12:13:47</publishTime>
+      <publishTime>03/08/2021 19:05:27</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>10/25/2020 14:39:34</publishTime>
@@ -380,7 +380,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/11/2020 11:25:59</publishTime>
     </File>
     <File Include="Stampe/RicalcoloConti.aspx">
-      <publishTime>10/17/2020 16:15:22</publishTime>
+      <publishTime>03/06/2021 10:11:45</publishTime>
     </File>
     <File Include="Stampe/StampaFruttiGruppi.aspx">
       <publishTime>10/17/2020 16:15:22</publishTime>
@@ -398,7 +398,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/17/2020 16:15:22</publishTime>
     </File>
     <File Include="Stampe/StampaValoriCantieriConOpzioni.aspx">
-      <publishTime>10/17/2020 16:15:22</publishTime>
+      <publishTime>03/06/2021 10:23:43</publishTime>
     </File>
     <File Include="Stampe/StampaVerificaCantiere.aspx">
       <publishTime>10/17/2020 16:15:22</publishTime>

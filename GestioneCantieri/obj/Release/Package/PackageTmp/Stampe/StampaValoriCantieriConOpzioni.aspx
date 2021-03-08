@@ -65,11 +65,10 @@
     <!-- Bottone visualizzazione stampa -->
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col text-center">
-            <asp:Button ID="btnStampaValoriCantieri" CssClass="btn btn-lg btn-primary pull-right" OnClick="btnStampaContoCliente_Click" runat="server" Text="Stampa Valori Cantieri" />
-            <br />
-            <asp:Label ID="lblMsg" runat="server"></asp:Label>
+            <asp:Button ID="btnStampaValoriCantieri" CssClass="btn btn-lg btn-primary" OnClick="btnStampaContoCliente_Click" Text="Stampa Valori Cantieri" runat="server" />
+            <asp:Button ID="btnGeneraExcel" CssClass="btn btn-lg btn-dark" OnClick="btnGeneraExcel_Click" Text="Genera Excel" runat="server" />
         </div>
-    </div>    
+    </div>
 
     <%-- Label Totale --%>
     <div class="row mt-3 d-flex justify-content-center align-items-center">
@@ -81,7 +80,7 @@
     <!-- Griglia di visualizzazione -->
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false" 
+            <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false"
                 ItemType="GestioneCantieri.Data.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
