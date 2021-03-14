@@ -142,6 +142,7 @@
     <Content Include="GestioneCantieri.aspx" />
     <Content Include="GestioneOrdineFrutti\GestioneLocali.aspx" />
     <Content Include="Acconti\GestionePagamenti.aspx" />
+    <Content Include="GestioneOrdineFrutti\GestisciDefaultOrdineFrutti.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciFrutti.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciGruppi.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciGruppiFrutti.aspx" />
@@ -254,11 +255,13 @@
     </Compile>
     <Compile Include="DAO\AccontiOperaiDAO.cs" />
     <Compile Include="DAO\BolletteDAO.cs" />
+    <Compile Include="DAO\DefaultMatOrdFrutDAO.cs" />
     <Compile Include="DAO\FruttiSerieDAO.cs" />
     <Compile Include="DAO\SerieDAO.cs" />
     <Compile Include="Data\AccontoOperaio.cs" />
     <Compile Include="Data\Bolletta.cs" />
     <Compile Include="Data\FruttoSerie.cs" />
+    <Compile Include="Data\DefaultMatOrdFrut.cs" />
     <Compile Include="Data\Serie.cs" />
     <Compile Include="DDT\CodiciMef.aspx.cs">
       <DependentUpon>CodiciMef.aspx</DependentUpon>
@@ -371,6 +374,13 @@
     </Compile>
     <Compile Include="Acconti\GestionePagamenti.aspx.designer.cs">
       <DependentUpon>GestionePagamenti.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\GestisciDefaultOrdineFrutti.aspx.cs">
+      <DependentUpon>GestisciDefaultOrdineFrutti.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\GestisciDefaultOrdineFrutti.aspx.designer.cs">
+      <DependentUpon>GestisciDefaultOrdineFrutti.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestioneOrdineFrutti\GestisciGruppi.aspx.cs">
       <DependentUpon>GestisciGruppi.aspx</DependentUpon>

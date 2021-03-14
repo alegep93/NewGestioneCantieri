@@ -7,120 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GestioneCantieri
+namespace GestioneCantieri.GestioneOrdineFrutti
 {
 
 
-    public partial class OrdineFrutti
+    public partial class GestisciDefaultOrdineFrutti
     {
-
-        /// <summary>
-        /// lblScegliCantiere control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliCantiere;
-
-        /// <summary>
-        /// ddlScegliCantiere control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliCantiere;
-
-        /// <summary>
-        /// btnEliminaOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminaOrdine;
-
-        /// <summary>
-        /// lblMsg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMsg;
-
-        /// <summary>
-        /// lblScegliGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliGruppoOrdine;
-
-        /// <summary>
-        /// ddlScegliGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliGruppoOrdine;
-
-        /// <summary>
-        /// pnlInserisciNuovoGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInserisciNuovoGruppoOrdine;
-
-        /// <summary>
-        /// lblNomeGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNomeGruppoOrdine;
-
-        /// <summary>
-        /// txtNomeGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNomeGruppoOrdine;
-
-        /// <summary>
-        /// btnCreaNuovoGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreaNuovoGruppoOrdine;
-
-        /// <summary>
-        /// lblNuovoGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNuovoGruppoOrdine;
-
-        /// <summary>
-        /// pnlInserisciDati control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInserisciDati;
 
         /// <summary>
         /// lblScegliLocale control.
@@ -139,42 +31,6 @@ namespace GestioneCantieri
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliLocale;
-
-        /// <summary>
-        /// pnlInserisciDaDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInserisciDaDefault;
-
-        /// <summary>
-        /// lblScegliLocaleDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliLocaleDefault;
-
-        /// <summary>
-        /// ddlScegliLocaleDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliLocaleDefault;
-
-        /// <summary>
-        /// btnInserisciDaDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInserisciDaDefault;
 
         /// <summary>
         /// pnlScegliGruppo control.
@@ -420,12 +276,12 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblIsFruttoInserito;
 
         /// <summary>
-        /// grdOrdini control.
+        /// grdDefMatOrdFrut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdOrdini;
+        protected global::System.Web.UI.WebControls.GridView grdDefMatOrdFrut;
     }
 }

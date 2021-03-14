@@ -9,6 +9,10 @@
     background-image: url('../Images/BackgroundGradient.png');
 }
 
+table td {
+    vertical-align: middle !important;
+}
+
 .default-title {
     height: 89vh;
     display: table-cell;
