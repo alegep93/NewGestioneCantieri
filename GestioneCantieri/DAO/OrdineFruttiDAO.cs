@@ -51,6 +51,28 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static bool InserisciDaDefault(int idCantiere, int idLocale, int idLocaleDefault)
+        {
+            bool ret = false;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                sql.AppendLine($"INSERT INTO TblMatOrdFrut (IdCantiere, IdGruppiFrutti, IdLocale, IdFrutto, QtaFrutti, IdSerie)");
+                sql.AppendLine($"SELECT {idCantiere}, IdGruppiFrutti, {idLocale}, IdFrutto, QtaFrutti, IdSerie");
+                sql.AppendLine($"FROM TblDefaultMatOrdFrut");
+                sql.AppendLine($"WHERE IdLocale = @idLocaleDefault");
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Execute(sql.ToString(), new { idLocaleDefault }) > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la InserisciDaDefault in OrdineFruttiDAO", ex);
+            }
+            return ret;
+        }
+
         public static List<MatOrdFrut> GetByIdCantiere(int idCantiere)
         {
             List<MatOrdFrut> ret = new List<MatOrdFrut>();
@@ -337,14 +359,16 @@ namespace GestioneCantieri.DAO
         {
             List<MatOrdFrut> ret = new List<MatOrdFrut>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo, E.descr001 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine");
-            sql.AppendLine("FROM TblMatOrdFrut AS A");
-            sql.AppendLine("LEFT JOIN TblCantieri AS B ON A.IdCantiere = B.IdCantieri");
-            sql.AppendLine("LEFT JOIN TblLocali AS C ON A.IdLocale = C.IdLocali");
-            sql.AppendLine("LEFT JOIN TblGruppiFrutti AS D ON A.IdGruppiFrutti = D.Id");
-            sql.AppendLine("LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.ID1");
-            sql.AppendLine("LEFT JOIN TblMatOrdFrutGroup AS F ON A.IdTblMatOrdFrutGroup = F.IdMatOrdFrutGroup");
-            sql.AppendLine("WHERE B.IdCantieri = @idCant AND C.IdLocali = @idLocale");
+            sql.AppendLine($"SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo,");
+            sql.AppendLine($"       E.descr001 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine, G.NomeSerie");
+            sql.AppendLine($"FROM TblMatOrdFrut AS A");
+            sql.AppendLine($"LEFT JOIN TblCantieri AS B ON A.IdCantiere = B.IdCantieri");
+            sql.AppendLine($"LEFT JOIN TblLocali AS C ON A.IdLocale = C.IdLocali");
+            sql.AppendLine($"LEFT JOIN TblGruppiFrutti AS D ON A.IdGruppiFrutti = D.Id");
+            sql.AppendLine($"LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.ID1");
+            sql.AppendLine($"LEFT JOIN TblMatOrdFrutGroup AS F ON A.IdTblMatOrdFrutGroup = F.IdMatOrdFrutGroup");
+            sql.AppendLine($"LEFT JOIN TblSerie G ON A.IdSerie = G.IdSerie");
+            sql.AppendLine($"WHERE B.IdCantieri = @idCant AND C.IdLocali = @idLocale");
             try
             {
                 using (SqlConnection cn = GetConnection())

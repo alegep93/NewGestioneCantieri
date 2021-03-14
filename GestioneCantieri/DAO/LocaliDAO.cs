@@ -28,6 +28,30 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static List<Locali> GetOnlyFirstTypeOfLocale()
+        {
+            List<Locali> ret = new List<Locali>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                sql.AppendLine($"SELECT MIN(idLocali) AS idLocali, value AS NomeLocale");
+                sql.AppendLine($"FROM TblLocali");
+                sql.AppendLine($"CROSS APPLY STRING_SPLIT(NomeLocale, '0')");
+                sql.AppendLine($"WHERE RTRIM(value) != '' AND RTRIM(value) NOT IN ('1','2','3','4','5','6','7','8','9')");
+                sql.AppendLine($"GROUP BY [value]");
+                sql.AppendLine($"ORDER BY [value]");
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Locali>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll in LocaliDAO", ex);
+            }
+            return ret;
+        }
+
         public static Locali GetSingle(int idLocale)
         {
             Locali ret = new Locali();

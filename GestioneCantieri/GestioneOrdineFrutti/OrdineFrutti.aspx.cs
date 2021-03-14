@@ -225,6 +225,7 @@ namespace GestioneCantieri
             ddlScegliLocale.Items.Clear();
             ddlScegliLocale.Items.Add(new ListItem("", "-1"));
             DropDownListManager.FillDdlLocali(LocaliDAO.GetAll(), ref ddlScegliLocale);
+            DropDownListManager.FillDdlLocali(LocaliDAO.GetOnlyFirstTypeOfLocale(), ref ddlScegliLocaleDefault);
         }
         protected void FillDdlScegliSerie()
         {
@@ -301,6 +302,19 @@ namespace GestioneCantieri
             else if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 e.Row.Cells[0].Text = (++progressivo).ToString();
+            }
+        }
+
+        protected void btnInserisciDaDefault_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OrdineFruttiDAO.InserisciDaDefault(Convert.ToInt32(ddlScegliCantiere.SelectedValue), Convert.ToInt32(ddlScegliLocale.SelectedValue), Convert.ToInt32(ddlScegliLocaleDefault.SelectedValue));
+                BindGrid();
+            }
+            catch (Exception ex)
+            {
+                (Master as layout).SetAlert("alert-danger", $"Errore durante l'inserimento da Default ===> {ex.Message}");
             }
         }
     }

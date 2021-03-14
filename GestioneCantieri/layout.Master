@@ -90,6 +90,7 @@
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciSerie.aspx">Gestisci Serie</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciDefaultOrdineFrutti.aspx">Default Ordine Frutti</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
                                 <li class="dropdown-submenu dropright">
                                     <a href="#" class="dropdown-item dropdown-toggle">Stampa Gruppi e Frutti<span class="caret"></span></a>

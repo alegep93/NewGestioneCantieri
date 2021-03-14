@@ -1,68 +1,19 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/layout.Master" CodeBehind="OrdineFrutti.aspx.cs" Inherits="GestioneCantieri.OrdineFrutti" %>
-
-<asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
-    <title>Ordine Frutti</title>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="GestisciDefaultOrdineFrutti.aspx.cs" Inherits="GestioneCantieri.GestioneOrdineFrutti.GestisciDefaultOrdineFrutti" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
+    <title>Default Ordine Frutti</title>
 </asp:Content>
-
-<asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
-    <div class="row d-flex justify-content-center align-items-center mt-3">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+    <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center">
-            <h1>Ordine Frutti</h1>
+            <h1>Default Ordine Frutti</h1>
         </div>
     </div>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <!-- Scegli Cantiere -->
-        <div class="col-6 text-center">
-            <asp:Label ID="lblScegliCantiere" runat="server" Text="Scegli Cantiere"></asp:Label>
-            <asp:DropDownList ID="ddlScegliCantiere" CssClass="form-control" OnTextChanged="ddlScegliCantiere_TextChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
+        <div class="col-4 text-center form-group">
+            <asp:Label ID="lblScegliLocale" Text="Scegli Locale" runat="server"></asp:Label>
+            <asp:DropDownList ID="ddlScegliLocale" CssClass="form-control" OnSelectedIndexChanged="ddlScegliLocale_SelectedIndexChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
         </div>
-    </div>
-
-    <div class="row d-flex justify-content-center align-items-center">
-        <!-- Elimina ordine cantiere -->
-        <div class="col-6 text-center">
-            <asp:Button ID="btnEliminaOrdine" CssClass="btn btn-lg btn-primary" OnClick="btnEliminaOrdine_Click" OnClientClick="return confirm('Vuoi veramente eliminare questo ordine?')" Text="Elimina Intero Ordine" runat="server" />
-            <br />
-            <asp:Label ID="lblMsg" runat="server"></asp:Label>
-        </div>
-    </div>
-
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <!-- Scegli Gruppo a cui associare l'ordine -->
-        <div class="col-6 text-center">
-            <div class="row">
-                <div class="col-4">
-                    <asp:Label ID="lblScegliGruppoOrdine" runat="server" Text="Scegli uno dei gruppi già creati"></asp:Label>
-                    <asp:DropDownList ID="ddlScegliGruppoOrdine" OnSelectedIndexChanged="ddlScegliGruppoOrdine_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control" runat="server"></asp:DropDownList>
-                </div>
-                <asp:Panel ID="pnlInserisciNuovoGruppoOrdine" Visible="true" CssClass="col-8" DefaultButton="btnCreaNuovoGruppoOrdine" runat="server">
-                    <div class="row">
-                        <div class="col-8">
-                            <asp:Label ID="lblNomeGruppoOrdine" runat="server" Text="Inserisci un nome per creare un nuovo gruppo"></asp:Label>
-                            <asp:TextBox ID="txtNomeGruppoOrdine" CssClass="form-control" runat="server"></asp:TextBox>
-                        </div>
-                        <div class="col-4">
-                            <asp:Button ID="btnCreaNuovoGruppoOrdine" CssClass="btn btn-primary pull-right" Text="Crea nuovo gruppo" OnClick="btnCreaNuovoGruppoOrdine_Click" Style="margin-top: 19px;" runat="server" />
-                            <asp:Label ID="lblNuovoGruppoOrdine" CssClass="pull-right" runat="server"></asp:Label>
-                        </div>
-                    </div>
-                </asp:Panel>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <asp:Panel ID="pnlInserisciDati" CssClass="col-2 text-center" runat="server">
-            <asp:Label ID="lblScegliLocale" runat="server" Text="Scegli Locale"></asp:Label>
-            <asp:DropDownList ID="ddlScegliLocale" CssClass="form-control" OnTextChanged="ddlScegliLocale_TextChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
-
-            <asp:Panel ID="pnlInserisciDaDefault" CssClass="col mt-3 text-center" runat="server">
-                <asp:Label ID="lblScegliLocaleDefault" runat="server" Text="Scegli Locale Per Inserimento Da Default"></asp:Label>
-                <asp:DropDownList ID="ddlScegliLocaleDefault" CssClass="form-control" runat="server"></asp:DropDownList>
-                <asp:Button ID="btnInserisciDaDefault" CssClass="btn btn-lg btn-dark" OnClick="btnInserisciDaDefault_Click" Text="Inserisci da Default" runat="server"></asp:Button>
-            </asp:Panel>
-        </asp:Panel>
     </div>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
@@ -146,26 +97,24 @@
     </div>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
-        <div class="tableContainer col-12 table-responsive">
-            <asp:GridView ID="grdOrdini" runat="server" ItemType="GestioneCantieri.Data.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" OnRowDataBound="grdOrdini_RowDataBound"
-                AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
+        <div class="col-10 text-center table-responsive">
+            <asp:GridView ID="grdDefMatOrdFrut" runat="server" ItemType="GestioneCantieri.Data.DefaultMatOrdFrut" OnRowCommand="grdDefMatOrdFrut_RowCommand" 
+                OnRowDataBound="grdDefMatOrdFrut_RowDataBound" CssClass="table table-dark table-striped text-center scrollable-table" AutoGenerateColumns="False">
                 <Columns>
-                    <asp:TemplateField>
+                    <%--<asp:TemplateField>
                         <ItemTemplate>
                             <asp:Label ID="lblProgressivo" runat="server"></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>
-                    <%--<asp:BoundField DataField="DescrCant" HeaderText="Cantiere" />
-                    <asp:BoundField DataField="Appartamento" HeaderText="Locale" />--%>
-                    <asp:BoundField DataField="NomeSerie" HeaderText="Nome Serie" />
+                    </asp:TemplateField>--%>
                     <asp:BoundField DataField="NomeGruppo" HeaderText="Nome Gruppo" />
+                    <asp:BoundField DataField="Descrizione" HeaderText="Descrizione Gruppo" />
                     <asp:BoundField DataField="NomeFrutto" HeaderText="Nome Frutto" />
                     <asp:BoundField DataField="QtaFrutti" HeaderText="Quantità Frutti" />
-                    <asp:BoundField DataField="DescrizioneGruppoOrdine" HeaderText="Gruppo Ordine" />
+                    <asp:BoundField DataField="NomeSerie" HeaderText="Nome Serie" />
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnElimiminaOrdine" CommandName="EliminaOrdine" CommandArgument="<%# BindItem.Id %>"
-                                CssClass="btn btn-lg btn-default" runat="server" Text="Elimina" OnClientClick="return confirm('Vuoi veramente eliminare questo ordine?');">
+                            <asp:LinkButton ID="btnElimimina" CommandName="Elimina" CommandArgument="<%# Item.IdTblDefaultMatOrdFrut %>"
+                                CssClass="btn btn-lg" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo elemento?');">
                                 <i class="fas fa-times" style="color: red;"></i>
                             </asp:LinkButton>
                         </ItemTemplate>
