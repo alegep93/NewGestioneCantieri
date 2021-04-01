@@ -65,10 +65,10 @@ namespace GestioneCantieri.DAO
         {
             Mamg0 ret = new Mamg0();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
+            sql.AppendLine($"SELECT (AA_SIGF + AA_COD) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
             sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
             sql.AppendLine($"FROM MAMG0");
-            sql.AppendLine($"WHERE (AA_SIGF + AA_CODF) = @codiceListinoUnivoco");
+            sql.AppendLine($"WHERE (AA_COD + AA_SIGF) = @codiceListinoUnivoco");
             sql.AppendLine($"ORDER BY CodArt ASC");
             try
             {

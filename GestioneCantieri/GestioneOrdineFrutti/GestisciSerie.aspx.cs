@@ -18,7 +18,6 @@ namespace GestioneCantieri.GestioneOrdineFrutti
             {
                 BindGrid();
             }
-
             Page.MaintainScrollPositionOnPostBack = true;
         }
 
@@ -68,12 +67,6 @@ namespace GestioneCantieri.GestioneOrdineFrutti
 
                 grdFruttiSerie.DataSource = FruttiSerieDAO.GetAll().Where(w => w.IdSerie == Convert.ToInt64(ddlFiltroSerie.SelectedValue)).ToList();
                 grdFruttiSerie.DataBind();
-
-                btnInserisciSerie.Visible = true;
-                btnModificaSerie.Visible = !btnInserisciSerie.Visible;
-
-                btnInserisciFruttoSerie.Visible = true;
-                btnModificaFruttoSerie.Visible = !btnInserisciFruttoSerie.Visible;
             }
             catch (Exception ex)
             {
