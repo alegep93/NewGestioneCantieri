@@ -131,14 +131,27 @@ namespace GestioneCantieri.GestioneOrdineFrutti
         {
             try
             {
-                FruttiSerieDAO.Insert(new FruttoSerie
+                int idFrutto = Convert.ToInt32(ddlScegliFrutto.SelectedValue);
+                long idSerie = Convert.ToInt64(ddlScegliSerie.SelectedValue);
+                FruttoSerie item = FruttiSerieDAO.GetAll().Where(w => w.IdFrutto == idFrutto && w.IdSerie == idSerie)?.FirstOrDefault() ?? null;
+
+                // Verifico che il frutto selezionato non sia già associato alla serie scelta
+                if (item == null)
                 {
-                    IdFrutto = Convert.ToInt32(ddlScegliFrutto.SelectedValue),
-                    IdSerie = Convert.ToInt64(ddlScegliSerie.SelectedValue),
-                    CodiceListinoUnivoco = ddlScegliListino.SelectedValue
-                });
-                BindGrid();
-                (Master as layout).SetAlert("alert-success", $"Inserimento di un'associazione frutto-serie avvenuto con successo");
+                    FruttiSerieDAO.Insert(new FruttoSerie
+                    {
+                        IdFrutto = idFrutto,
+                        IdSerie = idSerie,
+                        CodiceListinoUnivoco = ddlScegliListino.SelectedValue
+                    });
+
+                    BindGrid();
+                    (Master as layout).SetAlert("alert-success", $"Inserimento di un'associazione frutto-serie avvenuto con successo");
+                }
+                else
+                {
+                    (Master as layout).SetAlert("alert-warning", $"Non è possibile associare lo stesso frutto più di una volta alla stessa serie");
+                }
             }
             catch (Exception ex)
             {
@@ -150,15 +163,27 @@ namespace GestioneCantieri.GestioneOrdineFrutti
         {
             try
             {
-                FruttiSerieDAO.Update(new FruttoSerie
+                int idFrutto = Convert.ToInt32(ddlScegliFrutto.SelectedValue);
+                long idSerie = Convert.ToInt64(ddlScegliSerie.SelectedValue);
+                FruttoSerie item = FruttiSerieDAO.GetAll().Where(w => w.IdFrutto == idFrutto && w.IdSerie == idSerie)?.FirstOrDefault() ?? null;
+                // Verifico che il frutto selezionato non sia già associato alla serie scelta
+                if (item == null)
                 {
-                    IdFruttoSerie = Convert.ToInt64(hfIdFruttoSerie.Value),
-                    IdFrutto = Convert.ToInt32(ddlScegliFrutto.SelectedValue),
-                    IdSerie = Convert.ToInt64(ddlScegliSerie.SelectedValue),
-                    CodiceListinoUnivoco = ddlScegliListino.SelectedValue
-                });
-                BindGrid();
-                (Master as layout).SetAlert("alert-success", $"Aggiornamento di un'associazione frutto-serie avvenuto con successo");
+                    FruttiSerieDAO.Update(new FruttoSerie
+                    {
+                        IdFruttoSerie = Convert.ToInt64(hfIdFruttoSerie.Value),
+                        IdFrutto = Convert.ToInt32(ddlScegliFrutto.SelectedValue),
+                        IdSerie = Convert.ToInt64(ddlScegliSerie.SelectedValue),
+                        CodiceListinoUnivoco = ddlScegliListino.SelectedValue
+                    });
+
+                    BindGrid();
+                    (Master as layout).SetAlert("alert-success", $"Aggiornamento di un'associazione frutto-serie avvenuto con successo");
+                }
+                else
+                {
+                    (Master as layout).SetAlert("alert-warning", $"Non è possibile associare lo stesso frutto più di una volta alla stessa serie");
+                }
             }
             catch (Exception ex)
             {
