@@ -319,7 +319,7 @@ namespace GestioneCantieri.DAO
             StringBuilder sql = new StringBuilder();
             try
             {
-                sql.AppendLine($"SELECT descr001,SUM(Qta),NomeSerie,ArticoloSerie,DescrizioneSerie,MIN(PrezzoNetto),SUM(Valore) FROM (");
+                sql.AppendLine($"SELECT descr001, SUM(Qta) Qta, NomeSerie, ArticoloSerie, DescrizioneSerie, MIN(PrezzoNetto) PrezzoNetto, SUM(Valore) Valore FROM (");
                 sql.AppendLine($"   SELECT F.descr001, SUM(CGF.Qta) As Qta, S.NomeSerie, (M.AA_SIGF + M.AA_CODF) AS ArticoloSerie, AA_DES AS DescrizioneSerie, AA_PRZ1 AS PrezzoNetto, SUM(CGF.Qta * AA_PRZ1) AS Valore");
                 sql.AppendLine($"   FROM TblMatOrdFrut AS MOF");
                 sql.AppendLine($"   INNER JOIN TblLocali AS L ON MOF.IdLocale = L.IdLocali");

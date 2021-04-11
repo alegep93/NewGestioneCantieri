@@ -316,3 +316,11 @@ select option {
     .excel-icon:hover {
         color: #005916;
     }
+
+/* ALERT */
+#pnlAlert {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
+}

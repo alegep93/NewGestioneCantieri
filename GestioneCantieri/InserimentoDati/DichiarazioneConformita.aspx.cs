@@ -23,7 +23,7 @@ namespace GestioneCantieri
 
         private void Bind()
         {
-            List<Cantieri> cantieri = CantieriDAO.GetAll();
+            List<Cantieri> cantieri = CantieriDAO.GetCantieri(txtFiltroAnno.Text, txtFiltroCodCant.Text, txtFiltroDescr.Text);
 
             ddlScegliCantiere.Items.Clear();
             ddlScegliCantiere.Items.Add(new ListItem("", "-1"));
@@ -76,6 +76,11 @@ namespace GestioneCantieri
             {
                 (Master as layout).SetModal($"Errore durante il grdDiCo_RowCommand in DichiarazioneConformità.aspx.cs ===> {ex.Message}");
             }
+        }
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            Bind();
         }
     }
 }

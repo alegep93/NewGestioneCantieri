@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="DichiarazioneConformita.aspx.cs" Inherits="GestioneCantieri.DichiarazioneConformita" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     <title>Dichiarazione di conformità</title>
 </asp:Content>
@@ -11,8 +12,27 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 text-center">
-            <asp:Label ID="lblScegliCantiere" Text="Scegli cantiere" runat="server"></asp:Label>
-            <asp:DropDownList ID="ddlScegliCantiere" CssClass="form-control" runat="server"></asp:DropDownList>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Label ID="lblFiltroAnno" runat="server" Text="Anno"></asp:Label>
+                    <asp:TextBox ID="txtFiltroAnno" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged" runat="server"></asp:TextBox>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblFiltroCodCant" runat="server" Text="Codice Cantiere"></asp:Label>
+                    <asp:TextBox ID="txtFiltroCodCant" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged" runat="server"></asp:TextBox>
+                </div>
+                <div class="col">
+                    <asp:Label ID="lblFiltroDescr" runat="server" Text="Descrizione"></asp:Label>
+                    <asp:TextBox ID="txtFiltroDescr" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged" runat="server"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Label ID="lblScegliCantiere" Text="Scegli cantiere" runat="server"></asp:Label>
+                    <asp:DropDownList ID="ddlScegliCantiere" CssClass="form-control" runat="server"></asp:DropDownList>
+                </div>
+            </div>
         </div>
     </div>
 

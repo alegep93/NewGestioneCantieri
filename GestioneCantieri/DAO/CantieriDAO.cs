@@ -80,6 +80,29 @@ namespace GestioneCantieri.DAO
             return ret;
         }
 
+        public static List<Cantieri> GetCantieri(string anno, string codiceCantiere, string descrizione)
+        {
+            List<Cantieri> ret = new List<Cantieri>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT Cant.*, Cli.RagSocCli");
+            sql.AppendLine($"FROM TblCantieri AS Cant");
+            sql.AppendLine($"JOIN TblClienti AS Cli ON Cant.IdTblClienti = Cli.IdCliente");
+            sql.AppendLine($"WHERE Anno LIKE '%{anno}%' AND CodCant LIKE '%{codiceCantiere}%' AND DescriCodCAnt LIKE '%{descrizione}%'");
+            sql.AppendLine($"ORDER BY Cant.CodCant");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Cantieri>(sql.ToString(), new { anno, codiceCantiere, descrizione }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetCantieri con anno, codiceCantiere, descrizione in CantieriDAO", ex);
+            }
+            return ret;
+        }
+
         public static List<Cantieri> GetCantieri(string anno, string codiceCantiere, bool fatturato, bool chiuso, bool riscosso)
         {
             List<Cantieri> ret = new List<Cantieri>();
