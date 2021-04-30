@@ -23,6 +23,11 @@ namespace GestioneCantieri
             {
                 SvuotaCampi();
                 txtCodArt1.Focus();
+                _isPostBack.Value = "1";
+            }
+            else
+            {
+                _isPostBack.Value = "0";
             }
         }
 

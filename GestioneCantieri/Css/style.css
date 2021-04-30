@@ -324,3 +324,37 @@ select option {
     bottom: 0;
     z-index: 99;
 }
+
+
+/* Spinner.... */
+.spinner-panel-container {
+    position: absolute;
+    height: 100vh !important;
+    background: rgba(0,0,0,0.9);
+    top: 0;
+    left: -20px;
+    z-index: 999999999;
+    width: 101vw !important;
+    overflow: hidden;
+}
+
+.spinner-wrapper {
+    position: absolute;
+    left: calc(50% - 30px);
+    top: calc(50% - 30px);
+}
+
+.spinner-border.text-success {
+    width: 80px;
+    height: 80px;
+    font-size: 20px;
+}
+
+.spinner-label {
+    color: #FFF;
+    font-size: 16px;
+    position: absolute;
+    left: -10px;
+    width: 200px;
+    top: 100px;
+}

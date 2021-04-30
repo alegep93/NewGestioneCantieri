@@ -2,17 +2,34 @@
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
     <title>Listino Mef</title>
+    <!-- Blocco Javascript per la gestione dello spinner-->
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#body_spinnerImg").hide();
-        });
-
-        function ShowHideLoader() {
-            $("#body_spinnerImg").show();
+        function ShowLoader() {
+            $('#<%= pnlShowLoader.ClientID %>').show("fast");
         }
+
+        <%--$(document).ready(function () {
+            if ($('#_isPostBack').val() == '1') {
+                $('#<%= btnGo.ClientID %>').trigger('click');
+            }
+        });--%>
     </script>
 </asp:Content>
 <asp:Content ID="body" ContentPlaceHolderID="body" runat="server">
+
+    <%-- Loader --%>
+    <asp:Panel ID="pnlShowLoader" CssClass="w-100 h-100 mt-1 spinner-panel-container" Style="display: none;" runat="server">
+        <div class="d-flex justify-content-center spinner-wrapper">
+            <div class="spinner-border text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <br />
+            <br />
+            <span class="spinner-label">Loading data...</span>
+        </div>
+        <%--<asp:Button ID="btnGo" runat="server" CssClass="Button" Text="" Style="display: none;" OnClientClick="ShowLoader();" />--%>
+        <asp:HiddenField ID="_isPostBack" runat="server" ClientIDMode="Static" />
+    </asp:Panel>
 
     <%-- Titolo Pagina --%>
     <div class="row mt-3 d-flex justify-content-center align-items-center">
@@ -24,7 +41,7 @@
     <%-- Importazione/Eliminazione listino --%>
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center">
-            <asp:Button ID="btn_ImportaListino" class="btn btn-info btn-lg" OnClick="btn_ImportaListino_Click" OnClientClick="javascript:ShowHideLoader();return confirm('Vuoi importare il nuovo listino?');" Text="Importa Listino da DBF" runat="server" />
+            <asp:Button ID="btn_ImportaListino" class="btn btn-info btn-lg" OnClick="btn_ImportaListino_Click" OnClientClick="javascript:ShowLoader();return confirm('Vuoi importare il nuovo listino?');" Text="Importa Listino da DBF" runat="server" />
             <asp:Button ID="btnEliminaListino" runat="server" OnClick="btnEliminaListino_Click" Text="ELIMINA LISTINO" CssClass="btn btn-danger btn-lg" OnClientClick="return confirm('Vuoi veramente eliminare TUTTO il listino?');" />
             <br />
             <asp:Label ID="lblImportMsg" runat="server"></asp:Label>
@@ -70,15 +87,15 @@
                         </div>
                     </div>
                 </div>
-        </div>
-
-        <!-- Cerca e Svuota -->
-        <div class="row mt-1 d-flex justify-content-center align-items-center">
-            <div class="col">
-                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" CssClass="btn btn-primary btn-lg" Text="Cerca" />
-                <asp:Button ID="btnSvuotaTxt" runat="server" OnClick="btnSvuotaTxt_Click" Text="Svuota" CssClass="btn btn-secondary btn-lg" />
             </div>
-        </div>
+
+            <!-- Cerca e Svuota -->
+            <div class="row mt-1 d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" CssClass="btn btn-primary btn-lg" Text="Cerca" />
+                    <asp:Button ID="btnSvuotaTxt" runat="server" OnClick="btnSvuotaTxt_Click" Text="Svuota" CssClass="btn btn-secondary btn-lg" />
+                </div>
+            </div>
         </div>
     </asp:Panel>
 

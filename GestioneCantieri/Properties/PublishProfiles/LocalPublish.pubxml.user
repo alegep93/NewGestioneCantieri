@@ -23,6 +23,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>10/25/2020 14:39:34</publishTime>
     </File>
+    <File Include="bin/ClosedXML.dll">
+      <publishTime>12/16/2020 09:59:08</publishTime>
+    </File>
+    <File Include="bin/ClosedXML.pdb">
+      <publishTime>12/16/2020 09:59:08</publishTime>
+    </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>10/25/2020 14:39:33</publishTime>
     </File>
@@ -38,11 +44,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/Dapper.dll">
       <publishTime>01/19/2019 17:56:08</publishTime>
     </File>
+    <File Include="bin/DocumentFormat.OpenXml.dll">
+      <publishTime>06/06/2017 22:59:22</publishTime>
+    </File>
+    <File Include="bin/ExcelNumberFormat.dll">
+      <publishTime>03/13/2020 09:36:50</publishTime>
+    </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>04/11/2021 11:15:31</publishTime>
+      <publishTime>04/24/2021 13:11:55</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>04/11/2021 11:15:31</publishTime>
+      <publishTime>04/24/2021 13:11:55</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>10/25/2020 14:39:34</publishTime>
@@ -74,17 +86,23 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/itextsharp.dll">
       <publishTime>01/19/2019 17:56:08</publishTime>
     </File>
+    <File Include="bin/System.IO.FileSystem.Primitives.dll">
+      <publishTime>06/11/2016 23:13:46</publishTime>
+    </File>
+    <File Include="bin/System.IO.Packaging.dll">
+      <publishTime>06/11/2016 23:13:48</publishTime>
+    </File>
     <File Include="Content/bootstrap-grid.css">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.css.map">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.min.css">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.min.css.map">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap-reboot.css">
       <publishTime>01/19/2019 17:56:08</publishTime>
@@ -99,16 +117,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/19/2019 17:56:08</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap.css.map">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css.map">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Css/bootstrap-3.3.7-dist/css/bootstrap-theme.css">
       <publishTime>01/19/2019 17:56:08</publishTime>
@@ -123,16 +141,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/19/2019 17:56:08</publishTime>
     </File>
     <File Include="Css/bootstrap-3.3.7-dist/css/bootstrap.css">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Css/bootstrap-3.3.7-dist/css/bootstrap.css.map">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Css/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Css/bootstrap-3.3.7-dist/css/bootstrap.min.css.map">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="Css/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.eot">
       <publishTime>01/19/2019 17:56:08</publishTime>
@@ -162,10 +180,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/17/2020 16:15:22</publishTime>
     </File>
     <File Include="Css/Fatture.css">
-      <publishTime>11/01/2020 11:26:41</publishTime>
+      <publishTime>01/11/2020 11:26:41</publishTime>
     </File>
     <File Include="Css/style.css">
-      <publishTime>04/08/2021 18:05:09</publishTime>
+      <publishTime>04/24/2021 13:06:10</publishTime>
     </File>
     <File Include="DDT/CodiciMef.aspx">
       <publishTime>03/03/2021 11:54:58</publishTime>
@@ -192,16 +210,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/17/2020 16:15:22</publishTime>
     </File>
     <File Include="GestioneAppunti.aspx">
-      <publishTime>11/01/2019 11:38:38</publishTime>
+      <publishTime>01/11/2019 11:38:38</publishTime>
     </File>
     <File Include="GestioneCantieri.aspx">
       <publishTime>10/31/2020 13:23:54</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/ControlloGruppi.aspx">
-      <publishTime>11/07/2020 11:59:37</publishTime>
+      <publishTime>07/11/2020 11:59:37</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/GestioneLocali.aspx">
-      <publishTime>11/07/2020 11:59:37</publishTime>
+      <publishTime>07/11/2020 11:59:37</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/GestisciDefaultOrdineFrutti.aspx">
       <publishTime>03/14/2021 10:35:24</publishTime>
@@ -213,7 +231,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/04/2021 17:27:00</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/GestisciGruppiFrutti.aspx">
-      <publishTime>11/07/2020 11:59:37</publishTime>
+      <publishTime>07/11/2020 11:59:37</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/GestisciSerie.aspx">
       <publishTime>01/22/2021 16:16:18</publishTime>
@@ -246,13 +264,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/14/2021 10:35:24</publishTime>
     </File>
     <File Include="Listini/Listino.aspx">
-      <publishTime>10/17/2020 16:15:22</publishTime>
+      <publishTime>04/24/2021 13:05:27</publishTime>
     </File>
     <File Include="Listini/ListinoHTS.aspx">
       <publishTime>10/17/2020 16:15:22</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>10/25/2020 14:39:33</publishTime>
+      <publishTime>04/24/2021 12:30:18</publishTime>
     </File>
     <File Include="Preventivi.aspx">
       <publishTime>10/17/2020 16:15:22</publishTime>
@@ -381,7 +399,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/19/2019 17:56:08</publishTime>
     </File>
     <File Include="Stampe/ResocontoOperaio.aspx">
-      <publishTime>11/01/2020 11:25:59</publishTime>
+      <publishTime>01/11/2020 11:25:59</publishTime>
     </File>
     <File Include="Stampe/RicalcoloConti.aspx">
       <publishTime>03/06/2021 10:11:45</publishTime>

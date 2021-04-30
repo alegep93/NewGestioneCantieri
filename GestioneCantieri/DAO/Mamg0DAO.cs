@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using ClosedXML.Excel;
+using Dapper;
 using GestioneCantieri.Data;
 using System;
 using System.Collections.Generic;
@@ -130,42 +131,86 @@ namespace GestioneCantieri.DAO
         {
             try
             {
-                OleDbConnectionStringBuilder OleStringBuilder = new OleDbConnectionStringBuilder(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source =" + filePath + ";Extended Properties = 'Excel 12.0;HDR=Yes;IMEX=1';Persist Security Info=False;")
-                {
-                    DataSource = filePath
-                };
+                //OleDbConnectionStringBuilder OleStringBuilder = new OleDbConnectionStringBuilder(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source =" + filePath + ";Extended Properties = 'Excel 12.0;HDR=Yes;IMEX=1';Persist Security Info=False;")
+                //{
+                //    DataSource = filePath
+                //};
 
-                using (OleDbConnection ExcelConection = new OleDbConnection(OleStringBuilder.ConnectionString))
-                {
+                //using (OleDbConnection ExcelConection = new OleDbConnection(OleStringBuilder.ConnectionString))
+                //{
 
-                    using (OleDbDataAdapter adaptor = new OleDbDataAdapter("SELECT * FROM [Mamg0$]", ExcelConection))
+                //    using (OleDbDataAdapter adaptor = new OleDbDataAdapter("SELECT * FROM [Mamg0$]", ExcelConection))
+                //    {
+                //        DataSet ds = new DataSet();
+                //        adaptor.Fill(ds);
+
+                //        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(tr.Connection, SqlBulkCopyOptions.KeepIdentity, tr.Transaction))
+                //        {
+                //            bulkCopy.DestinationTableName = "dbo.MAMG0";
+
+                //            try
+                //            {
+                //                // Write from the source to the destination.
+                //                bulkCopy.WriteToServer(ds.Tables[0]);
+                //            }
+                //            catch (Exception ex)
+                //            {
+                //                throw new Exception("Errore durante la copia massiva dei dati", ex);
+                //            }
+                //        }
+                //    }
+                //}
+
+                var workbook = new XLWorkbook(filePath);
+                var ws1 = workbook.Worksheet(1);
+                int rowNumber = 2;
+                var row = ws1.Row(rowNumber);
+                bool empty = row.IsEmpty();
+                List<Mamg0ForDBF> items = new List<Mamg0ForDBF>();
+                while (!empty)
+                {
+                    items.Add(new Mamg0ForDBF
                     {
-                        DataSet ds = new DataSet();
-                        adaptor.Fill(ds);
-
-                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(tr.Connection, SqlBulkCopyOptions.KeepIdentity, tr.Transaction))
-                        {
-                            bulkCopy.DestinationTableName = "dbo.MAMG0";
-
-                            try
-                            {
-                                // Write from the source to the destination.
-                                bulkCopy.WriteToServer(ds.Tables[0]);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new Exception("Errore durante la copia massiva dei dati", ex);
-                            }
-                        }
-                    }
+                        AA_COD = row.Cell(1).GetString(),
+                        AA_SIGF = row.Cell(2).GetString(),
+                        AA_CODF = row.Cell(3).GetString(),
+                        AA_DES = row.Cell(4).GetString(),
+                        AA_UM = row.Cell(5).GetString(),
+                        AA_PZ = row.Cell(6).GetDouble(),
+                        AA_IVA = Convert.ToInt32(row.Cell(7).GetDouble()),
+                        AA_VAL = row.Cell(8).GetString(),
+                        AA_PRZ = row.Cell(9).GetDouble(),
+                        AA_CODFSS = row.Cell(10).GetString(),
+                        AA_GRUPPO = row.Cell(11).GetString(),
+                        AA_SCONTO1 = row.Cell(12).GetDouble(),
+                        AA_SCONTO2 = row.Cell(13).GetDouble(),
+                        AA_SCONTO3 = row.Cell(14).GetDouble(),
+                        AA_CFZMIN = row.Cell(15).GetDouble(),
+                        AA_MGZ = row.Cell(16).GetString(),
+                        AA_CUB = row.Cell(17).GetDouble(),
+                        AA_PRZ1 = row.Cell(18).GetDouble(),
+                        AA_DATA1 = row.Cell(19).GetDateTime(),
+                        AA_EAN = row.Cell(20).GetString(),
+                        WOMAME = row.Cell(21).GetString(),
+                        WOFOME = row.Cell(22).GetString(),
+                        WOPDME = row.Cell(23).GetString(),
+                        WOFMSC = row.Cell(24).GetString(),
+                        WOFMST = row.Cell(25).GetString(),
+                        RAME = row.Cell(26).GetDouble()
+                    });
+                    row = ws1.Row(rowNumber += 1);
+                    empty = row.IsEmpty();
                 }
+
+                InsertAll(items, tr);
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'importazione del listino Mamg0", ex);
             }
         }
-        public static void InsertAll(List<Mamg0ForDBF> items)
+
+        public static void InsertAll(List<Mamg0ForDBF> items, DBTransaction tr)
         {
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"INSERT INTO MAMG0 (AA_COD, AA_SIGF, AA_CODF, AA_DES, AA_UM, AA_PZ, AA_IVA, AA_VAL, AA_PRZ, AA_CODFSS, AA_GRUPPO,");
@@ -176,10 +221,7 @@ namespace GestioneCantieri.DAO
             sql.AppendLine($"@WOPDME, @WOFMSC, @WOFMST, @RAME)");
             try
             {
-                using (SqlConnection cn = GetConnection())
-                {
-                    cn.Execute(sql.ToString(), items);
-                }
+                tr.Connection.Execute(sql.ToString(), items, tr.Transaction, commandTimeout: 600);
             }
             catch (Exception ex)
             {
