@@ -96,7 +96,7 @@
     <%-- Visualizzazione dati --%>
     <div class="row mt-2">
         <div class="col text-center table-overflow ddt-fornitori-table">
-            <asp:GridView ID="grdListaDDTFornitori" runat="server" ItemType="GestioneCantieri.Data.DDTFornitori" AutoGenerateColumns="False"
+            <asp:GridView ID="grdListaDDTFornitori" runat="server" ItemType="Database.Models.DDTFornitori" AutoGenerateColumns="False"
                 OnRowCommand="grdListaDDTFornitori_RowCommand" HeaderStyle-CssClass="border-bottom-bold" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="RagSocFornitore" HeaderText="Rag. Soc. Fornitore" />

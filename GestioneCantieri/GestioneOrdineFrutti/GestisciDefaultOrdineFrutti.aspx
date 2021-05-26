@@ -98,7 +98,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-10 text-center table-responsive">
-            <asp:GridView ID="grdDefMatOrdFrut" runat="server" ItemType="GestioneCantieri.Data.DefaultMatOrdFrut" OnRowCommand="grdDefMatOrdFrut_RowCommand" 
+            <asp:GridView ID="grdDefMatOrdFrut" runat="server" ItemType="Database.Models.DefaultMatOrdFrut" OnRowCommand="grdDefMatOrdFrut_RowCommand" 
                 OnRowDataBound="grdDefMatOrdFrut_RowDataBound" CssClass="table table-dark table-striped text-center scrollable-table" AutoGenerateColumns="False">
                 <Columns>
                     <%--<asp:TemplateField>

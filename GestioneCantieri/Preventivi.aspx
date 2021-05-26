@@ -77,7 +77,7 @@
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-8 text-center table-container">
             <asp:GridView ID="grdPreventivi" OnRowCommand="grdPreventivi_RowCommand" AutoGenerateColumns="false"
-                ItemType="GestioneCantieri.Data.Preventivo" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                ItemType="Database.Models.Preventivo" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Anno" DataField="Anno" />
                     <asp:BoundField HeaderText="Numero" DataField="Numero" />

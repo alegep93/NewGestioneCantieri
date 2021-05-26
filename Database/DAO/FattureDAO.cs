@@ -51,7 +51,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static List<Fattura> GetAll()
+        public static List<Fattura> GetAll()
         {
             List<Fattura> ret = new List<Fattura>();
             StringBuilder sql = new StringBuilder("SELECT * FROM TblFatture ORDER BY numero");
@@ -69,7 +69,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static Fattura GetSingle(long idFattura)
+        public static Fattura GetSingle(long idFattura)
         {
             Fattura ret = new Fattura();
             StringBuilder sql = new StringBuilder("SELECT * FROM TblFatture WHERE id_fatture = @idFattura ORDER BY numero");
@@ -194,7 +194,7 @@ namespace Database.DAO
             }
         }
 
-        internal static long Insert(Fattura p)
+        public static long Insert(Fattura p)
         {
             long ret = 0;
             StringBuilder sql = new StringBuilder();
@@ -215,7 +215,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static bool Update(Fattura p)
+        public static bool Update(Fattura p)
         {
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"UPDATE TblFatture");

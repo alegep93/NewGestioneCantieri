@@ -250,7 +250,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static void SetDiCo(int idCantiere, long numDiCo)
+        public static void SetDiCo(int idCantiere, long numDiCo)
         {
             StringBuilder sql = new StringBuilder($"UPDATE TblCantieri SET NumDiCo = @numDiCo WHERE IdCantieri = @idCantiere");
             try

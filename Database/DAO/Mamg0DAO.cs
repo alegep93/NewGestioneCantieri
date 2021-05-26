@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using ClosedXML.Excel;
+using Dapper;
 using Database.Models;
 using System;
 using System.Collections.Generic;
@@ -97,6 +98,59 @@ namespace Database.DAO
                 throw new Exception("Errore durante la GetPrezzoDiListino in Mamg0DAO", ex);
             }
             return ret;
+        }
+
+        public static void GetDataFromExcelAndInsertBulkCopy(string filePath, DBTransaction tr)
+        {
+            try
+            {
+                var workbook = new XLWorkbook(filePath);
+                var ws1 = workbook.Worksheet(1);
+                int rowNumber = 2;
+                var row = ws1.Row(rowNumber);
+                bool empty = row.IsEmpty();
+                List<Mamg0ForDBF> items = new List<Mamg0ForDBF>();
+                while (!empty)
+                {
+                    items.Add(new Mamg0ForDBF
+                    {
+                        AA_COD = row.Cell(1).GetString(),
+                        AA_SIGF = row.Cell(2).GetString(),
+                        AA_CODF = row.Cell(3).GetString(),
+                        AA_DES = row.Cell(4).GetString(),
+                        AA_UM = row.Cell(5).GetString(),
+                        AA_PZ = row.Cell(6).GetDouble(),
+                        AA_IVA = Convert.ToInt32(row.Cell(7).GetDouble()),
+                        AA_VAL = row.Cell(8).GetString(),
+                        AA_PRZ = row.Cell(9).GetDouble(),
+                        AA_CODFSS = row.Cell(10).GetString(),
+                        AA_GRUPPO = row.Cell(11).GetString(),
+                        AA_SCONTO1 = row.Cell(12).GetDouble(),
+                        AA_SCONTO2 = row.Cell(13).GetDouble(),
+                        AA_SCONTO3 = row.Cell(14).GetDouble(),
+                        AA_CFZMIN = row.Cell(15).GetDouble(),
+                        AA_MGZ = row.Cell(16).GetString(),
+                        AA_CUB = row.Cell(17).GetDouble(),
+                        AA_PRZ1 = row.Cell(18).GetDouble(),
+                        AA_DATA1 = row.Cell(19).GetDateTime(),
+                        AA_EAN = row.Cell(20).GetString(),
+                        WOMAME = row.Cell(21).GetString(),
+                        WOFOME = row.Cell(22).GetString(),
+                        WOPDME = row.Cell(23).GetString(),
+                        WOFMSC = row.Cell(24).GetString(),
+                        WOFMST = row.Cell(25).GetString(),
+                        RAME = row.Cell(26).GetDouble()
+                    });
+                    row = ws1.Row(rowNumber += 1);
+                    empty = row.IsEmpty();
+                }
+
+                InsertAll(items, tr);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'importazione del listino Mamg0", ex);
+            }
         }
 
         // INSERT

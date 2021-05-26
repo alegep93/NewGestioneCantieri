@@ -25,7 +25,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 table-container text-center">
-            <asp:GridView ID="grdLocali" AutoGenerateColumns="false" CssClass="table table-striped table-dark scrollable-table" ItemType="GestioneCantieri.Data.Locali" OnRowCommand="grdLocali_RowCommand" runat="server">
+            <asp:GridView ID="grdLocali" AutoGenerateColumns="false" CssClass="table table-striped table-dark scrollable-table" ItemType="Database.Models.Locali" OnRowCommand="grdLocali_RowCommand" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Locale" DataField="NomeLocale" />
                     <asp:TemplateField>

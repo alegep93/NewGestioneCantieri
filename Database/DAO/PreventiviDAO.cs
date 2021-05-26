@@ -33,6 +33,31 @@ namespace Database.DAO
             return ret;
 
         }
+
+        public static List<Preventivo> GetPreventivi(string anno, string descrizione)
+        {
+            List<Preventivo> ret = new List<Preventivo>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT A.*, B.NomeOp");
+            sql.AppendLine($"FROM TblPreventivi AS A");
+            sql.AppendLine($"INNER JOIN TblOperaio AS B ON A.IdOperaio = B.IdOperaio");
+            sql.AppendLine($"WHERE A.Anno LIKE '%{anno}%' AND A.Descrizione LIKE '%{descrizione}%'");
+            sql.AppendLine($"ORDER BY A.Anno, A.Numero");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Preventivo>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetPreventivi con filtro su anno e descrizione in PreventiviDAO", ex);
+            }
+            return ret;
+
+        }
+
         public static List<Preventivo> GetPreventivi(string anno, string numero, string descrizione)
         {
             List<Preventivo> ret = new List<Preventivo>();
@@ -56,7 +81,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static Preventivo GetSingle(int idPreventivo)
+        public static Preventivo GetSingle(int idPreventivo)
         {
             Preventivo ret = new Preventivo();
             StringBuilder sql = new StringBuilder();
@@ -79,7 +104,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static bool Insert(Preventivo p)
+        public static bool Insert(Preventivo p)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder("INSERT INTO TblPreventivi(Anno,Numero,IdOperaio,Descrizione,Data) VALUES(@Anno,@Numero,@IdOperaio,@Descrizione,@Data)");
@@ -97,7 +122,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static bool Update(Preventivo p)
+        public static bool Update(Preventivo p)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
@@ -119,7 +144,7 @@ namespace Database.DAO
             return ret;
         }
 
-        internal static bool Delete(int idPreventivo)
+        public static bool Delete(int idPreventivo)
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder("DELETE FROM TblPreventivi WHERE Id = @idPreventivo");

@@ -128,7 +128,7 @@
             <!-- Griglia di visualizzazione record -->
             <div class="col table-container">
                 <asp:GridView ID="grdFatture" OnRowCommand="grdFatture_RowCommand" AutoGenerateColumns="false"
-                    ItemType="GestioneCantieri.Data.FatturaAcquisto" OnRowDataBound="grdFatture_RowDataBound" runat="server" 
+                    ItemType="Database.Models.FatturaAcquisto" OnRowDataBound="grdFatture_RowDataBound" runat="server" 
                     CssClass="table table-striped table-dark text-center scrollable-table">
                     <Columns>
                         <asp:BoundField HeaderText="Numero" DataField="Numero" />

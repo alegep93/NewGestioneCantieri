@@ -33,6 +33,28 @@ namespace Database.DAO
             return ret;
         }
 
+        //public static List<string> GetJson()
+        //{
+        //    List<string> ret = new List<string>();
+        //    StringBuilder sql = new StringBuilder();
+        //    sql.AppendLine($"SELECT *");
+        //    sql.AppendLine($"FROM TblDDTMef");
+        //    sql.AppendLine($"ORDER BY Anno, Data, N_DDT, CodArt");
+        //    sql.AppendLine($"FOR JSON PATH");
+        //    try
+        //    {
+        //        using (SqlConnection cn = GetConnection())
+        //        {
+        //            ret = cn.Query<string>(sql.ToString()).ToList();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante il recupero dei DDT in formato JSON", ex);
+        //    }
+        //    return ret;
+        //}
+
         public static List<DDTMef> GetDdt(DDTMefObject ddt)
         {
             List<DDTMef> ret = new List<DDTMef>();
@@ -228,16 +250,16 @@ namespace Database.DAO
             return ret;
         }
 
-        public static List<string> GetCodiciMef(int annoInizio, int annoFine)
+        public static List<DDTMef> GetCodiciMef(int annoInizio, int annoFine)
         {
-            List<string> ret = new List<string>();
+            List<DDTMef> ret = new List<DDTMef>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT DISTINCT LEFT(CodArt, 3) FROM TblDdtMef WHERE Anno BETWEEN @annoInizio AND @annoFine");
+            sql.AppendLine($"SELECT DISTINCT Anno, LEFT(CodArt, 3) AS CodArt FROM TblDdtMef WHERE Anno BETWEEN @annoInizio AND @annoFine ORDER BY 1");
             try
             {
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<string>(sql.ToString(), new { annoInizio, annoFine }).ToList();
+                    ret = cn.Query<DDTMef>(sql.ToString(), new { annoInizio, annoFine }).ToList();
                 }
             }
             catch (Exception ex)

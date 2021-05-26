@@ -61,7 +61,7 @@
 
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdGruppi" ItemType="GestioneCantieri.Data.GruppiFrutti" OnRowCommand="grdGruppi_RowCommand" CssClass="table table-dark table-striped scrollable-table" AutoGenerateColumns="false" runat="server">
+            <asp:GridView ID="grdGruppi" ItemType="Database.Models.GruppiFrutti" OnRowCommand="grdGruppi_RowCommand" CssClass="table table-dark table-striped scrollable-table" AutoGenerateColumns="false" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Gruppo" DataField="NomeGruppo" />
                     <asp:BoundField HeaderText="Descrizione Gruppo" DataField="Descrizione" />

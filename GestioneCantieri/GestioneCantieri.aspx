@@ -149,7 +149,7 @@
                 </div>
             </div>
             <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <asp:GridView ID="grdMostraDDTDaInserire" ItemType="GestioneCantieri.Data.DDTMef" AutoGenerateColumns="false"
+                <asp:GridView ID="grdMostraDDTDaInserire" ItemType="Database.Models.DDTMef" AutoGenerateColumns="false"
                     CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                     <Columns>
                         <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -314,7 +314,7 @@
 
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdMatCant" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdMatCant" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdMatCant_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -349,7 +349,7 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:GridView ID="grdRientro" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdRientro_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
+                    <asp:GridView ID="grdRientro" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false" OnRowCommand="grdRientro_RowCommand" CssClass="table table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                             <asp:BoundField DataField="ProtocolloInterno" HeaderText="Protocollo" />
@@ -484,7 +484,7 @@
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center">
-                    <asp:GridView ID="grdAccrediti" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdAccrediti" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdAccrediti_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -599,7 +599,7 @@
 
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdManodop" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdManodop" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdManodop_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -717,7 +717,7 @@
 
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdOperai" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdOperai" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdOperai_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -824,7 +824,7 @@
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdArrot" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdArrot" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdArrot_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -953,7 +953,7 @@
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdAChiam" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdAChiam" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdAChiam_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -1069,7 +1069,7 @@
 
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdSpese" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdSpese" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="false"
                         OnRowCommand="grdSpese_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

@@ -101,7 +101,7 @@
 
     <div class="row mt-5 d-flex justify-content-center align-items-center">
         <div class="col text-center table-overflow listino-mef-table">
-            <asp:GridView ID="grdListino" runat="server" ItemType="GestioneCantieri.Data.Mamg0" AutoGenerateColumns="False"
+            <asp:GridView ID="grdListino" runat="server" ItemType="Database.Models.Mamg0" AutoGenerateColumns="False"
                 HeaderStyle-CssClass="border-bottom-bold" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />

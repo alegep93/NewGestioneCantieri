@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Database.DAO;
+using Database.Models;
+using log4net;
+using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Database.Models;
-using Database.DAO;
-using System.Collections.Generic;
-using log4net;
 
 namespace RestApi.Controllers
 {
@@ -26,6 +26,24 @@ namespace RestApi.Controllers
             catch (Exception ex)
             {
                 string messaggio = $"Errore durante la GetAll in DdtMefController --- {ex}";
+                log.Error(messaggio);
+                return BadRequest(messaggio);
+            }
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(List<DDTMef>))]
+        [Route("Codes")]
+        public IHttpActionResult GetDdtMefCodes([FromUri] string annoInizio, [FromUri] string annoFine)
+        {
+            try
+            {
+                List<DDTMef> items = DDTMefDAO.GetCodiciMef(Convert.ToInt32(annoInizio), Convert.ToInt32(annoFine));
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                string messaggio = $"Errore durante la GetDdtMefCodes in DdtMefController --- {ex}";
                 log.Error(messaggio);
                 return BadRequest(messaggio);
             }

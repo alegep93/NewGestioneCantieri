@@ -55,7 +55,7 @@
     <%-- Lista Frutti --%>
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-6 text-center table-container">
-            <asp:GridView ID="grdFrutti" ItemType="GestioneCantieri.Data.Frutto" OnRowCommand="grdFrutti_RowCommand" CssClass="table table-dark table-striped scrollable-table" AutoGenerateColumns="false" runat="server">
+            <asp:GridView ID="grdFrutti" ItemType="Database.Models.Frutto" OnRowCommand="grdFrutti_RowCommand" CssClass="table table-dark table-striped scrollable-table" AutoGenerateColumns="false" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Frutto" DataField="Descr001" />
                     <asp:TemplateField>

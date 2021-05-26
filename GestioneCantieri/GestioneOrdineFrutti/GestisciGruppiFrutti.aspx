@@ -63,7 +63,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdFruttiInGruppo" ItemType="GestioneCantieri.Data.CompGruppoFrut" OnRowCommand="grdGruppi_RowCommand" CssClass="table table-dark table-striped" AutoGenerateColumns="false" runat="server">
+            <asp:GridView ID="grdFruttiInGruppo" ItemType="Database.Models.CompGruppoFrut" OnRowCommand="grdGruppi_RowCommand" CssClass="table table-dark table-striped" AutoGenerateColumns="false" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Frutto" DataField="NomeFrutto" />
                     <asp:BoundField HeaderText="Quantità" DataField="Qta" />

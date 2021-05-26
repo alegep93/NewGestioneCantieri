@@ -1,5 +1,5 @@
-﻿using GestioneCantieri.DAO;
-using GestioneCantieri.Data;
+﻿using Database.DAO;
+using Database.Models;
 using GestioneCantieri.Utils;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -29,7 +29,7 @@ namespace GestioneCantieri
             DropDownListManager.FillDdlCliente(ClientiDAO.GetClienti(txtFiltraCliente.Text), ref ddlScegliCliente);
         }
 
-        protected void CreateExcel(List<Data.StampaValoriCantieriConOpzioni> items)
+        protected void CreateExcel(List<Database.Models.StampaValoriCantieriConOpzioni> items)
         {
             if (items.Count > 0)
             {
@@ -70,12 +70,12 @@ namespace GestioneCantieri
                 {
                     List<MaterialiCantieri> materiali = MaterialiCantieriDAO.GetByListOfCantieri(RicalcoloContiManager.GetStringFromListForQuery(listaCantieri.Select(s => s.IdCantieri).ToList()));
                     List<Pagamenti> pagamenti = PagamentiDAO.GetAll();
-                    List<Data.StampaValoriCantieriConOpzioni> gridViewItems = new List<Data.StampaValoriCantieriConOpzioni>();
+                    List<Database.Models.StampaValoriCantieriConOpzioni> gridViewItems = new List<Database.Models.StampaValoriCantieriConOpzioni>();
 
                     materiali.ForEach(f =>
                     {
                         Cantieri cantiere = listaCantieri.Where(w => w.IdCantieri == f.IdTblCantieri).FirstOrDefault();
-                        Data.StampaValoriCantieriConOpzioni objStampa = new Data.StampaValoriCantieriConOpzioni
+                        Database.Models.StampaValoriCantieriConOpzioni objStampa = new Database.Models.StampaValoriCantieriConOpzioni
                         {
                             CodCant = cantiere.CodCant,
                             DescriCodCAnt = cantiere.DescriCodCant,
@@ -161,7 +161,7 @@ namespace GestioneCantieri
                 // Controllo fatto per verificare che sia stata popolata la tabella prima di effettuare la stampa excel
                 if (Session["StampaValConOpzData"] != null)
                 {
-                    List<Data.StampaValoriCantieriConOpzioni> items = (List<Data.StampaValoriCantieriConOpzioni>)Session["StampaValConOpzData"];
+                    List<Database.Models.StampaValoriCantieriConOpzioni> items = (List<Database.Models.StampaValoriCantieriConOpzioni>)Session["StampaValConOpzData"];
                     CreateExcel(items);
                 }
                 else

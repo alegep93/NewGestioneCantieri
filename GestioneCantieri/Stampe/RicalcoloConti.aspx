@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False"
+    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="False"
         CssClass="table table-dark table-striped text-center scrollable-table" Visible="false">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -83,7 +83,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="Database.Models.MaterialiCantieri"
         AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table" Visible="true">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -94,7 +94,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:GridView ID="grdStampaMateCantExcel" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+    <asp:GridView ID="grdStampaMateCantExcel" runat="server" ItemType="Database.Models.MaterialiCantieri"
         AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table" Visible="true">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

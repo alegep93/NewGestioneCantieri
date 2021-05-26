@@ -147,7 +147,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="tableContainer col-12 table-responsive">
-            <asp:GridView ID="grdOrdini" runat="server" ItemType="GestioneCantieri.Data.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" OnRowDataBound="grdOrdini_RowDataBound"
+            <asp:GridView ID="grdOrdini" runat="server" ItemType="Database.Models.MatOrdFrut" OnRowCommand="grdOrdini_RowCommand" OnRowDataBound="grdOrdini_RowDataBound"
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
                 <Columns>
                     <asp:TemplateField>

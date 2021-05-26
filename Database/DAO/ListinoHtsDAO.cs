@@ -35,7 +35,6 @@ namespace Database.DAO
         {
             string sql = "";
             List<ListinoHts> ret = new List<ListinoHts>();
-            SqlConnection cn = GetConnection();
 
             codice1 = "%" + codice1 + "%";
             codice2 = "%" + codice2 + "%";
@@ -62,15 +61,14 @@ namespace Database.DAO
                           "ORDER BY Codice ASC ";
                 }
 
-                ret = cn.Query<ListinoHts>(sql, new { codice1, codice2, codice3, codProd1, codProd2, codProd3, desc1, desc2, desc3 }).ToList();
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<ListinoHts>(sql, new { codice1, codice2, codice3, codProd1, codProd2, codProd3, desc1, desc2, desc3 }).ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Errore durante la GetAllFiltered in ListinoHtsDAO", ex);
-            }
-            finally
-            {
-                CloseResouces(cn, null);
             }
 
             return ret;

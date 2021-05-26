@@ -63,16 +63,5 @@ namespace Database.DAO
             }
             return cn;
         }
-        protected static void CloseResouces(SqlConnection cn, SqlDataReader dr)
-        {
-            if (cn != null && cn.State != System.Data.ConnectionState.Closed)
-            {
-                cn.Close();
-            }
-            if (dr != null)
-            {
-                dr.Close();
-            }
-        }
     }
 }

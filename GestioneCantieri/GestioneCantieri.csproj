@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GestioneCantieri</RootNamespace>
     <AssemblyName>GestioneCantieri</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -53,11 +53,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AjaxMin.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
-      <HintPath>..\packages\Portable.BouncyCastle.1.8.5\lib\net40\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClosedXML.0.95.4\lib\net46\ClosedXML.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
@@ -68,49 +65,49 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.90\lib\net461\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.12.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.12.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
-    <Reference Include="itext.barcodes, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.barcodes.dll</HintPath>
+    <Reference Include="itext.barcodes, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.barcodes.dll</HintPath>
     </Reference>
-    <Reference Include="itext.forms, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.forms.dll</HintPath>
+    <Reference Include="itext.forms, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.forms.dll</HintPath>
     </Reference>
-    <Reference Include="itext.io, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.io.dll</HintPath>
+    <Reference Include="itext.io, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.io.dll</HintPath>
     </Reference>
-    <Reference Include="itext.kernel, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.kernel.dll</HintPath>
+    <Reference Include="itext.kernel, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.kernel.dll</HintPath>
     </Reference>
-    <Reference Include="itext.layout, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.layout.dll</HintPath>
+    <Reference Include="itext.layout, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.layout.dll</HintPath>
     </Reference>
-    <Reference Include="itext.pdfa, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.pdfa.dll</HintPath>
+    <Reference Include="itext.pdfa, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.pdfa.dll</HintPath>
     </Reference>
-    <Reference Include="itext.sign, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.sign.dll</HintPath>
+    <Reference Include="itext.sign, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.sign.dll</HintPath>
     </Reference>
-    <Reference Include="itext.styledxmlparser, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.styledxmlparser.dll</HintPath>
+    <Reference Include="itext.styledxmlparser, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.styledxmlparser.dll</HintPath>
     </Reference>
-    <Reference Include="itext.svg, Version=7.1.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\itext7.7.1.13\lib\net40\itext.svg.dll</HintPath>
+    <Reference Include="itext.svg, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.svg.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    <Reference Include="System.IO.Packaging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.5.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -141,6 +138,7 @@
     <Content Include="DDT\CodiciMef.aspx" />
     <Content Include="Fatture\Bollette.aspx" />
     <Content Include="Fatture\TotaliFatture.aspx" />
+    <Content Include="GestioneOrdineFrutti\AssociaSerie.aspx" />
     <Content Include="GestioneOrdineFrutti\ControlloGruppi.aspx" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
     <Content Include="Css\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
@@ -186,18 +184,15 @@
     </None>
     <Content Include="Fatture\Fatture.aspx" />
     <Content Include="Preventivi.aspx" />
-    <Content Include="Stampe\ResocontoOperaio.aspx" />
-    <Content Include="Stampe\RicalcoloConti.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\DynamicStampaOrdFrutStyle.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\FilterToggle.js" />
+    <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
@@ -206,23 +201,91 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Stampe\ResocontoOperaio.aspx" />
+    <Content Include="Stampe\RicalcoloConti.aspx" />
+    <Content Include="Scripts\DynamicStampaOrdFrutStyle.js" />
+    <Content Include="Scripts\FilterToggle.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper-utils.js.map" />
     <Content Include="Scripts\README.md" />
@@ -269,16 +332,6 @@
     <Compile Include="Acconti\AccontiOperaio.aspx.designer.cs">
       <DependentUpon>AccontiOperaio.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DAO\AccontiOperaiDAO.cs" />
-    <Compile Include="DAO\BolletteDAO.cs" />
-    <Compile Include="DAO\DefaultMatOrdFrutDAO.cs" />
-    <Compile Include="DAO\FruttiSerieDAO.cs" />
-    <Compile Include="DAO\SerieDAO.cs" />
-    <Compile Include="Data\AccontoOperaio.cs" />
-    <Compile Include="Data\Bolletta.cs" />
-    <Compile Include="Data\FruttoSerie.cs" />
-    <Compile Include="Data\DefaultMatOrdFrut.cs" />
-    <Compile Include="Data\Serie.cs" />
     <Compile Include="DDT\CodiciMef.aspx.cs">
       <DependentUpon>CodiciMef.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -300,6 +353,13 @@
     <Compile Include="Fatture\TotaliFatture.aspx.designer.cs">
       <DependentUpon>TotaliFatture.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GestioneOrdineFrutti\AssociaSerie.aspx.cs">
+      <DependentUpon>AssociaSerie.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\AssociaSerie.aspx.designer.cs">
+      <DependentUpon>AssociaSerie.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestioneOrdineFrutti\ControlloGruppi.aspx.cs">
       <DependentUpon>ControlloGruppi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -307,47 +367,6 @@
     <Compile Include="GestioneOrdineFrutti\ControlloGruppi.aspx.designer.cs">
       <DependentUpon>ControlloGruppi.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DAO\BaseDAO.cs" />
-    <Compile Include="DAO\ClientiDAO.cs" />
-    <Compile Include="DAO\CantieriDAO.cs" />
-    <Compile Include="DAO\CompGruppoFrutDAO.cs" />
-    <Compile Include="DAO\DDTFornitoriDAO.cs" />
-    <Compile Include="DAO\FattureAccontiDAO.cs" />
-    <Compile Include="DAO\AmministratoriDAO.cs" />
-    <Compile Include="DAO\FattureCantieriDAO.cs" />
-    <Compile Include="DAO\FattureAcquistoDAO.cs" />
-    <Compile Include="DAO\FornitoriDAO.cs" />
-    <Compile Include="DAO\FruttiDAO.cs" />
-    <Compile Include="DAO\ListinoHtsDAO.cs" />
-    <Compile Include="DAO\LocaliDAO.cs" />
-    <Compile Include="DAO\Mamg0DAO.cs" />
-    <Compile Include="DAO\MaterialiCantieriDAO.cs" />
-    <Compile Include="DAO\MatOrdFrutGroupDAO.cs" />
-    <Compile Include="DAO\OperaiDAO.cs" />
-    <Compile Include="DAO\OrdineFruttiDAO.cs" />
-    <Compile Include="DAO\DDTMefDAO.cs" />
-    <Compile Include="DAO\GruppiFruttiDAO.cs" />
-    <Compile Include="DAO\PagamentiDAO.cs" />
-    <Compile Include="DAO\FattureDAO.cs" />
-    <Compile Include="DAO\PreventiviDAO.cs" />
-    <Compile Include="DAO\SpeseDAO.cs" />
-    <Compile Include="DAO\StampeDAO.cs" />
-    <Compile Include="Data\Amministratore.cs" />
-    <Compile Include="Data\DDTFornitori.cs" />
-    <Compile Include="Data\FatturaAcquisto.cs" />
-    <Compile Include="Data\Fattura.cs" />
-    <Compile Include="Data\FatturaAcconto.cs" />
-    <Compile Include="Data\FatturaCantiere.cs" />
-    <Compile Include="Data\ListinoHts.cs" />
-    <Compile Include="Data\MatOrdFrutGroup.cs" />
-    <Compile Include="Data\Preventivo.cs" />
-    <Compile Include="Data\Mamg0ForDBF.cs" />
-    <Compile Include="Data\StampaValoriCantieriConOpzioni.cs" />
-    <Compile Include="Data\DDTMefObject.cs" />
-    <Compile Include="Data\MaterialiCantieri.cs" />
-    <Compile Include="Data\Pagamenti.cs" />
-    <Compile Include="Data\Spese.cs" />
-    <Compile Include="Data\Stampe.cs" />
     <Compile Include="DDT\DDT-Fornitori.aspx.cs">
       <DependentUpon>DDT-Fornitori.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -498,19 +517,6 @@
     </Compile>
     <Compile Include="Utils\AlertManager.cs" />
     <Compile Include="Utils\DataTableToListHelper.cs" />
-    <Compile Include="Data\Cantieri.cs" />
-    <Compile Include="Data\Clienti.cs" />
-    <Compile Include="Data\CompGruppoFrut.cs" />
-    <Compile Include="Data\DDTMef.cs" />
-    <Compile Include="Data\Fornitori.cs" />
-    <Compile Include="Data\Frutto.cs" />
-    <Compile Include="Data\GruppiFrutti.cs" />
-    <Compile Include="Data\Locali.cs" />
-    <Compile Include="Data\Mamg0.cs" />
-    <Compile Include="Data\MatOrdFrut.cs" />
-    <Compile Include="Data\Operai.cs" />
-    <Compile Include="Data\StampaFruttiPerGruppi.cs" />
-    <Compile Include="Data\StampaOrdFrutCantLoc.cs" />
     <Compile Include="DDT\DDT-Mef.aspx.cs">
       <DependentUpon>DDT-Mef.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -602,9 +608,7 @@
     <Compile Include="Stampe\StampaOrdFrutCantExcel.aspx.designer.cs">
       <DependentUpon>StampaOrdFrutCantExcel.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Utils\DBTransaction.cs" />
     <Compile Include="Utils\DropDownListManager.cs" />
-    <Compile Include="Utils\Enumeratori.cs" />
     <Compile Include="Utils\ExcelManager.cs" />
     <Compile Include="Utils\RicalcoloContiManager.cs" />
   </ItemGroup>
@@ -612,10 +616,16 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{1845b6ec-0f05-40b7-965b-bb040c3f575e}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

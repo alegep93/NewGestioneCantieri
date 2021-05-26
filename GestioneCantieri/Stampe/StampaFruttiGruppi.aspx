@@ -30,7 +30,7 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-md-6 table-container">
             <asp:GridView ID="grdFruttiInGruppo" AllowSorting="true" OnSorting="grdFruttiInGruppo_Sorting"
-                AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaFruttiPerGruppi"
+                AutoGenerateColumns="false" ItemType="Database.Models.StampaFruttiPerGruppi"
                 runat="server" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Gruppo" DataField="NomeGruppo" />
