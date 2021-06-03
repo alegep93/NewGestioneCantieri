@@ -32,14 +32,14 @@ namespace RestApi.Controllers
         }
 
         [HttpPost]
-        [ResponseType(typeof(bool))]
+        [ResponseType(typeof(long))]
         [Route("Insert")]
         public IHttpActionResult Insert([FromBody] string nota)
         {
             try
             {
-                NoteDAO.Insert(nota);
-                return Ok(true);
+                long idNota = NoteDAO.Insert(nota);
+                return Ok(idNota);
             }
             catch (Exception ex)
             {

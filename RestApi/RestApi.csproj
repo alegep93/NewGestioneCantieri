@@ -201,14 +201,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AmministratoriController.cs" />
     <Compile Include="Controllers\CantieriController.cs" />
     <Compile Include="Controllers\ClientiController.cs" />
     <Compile Include="Controllers\DdtMefController.cs" />
+    <Compile Include="Controllers\FattureController.cs" />
     <Compile Include="Controllers\FornitoriController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\OperaiController.cs" />
     <Compile Include="Controllers\PreventiviController.cs" />
     <Compile Include="Controllers\SpeseController.cs" />
+    <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,14 +235,19 @@
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Amministratori\" />
     <Folder Include="Views\Cantieri\" />
     <Folder Include="Views\Clienti\" />
     <Folder Include="Views\DdtMef\" />
+    <Folder Include="Views\DiCo\" />
+    <Folder Include="Views\Fatture\" />
     <Folder Include="Views\Fornitori\" />
     <Folder Include="Views\Notes\" />
     <Folder Include="Views\Operai\" />
     <Folder Include="Views\Preventivi\" />
     <Folder Include="Views\Spese\" />
+    <Folder Include="Views\User\" />
+    <Folder Include="Views\Utenti\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj">

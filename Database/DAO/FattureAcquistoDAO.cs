@@ -10,6 +10,24 @@ namespace Database.DAO
 {
     public class FattureAcquistoDAO : BaseDAO
     {
+        public static List<FatturaAcquisto> GetAll()
+        {
+            List<FatturaAcquisto> ret = new List<FatturaAcquisto>();
+            StringBuilder sql = new StringBuilder("SELECT * FROM TblFattureAcquisto ORDER BY numero");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<FatturaAcquisto>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll in FattureAcquistoDAO", ex);
+            }
+            return ret;
+        }
+
         public static List<FatturaAcquisto> GetFattureAcquisto(string anno, string dataDa, string dataA, string fornitore, int numeroFattura)
         {
             List<FatturaAcquisto> ret = new List<FatturaAcquisto>();
@@ -39,20 +57,27 @@ namespace Database.DAO
             return ret;
         }
 
-        public static List<FatturaAcquisto> GetAll()
+        public static List<FatturaAcquisto> GetByAnnoNumero(int anno, int numeroFattura)
         {
             List<FatturaAcquisto> ret = new List<FatturaAcquisto>();
-            StringBuilder sql = new StringBuilder("SELECT * FROM TblFattureAcquisto ORDER BY numero");
+            StringBuilder sql = new StringBuilder();
             try
             {
+                anno = anno == 0 ? DateTime.Now.Year : anno;
+                sql.AppendLine($"SELECT A.*, B.RagSocForni AS RagioneSocialeFornitore");
+                sql.AppendLine($"FROM TblFattureAcquisto AS A");
+                sql.AppendLine($"INNER JOIN TblForitori AS B ON A.id_fornitore = B.IdFornitori");
+                sql.AppendLine($"WHERE DATEPART(YEAR, A.data) = @anno");
+                sql.AppendLine(numeroFattura > 0 ? "AND A.numero = @numeroFattura " : "");
+                sql.AppendLine($"ORDER BY numero");
                 using (SqlConnection cn = GetConnection())
                 {
-                    ret = cn.Query<FatturaAcquisto>(sql.ToString()).ToList();
+                    ret = cn.Query<FatturaAcquisto>(sql.ToString(), new { anno, numeroFattura }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la GetAll in FattureAcquistoDAO", ex);
+                throw new Exception("Errore durante la GetByAnnoNumero in FattureDAO", ex);
             }
             return ret;
         }

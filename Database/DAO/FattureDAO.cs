@@ -69,6 +69,31 @@ namespace Database.DAO
             return ret;
         }
 
+        public static List<Fattura> GetByAnnoNumero(int anno, int numeroFattura)
+        {
+            List<Fattura> ret = new List<Fattura>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                anno = anno == 0 ? DateTime.Now.Year : anno;
+                sql.AppendLine($"SELECT A.*, B.RagSocCli AS RagioneSocialeCliente");
+                sql.AppendLine($"FROM TblFatture AS A");
+                sql.AppendLine($"INNER JOIN TblClienti AS B ON A.id_clienti = B.IdCliente");
+                sql.AppendLine($"WHERE DATEPART(YEAR, A.data) = @anno");
+                sql.AppendLine(numeroFattura > 0 ? "AND A.numero = @numeroFattura " : "");
+                sql.AppendLine($"ORDER BY numero");
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Fattura>(sql.ToString(),new { anno, numeroFattura }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetByAnnoNumero in FattureDAO", ex);
+            }
+            return ret;
+        }
+
         public static Fattura GetSingle(long idFattura)
         {
             Fattura ret = new Fattura();

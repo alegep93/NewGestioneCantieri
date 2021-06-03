@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace GestioneCantieri.Utils
+﻿namespace GestioneCantieri.Utils
 {
     public class Enumeratori
     {
@@ -17,6 +12,11 @@ namespace GestioneCantieri.Utils
             OPERAIO = 6,
             RIENTRO = 7,
             SPESE = 8
+        }
+
+        public enum TipoUtente : long
+        {
+            Admin = 1
         }
     }
 }
