@@ -53,7 +53,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 text-center table-container">
-            <asp:GridView ID="grdDiCo" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.Cantieri"
+            <asp:GridView ID="grdDiCo" AutoGenerateColumns="false" ItemType="Database.Models.Cantieri"
                 OnRowCommand="grdDiCo_RowCommand" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="N° DiCo" DataField="NumDiCo" />

@@ -10,7 +10,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <LastActiveSolutionConfig>Release|Any CPU</LastActiveSolutionConfig>
-    <NameOfLastUsedPublishProfile>LocalPublish</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Git\NewGestioneCantieri\GestioneCantieri\Properties\PublishProfiles\LocalPublish.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

@@ -119,7 +119,7 @@
                 <!-- Griglia di visualizzazione record -->
                 <div class="col table-container">
                     <asp:GridView ID="grdClienti" OnRowCommand="grdClienti_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Clienti" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                        ItemType="Database.Models.Clienti" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Id Cliente" DataField="IdCliente" />
                             <asp:BoundField HeaderText="Ragione Sociale" DataField="RagSocCli" />
@@ -231,7 +231,7 @@
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-container">
                     <asp:GridView ID="grdFornitori" OnRowCommand="grdFornitori_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Fornitori" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                        ItemType="Database.Models.Fornitori" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Id" DataField="IdFornitori" />
                             <asp:BoundField HeaderText="Ragione Sociale" DataField="RagSocForni" />
@@ -329,7 +329,7 @@
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-container">
                     <asp:GridView ID="grdOperai" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Operai" OnRowCommand="grdOperai_RowCommand" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                        ItemType="Database.Models.Operai" OnRowCommand="grdOperai_RowCommand" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Nome" DataField="NomeOp" />
                             <asp:BoundField HeaderText="Descrizione" DataField="DescrOp" />
@@ -532,7 +532,7 @@
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-container">
                     <asp:GridView ID="grdCantieri" OnRowCommand="grdCantieri_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Cantieri" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                        ItemType="Database.Models.Cantieri" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
                             <asp:BoundField HeaderText="Codice Rif. Cant." DataField="codRiferCant" />
@@ -609,7 +609,7 @@
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col text-center table-container">
                     <asp:GridView ID="grdSpese" OnRowCommand="grdSpese_RowCommand" AutoGenerateColumns="false"
-                        ItemType="GestioneCantieri.Data.Spese" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
+                        ItemType="Database.Models.Spese" runat="server" CssClass="table table-striped table-dark text-center scrollable-table">
                         <Columns>
                             <asp:BoundField HeaderText="Descrizione" DataField="Descrizione" />
                             <asp:BoundField HeaderText="Prezzo" DataField="Prezzo" DataFormatString="{0:0.00}" />

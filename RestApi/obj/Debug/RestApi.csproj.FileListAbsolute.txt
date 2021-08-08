@@ -121,7 +121,7 @@ C:\Git\NewGestioneCantieri\RestApi\bin\ClosedXML.pdb
 C:\Git\NewGestioneCantieri\RestApi\bin\ClosedXML.xml
 C:\Git\NewGestioneCantieri\RestApi\bin\DocumentFormat.OpenXml.xml
 C:\Git\NewGestioneCantieri\RestApi\bin\ExcelNumberFormat.xml
-C:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csprojAssemblyReference.cache
+C:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csproj.AssemblyReference.cache
 C:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csproj.CoreCompileInputs.cache
 C:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.dll

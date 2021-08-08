@@ -35,7 +35,7 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 table-container">
             <asp:GridView ID="grdGruppiInLocale" AllowSorting="true" OnSorting="grdGruppiInLocale_Sorting" AutoGenerateColumns="false" 
-                ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-dark table-striped scrollable-table">
+                ItemType="Database.Models.StampaCantiere" runat="server" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Nome Locale" DataField="NomeLocale" />
                     <asp:BoundField HeaderText="Nome Locale / Gruppi Contenuti" DataField="NomeGruppo" />
@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-6 table-container">
-            <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" 
+            <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="Database.Models.StampaCantiere" 
                 runat="server" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Descrizione Frutto" DataField="Descr001" />

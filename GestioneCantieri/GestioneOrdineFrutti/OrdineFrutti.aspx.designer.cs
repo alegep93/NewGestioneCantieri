@@ -51,69 +51,6 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblMsg;
 
         /// <summary>
-        /// lblScegliGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliGruppoOrdine;
-
-        /// <summary>
-        /// ddlScegliGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliGruppoOrdine;
-
-        /// <summary>
-        /// pnlInserisciNuovoGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInserisciNuovoGruppoOrdine;
-
-        /// <summary>
-        /// lblNomeGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNomeGruppoOrdine;
-
-        /// <summary>
-        /// txtNomeGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNomeGruppoOrdine;
-
-        /// <summary>
-        /// btnCreaNuovoGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreaNuovoGruppoOrdine;
-
-        /// <summary>
-        /// lblNuovoGruppoOrdine control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNuovoGruppoOrdine;
-
-        /// <summary>
         /// pnlInserisciDati control.
         /// </summary>
         /// <remarks>
@@ -139,42 +76,6 @@ namespace GestioneCantieri
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliLocale;
-
-        /// <summary>
-        /// pnlInserisciDaDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInserisciDaDefault;
-
-        /// <summary>
-        /// lblScegliLocaleDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScegliLocaleDefault;
-
-        /// <summary>
-        /// ddlScegliLocaleDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlScegliLocaleDefault;
-
-        /// <summary>
-        /// btnInserisciDaDefault control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInserisciDaDefault;
 
         /// <summary>
         /// pnlScegliGruppo control.

@@ -54,7 +54,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 text-center table-container">
-            <asp:GridView ID="grdAccontiOperai" ItemType="GestioneCantieri.Data.AccontoOperaio" AutoGenerateColumns="False" runat="server"
+            <asp:GridView ID="grdAccontiOperai" ItemType="Database.Models.AccontoOperaio" AutoGenerateColumns="False" runat="server"
                 CssClass="table table-dark table-striped text-center scrollable-table" OnRowCommand="grdAccontiOperai_RowCommand" OnRowDataBound="grdAccontiOperai_RowDataBound">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

@@ -29,7 +29,7 @@ namespace GestioneCantieri
                 FillDdlScegliSerie();
                 FillDdlGruppi();
                 FillDdlFrutti();
-                FillNomiGruppoOrdine();
+                //FillNomiGruppoOrdine();
             }
         }
 
@@ -48,7 +48,7 @@ namespace GestioneCantieri
         }
         protected void btnInserisciGruppo_Click(object sender, EventArgs e)
         {
-            int? idGruppoOrdine = (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
+            int? idGruppoOrdine = null; // (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
             long? idSerie = ddlScegliSerie.SelectedValue != "-1" ? Convert.ToInt64(ddlScegliSerie.SelectedValue) : (long?)null;
             bool isAggiunto = OrdineFruttiDAO.InserisciGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliGruppo.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, idGruppoOrdine, idSerie);
 
@@ -73,7 +73,7 @@ namespace GestioneCantieri
             {
                 if (txtQtaFrutto.Text != "" && Convert.ToInt32(txtQtaFrutto.Text) > 0)
                 {
-                    int? idGruppoOrdine = (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
+                    int? idGruppoOrdine = null; // (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != 0) ? Convert.ToInt32(ddlScegliGruppoOrdine.SelectedValue) : (int?)null;
                     long? idSerie = ddlScegliSerie.SelectedValue != "-1" ? Convert.ToInt64(ddlScegliSerie.SelectedValue) : (long?)null;
                     bool isInserito = OrdineFruttiDAO.InserisciFruttoNonInGruppo(ddlScegliCantiere.SelectedItem.Value, ddlScegliLocale.SelectedItem.Value, ddlScegliFrutto.SelectedItem.Value, txtQtaFrutto.Text, idGruppoOrdine, idSerie);
 
@@ -105,43 +105,45 @@ namespace GestioneCantieri
             PopolaListe();
             BindGrid();
         }
-        protected void btnCreaNuovoGruppoOrdine_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int rows = MatOrdFrutGroupDAO.Insert(txtNomeGruppoOrdine.Text);
+        //protected void btnCreaNuovoGruppoOrdine_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int rows = MatOrdFrutGroupDAO.Insert(txtNomeGruppoOrdine.Text);
 
-                if (rows > 0)
-                {
-                    lblNuovoGruppoOrdine.Text = "Nuovo gruppo inserito correttamente";
-                    lblNuovoGruppoOrdine.ForeColor = Color.Blue;
-                }
-                else
-                {
-                    lblNuovoGruppoOrdine.Text = "Gruppo già esistente";
-                    lblNuovoGruppoOrdine.ForeColor = Color.Yellow;
-                }
+        //        if (rows > 0)
+        //        {
+        //            lblNuovoGruppoOrdine.Text = "Nuovo gruppo inserito correttamente";
+        //            lblNuovoGruppoOrdine.ForeColor = Color.Blue;
+        //        }
+        //        else
+        //        {
+        //            lblNuovoGruppoOrdine.Text = "Gruppo già esistente";
+        //            lblNuovoGruppoOrdine.ForeColor = Color.Yellow;
+        //        }
 
-                FillNomiGruppoOrdine();
-            }
-            catch
-            {
-                lblNuovoGruppoOrdine.Text = "Errore durante la creazione di un nuovo gruppo ordine";
-                lblNuovoGruppoOrdine.ForeColor = Color.Red;
-            }
-        }
+        //        FillNomiGruppoOrdine();
+        //    }
+        //    catch
+        //    {
+        //        lblNuovoGruppoOrdine.Text = "Errore durante la creazione di un nuovo gruppo ordine";
+        //        lblNuovoGruppoOrdine.ForeColor = Color.Red;
+        //    }
+        //}
 
         protected void ddlScegliCantiere_TextChanged(object sender, EventArgs e)
         {
             if (ddlScegliCantiere.SelectedIndex != 0)
             {
-                pnlInserisciDati.Visible = pnlInserisciNuovoGruppoOrdine.Visible = true;
+                pnlInserisciDati.Visible = true;
+                //pnlInserisciNuovoGruppoOrdine.Visible = true;
                 pnlScegliGruppo.Visible = false;
                 lblQtaFrutto.Visible = txtQtaFrutto.Visible = btnInserisciFrutto.Visible = false;
             }
             else
             {
-                pnlInserisciDati.Visible = pnlInserisciNuovoGruppoOrdine.Visible = pnlInserisciDati.Visible = pnlScegliGruppo.Visible = false;
+                pnlInserisciDati.Visible = pnlInserisciDati.Visible = pnlScegliGruppo.Visible = false;
+                //pnlInserisciNuovoGruppoOrdine.Visible = false;
                 lblQtaFrutto.Visible = txtQtaFrutto.Visible = btnInserisciFrutto.Visible = false;
             }
             SvuotaCampi();
@@ -198,20 +200,20 @@ namespace GestioneCantieri
         }
 
         /* EVENTI SELECT INDEX CHANGED */
-        protected void ddlScegliGruppoOrdine_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != -1)
-            {
-                if (ddlScegliGruppoOrdine.SelectedIndex == 0)
-                {
-                    pnlInserisciNuovoGruppoOrdine.Visible = true;
-                }
-                else
-                {
-                    pnlInserisciNuovoGruppoOrdine.Visible = false;
-                }
-            }
-        }
+        //protected void ddlScegliGruppoOrdine_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (ddlScegliGruppoOrdine != null && ddlScegliGruppoOrdine.SelectedIndex != -1)
+        //    {
+        //        if (ddlScegliGruppoOrdine.SelectedIndex == 0)
+        //        {
+        //            pnlInserisciNuovoGruppoOrdine.Visible = true;
+        //        }
+        //        else
+        //        {
+        //            pnlInserisciNuovoGruppoOrdine.Visible = false;
+        //        }
+        //    }
+        //}
 
         /* HELPERS */
         protected void FillDdlScegliCantiere()
@@ -225,7 +227,6 @@ namespace GestioneCantieri
             ddlScegliLocale.Items.Clear();
             ddlScegliLocale.Items.Add(new ListItem("", "-1"));
             DropDownListManager.FillDdlLocali(LocaliDAO.GetAll(), ref ddlScegliLocale);
-            DropDownListManager.FillDdlLocali(LocaliDAO.GetOnlyFirstTypeOfLocale(), ref ddlScegliLocaleDefault);
         }
         protected void FillDdlScegliSerie()
         {
@@ -250,12 +251,14 @@ namespace GestioneCantieri
             ddlScegliFrutto.Items.Add(new ListItem("", "-1"));
             DropDownListManager.FillDdlFrutti(FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text), ref ddlScegliFrutto);
         }
-        protected void FillNomiGruppoOrdine()
-        {
-            ddlScegliGruppoOrdine.Items.Clear();
-            ddlScegliGruppoOrdine.Items.Add(new ListItem("", "-1"));
-            DropDownListManager.FillDdlMatOrdFrutGroup(MatOrdFrutGroupDAO.GetAll(), ref ddlScegliGruppoOrdine);
-        }
+        
+        //protected void FillNomiGruppoOrdine()
+        //{
+        //    ddlScegliGruppoOrdine.Items.Clear();
+        //    ddlScegliGruppoOrdine.Items.Add(new ListItem("", "-1"));
+        //    DropDownListManager.FillDdlMatOrdFrutGroup(MatOrdFrutGroupDAO.GetAll(), ref ddlScegliGruppoOrdine);
+        //}
+
         protected void PopolaListe()
         {
             string idCantiere = ddlScegliCantiere.SelectedItem.Value;
@@ -272,8 +275,10 @@ namespace GestioneCantieri
 
         private void SvuotaCampi()
         {
-            txtNomeGruppoOrdine.Text = txtFiltroFrutto1.Text = txtFiltroFrutto2.Text = txtFiltroFrutto3.Text = txtFiltroGruppo1.Text = txtFiltroGruppo2.Text = txtFiltroGruppo3.Text = txtQtaFrutto.Text = "";
-            ddlScegliFrutto.SelectedIndex = ddlScegliGruppo.SelectedIndex = ddlScegliGruppoOrdine.SelectedIndex = ddlScegliLocale.SelectedIndex = 0;
+            txtFiltroFrutto1.Text = txtFiltroFrutto2.Text = txtFiltroFrutto3.Text = txtFiltroGruppo1.Text = txtFiltroGruppo2.Text = txtFiltroGruppo3.Text = txtQtaFrutto.Text = "";
+            ddlScegliFrutto.SelectedIndex = ddlScegliGruppo.SelectedIndex = ddlScegliLocale.SelectedIndex = 0;
+            //txtNomeGruppoOrdine.Text = "";
+            //ddlScegliGruppoOrdine.SelectedIndex = 0;
         }
 
         protected void btnEliminaOrdine_Click(object sender, EventArgs e)
@@ -302,19 +307,6 @@ namespace GestioneCantieri
             else if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 e.Row.Cells[0].Text = (++progressivo).ToString();
-            }
-        }
-
-        protected void btnInserisciDaDefault_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OrdineFruttiDAO.InserisciDaDefault(Convert.ToInt32(ddlScegliCantiere.SelectedValue), Convert.ToInt32(ddlScegliLocale.SelectedValue), Convert.ToInt32(ddlScegliLocaleDefault.SelectedValue));
-                BindGrid();
-            }
-            catch (Exception ex)
-            {
-                (Master as layout).SetAlert("alert-danger", $"Errore durante l'inserimento da Default ===> {ex.Message}");
             }
         }
     }

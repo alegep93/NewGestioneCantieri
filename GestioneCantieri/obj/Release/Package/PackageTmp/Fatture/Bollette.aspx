@@ -65,7 +65,7 @@
     <div class="row d-flex justify-content-center align-content-center">
         <div class="col-8 text-center tableContainer">
             <asp:GridView ID="grdBollette" AutoGenerateColumns="false"
-                ItemType="GestioneCantieri.Data.Bolletta" OnRowCommand="grdBollette_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
+                ItemType="Database.Models.Bolletta" OnRowCommand="grdBollette_RowCommand" CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Progressivo" DataField="Progressivo" />
                     <asp:BoundField HeaderText="Fornitore" DataField="RagSocForni" />

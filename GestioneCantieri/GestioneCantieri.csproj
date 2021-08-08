@@ -161,6 +161,7 @@
     <Content Include="GestioneOrdineFrutti\GestisciGruppi.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciGruppiFrutti.aspx" />
     <Content Include="GestioneOrdineFrutti\GestisciSerie.aspx" />
+    <Content Include="GestioneOrdineFrutti\OrdineDaDefault.aspx" />
     <Content Include="Images\BackgroundGradient.png" />
     <Content Include="Images\spinner.gif" />
     <Content Include="InserimentoDati\Amministratori.aspx" />
@@ -430,6 +431,13 @@
     </Compile>
     <Compile Include="GestioneOrdineFrutti\GestisciSerie.aspx.designer.cs">
       <DependentUpon>GestisciSerie.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\OrdineDaDefault.aspx.cs">
+      <DependentUpon>OrdineDaDefault.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestioneOrdineFrutti\OrdineDaDefault.aspx.designer.cs">
+      <DependentUpon>OrdineDaDefault.aspx</DependentUpon>
     </Compile>
     <Compile Include="InserimentoDati\Amministratori.aspx.cs">
       <DependentUpon>Amministratori.aspx</DependentUpon>

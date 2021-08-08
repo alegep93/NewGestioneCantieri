@@ -16,8 +16,10 @@ namespace GestioneCantieri.GestioneOrdineFrutti
         {
             if (!IsPostBack)
             {
-
+                BindGrid(true);
             }
+
+            (Master as layout).HideAlert();
         }
 
         private void BindGrid(bool fillDdls = true)
@@ -88,7 +90,7 @@ namespace GestioneCantieri.GestioneOrdineFrutti
                         CodiceListinoUnivoco = ddlScegliListino.SelectedValue
                     });
 
-                    BindGrid();
+                    BindGrid(false);
                     (Master as layout).SetAlert("alert-success", $"Inserimento di un'associazione frutto-serie avvenuto con successo");
                 }
                 else

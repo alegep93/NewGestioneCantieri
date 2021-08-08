@@ -74,7 +74,7 @@
     </asp:Panel>
 
     <!-- GridView di appoggio -->
-    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" 
+    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="Database.Models.MaterialiCantieri" 
         AutoGenerateColumns="False" Visible="false">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -91,7 +91,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri" 
+    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="Database.Models.MaterialiCantieri" 
         AutoGenerateColumns="False" Visible="false">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

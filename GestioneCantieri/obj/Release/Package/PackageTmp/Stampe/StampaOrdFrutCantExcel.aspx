@@ -24,7 +24,7 @@
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-6 text-center">
             <asp:Panel ID="pnlLocaliWrapper" CssClass="row d-flex justify-content-center align-items-center" runat="server">
-                <asp:Repeater ID="rptLocali" ItemType="GestioneCantieri.Data.MatOrdFrut" runat="server">
+                <asp:Repeater ID="rptLocali" ItemType="Database.Models.MatOrdFrut" runat="server">
                     <ItemTemplate>
                         <div class="col-3 text-center">
                             <asp:CheckBox ID="chkLocale" Text="<%# Item.NomeLocale %>" Checked="true" AutoPostBack="true" OnCheckedChanged="chkLocale_CheckedChanged" runat="server" />
@@ -44,7 +44,7 @@
 
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-6 table-container">
-            <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.StampaCantiere" runat="server" CssClass="table table-dark table-striped scrollable-table">
+            <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="Database.Models.StampaCantiere" runat="server" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField HeaderText="Descrizione Frutto" DataField="Descr001" />
                     <asp:BoundField HeaderText="Articolo Serie" DataField="ArticoloSerie" />

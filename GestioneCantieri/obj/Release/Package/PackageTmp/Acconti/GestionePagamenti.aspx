@@ -104,7 +104,7 @@
 
             <div class="row mt-4 d-flex justify-content-center align-items-center">
                 <div class="col text-center table-responsive tableContainer">
-                    <asp:GridView ID="grdPagamenti" ItemType="GestioneCantieri.Data.Pagamenti" AutoGenerateColumns="false"
+                    <asp:GridView ID="grdPagamenti" ItemType="Database.Models.Pagamenti" AutoGenerateColumns="false"
                         OnRowCommand="grdPagamenti_RowCommand" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
                         <Columns>
                             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

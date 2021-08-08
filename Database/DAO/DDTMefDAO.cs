@@ -33,6 +33,30 @@ namespace Database.DAO
             return ret;
         }
 
+        public static List<DDTMef> GetDdts(int anno, int qta, string codOrDescr)
+        {
+            List<DDTMef> ret = new List<DDTMef>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"SELECT *");
+            sql.AppendLine($"FROM TblDDTMef");
+            sql.AppendLine($"WHERE (CodArt LIKE '%{codOrDescr}%' OR DescriCodArt LIKE '%{codOrDescr}%')");
+            sql.AppendLine(anno != 0 ? "AND Anno = @anno" : "");
+            sql.AppendLine(qta != 0 ? "AND Qta = @qta" : "");
+            sql.AppendLine($"ORDER BY Anno, Data, N_DDT, CodArt");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<DDTMef>(sql.ToString(), new { anno, qta, codOrDescr }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il recupero dell'elenco dei DDT", ex);
+            }
+            return ret;
+        }
+
         //public static List<string> GetJson()
         //{
         //    List<string> ret = new List<string>();

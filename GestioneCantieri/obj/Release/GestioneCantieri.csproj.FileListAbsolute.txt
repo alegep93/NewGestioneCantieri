@@ -17,7 +17,6 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.sign.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.styledxmlparser.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.svg.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.dll
-C:\Git\NewGestioneCantieri\GestioneCantieri\bin\BouncyCastle.Crypto.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Common.Logging.pdb
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Common.Logging.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Common.Logging.Core.pdb
@@ -33,7 +32,6 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.sign.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.styledxmlparser.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.svg.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.xml
-C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csprojAssemblyReference.cache
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.CoreCompileInputs.cache
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.dll
@@ -41,9 +39,13 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.pdb
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ClosedXML.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\DocumentFormat.OpenXml.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ExcelNumberFormat.dll
-C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.FileSystem.Primitives.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.Packaging.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ClosedXML.pdb
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ClosedXML.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\DocumentFormat.OpenXml.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ExcelNumberFormat.xml
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Database.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Database.pdb
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Database.dll.config
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.Packaging.xml
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.AssemblyReference.cache

@@ -34,7 +34,7 @@ namespace GestioneCantieri
         private void ResetToInitial()
         {
             int currentYear = DateTime.Today.Year;
-            List<Bolletta> bollette = BolletteDAO.GetAll(currentYear);
+            List<Bolletta> bollette = BolletteDAO.GetAll(currentYear, 0);
             txtDataBolletta.Text = DateTime.Now.ToString("yyyy-MM-dd");
             txtDataScadenza.Text = txtDataPagamento.Text = txtTotaleBolletta.Text = "";
             txtProgressivo.Text = GetProgressivo();
@@ -138,8 +138,8 @@ namespace GestioneCantieri
         private string GetProgressivo(int anno = 0)
         {
             int progressivo = 1;
-            List<Bolletta> items = BolletteDAO.GetAll().Where(w => w.DataBolletta.Year == (anno > 0 ? anno : DateTime.Now.Year)).ToList();
-            if(items.Count > 0)
+            List<Bolletta> items = BolletteDAO.GetAll(0, 0).Where(w => w.DataBolletta.Year == (anno > 0 ? anno : DateTime.Now.Year)).ToList();
+            if (items.Count > 0)
             {
                 progressivo = items.Select(s => s.Progressivo).Max() + 1;
             }

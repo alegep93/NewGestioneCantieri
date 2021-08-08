@@ -164,7 +164,7 @@
 
     <div class="row mt-3">
         <div class="col text-center table-overflow ddt-mef-table">
-            <asp:GridView ID="grdListaDDTMef" HeaderStyle-CssClass="border-bottom-bold" runat="server" ItemType="GestioneCantieri.Data.DDTMef" 
+            <asp:GridView ID="grdListaDDTMef" HeaderStyle-CssClass="border-bottom-bold" runat="server" ItemType="Database.Models.DDTMef" 
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="Anno" HeaderText="Anno" />

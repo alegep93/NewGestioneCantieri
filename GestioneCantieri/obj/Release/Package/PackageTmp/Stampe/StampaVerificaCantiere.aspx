@@ -116,7 +116,7 @@
         <div class="row mt-3 d-flex justify-content-center align-items-center">
             <div class="table-container col text-center">
                 <asp:GridView ID="grdStampaVerificaCant" runat="server"
-                    ItemType="GestioneCantieri.Data.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table"
+                    ItemType="Database.Models.MaterialiCantieri" AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table"
                     AllowSorting="true" OnSorting="grdStampaVerificaCant_Sorting">
                     <Columns>
                         <asp:BoundField DataField="Tipologia" HeaderText="Tipologia" />
@@ -133,7 +133,7 @@
     </asp:Panel>
 
     <!-- GridView di appoggio -->
-    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+    <asp:GridView ID="grdStampaMateCant" runat="server" ItemType="Database.Models.MaterialiCantieri"
         AutoGenerateColumns="False" Visible="false">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -150,7 +150,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+    <asp:GridView ID="grdStampaMateCantPDF" runat="server" ItemType="Database.Models.MaterialiCantieri"
         AutoGenerateColumns="False" Visible="false">
         <Columns>
             <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

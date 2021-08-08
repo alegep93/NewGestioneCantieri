@@ -13,5 +13,10 @@ namespace GestioneCantieri
         {
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
+
+        protected void Application_BeginRequest()
+        {
+            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+        }
     }
 }

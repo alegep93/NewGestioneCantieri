@@ -35,6 +35,30 @@ namespace Database.DAO
             return ret;
         }
 
+        public static List<Bolletta> GetAll(int anno = 0, string ragSocForni = "")
+        {
+            List<Bolletta> ret = new List<Bolletta>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                anno = anno == 0 ? DateTime.Now.Year : anno;
+                sql.AppendLine($"SELECT A.*, B.RagSocForni");
+                sql.AppendLine($"FROM TblBollette AS A");
+                sql.AppendLine($"INNER JOIN TblForitori AS B ON A.id_fornitori = B.IdFornitori");
+                sql.AppendLine($"WHERE DATEPART(YEAR, data_bolletta) = {anno} AND RagSocForni LIKE '%{ragSocForni}%'");
+                sql.AppendLine($"ORDER BY DATEPART(YEAR, data_bolletta), progressivo");
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Bolletta>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll in BolletteDAO", ex);
+            }
+            return ret;
+        }
+
         public static Bolletta GetSingle(long idBolletta)
         {
             Bolletta ret = new Bolletta();

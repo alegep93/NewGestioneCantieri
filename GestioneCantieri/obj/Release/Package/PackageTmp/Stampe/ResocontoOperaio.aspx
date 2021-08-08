@@ -83,7 +83,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdResocontoOperaio" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+            <asp:GridView ID="grdResocontoOperaio" runat="server" ItemType="Database.Models.MaterialiCantieri"
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
@@ -101,7 +101,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
-            <asp:GridView ID="grdResocontoRaggruppato" runat="server" ItemType="GestioneCantieri.Data.MaterialiCantieri"
+            <asp:GridView ID="grdResocontoRaggruppato" runat="server" ItemType="Database.Models.MaterialiCantieri"
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped text-center scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />

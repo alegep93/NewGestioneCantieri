@@ -202,6 +202,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AmministratoriController.cs" />
+    <Compile Include="Controllers\BolletteController.cs" />
     <Compile Include="Controllers\CantieriController.cs" />
     <Compile Include="Controllers\ClientiController.cs" />
     <Compile Include="Controllers\DdtMefController.cs" />
@@ -236,6 +237,7 @@
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Amministratori\" />
+    <Folder Include="Views\Bollette\" />
     <Folder Include="Views\Cantieri\" />
     <Folder Include="Views\Clienti\" />
     <Folder Include="Views\DdtMef\" />

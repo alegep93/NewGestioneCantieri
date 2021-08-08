@@ -26,7 +26,7 @@ namespace RestApi.Controllers
             }
             catch (Exception ex)
             {
-                string messaggio = $"Errore durante la GetFattureEmesse in NotesController --- {ex}";
+                string messaggio = $"Errore durante la GetFattureEmesse in FattureController --- {ex}";
                 log.Error(messaggio);
                 return BadRequest(messaggio);
             }
@@ -44,7 +44,7 @@ namespace RestApi.Controllers
             }
             catch (Exception ex)
             {
-                string messaggio = $"Errore durante la GetFattureEmesse in NotesController --- {ex}";
+                string messaggio = $"Errore durante la GetFattureEmesse in FattureController --- {ex}";
                 log.Error(messaggio);
                 return BadRequest(messaggio);
             }

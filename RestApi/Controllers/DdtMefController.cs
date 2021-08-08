@@ -16,11 +16,11 @@ namespace RestApi.Controllers
         [HttpGet]
         [ResponseType(typeof(DDTMef))]
         [Route("CompleteList")]
-        public IHttpActionResult GetAll()
+        public IHttpActionResult GetAll([FromUri] string anno, [FromUri] string qta, [FromUri] string codOrDescr)
         {
             try
             {
-                List<DDTMef> items = DDTMefDAO.GetAll();
+                List<DDTMef> items = DDTMefDAO.GetDdts(Convert.ToInt32(anno), Convert.ToInt32(qta), codOrDescr);
                 return Ok(items);
             }
             catch (Exception ex)

@@ -81,7 +81,7 @@
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col text-center table-container">
             <asp:GridView ID="grdStampaConOpzioni" AutoGenerateColumns="false"
-                ItemType="GestioneCantieri.Data.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
+                ItemType="Database.Models.StampaValoriCantieriConOpzioni" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Codice Cantiere" DataField="CodCant" />
                     <asp:BoundField HeaderText="Descrizione Cantiere" DataField="DescriCodCAnt" />

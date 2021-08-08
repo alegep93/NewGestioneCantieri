@@ -234,7 +234,7 @@ namespace Database.DAO
             sql.AppendLine($"IVA = @IVA, Anno = @Anno,");
             sql.AppendLine($"Preventivo = @Preventivo, FasciaTblCantieri = @FasciaTblCantieri,");
             sql.AppendLine($"DaDividere = @DaDividere, Diviso = @Diviso,");
-            sql.AppendLine($"Fatturato = @Fatturato, NonRiscuotibile = @NonRiscuotibile");
+            sql.AppendLine($"Fatturato = @Fatturato, NonRiscuotibile = @NonRiscuotibile, codRiferCant = @CodRiferCant");
             sql.AppendLine($"WHERE IdCantieri = @IdCantieri");
             try
             {

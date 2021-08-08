@@ -1,0 +1,11 @@
+2021-06-25 14:46:15,228 [1] INFO  - *** Application start ***
+2021-06-25 14:46:47,888 [10] ERROR - Errore durante la GetAll in DdtMefController --- System.FormatException: Formato della stringa di input non corretto.
+   in System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   in System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   in System.Convert.ToInt32(String value)
+   in RestApi.Controllers.DdtMefController.GetAll(String anno, String codOrDescr) in C:\Git\NewGestioneCantieri\RestApi\Controllers\DdtMefController.cs:riga 23
+2021-06-25 14:47:18,920 [9] ERROR - Errore durante la GetAll in DdtMefController --- System.FormatException: Formato della stringa di input non corretto.
+   in System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   in System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   in System.Convert.ToInt32(String value)
+   in RestApi.Controllers.DdtMefController.GetAll(String anno, String codOrDescr) in C:\Git\NewGestioneCantieri\RestApi\Controllers\DdtMefController.cs:riga 23

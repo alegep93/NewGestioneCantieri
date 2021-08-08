@@ -1254,7 +1254,7 @@ namespace GestioneCantieri
                         DescriCodArt = "Manodopera" + op.Operaio,
                         IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                         Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                        Fornitore = ddlScegliFornit.SelectedItem.Value,
+                        Fornitore = Enumeratori.Fornitori.Manodopera.GetHashCode().ToString(), // ddlScegliFornit.SelectedItem.Value,
                         Qta = Convert.ToDouble(txtManodopQta.Text.Replace(".", ",")),
                         Tipologia = txtTipDatCant.Text,
                         ProtocolloInterno = Convert.ToInt32(txtProtocollo.Text),
@@ -1395,7 +1395,7 @@ namespace GestioneCantieri
                     DescriCodArt = "Manodopera" + op.Operaio,
                     IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                     Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                    Fornitore = ddlScegliFornit.SelectedItem.Value,
+                    Fornitore = Enumeratori.Fornitori.Manodopera.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                     Tipologia = txtTipDatCant.Text,
                     NumeroBolla = txtNumBolla.Text,
                     Data = Convert.ToDateTime(txtDataDDT.Text),
@@ -1493,7 +1493,7 @@ namespace GestioneCantieri
                         DescriCodArt = "Manodopera" + op.Operaio,
                         IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                         Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                        Fornitore = ddlScegliFornit.SelectedItem.Value,
+                        Fornitore = Enumeratori.Fornitori.Operaio.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                         DescriMateriali = txtDescrOper.Text,
                         Qta = Convert.ToDouble(txtOperQta.Text.Replace(".", ",")),
                         Visibile = chkOperVisibile.Checked,
@@ -1629,7 +1629,7 @@ namespace GestioneCantieri
                     IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                     IdTblOperaio = Convert.ToInt32(ddlScegliOperaio.SelectedItem.Value),
                     Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                    Fornitore = ddlScegliFornit.SelectedItem.Value,
+                    Fornitore = Enumeratori.Fornitori.Operaio.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                     Tipologia = txtTipDatCant.Text,
                     NumeroBolla = txtNumBolla.Text,
                     Data = Convert.ToDateTime(txtDataDDT.Text),
@@ -1754,7 +1754,7 @@ namespace GestioneCantieri
                     {
                         IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                         Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                        Fornitore = ddlScegliFornit.SelectedItem.Value,
+                        Fornitore = Enumeratori.Fornitori.Arrotondamento.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                         Tipologia = txtTipDatCant.Text,
                         NumeroBolla = txtNumBolla.Text,
                         Data = Convert.ToDateTime(txtDataDDT.Text),
@@ -1796,7 +1796,7 @@ namespace GestioneCantieri
                     IdMaterialiCantiere = Convert.ToInt32(hidArrot.Value),
                     IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                     Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                    Fornitore = ddlScegliFornit.SelectedItem.Value,
+                    Fornitore = Enumeratori.Fornitori.Arrotondamento.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                     Tipologia = txtTipDatCant.Text,
                     NumeroBolla = txtNumBolla.Text,
                     Data = Convert.ToDateTime(txtDataDDT.Text),
@@ -1976,7 +1976,7 @@ namespace GestioneCantieri
                             DescriCodArt = txtChiamDescriCodArt.Text,
                             Tipologia = txtTipDatCant.Text,
                             Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                            Fornitore = ddlScegliFornit.SelectedItem.Value,
+                            Fornitore = Enumeratori.Fornitori.AChiamata.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                             Note = txtChiamNote.Text,
                             Note2 = txtChiamNote2.Text,
                             Qta = Convert.ToDouble(txtChiamQta.Text),
@@ -2079,7 +2079,7 @@ namespace GestioneCantieri
                     IdMaterialiCantiere = Convert.ToInt32(hidAChiamata.Value),
                     IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                     Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                    Fornitore = ddlScegliFornit.SelectedItem.Value,
+                    Fornitore = Enumeratori.Fornitori.AChiamata.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                     Tipologia = txtTipDatCant.Text,
                     NumeroBolla = txtNumBolla.Text,
                     Data = Convert.ToDateTime(txtDataDDT.Text),
@@ -2218,7 +2218,7 @@ namespace GestioneCantieri
                         DescriCodArt = txtSpeseDescriCodArt.Text,
                         Tipologia = txtTipDatCant.Text,
                         Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                        Fornitore = ddlScegliFornit.SelectedItem.Value,
+                        Fornitore = Enumeratori.Fornitori.Spese.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                         Qta = txtSpeseQta.Text != "" ? Convert.ToDouble(txtSpeseQta.Text) : 0,
                         Fascia = txtFascia.Text != "" ? Convert.ToInt32(txtFascia.Text) : 0,
                         ProtocolloInterno = txtProtocollo.Text != "" ? Convert.ToInt32(txtProtocollo.Text) : 0,
@@ -2314,7 +2314,7 @@ namespace GestioneCantieri
                     IdMaterialiCantiere = Convert.ToInt32(hidIdSpesa.Value),
                     IdTblCantieri = Convert.ToInt32(ddlScegliCant.SelectedItem.Value),
                     Acquirente = ddlScegliAcquirente.SelectedItem.Value,
-                    Fornitore = ddlScegliFornit.SelectedItem.Value,
+                    Fornitore = Enumeratori.Fornitori.Spese.GetHashCode().ToString(), //ddlScegliFornit.SelectedItem.Value,
                     Tipologia = txtTipDatCant.Text,
                     NumeroBolla = txtNumBolla.Text,
                     Data = Convert.ToDateTime(txtDataDDT.Text),
@@ -2395,7 +2395,7 @@ namespace GestioneCantieri
                 string tipologia = "";
 
                 // Dati in tabella
-                tipologia = Enumeratori.tipologie.MANODOPERA.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.MANODOPERA.ToString().Replace("_", " ");
                 List<MaterialiCantieri> manodoperaList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (manodoperaList.Count > 0)
                 {
@@ -2405,7 +2405,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellManodopera);
                 }
 
-                tipologia = Enumeratori.tipologie.OPERAIO.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.OPERAIO.ToString().Replace("_", " ");
                 List<MaterialiCantieri> operaioList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (operaioList.Count > 0)
                 {
@@ -2415,7 +2415,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellOperaio);
                 }
 
-                tipologia = Enumeratori.tipologie.MATERIALE.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.MATERIALE.ToString().Replace("_", " ");
                 List<MaterialiCantieri> materialeList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (materialeList.Count > 0)
                 {
@@ -2425,7 +2425,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellMateriale);
                 }
 
-                tipologia = Enumeratori.tipologie.SPESE.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.SPESE.ToString().Replace("_", " ");
                 List<MaterialiCantieri> speseList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (speseList.Count > 0)
                 {
@@ -2435,7 +2435,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellSpese);
                 }
 
-                tipologia = Enumeratori.tipologie.A_CHIAMATA.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.A_CHIAMATA.ToString().Replace("_", " ");
                 List<MaterialiCantieri> aChiamataList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (aChiamataList.Count > 0)
                 {
@@ -2445,7 +2445,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellAChiamata);
                 }
 
-                tipologia = Enumeratori.tipologie.ARROTONDAMENTO.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.ARROTONDAMENTO.ToString().Replace("_", " ");
                 List<MaterialiCantieri> arrotondamentoList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (arrotondamentoList.Count > 0)
                 {
@@ -2455,7 +2455,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellArrotondamento);
                 }
 
-                tipologia = Enumeratori.tipologie.ACCREDITI.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.ACCREDITI.ToString().Replace("_", " ");
                 List<MaterialiCantieri> accreditiList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (accreditiList.Count > 0)
                 {
@@ -2465,7 +2465,7 @@ namespace GestioneCantieri
                     table.AddCell(emptyCellAccrediti);
                 }
 
-                tipologia = Enumeratori.tipologie.RIENTRO.ToString().Replace("_", " ");
+                tipologia = Enumeratori.Tipologie.RIENTRO.ToString().Replace("_", " ");
                 List<MaterialiCantieri> rientroList = items.Where(w => w.Tipologia == tipologia).ToList();
                 if (rientroList.Count > 0)
                 {

@@ -32,7 +32,7 @@
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col-6 text-center">
-            <asp:GridView ID="grdAmministratori" AutoGenerateColumns="false" ItemType="GestioneCantieri.Data.Amministratore"
+            <asp:GridView ID="grdAmministratori" AutoGenerateColumns="false" ItemType="Database.Models.Amministratore"
                 OnRowCommand="grdAmministratori_RowCommand" CssClass="table table-striped table-dark text-center scrollable-table" runat="server">
                 <Columns>
                     <asp:BoundField HeaderText="Nome amministratore" DataField="Nome" />

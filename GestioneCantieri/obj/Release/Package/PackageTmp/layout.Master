@@ -24,7 +24,11 @@
     <script src="/Scripts/FilterToggle.js"></script>
 
     <%-- FontAwesome --%>
-    <script src="https://kit.fontawesome.com/42ac00650f.js" crossorigin="anonymous"></script>
+    <%--<script src="https://kit.fontawesome.com/42ac00650f.js" crossorigin="anonymous"></script>--%>
+    <%--<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />--%>
+    <link href="Fontawesome5.15.3/css/all.css" rel="stylesheet" />
+    <link rel="preload" href="Fontawesome5.15.3/css/all.css" />
+    <link rel="prefetch" href="Fontawesome5.15.3/css/all.css" />
 
     <script type="text/javascript">
         $(function () {
@@ -88,10 +92,12 @@
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppi.aspx">Gestisci Gruppi</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestioneLocali.aspx">Gestisci Locali</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciSerie.aspx">Gestisci Serie</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/AssociaSerie.aspx">Associa Serie</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciGruppiFrutti.aspx">Gestisci Gruppi Frutti</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/ControlloGruppi.aspx">Controllo Gruppi</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/GestisciDefaultOrdineFrutti.aspx">Default Ordine Frutti</a></li>
                                 <li><a class="dropdown-item" href="/GestioneOrdineFrutti/OrdineFrutti.aspx">Ordine Frutti</a></li>
+                                <li><a class="dropdown-item" href="/GestioneOrdineFrutti/OrdineDaDefault.aspx">Ordine Da Default</a></li>
                                 <li class="dropdown-submenu dropright">
                                     <a href="#" class="dropdown-item dropdown-toggle">Stampa Gruppi e Frutti<span class="caret"></span></a>
                                     <ul class="dropdown-menu">

@@ -112,7 +112,7 @@
 
     <div class="row mt-1 d-flex justify-content-center align-items-center">
         <div class="col text-center table-overflow listino-hts-table">
-            <asp:GridView ID="grdListinoHts" runat="server" ItemType="GestioneCantieri.Data.Mamg0" OnRowDataBound="grdListinoHts_RowDataBound" AutoGenerateColumns="False" 
+            <asp:GridView ID="grdListinoHts" runat="server" ItemType="Database.Models.Mamg0" OnRowDataBound="grdListinoHts_RowDataBound" AutoGenerateColumns="False" 
                 HeaderStyle-CssClass="border-bottom-bold" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" />

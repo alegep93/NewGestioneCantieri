@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 d-flex justify-content-center align-items-center">
+    <%--<div class="row mt-3 d-flex justify-content-center align-items-center">
         <!-- Scegli Gruppo a cui associare l'ordine -->
         <div class="col-6 text-center">
             <div class="row">
@@ -50,18 +50,12 @@
                 </asp:Panel>
             </div>
         </div>
-    </div>
+    </div>--%>
 
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlInserisciDati" CssClass="col-2 text-center" runat="server">
             <asp:Label ID="lblScegliLocale" runat="server" Text="Scegli Locale"></asp:Label>
             <asp:DropDownList ID="ddlScegliLocale" CssClass="form-control" OnTextChanged="ddlScegliLocale_TextChanged" AutoPostBack="true" runat="server"></asp:DropDownList>
-
-            <asp:Panel ID="pnlInserisciDaDefault" CssClass="col mt-3 text-center d-none" runat="server">
-                <asp:Label ID="lblScegliLocaleDefault" runat="server" Text="Scegli Locale Per Inserimento Da Default"></asp:Label>
-                <asp:DropDownList ID="ddlScegliLocaleDefault" CssClass="form-control" runat="server"></asp:DropDownList>
-                <asp:Button ID="btnInserisciDaDefault" CssClass="btn btn-lg btn-dark" OnClick="btnInserisciDaDefault_Click" Text="Inserisci da Default" runat="server"></asp:Button>
-            </asp:Panel>
         </asp:Panel>
     </div>
 
