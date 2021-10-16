@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/layout.Master" CodeBehind="InserimentoDati.aspx.cs" Inherits="GestioneCantieri.InserimentoDati" %>
+﻿<%@ page language="C#" autoeventwireup="true" masterpagefile="~/layout.Master" codebehind="InserimentoDati.aspx.cs" inherits="GestioneCantieri.InserimentoDati" %>
 
 <asp:Content ID="title" ContentPlaceHolderID="title" runat="server">
     <title>Inserimento Dati</title>
@@ -221,7 +221,7 @@
                     </div>
                     <div class="row d-flex justify-content-center align-items-center">
                         <div class="col text-center">
-                            <asp:Button ID="btnFiltraGrdFornitori" OnClick="btnFiltraGrdFornitori_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Griglia"/>
+                            <asp:Button ID="btnFiltraGrdFornitori" OnClick="btnFiltraGrdFornitori_Click" CssClass="btn btn-lg btn-primary pull-left" runat="server" Text="Filtra Griglia" />
                         </div>
                     </div>
                 </div>
@@ -372,6 +372,16 @@
                 <div class="col-2 text-center">
                     <asp:TextBox ID="txtFiltroClientePerInserimentoCantieri" placeholder="Filtro per cliente" AutoPostBack="true" OnTextChanged="txtFiltroClientePerInserimentoCantieri_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
                 </div>
+                <div class="col-2 text-center">
+                    <div class="row">
+                        <div class="col text-center">
+                            <asp:TextBox ID="txtFiltroAnnoPreventivo" placeholder="Filtro anno" AutoPostBack="true" OnTextChanged="txtFiltroPreventivo_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col text-center">
+                            <asp:TextBox ID="txtFiltroDescrizionePreventivo" placeholder="Filtro descrizione" AutoPostBack="true" OnTextChanged="txtFiltroPreventivo_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row d-flex justify-content-center align-items-center">
@@ -380,6 +390,10 @@
                         <div class="col-2 form-group">
                             <asp:Label ID="lblScegliCliente" runat="server" Text="Scegli Cliente" />
                             <asp:DropDownList ID="ddlScegliClientePerCantiere" CssClass="form-control" runat="server"></asp:DropDownList>
+                        </div>
+                        <div class="col text-center form-group">
+                            <asp:Label ID="lblScegliPreventivoCant" runat="server" Text="Scegli preventivo" />
+                            <asp:DropDownList ID="ddlScegliPreventivoCant" CssClass="form-control mr-3" runat="server"></asp:DropDownList>
                         </div>
                         <div class="col-2 form-group">
                             <asp:Label ID="lblDataInserimentoCantiere" runat="server" Text="Data Inserimento" />

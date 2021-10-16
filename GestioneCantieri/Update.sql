@@ -14,3 +14,7 @@ GO
 
 
 ALTER TABLE [dbo].[TblMatOrdFrut]  DROP [FK_TblMatOrdFrut_TblSerie]
+
+
+-- TODO
+ALTER TABLE TblCantieri ADD id_preventivo int null

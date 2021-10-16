@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish\GestioneCantieri</_PublishTargetUrl>
-    <History>True|2021-08-08T10:29:53.8261497Z;True|2021-08-08T12:24:41.1100078+02:00;True|2021-04-11T11:15:32.2334625+02:00;True|2021-04-08T18:05:47.5669861+02:00;True|2021-04-04T11:59:17.0707690+02:00;True|2021-04-01T18:56:39.0601952+02:00;</History>
+    <History>True|2021-09-02T09:03:13.5402012Z;True|2021-08-08T12:29:53.8261497+02:00;True|2021-08-08T12:24:41.1100078+02:00;True|2021-04-11T11:15:32.2334625+02:00;True|2021-04-08T18:05:47.5669861+02:00;True|2021-04-04T11:59:17.0707690+02:00;True|2021-04-01T18:56:39.0601952+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Acconti/AccontiOperaio.aspx">
@@ -45,13 +45,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/29/2021 11:22:54</publishTime>
     </File>
     <File Include="bin/Database.dll">
-      <publishTime>08/08/2021 12:24:38</publishTime>
+      <publishTime>02/09/2021 11:03:11</publishTime>
     </File>
     <File Include="bin/Database.dll.config">
       <publishTime>05/03/2021 14:42:50</publishTime>
     </File>
     <File Include="bin/Database.pdb">
-      <publishTime>08/08/2021 12:24:38</publishTime>
+      <publishTime>02/09/2021 11:03:11</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>02/24/2021 22:56:40</publishTime>
@@ -60,10 +60,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/02/2020 08:42:28</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>08/08/2021 12:29:53</publishTime>
+      <publishTime>09/02/2021 11:05:25</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>08/08/2021 12:29:53</publishTime>
+      <publishTime>09/02/2021 11:05:25</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>04/03/2021 17:31:44</publishTime>

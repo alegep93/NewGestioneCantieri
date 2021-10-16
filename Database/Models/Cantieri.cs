@@ -6,6 +6,7 @@ namespace Database.Models
     {
         public int IdCantieri { get; set; } = 0;
         public int IdtblClienti { get; set; } = 0;
+        public int IdPreventivo { get; set; } = 0;
         public int Ricarico { get; set; } = 0;
         public int Iva { get; set; } = 0;
         public int Anno { get; set; } = 0;

@@ -13,7 +13,6 @@ C:\Git\NewGestioneCantieri\Database\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Git\NewGestioneCantieri\Database\bin\Debug\ExcelNumberFormat.xml
 C:\Git\NewGestioneCantieri\Database\bin\Debug\System.IO.Packaging.xml
 C:\Git\NewGestioneCantieri\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
-C:\Git\NewGestioneCantieri\Database\obj\Debug\Database.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\Database\obj\Debug\Database.dll
 C:\Git\NewGestioneCantieri\Database\obj\Debug\Database.pdb
 C:\Git\NewGestioneCantieri\Database\obj\Debug\Database.csproj.AssemblyReference.cache

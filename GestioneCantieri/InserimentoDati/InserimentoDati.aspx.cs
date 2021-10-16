@@ -491,6 +491,7 @@ namespace GestioneCantieri
                     Fatturato = chkFatturato.Checked,
                     NonRiscuotibile = chkNonRiscuotibile.Checked,
                     FasciaTblCantieri = Convert.ToInt32(txtFasciaCant.Text),
+                    IdPreventivo = Convert.ToInt32(ddlScegliPreventivoCant.SelectedValue),
                     //CodRiferCant = CostruisciCodRiferCant()
                     CodRiferCant = txtCodiceRiferimentoCant.Text
                 });
@@ -542,6 +543,7 @@ namespace GestioneCantieri
                 Fatturato = chkFatturato.Checked,
                 NonRiscuotibile = chkNonRiscuotibile.Checked,
                 FasciaTblCantieri = Convert.ToInt32(txtFasciaCant.Text),
+                IdPreventivo = Convert.ToInt32(ddlScegliPreventivoCant.SelectedValue),
                 CodRiferCant = txtCodiceRiferimentoCant.Text
                 //CodRiferCant = CostruisciCodRiferCant()
             });
@@ -587,6 +589,13 @@ namespace GestioneCantieri
                 ddlScegliClientePerCantiere.Items.Add(new ListItem(f.RagSocCli, f.IdCliente.ToString()));
             });
         }
+        protected void FillDdlPreventiviPerCantieri(string anno = "", string descrizione = "")
+        {
+            ddlScegliPreventivoCant.Items.Clear();
+            ddlScegliPreventivoCant.Items.Add(new ListItem("", "-1"));
+            List<Preventivo> items = PreventiviDAO.GetPreventivi(anno, descrizione);
+            DropDownListManager.FillDdlPreventivi(items, ref ddlScegliPreventivoCant);
+        }
         protected void PopolaCampiCantiere(int idCant, bool isControlEnabled)
         {
             EnableDisableFields(pnlTxtBoxCantContainer, isControlEnabled);
@@ -601,6 +610,7 @@ namespace GestioneCantieri
 
             // Seleziono il cliente con la Ragione Sociale associata al cantiere di riferimento
             ddlScegliClientePerCantiere.SelectedValue = ddlScegliClientePerCantiere.Items.FindByText(cant.RagSocCli).Value;
+            ddlScegliPreventivoCant.SelectedValue = "-1";
 
             //Popolo i textbox
             txtDataInserCant.Text = cant.Data.ToString("yyyy-MM-dd");
@@ -886,6 +896,7 @@ namespace GestioneCantieri
             lblIsCantInserito.Text = "";
             BindGridCantieri();
             FillDdlClientiPerCantieri();
+            FillDdlPreventiviPerCantieri();
             ResettaCampi(pnlTxtBoxCantContainer);
             txtAnnoCant.Text = DateTime.Now.Year.ToString();
             PopolaCodCantAnnoNumero(txtAnnoCant.Text);
@@ -965,5 +976,10 @@ namespace GestioneCantieri
             FillDdlClientiPerCantieri(txtFiltroClientePerInserimentoCantieri.Text);
         }
         #endregion
+
+        protected void txtFiltroPreventivo_TextChanged(object sender, EventArgs e)
+        {
+            FillDdlPreventiviPerCantieri(txtFiltroAnnoPreventivo.Text, txtFiltroDescrizionePreventivo.Text);
+        }
     }
 }

@@ -144,5 +144,13 @@ namespace GestioneCantieri.Utils
                 ddl.Items.Add(new ListItem(item.Descrizione, item.IdMatOrdFrutGroup.ToString()));
             }
         }
+
+        public static void FillDdlPreventivi(List<Preventivo> items, ref DropDownList ddl)
+        {
+            foreach (Preventivo item in items)
+            {
+                ddl.Items.Add(new ListItem($"{item.Numero} - {item.Descrizione}", item.Id.ToString()));
+            }
+        }
     }
 }

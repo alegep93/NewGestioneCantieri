@@ -168,6 +168,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblErroreGeneraNumBolla;
 
         /// <summary>
+        /// lblPreventivoCantiere control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreventivoCantiere;
+
+        /// <summary>
+        /// txtPreventivoCantiere control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPreventivoCantiere;
+
+        /// <summary>
         /// pnlSubIntestazione control.
         /// </summary>
         /// <remarks>

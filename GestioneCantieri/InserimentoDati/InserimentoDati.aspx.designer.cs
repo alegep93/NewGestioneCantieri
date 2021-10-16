@@ -834,6 +834,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.TextBox txtFiltroClientePerInserimentoCantieri;
 
         /// <summary>
+        /// txtFiltroAnnoPreventivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroAnnoPreventivo;
+
+        /// <summary>
+        /// txtFiltroDescrizionePreventivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroDescrizionePreventivo;
+
+        /// <summary>
         /// pnlTxtBoxCantContainer control.
         /// </summary>
         /// <remarks>
@@ -859,6 +877,24 @@ namespace GestioneCantieri
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliClientePerCantiere;
+
+        /// <summary>
+        /// lblScegliPreventivoCant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliPreventivoCant;
+
+        /// <summary>
+        /// ddlScegliPreventivoCant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliPreventivoCant;
 
         /// <summary>
         /// lblDataInserimentoCantiere control.

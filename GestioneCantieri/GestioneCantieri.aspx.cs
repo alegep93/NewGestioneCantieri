@@ -365,6 +365,9 @@ namespace GestioneCantieri
                 pnlSubIntestazione.Visible = true;
                 txtPzzoManodop.Text = cant.PzzoManodopera.ToString("N2");
                 txtFascia.Text = cant.FasciaTblCantieri.ToString();
+
+                Preventivo preventivo = PreventiviDAO.GetSingle(cant.IdPreventivo);
+                txtPreventivoCantiere.Text = preventivo != null ? $"{preventivo.Numero} - {preventivo.Descrizione}" : "";
             }
             else
             {

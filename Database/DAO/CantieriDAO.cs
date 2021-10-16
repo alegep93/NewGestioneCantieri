@@ -201,10 +201,10 @@ namespace Database.DAO
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"INSERT INTO TblCantieri (IdTblClienti,Data,CodCant,DescriCodCAnt,Indirizzo,Città,Ricarico,");
             sql.AppendLine($"PzzoManodopera,Chiuso,Riscosso,Numero,ValorePreventivo,IVA,Anno,Preventivo,");
-            sql.AppendLine($"FasciaTblCantieri,DaDividere,Diviso,Fatturato,NonRiscuotibile,CodRiferCant)");
+            sql.AppendLine($"FasciaTblCantieri,DaDividere,Diviso,Fatturato,NonRiscuotibile,CodRiferCant,id_preventivo)");
             sql.AppendLine($"VALUES (@IdTblClienti,CONVERT(date,@Data),@CodCant,@DescriCodCAnt,@Indirizzo,@Città,@Ricarico,");
             sql.AppendLine($"@PzzoManodopera,@Chiuso,@Riscosso,@Numero,@ValorePreventivo,@IVA,@Anno,@Preventivo,@FasciaTblCantieri,");
-            sql.AppendLine($"@DaDividere,@Diviso,@Fatturato,@NonRiscuotibile,@CodRiferCant)");
+            sql.AppendLine($"@DaDividere,@Diviso,@Fatturato,@NonRiscuotibile,@CodRiferCant,@IdPreventivo)");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -234,7 +234,8 @@ namespace Database.DAO
             sql.AppendLine($"IVA = @IVA, Anno = @Anno,");
             sql.AppendLine($"Preventivo = @Preventivo, FasciaTblCantieri = @FasciaTblCantieri,");
             sql.AppendLine($"DaDividere = @DaDividere, Diviso = @Diviso,");
-            sql.AppendLine($"Fatturato = @Fatturato, NonRiscuotibile = @NonRiscuotibile, codRiferCant = @CodRiferCant");
+            sql.AppendLine($"Fatturato = @Fatturato, NonRiscuotibile = @NonRiscuotibile,");
+            sql.AppendLine($"codRiferCant = @CodRiferCant, id_preventivo = @IdPreventivo");
             sql.AppendLine($"WHERE IdCantieri = @IdCantieri");
             try
             {

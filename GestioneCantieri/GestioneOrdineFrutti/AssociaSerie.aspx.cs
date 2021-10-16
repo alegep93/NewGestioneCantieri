@@ -16,6 +16,12 @@ namespace GestioneCantieri.GestioneOrdineFrutti
         {
             if (!IsPostBack)
             {
+                ddlFiltroSerie.Items.Clear();
+                DropDownListManager.FillDdlSerie(SerieDAO.GetAll(), ref ddlFiltroSerie);
+
+                ddlScegliSerie.Items.Clear();
+                DropDownListManager.FillDdlSerie(SerieDAO.GetAll(), ref ddlScegliSerie);
+
                 BindGrid(true);
             }
 
@@ -46,12 +52,6 @@ namespace GestioneCantieri.GestioneOrdineFrutti
             {
                 ddlScegliFrutto.Items.Clear();
                 DropDownListManager.FillDdlFrutti(FruttiDAO.GetFrutti(txtFiltroFrutti1.Text, txtFiltroFrutti2.Text, txtFiltroFrutti3.Text), ref ddlScegliFrutto);
-
-                ddlScegliSerie.Items.Clear();
-                DropDownListManager.FillDdlSerie(SerieDAO.GetAll(), ref ddlScegliSerie);
-
-                ddlFiltroSerie.Items.Clear();
-                DropDownListManager.FillDdlSerie(SerieDAO.GetAll(), ref ddlFiltroSerie);
             }
             catch (Exception ex)
             {

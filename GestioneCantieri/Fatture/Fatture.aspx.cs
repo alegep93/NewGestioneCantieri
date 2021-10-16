@@ -153,7 +153,7 @@ namespace GestioneCantieri
             Fattura fatt = FattureDAO.GetSingle(idFattura);
             List<FatturaCantiere> fatCantieri = FattureCantieriDAO.GetByIdFattura(fatt.IdFatture);
             List<FatturaAcconto> fatAcconti = FattureAccontiDAO.GetByIdFattura(fatt.IdFatture);
-
+            Cantieri cantiere = CantieriDAO.GetSingle(fatCantieri.FirstOrDefault().IdCantieri);
             txtNumeroFattura.Text = fatt.Numero.ToString();
             ddlScegliCliente.SelectedValue = fatt.IdClienti.ToString();
             fatCantieri.ForEach(f => lblShowCantieriAggiunti.Text += (lblShowCantieriAggiunti.Text == "" ? "" : ",") + CantieriDAO.GetSingle(f.IdCantieri).CodCant);
@@ -166,7 +166,7 @@ namespace GestioneCantieri
             chkNotaCredito.Checked = fatt.IsNotaDiCredito;
             chkReverseCharge.Checked = fatt.ReverseCharge;
             chkRiscosso.Checked = fatt.Riscosso;
-            txtConcatenazione.Text = $"Fat. {fatt.Numero.ToString()} del {fatt.Data.ToString("dd/MM/yyyy")}";
+            txtConcatenazione.Text = $"Fat. {fatt.Numero} del {fatt.Data:dd/MM/yyyy} - {cantiere.DescriCodCant} ({cantiere.CodCant})";
 
             // Accessibilità campi
             txtNumeroFattura.ReadOnly = txtData.ReadOnly = txtValoreAcconto.ReadOnly = !isModifica;
