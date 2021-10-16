@@ -69,6 +69,10 @@ namespace GestioneCantieri
                 // Reinserisco tutto il listino Mamg0, recuperando i dati da un file excel nominato Mamg0.xlsx
                 Mamg0DAO.GetDataFromExcelAndInsertBulkCopy(filePath, tr);
 
+                // Nuovo metodo, con txt
+                //List<Mamg0ForDBF> items = ReadDataFromTextFile();
+                //Mamg0DAO.InsertAll(items, tr);
+
                 tr.Commit();
                 lblImportMsg.Text = "Importazione del listino avvenuta con successo";
                 lblImportMsg.ForeColor = Color.Blue;
@@ -109,63 +113,57 @@ namespace GestioneCantieri
             txtDescriCodArt3.Text = "";
             BindGrid();
         }
-        //private List<Mamg0> ReadDataFromTextFile()
-        //{
-        //    List<Mamg0> ddts = new List<Mamg0>();
-        //    try
-        //    {
-        //        string[] lines = File.ReadAllLines(filePathTxt);
-        //        foreach (string line in lines)
-        //        {
-        //            Mamg0 mamgo = new Mamg0();
-        //            //int qta = line.Substring(174, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(174, 8).Trim());
-        //            //decimal importo = line.Substring(185, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(185, 12).Trim())},{Convert.ToInt32(line.Substring(197, 3).Trim())}");
-        //            //string sigf = line.Substring(41, 3).Trim();
-        //            //string codf = line.Substring(44, 16).Trim();
+        private List<Mamg0ForDBF> ReadDataFromTextFile()
+        {
+            List<Mamg0ForDBF> mamgoList = new List<Mamg0ForDBF>();
+            try
+            {
+                string[] lines = File.ReadAllLines(filePathTxt);
+                foreach (string line in lines)
+                {
+                    Mamg0ForDBF mamgo = new Mamg0ForDBF();
+                    //int qta = line.Substring(174, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(174, 8).Trim());
+                    //decimal importo = line.Substring(185, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(185, 12).Trim())},{Convert.ToInt32(line.Substring(197, 3).Trim())}");
+                    //string sigf = line.Substring(41, 3).Trim();
+                    //string codf = line.Substring(44, 16).Trim();
 
-        //            //DateTime data = GetDateFromString(line.Substring(4, 8).Trim()).Value;
-        //            //DateTime data2 = GetDateFromString(line.Substring(200, 8).Trim()) ?? data;
-        //            //DateTime data3 = GetDateFromString(line.Substring(219, 8).Trim()) ?? data;
+                    //DateTime data = GetDateFromString(line.Substring(4, 8).Trim()).Value;
+                    //DateTime data2 = GetDateFromString(line.Substring(200, 8).Trim()) ?? data;
+                    //DateTime data3 = GetDateFromString(line.Substring(219, 8).Trim()) ?? data;
 
-        //            mamgo.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
-        //            mamgo.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : data;
-        //            mamgo.N_DDT = line.Substring(12, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 6).Trim());
-        //            mamgo.FTVRF0 = line.Substring(18, 15).Trim();
-        //            mamgo.FTDT30 = line.Substring(33, 41).Trim();
-        //            mamgo.CodArt = line.Substring(41, 19).Trim();
-        //            mamgo.FTAIN = line.Substring(60, 17).Trim();
-        //            mamgo.DescriCodArt = line.Substring(77, 40).Trim();
-        //            mamgo.DescrizioneArticolo2 = line.Substring(117, 40).Trim();
-        //            mamgo.Iva = line.Substring(157, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(157, 2).Trim());
-        //            //ddt.PrezzoListino = line.Substring(159, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(159, 12).Trim())},{Convert.ToInt32(line.Substring(170, 3).Trim())}");
-        //            mamgo.PrezzoListino = Convert.ToDecimal(Mamg0DAO.GetPrezzoDiListino(sigf, codf));
-        //            mamgo.Qta = qta;
-        //            mamgo.Importo = importo;
-        //            mamgo.Data2 = line.Substring(200, 8).Trim() == "" ? new DateTime() : data2;
-        //            mamgo.Valuta = line.Substring(208, 3).Trim();
-        //            mamgo.FTFOM = line.Substring(211, 1).Trim();
-        //            mamgo.FTCMA = line.Substring(212, 2).Trim();
-        //            mamgo.FTCDO = line.Substring(214, 2).Trim();
-        //            mamgo.FLFLAG = line.Substring(216, 1).Trim();
-        //            mamgo.FLFLQU = line.Substring(217, 2).Trim();
-        //            mamgo.Data3 = line.Substring(219, 8).Trim() == "" ? new DateTime() : data3;
-        //            mamgo.FTORAG = line.Substring(227, 6).Trim();
-        //            mamgo.FTMLT0 = line.Substring(233, 5).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(233, 5).Trim())},{Convert.ToInt32(line.Substring(238, 2).Trim())}";
-        //            mamgo.Importo2 = line.Substring(240, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(240, 12).Trim())},{Convert.ToInt32(line.Substring(252, 3).Trim())}");
-        //            mamgo.FTIMRA = line.Substring(255, 12).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(255, 12).Trim())},{Convert.ToInt32(line.Substring(267, 3).Trim())}";
-        //            mamgo.AnnoN_ddt = (line.Substring(0, 4).Trim() == "" || line.Substring(12, 6).Trim() == "") ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(0, 4).Trim())}{Convert.ToInt32(line.Substring(12, 6).Trim())}");
-        //            mamgo.IdFornitore = idFornitore;
-        //            mamgo.Acquirente = txtAcquirente.Text;
-        //            mamgo.PrezzoUnitario = importo / (qta == 0 ? 1 : qta);
-        //            ddts.Add(mamgo);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Errore durante il popolamento della lista dei DDT Mef da ddt.txt", ex);
-        //    }
-        //    return ddts;
-        //}
+                    mamgo.AA_IVA = line.Substring(0, 3).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 3).Trim());
+                    mamgo.AA_IVA = line.Substring(3, 16).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(3, 16).Trim());
+                    mamgo.AA_IVA = line.Substring(19, 13).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(19, 13).Trim());
+                    mamgo.AA_IVA = line.Substring(32, 43).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(32, 43).Trim());
+                    mamgo.AA_IVA = line.Substring(75, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(75, 5).Trim());
+                    mamgo.AA_IVA = line.Substring(80, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(80, 5).Trim());
+                    mamgo.AA_IVA = line.Substring(85, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(85, 5).Trim());
+                    mamgo.AA_IVA = line.Substring(90, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(90, 6).Trim());
+                    mamgo.AA_IVA = line.Substring(96, 1).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(96, 1).Trim());
+                    mamgo.AA_IVA = line.Substring(97, 11).Trim() == "" ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(97, 9).Trim())},{Convert.ToInt32(line.Substring(106, 2).Trim())}");
+                    mamgo.AA_IVA = line.Substring(108, 11).Trim() == "" ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(108, 9).Trim())},{Convert.ToInt32(line.Substring(117, 2).Trim())}");
+                    mamgo.AA_IVA = line.Substring(119, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(119, 6).Trim());
+                    mamgo.AA_IVA = line.Substring(125, 3).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(125, 3).Trim());
+                    mamgo.AA_IVA = line.Substring(128, 3).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(128, 3).Trim());
+                    mamgo.AA_IVA = line.Substring(131, 1).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(131, 1).Trim());
+                    mamgo.AA_IVA = line.Substring(132, 1).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(132, 1).Trim());
+                    mamgo.AA_IVA = line.Substring(133, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(133, 8).Trim());
+                    mamgo.AA_IVA = line.Substring(141, 18).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(141, 18).Trim());
+                    mamgo.AA_IVA = line.Substring(159, 18).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(159, 18).Trim());
+                    mamgo.AA_IVA = line.Substring(177, 21).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(177, 21).Trim());
+                    mamgo.AA_IVA = line.Substring(198, 7).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(198, 7).Trim());
+                    mamgo.AA_IVA = line.Substring(205, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(205, 4).Trim());
+                    mamgo.AA_IVA = line.Substring(209, 11).Trim() == "" ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(209, 8).Trim())},{Convert.ToInt32(line.Substring(217, 3).Trim())}");
+
+                    mamgoList.Add(mamgo);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il popolamento della lista dei DDT Mef da ddt.txt", ex);
+            }
+            return mamgoList;
+        }
         public static DateTime? GetDateFromString(string dataString)
         {
             //Ottiene un DateTime da una stringa con la data formattata in base alla nostra scelta (in questo caso Italiana "dd/MM/yyyy")

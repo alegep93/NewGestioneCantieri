@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1845b6ec-0f05-40b7-965b-bb040c3f575e": {
+      "ProjectGuid": "1845b6ec-0f05-40b7-965b-bb040c3f575e",
+      "DisplayName": "Database",
+      "ColorIndex": 0
+    },
+    "5e56b4ba-ee55-451b-b467-440251d2002e": {
+      "ProjectGuid": "5e56b4ba-ee55-451b-b467-440251d2002e",
+      "DisplayName": "GestioneCantieri",
+      "ColorIndex": 1
+    },
+    "7cd22254-9b98-4351-bbb6-fd3547f3c4b2": {
+      "ProjectGuid": "7cd22254-9b98-4351-bbb6-fd3547f3c4b2",
+      "DisplayName": "RestApi",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}
