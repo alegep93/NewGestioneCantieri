@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Utils;
+using Z.Dapper.Plus;
 
 namespace Database.DAO
 {
@@ -197,6 +198,32 @@ namespace Database.DAO
             }
         }
 
+        public static void InsertListinoNew(List<Mamg0> items, DBTransaction tr)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"INSERT INTO TblListinoMef (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto)");
+            sql.AppendLine($"VALUES (@CodArt, @Desc, @Pezzo, @PrezzoListino, @PrezzoNetto)");
+            try
+            {
+                DapperPlusManager.Entity<Mamg0>().Table("TblListinoMef")
+                                                 .Map(item => item.CodArt, "CodArt")
+                                                 .Map(item => item.Desc, "Desc")
+                                                 .Map(item => item.Pezzo, "Pezzo")
+                                                 .Map(item => item.PrezzoListino, "PrezzoListino")
+                                                 .Map(item => item.PrezzoNetto, "PrezzoNetto")
+                                                 .Ignore(item => item.Sconto1)
+                                                 .Ignore(item => item.Sconto2)
+                                                 .Ignore(item => item.Sconto3)
+                                                 .Ignore(item => item.UnitMis)
+                                                 .Ignore(item => item.CodiceListinoUnivoco);
+                tr.Connection.UseBulkOptions(opt => opt.Transaction = tr.Transaction).BulkInsert(items);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'inserimento del listino 'nuovo'", ex);
+            }
+        }
+
         //public static void InsertIntoDBF(string pathFile)
         //{
         //    string excelConnectionString = "Provider = vfpoledb; Data Source ="); pathFile + "); Collating Sequence = machine");
@@ -287,6 +314,19 @@ namespace Database.DAO
                 throw new Exception("Errore durante l'eliminazione del listino", ex);
             }
             return ret;
+        }
+
+        public static void DeleteListinoNew(DBTransaction tr)
+        {
+            StringBuilder sql = new StringBuilder("DELETE FROM TblListinoMef");
+            try
+            {
+                tr.Connection.Execute(sql.ToString(), transaction: tr.Transaction);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'eliminazione del listino 'nuovo'", ex);
+            }
         }
     }
 }
