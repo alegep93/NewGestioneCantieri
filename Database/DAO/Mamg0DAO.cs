@@ -14,37 +14,57 @@ namespace Database.DAO
     public class Mamg0DAO : BaseDAO
     {
         // SELECT
-        public static List<Mamg0> GetAll()
-        {
-            List<Mamg0> ret = new List<Mamg0>();
-            StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT TOP 500 (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
-            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
-            sql.AppendLine($"FROM MAMG0");
-            sql.AppendLine($"ORDER BY CodArt ASC");
-            try
-            {
-                using (SqlConnection cn = GetConnection())
-                {
-                    ret = cn.Query<Mamg0>(sql.ToString()).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante il recupero del listino", ex);
-            }
-            return ret;
-        }
+        //public static List<Mamg0> GetAll()
+        //{
+        //    List<Mamg0> ret = new List<Mamg0>();
+        //    StringBuilder sql = new StringBuilder();
+        //    sql.AppendLine($"SELECT TOP 500 (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
+        //    sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
+        //    sql.AppendLine($"FROM MAMG0");
+        //    sql.AppendLine($"ORDER BY CodArt ASC");
+        //    try
+        //    {
+        //        using (SqlConnection cn = GetConnection())
+        //        {
+        //            ret = cn.Query<Mamg0>(sql.ToString()).ToList();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante il recupero del listino", ex);
+        //    }
+        //    return ret;
+        //}
 
-        public static List<Mamg0> GetListino(string codArt1, string codArt2, string codArt3, string desc1, string desc2, string desc3)
+        //public static List<Mamg0> GetAll()
+        //{
+        //    List<Mamg0> ret = new List<Mamg0>();
+        //    StringBuilder sql = new StringBuilder();
+        //    sql.AppendLine($"SELECT TOP 500 CodArt, 'Desc', Pezzo, PrezzoListino, PrezzoNetto");
+        //    sql.AppendLine($"FROM TblListinoMef");
+        //    sql.AppendLine($"ORDER BY CodArt ASC");
+        //    try
+        //    {
+        //        using (SqlConnection cn = GetConnection())
+        //        {
+        //            ret = cn.Query<Mamg0>(sql.ToString()).ToList();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante il recupero del listino", ex);
+        //    }
+        //    return ret;
+        //}
+
+        public static List<Mamg0> GetListino(string codArt1, string codArt2, string codArt3, string desc1, string desc2, string desc3, bool limitResults = true)
         {
             List<Mamg0> ret = new List<Mamg0>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT (AA_SIGF + AA_CODF) AS CodArt, AA_DES AS 'Desc', AA_UM AS UnitMis, AA_PZ AS Pezzo, AA_PRZ AS PrezzoListino,");
-            sql.AppendLine($"AA_SCONTO1 AS Sconto1, AA_SCONTO2 AS Sconto2, AA_SCONTO3 AS Sconto3, AA_PRZ1 AS PrezzoNetto, CodiceListinoUnivoco");
-            sql.AppendLine($"FROM MAMG0");
-            sql.AppendLine($"WHERE (AA_SIGF + AA_CODF) LIKE '%{codArt1}%' AND (AA_SIGF + AA_CODF) LIKE '%{codArt2}%' AND (AA_SIGF + AA_CODF) LIKE '%{codArt3}%'");
-            sql.AppendLine($"AND AA_DES LIKE '%{desc1}%' AND AA_DES LIKE '%{desc2}%' AND AA_DES LIKE '%{desc3}%'");
+            sql.AppendLine($"SELECT {(limitResults ? "TOP 500" : "")} CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto");
+            sql.AppendLine($"FROM TblListinoMef");
+            sql.AppendLine($"WHERE CodArt LIKE '%{codArt1}%' AND CodArt LIKE '%{codArt2}%' AND CodArt LIKE '%{codArt3}%'");
+            sql.AppendLine($"AND [Desc] LIKE '%{desc1}%' AND [Desc] LIKE '%{desc2}%' AND [Desc] LIKE '%{desc3}%'");
             sql.AppendLine($"ORDER BY CodArt ASC");
             try
             {
@@ -86,7 +106,7 @@ namespace Database.DAO
         public static double GetPrezzoDiListino(string sigf, string codf)
         {
             double ret = 0;
-            StringBuilder sql = new StringBuilder($"SELECT AA_PRZ AS prezzoListino FROM MAMG0 WHERE AA_SIGF = @sigf AND AA_CODF = @codf");
+            StringBuilder sql = new StringBuilder($"SELECT PrezzoListino FROM TblListinoMef WHERE CodArt = (@sigf + @codf)");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -96,109 +116,109 @@ namespace Database.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante la GetPrezzoDiListino in Mamg0DAO", ex);
+                throw new Exception("Errore durante la GetPrezzoDiListino in TblListinoMef", ex);
             }
             return ret;
         }
 
-        public static void GetDataFromExcelAndInsertBulkCopy(string filePath, DBTransaction tr)
-        {
-            try
-            {
-                var workbook = new XLWorkbook(filePath);
-                var ws1 = workbook.Worksheet(1);
-                int rowNumber = 2;
-                var row = ws1.Row(rowNumber);
-                bool empty = row.IsEmpty();
-                List<Mamg0ForDBF> items = new List<Mamg0ForDBF>();
-                while (!empty)
-                {
-                    items.Add(new Mamg0ForDBF
-                    {
-                        AA_COD = row.Cell(1).GetString(),
-                        AA_SIGF = row.Cell(2).GetString(),
-                        AA_CODF = row.Cell(3).GetString(),
-                        AA_DES = row.Cell(4).GetString(),
-                        AA_UM = row.Cell(5).GetString(),
-                        AA_PZ = row.Cell(6).GetDouble(),
-                        AA_IVA = Convert.ToInt32(row.Cell(7).GetDouble()),
-                        AA_VAL = row.Cell(8).GetString(),
-                        AA_PRZ = row.Cell(9).GetDouble(),
-                        AA_CODFSS = row.Cell(10).GetString(),
-                        AA_GRUPPO = row.Cell(11).GetString(),
-                        AA_SCONTO1 = row.Cell(12).GetDouble(),
-                        AA_SCONTO2 = row.Cell(13).GetDouble(),
-                        AA_SCONTO3 = row.Cell(14).GetDouble(),
-                        AA_CFZMIN = row.Cell(15).GetDouble(),
-                        AA_MGZ = row.Cell(16).GetString(),
-                        AA_CUB = row.Cell(17).GetDouble(),
-                        AA_PRZ1 = row.Cell(18).GetDouble(),
-                        AA_DATA1 = row.Cell(19).GetDateTime(),
-                        AA_EAN = row.Cell(20).GetString(),
-                        WOMAME = row.Cell(21).GetString(),
-                        WOFOME = row.Cell(22).GetString(),
-                        WOPDME = row.Cell(23).GetString(),
-                        WOFMSC = row.Cell(24).GetString(),
-                        WOFMST = row.Cell(25).GetString(),
-                        RAME = row.Cell(26).GetDouble()
-                    });
-                    row = ws1.Row(rowNumber += 1);
-                    empty = row.IsEmpty();
-                }
+        //public static void GetDataFromExcelAndInsertBulkCopy(string filePath, DBTransaction tr)
+        //{
+        //    try
+        //    {
+        //        var workbook = new XLWorkbook(filePath);
+        //        var ws1 = workbook.Worksheet(1);
+        //        int rowNumber = 2;
+        //        var row = ws1.Row(rowNumber);
+        //        bool empty = row.IsEmpty();
+        //        List<Mamg0ForDBF> items = new List<Mamg0ForDBF>();
+        //        while (!empty)
+        //        {
+        //            items.Add(new Mamg0ForDBF
+        //            {
+        //                AA_COD = row.Cell(1).GetString(),
+        //                AA_SIGF = row.Cell(2).GetString(),
+        //                AA_CODF = row.Cell(3).GetString(),
+        //                AA_DES = row.Cell(4).GetString(),
+        //                AA_UM = row.Cell(5).GetString(),
+        //                AA_PZ = row.Cell(6).GetDouble(),
+        //                AA_IVA = Convert.ToInt32(row.Cell(7).GetDouble()),
+        //                AA_VAL = row.Cell(8).GetString(),
+        //                AA_PRZ = row.Cell(9).GetDouble(),
+        //                AA_CODFSS = row.Cell(10).GetString(),
+        //                AA_GRUPPO = row.Cell(11).GetString(),
+        //                AA_SCONTO1 = row.Cell(12).GetDouble(),
+        //                AA_SCONTO2 = row.Cell(13).GetDouble(),
+        //                AA_SCONTO3 = row.Cell(14).GetDouble(),
+        //                AA_CFZMIN = row.Cell(15).GetDouble(),
+        //                AA_MGZ = row.Cell(16).GetString(),
+        //                AA_CUB = row.Cell(17).GetDouble(),
+        //                AA_PRZ1 = row.Cell(18).GetDouble(),
+        //                AA_DATA1 = row.Cell(19).GetDateTime(),
+        //                AA_EAN = row.Cell(20).GetString(),
+        //                WOMAME = row.Cell(21).GetString(),
+        //                WOFOME = row.Cell(22).GetString(),
+        //                WOPDME = row.Cell(23).GetString(),
+        //                WOFMSC = row.Cell(24).GetString(),
+        //                WOFMST = row.Cell(25).GetString(),
+        //                RAME = row.Cell(26).GetDouble()
+        //            });
+        //            row = ws1.Row(rowNumber += 1);
+        //            empty = row.IsEmpty();
+        //        }
 
-                InsertAll(items, tr);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'importazione del listino Mamg0", ex);
-            }
-        }
+        //        InsertAll(items, tr);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante l'importazione del listino Mamg0", ex);
+        //    }
+        //}
 
         // INSERT
-        public static bool InserisciListino(Mamg0ForDBF mmgDbf)
-        {
-            bool ret = false;
-            StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"INSERT INTO MAMG0 (AA_COD, AA_SIGF, AA_CODF, AA_DES, AA_UM, AA_PZ, AA_IVA, AA_VAL, AA_PRZ, AA_CODFSS, AA_GRUPPO,");
-            sql.AppendLine($"AA_SCONTO1, AA_SCONTO2, AA_SCONTO3, AA_CFZMIN, AA_MGZ, AA_CUB, AA_PRZ1, AA_DATA1, AA_EAN, WOMAME, WOFOME,");
-            sql.AppendLine($"WOPDME, WOFMSC, WOFMST, RAME)");
-            sql.AppendLine($"VALUES (@AA_COD, @AA_SIGF, @AA_CODF, @AA_DES, @AA_UM, @AA_PZ, @AA_IVA, @AA_VAL, @AA_PRZ, @AA_CODFSS, @AA_GRUPPO,");
-            sql.AppendLine($"@AA_SCONTO1, @AA_SCONTO2, @AA_SCONTO3, @AA_CFZMIN, @AA_MGZ, @AA_CUB, @AA_PRZ1, @AA_DATA1, @AA_EAN, @WOMAME, @WOFOME,");
-            sql.AppendLine($"@WOPDME, @WOFMSC, @WOFMST, @RAME)");
-            try
-            {
-                using (SqlConnection cn = GetConnection())
-                {
-                    ret = cn.Execute(sql.ToString()) > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'inserimento del listino", ex);
-            }
-            return ret;
-        }
+        //public static bool InserisciListino(Mamg0ForDBF mmgDbf)
+        //{
+        //    bool ret = false;
+        //    StringBuilder sql = new StringBuilder();
+        //    sql.AppendLine($"INSERT INTO MAMG0 (AA_COD, AA_SIGF, AA_CODF, AA_DES, AA_UM, AA_PZ, AA_IVA, AA_VAL, AA_PRZ, AA_CODFSS, AA_GRUPPO,");
+        //    sql.AppendLine($"AA_SCONTO1, AA_SCONTO2, AA_SCONTO3, AA_CFZMIN, AA_MGZ, AA_CUB, AA_PRZ1, AA_DATA1, AA_EAN, WOMAME, WOFOME,");
+        //    sql.AppendLine($"WOPDME, WOFMSC, WOFMST, RAME)");
+        //    sql.AppendLine($"VALUES (@AA_COD, @AA_SIGF, @AA_CODF, @AA_DES, @AA_UM, @AA_PZ, @AA_IVA, @AA_VAL, @AA_PRZ, @AA_CODFSS, @AA_GRUPPO,");
+        //    sql.AppendLine($"@AA_SCONTO1, @AA_SCONTO2, @AA_SCONTO3, @AA_CFZMIN, @AA_MGZ, @AA_CUB, @AA_PRZ1, @AA_DATA1, @AA_EAN, @WOMAME, @WOFOME,");
+        //    sql.AppendLine($"@WOPDME, @WOFMSC, @WOFMST, @RAME)");
+        //    try
+        //    {
+        //        using (SqlConnection cn = GetConnection())
+        //        {
+        //            ret = cn.Execute(sql.ToString()) > 0;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante l'inserimento del listino", ex);
+        //    }
+        //    return ret;
+        //}
 
-        public static void InsertAll(List<Mamg0ForDBF> items, DBTransaction tr)
-        {
-            StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"INSERT INTO MAMG0 (AA_COD, AA_SIGF, AA_CODF, AA_DES, AA_UM, AA_PZ, AA_IVA, AA_VAL, AA_PRZ, AA_CODFSS, AA_GRUPPO,");
-            sql.AppendLine($"AA_SCONTO1, AA_SCONTO2, AA_SCONTO3, AA_CFZMIN, AA_MGZ, AA_CUB, AA_PRZ1, AA_DATA1, AA_EAN, WOMAME, WOFOME,");
-            sql.AppendLine($"WOPDME, WOFMSC, WOFMST, RAME)");
-            sql.AppendLine($"VALUES (@AA_COD, @AA_SIGF, @AA_CODF, @AA_DES, @AA_UM, @AA_PZ, @AA_IVA, @AA_VAL, @AA_PRZ, @AA_CODFSS, @AA_GRUPPO,");
-            sql.AppendLine($"@AA_SCONTO1, @AA_SCONTO2, @AA_SCONTO3, @AA_CFZMIN, @AA_MGZ, @AA_CUB, @AA_PRZ1, @AA_DATA1, @AA_EAN, @WOMAME, @WOFOME,");
-            sql.AppendLine($"@WOPDME, @WOFMSC, @WOFMST, @RAME)");
-            try
-            {
-                tr.Connection.Execute(sql.ToString(), items, tr.Transaction, commandTimeout: 600);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'inserimento del listino", ex);
-            }
-        }
+        //public static void InsertAll(List<Mamg0ForDBF> items, DBTransaction tr)
+        //{
+        //    StringBuilder sql = new StringBuilder();
+        //    sql.AppendLine($"INSERT INTO MAMG0 (AA_COD, AA_SIGF, AA_CODF, AA_DES, AA_UM, AA_PZ, AA_IVA, AA_VAL, AA_PRZ, AA_CODFSS, AA_GRUPPO,");
+        //    sql.AppendLine($"AA_SCONTO1, AA_SCONTO2, AA_SCONTO3, AA_CFZMIN, AA_MGZ, AA_CUB, AA_PRZ1, AA_DATA1, AA_EAN, WOMAME, WOFOME,");
+        //    sql.AppendLine($"WOPDME, WOFMSC, WOFMST, RAME)");
+        //    sql.AppendLine($"VALUES (@AA_COD, @AA_SIGF, @AA_CODF, @AA_DES, @AA_UM, @AA_PZ, @AA_IVA, @AA_VAL, @AA_PRZ, @AA_CODFSS, @AA_GRUPPO,");
+        //    sql.AppendLine($"@AA_SCONTO1, @AA_SCONTO2, @AA_SCONTO3, @AA_CFZMIN, @AA_MGZ, @AA_CUB, @AA_PRZ1, @AA_DATA1, @AA_EAN, @WOMAME, @WOFOME,");
+        //    sql.AppendLine($"@WOPDME, @WOFMSC, @WOFMST, @RAME)");
+        //    try
+        //    {
+        //        tr.Connection.Execute(sql.ToString(), items, tr.Transaction, commandTimeout: 600);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Errore durante l'inserimento del listino", ex);
+        //    }
+        //}
 
-        public static void InsertListinoNew(List<Mamg0> items, DBTransaction tr)
+        public static void InsertListino(List<Mamg0> items, DBTransaction tr)
         {
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"INSERT INTO TblListinoMef (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto)");
@@ -301,22 +321,7 @@ namespace Database.DAO
 
         // DELETE
 
-        public static bool EliminaListino(DBTransaction tr)
-        {
-            bool ret = false;
-            StringBuilder sql = new StringBuilder("DELETE FROM MAMG0");
-            try
-            {
-                ret = tr.Connection.Execute(sql.ToString(), transaction: tr.Transaction) > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Errore durante l'eliminazione del listino", ex);
-            }
-            return ret;
-        }
-
-        public static void DeleteListinoNew(DBTransaction tr)
+        public static void DeleteListino(DBTransaction tr)
         {
             StringBuilder sql = new StringBuilder("DELETE FROM TblListinoMef");
             try

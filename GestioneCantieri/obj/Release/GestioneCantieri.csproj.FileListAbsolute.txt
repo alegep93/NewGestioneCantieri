@@ -36,12 +36,9 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.pdb
-C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ClosedXML.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\DocumentFormat.OpenXml.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ExcelNumberFormat.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.Packaging.dll
-C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ClosedXML.pdb
-C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ClosedXML.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\DocumentFormat.OpenXml.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\ExcelNumberFormat.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Database.dll
@@ -49,3 +46,5 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Database.pdb
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Database.dll.config
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.Packaging.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.AssemblyReference.cache
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Z.Dapper.Plus.dll
+C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Z.Dapper.Plus.xml

@@ -14,3 +14,21 @@ GO
 
 
 ALTER TABLE [dbo].[TblMatOrdFrut]  DROP [FK_TblMatOrdFrut_TblSerie]
+
+
+-- TODO
+ALTER TABLE TblCantieri ADD id_preventivo int null
+
+CREATE TABLE TblListinoMef(
+	[IdListinoMef] [bigint] IDENTITY(1,1) NOT NULL,
+    [CodArt] nvarchar(200) NOT NULL, 
+    [Desc] nvarchar(400) NOT NULL, 
+    [Pezzo] int NOT NULL,
+    [PrezzoListino] decimal(10,2) NOT NULL, 
+    [PrezzoNetto] decimal(10,2) NOT NULL,
+ CONSTRAINT [PK_TblListinoMef] PRIMARY KEY CLUSTERED 
+(
+	[IdListinoMef] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO

@@ -51,6 +51,10 @@
                     <asp:DropDownList ID="ddlScegliCant" CssClass="form-control" AutoPostBack="true" OnTextChanged="ddlScegliCant_TextChanged" runat="server" /><br />
                     <asp:Label ID="lblErroreGeneraNumBolla" Text="" runat="server" />
                 </div>
+                <div class="col-4 text-center">
+                    <asp:Label ID="lblPreventivoCantiere" Text="Preventivo Cantiere" runat="server" />
+                    <asp:TextBox ID="txtPreventivoCantiere" Enabled="false" CssClass="form-control" runat="server"></asp:TextBox><br />
+                </div>
             </div>
 
             <asp:Panel ID="pnlSubIntestazione" CssClass="row d-flex justify-content-center align-items-center" runat="server">

@@ -47,7 +47,7 @@ namespace GestioneCantieri
             tr.Begin();
             try
             {
-                Mamg0DAO.EliminaListino(tr);
+                Mamg0DAO.DeleteListino(tr);
                 tr.Commit();
             }
             catch (Exception ex)
@@ -72,8 +72,8 @@ namespace GestioneCantieri
                 // Nuovo metodo, con txt
                 // Elimino il listino
                 List<Mamg0> items = ReadDataFromTextFile();
-                Mamg0DAO.DeleteListinoNew(tr);
-                Mamg0DAO.InsertListinoNew(items, tr);
+                Mamg0DAO.DeleteListino(tr);
+                Mamg0DAO.InsertListino(items, tr);
 
                 tr.Commit();
                 lblImportMsg.Text = "Importazione del listino avvenuta con successo";
@@ -94,14 +94,14 @@ namespace GestioneCantieri
         protected void BindGrid()
         {
             List<Mamg0> listaDDT = new List<Mamg0>();
-            listaDDT = Mamg0DAO.GetAll();
+            listaDDT = Mamg0DAO.GetListino("", "", "", "", "", "", true);
             grdListino.DataSource = listaDDT;
             grdListino.DataBind();
         }
         protected void BindGridWithSearch()
         {
             List<Mamg0> listaDDT = new List<Mamg0>();
-            listaDDT = Mamg0DAO.GetListino(txtCodArt1.Text, txtCodArt2.Text, txtCodArt3.Text, txtDescriCodArt1.Text, txtDescriCodArt2.Text, txtDescriCodArt3.Text);
+            listaDDT = Mamg0DAO.GetListino(txtCodArt1.Text, txtCodArt2.Text, txtCodArt3.Text, txtDescriCodArt1.Text, txtDescriCodArt2.Text, txtDescriCodArt3.Text, false);
             grdListino.DataSource = listaDDT;
             grdListino.DataBind();
         }
@@ -135,7 +135,7 @@ namespace GestioneCantieri
                     mamgo.CodArt = line.Substring(0, 16).Trim() == "" ? "" : line.Substring(0, 16).Trim();
                     mamgo.Desc = line.Substring(32, 43).Trim() == "" ? "" : line.Substring(32, 43).Trim();
                     mamgo.Pezzo = line.Substring(75, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(75, 5).Trim());
-                    mamgo.PrezzoListino = line.Substring(97, 11).Replace("-","").Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(97, 9).Replace("-", "").Trim())},{Convert.ToInt32(line.Substring(106, 2).Replace("-", "").Trim())}");
+                    mamgo.PrezzoListino = line.Substring(97, 11).Replace("-", "").Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(97, 9).Replace("-", "").Trim())},{Convert.ToInt32(line.Substring(106, 2).Replace("-", "").Trim())}");
                     mamgo.PrezzoNetto = line.Substring(108, 11).Replace("-", "").Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(108, 9).Replace("-", "").Trim())},{Convert.ToInt32(line.Substring(117, 2).Replace("-", "").Trim())}");
                     //mamgo.AA_CODF = line.Substring(0, 16).Trim() == "" ? "" : line.Substring(0, 16).Trim(); // OLD
                     //mamgo.AA_IVA = line.Substring(3, 16).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(3, 16).Trim());

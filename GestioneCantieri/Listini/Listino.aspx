@@ -106,12 +106,12 @@
                 <Columns>
                     <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
                     <asp:BoundField DataField="Desc" HeaderText="Descrizione" />
-                    <asp:BoundField DataField="UnitMis" HeaderText="Unità di Misura" />
+                    <%--<asp:BoundField DataField="UnitMis" HeaderText="Unità di Misura" />--%>
                     <asp:BoundField DataField="Pezzo" HeaderText="Pezzo" />
                     <asp:BoundField DataField="PrezzoListino" HeaderText="Prezzo Listino" />
-                    <asp:BoundField DataField="Sconto1" HeaderText="Sconto 1" />
+                    <%--<asp:BoundField DataField="Sconto1" HeaderText="Sconto 1" />
                     <asp:BoundField DataField="Sconto2" HeaderText="Sconto2" />
-                    <asp:BoundField DataField="Sconto3" HeaderText="Sconto3" />
+                    <asp:BoundField DataField="Sconto3" HeaderText="Sconto3" />--%>
                     <asp:BoundField DataField="PrezzoNetto" HeaderText="Prezzo Netto" />
                 </Columns>
             </asp:GridView>

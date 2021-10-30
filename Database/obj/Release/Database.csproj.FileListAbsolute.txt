@@ -4,7 +4,6 @@ C:\Git\NewGestioneCantieri\Database\bin\Release\Database.pdb
 C:\Git\NewGestioneCantieri\Database\bin\Release\Dapper.dll
 C:\Git\NewGestioneCantieri\Database\bin\Release\Dapper.xml
 C:\Git\NewGestioneCantieri\Database\obj\Release\Database.csproj.CoreCompileInputs.cache
-C:\Git\NewGestioneCantieri\Database\obj\Release\Database.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\Database\obj\Release\Database.dll
 C:\Git\NewGestioneCantieri\Database\obj\Release\Database.pdb
 C:\Git\NewGestioneCantieri\Database\bin\Release\ClosedXML.dll
@@ -17,3 +16,5 @@ C:\Git\NewGestioneCantieri\Database\bin\Release\DocumentFormat.OpenXml.xml
 C:\Git\NewGestioneCantieri\Database\bin\Release\ExcelNumberFormat.xml
 C:\Git\NewGestioneCantieri\Database\bin\Release\System.IO.Packaging.xml
 C:\Git\NewGestioneCantieri\Database\obj\Release\Database.csproj.AssemblyReference.cache
+C:\Git\NewGestioneCantieri\Database\bin\Release\Z.Dapper.Plus.dll
+C:\Git\NewGestioneCantieri\Database\bin\Release\Z.Dapper.Plus.xml
