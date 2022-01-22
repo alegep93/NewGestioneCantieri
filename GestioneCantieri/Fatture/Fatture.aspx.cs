@@ -176,7 +176,7 @@ namespace GestioneCantieri
 
             if (cantiere != null)
             {
-                txtConcatenazione.Text += $" - {cantiere.DescriCodCant} ({cantiere.CodCant})";
+                txtConcatenazione.Text += $" - {cantiere.CodCant}";
             }
 
             // Accessibilità campi

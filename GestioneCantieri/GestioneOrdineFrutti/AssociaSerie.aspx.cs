@@ -64,7 +64,7 @@ namespace GestioneCantieri.GestioneOrdineFrutti
             try
             {
                 ddlScegliListino.Items.Clear();
-                DropDownListManager.FillDdlMamg0WithCodiceListinoUnivoco(Mamg0DAO.GetListino(txtFiltroCodice1.Text, txtFiltroCodice2.Text, txtFiltroCodice3.Text, txtFiltroDescr1.Text, txtFiltroDescr2.Text, txtFiltroDescr3.Text), ref ddlScegliListino);
+                DropDownListManager.FillDdlMamg0WithIdListino(Mamg0DAO.GetListino(txtFiltroCodice1.Text, txtFiltroCodice2.Text, txtFiltroCodice3.Text, txtFiltroDescr1.Text, txtFiltroDescr2.Text, txtFiltroDescr3.Text), ref ddlScegliListino);
             }
             catch (Exception ex)
             {
@@ -165,7 +165,7 @@ namespace GestioneCantieri.GestioneOrdineFrutti
                     ddlScegliSerie.SelectedValue = fruttoSerie.IdSerie.ToString();
                     List<Mamg0> listino = new List<Mamg0>() { Mamg0DAO.GetSingle(fruttoSerie.CodiceListinoUnivoco) };
                     ddlScegliListino.Items.Clear();
-                    DropDownListManager.FillDdlMamg0WithCodiceListinoUnivoco(listino, ref ddlScegliListino);
+                    DropDownListManager.FillDdlMamg0WithIdListino(listino, ref ddlScegliListino);
                     btnInserisciFruttoSerie.Visible = false;
                     btnModificaFruttoSerie.Visible = !btnInserisciFruttoSerie.Visible;
                 }

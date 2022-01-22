@@ -74,3 +74,4 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.Packaging.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Z.Dapper.Plus.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.pdb
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CopyComplete

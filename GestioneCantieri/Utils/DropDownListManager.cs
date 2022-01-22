@@ -79,13 +79,13 @@ namespace GestioneCantieri.Utils
             }
         }
 
-        public static void FillDdlMamg0WithCodiceListinoUnivoco(List<Mamg0> items, ref DropDownList ddl)
+        public static void FillDdlMamg0WithIdListino(List<Mamg0> items, ref DropDownList ddl)
         {
             foreach (Mamg0 item in items)
             {
                 string show = string.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
                     item.CodArt, item.Desc, item.PrezzoNetto, item.PrezzoListino, item.Sconto1, item.Sconto2, item.Sconto3);
-                ddl.Items.Add(new ListItem(show, item.CodiceListinoUnivoco.ToString()));
+                ddl.Items.Add(new ListItem(show, item.IdListinoMef.ToString()));
             }
         }
 

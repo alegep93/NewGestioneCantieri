@@ -3,6 +3,7 @@ namespace Database.Models
 {
     public class Mamg0
     {
+        public long IdListinoMef { get; set; } = 0;
         public float Pezzo { get; set; } = 0;
         public decimal PrezzoListino { get; set; } = 0;
         public decimal PrezzoNetto { get; set; } = 0;

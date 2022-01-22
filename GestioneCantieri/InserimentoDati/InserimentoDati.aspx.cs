@@ -729,6 +729,14 @@ namespace GestioneCantieri
                 }
             }
         }
+        protected void txtAnnoCant_TextChanged(object sender, EventArgs e)
+        {
+            PopolaCodCantAnnoNumero(txtAnnoCant.Text);
+        }
+        protected void txtFiltroClientePerInserimentoCantieri_TextChanged(object sender, EventArgs e)
+        {
+            FillDdlClientiPerCantieri(txtFiltroClientePerInserimentoCantieri.Text);
+        }
         #endregion
 
         #region Spese
@@ -963,17 +971,6 @@ namespace GestioneCantieri
                     chkBox.Enabled = enableFields;
                 }
             }
-        }
-        #endregion
-
-        #region EVENTI TEXT-CHANGED 
-        protected void txtAnnoCant_TextChanged(object sender, EventArgs e)
-        {
-            PopolaCodCantAnnoNumero(txtAnnoCant.Text);
-        }
-        protected void txtFiltroClientePerInserimentoCantieri_TextChanged(object sender, EventArgs e)
-        {
-            FillDdlClientiPerCantieri(txtFiltroClientePerInserimentoCantieri.Text);
         }
         #endregion
 

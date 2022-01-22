@@ -61,7 +61,7 @@ namespace Database.DAO
         {
             List<Mamg0> ret = new List<Mamg0>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT {(limitResults ? "TOP 500" : "")} CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto");
+            sql.AppendLine($"SELECT {(limitResults ? "TOP 500" : "")} IdListinoMef, CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto");
             sql.AppendLine($"FROM TblListinoMef");
             sql.AppendLine($"WHERE CodArt LIKE '%{codArt1}%' AND CodArt LIKE '%{codArt2}%' AND CodArt LIKE '%{codArt3}%'");
             sql.AppendLine($"AND [Desc] LIKE '%{desc1}%' AND [Desc] LIKE '%{desc2}%' AND [Desc] LIKE '%{desc3}%'");

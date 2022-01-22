@@ -239,7 +239,7 @@ namespace GestioneCantieri
             ddlScegliFornit.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlFornitore(FornitoriDAO.GetFornitori(), ref ddlScegliFornit);
 
-            // MaterialiCantieri
+            // Rientro
             ddlScegliMatCant.Items.Clear();
             ddlScegliMatCant.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlMaterialiCantieri(MaterialiCantieriDAO.GetMaterialeCantiere(ddlScegliCant.SelectedItem.Value, txtFiltroMatCantCodArt.Text, txtFiltroMatCantDescriCodArt.Text), ref ddlScegliMatCant);

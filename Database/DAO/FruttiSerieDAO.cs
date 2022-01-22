@@ -16,11 +16,11 @@ namespace Database.DAO
             StringBuilder sql = new StringBuilder();
 
             sql.AppendLine($"SELECT A.IdFruttoSerie, A.IdSerie, A.IdFrutto, A.CodiceListinoUnivoco, C.NomeSerie,");
-            sql.AppendLine($"       B.descr001 AS NomeFrutto, (AA_SIGF + AA_CODF) AS CodiceListino, AA_DES AS DescrizioneListino");
+            sql.AppendLine($"       B.descr001 AS NomeFrutto, D.CodArt AS CodiceListino, D.[Desc] AS DescrizioneListino");
             sql.AppendLine($"FROM TblFruttiSerie A");
             sql.AppendLine($"INNER JOIN TblFrutti B ON A.IdFrutto = B.ID1");
             sql.AppendLine($"INNER JOIN TblSerie C ON A.IdSerie = C.IdSerie");
-            sql.AppendLine($"INNER JOIN MAMG0 D ON A.CodiceListinoUnivoco = D.CodiceListinoUnivoco");
+            sql.AppendLine($"INNER JOIN TblListinoMef D ON A.CodiceListinoUnivoco = D.IdListinoMef");
             try
             {
                 using (SqlConnection cn = GetConnection())
