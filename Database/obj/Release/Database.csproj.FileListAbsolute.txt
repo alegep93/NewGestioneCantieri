@@ -18,3 +18,4 @@ C:\Git\NewGestioneCantieri\Database\bin\Release\System.IO.Packaging.xml
 C:\Git\NewGestioneCantieri\Database\obj\Release\Database.csproj.AssemblyReference.cache
 C:\Git\NewGestioneCantieri\Database\bin\Release\Z.Dapper.Plus.dll
 C:\Git\NewGestioneCantieri\Database\bin\Release\Z.Dapper.Plus.xml
+C:\Git\NewGestioneCantieri\Database\obj\Release\Database.csproj.CopyComplete

@@ -132,7 +132,7 @@ namespace GestioneCantieri
 
                     //lineCheck = line;
                     Mamg0 mamgo = new Mamg0();
-                    mamgo.CodArt = line.Substring(0, 16).Trim() == "" ? "" : line.Substring(0, 16).Trim();
+                    mamgo.CodArt = line.Substring(0, 19).Trim() == "" ? "" : line.Substring(0, 19).Trim();
                     mamgo.Desc = line.Substring(32, 43).Trim() == "" ? "" : line.Substring(32, 43).Trim();
                     mamgo.Pezzo = line.Substring(75, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(75, 5).Trim());
                     mamgo.PrezzoListino = line.Substring(97, 11).Replace("-", "").Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(97, 9).Replace("-", "").Trim())},{Convert.ToInt32(line.Substring(106, 2).Replace("-", "").Trim())}");

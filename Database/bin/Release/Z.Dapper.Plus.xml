@@ -4669,6 +4669,16 @@
         <member name="P:Z.BulkOperations.BulkOperation.InternalOptions">
             <summary>Internal Options. DO NOT USE IT.</summary>
         </member>
+        <member name="P:Z.BulkOperations.BulkOperation.UsePostgreSqlInsertOnConflictDoNothing">
+            <summary>
+            Gets or sets a value indicating whether instead of checking with the primary key, the SQL generated should do "ON CONFLICT (key) DO NOTHING"
+            </summary>
+        </member>
+        <member name="P:Z.BulkOperations.BulkOperation.UsePostgreSqlTimeZone">
+            <summary>
+            Gets or sets a value indicating whether this object use PostgreSQL time zone.
+            </summary>
+        </member>
         <member name="P:Z.BulkOperations.BulkOperation.AutoMap">
             <summary>Gets or sets the automatic map.</summary>
             <value>The automatic map.</value>
@@ -4831,6 +4841,10 @@
         <member name="P:Z.BulkOperations.BulkOperation.ColumnStagingTableFormulaNames">
             <summary>Gets or sets a list of property names to use for formula.</summary>
         </member>
+        <member name="P:Z.BulkOperations.BulkOperation.IgnoreColumnOutputNames">
+            <summary>Gets or sets columns output to ignore using names.</summary>
+            <value>The columns output to ignore using names.</value>
+        </member>
         <member name="P:Z.BulkOperations.BulkOperation.ColumnInputExpression">
             <summary>Gets or sets the column input expression.</summary>
             <value>The column input expression.</value>
@@ -4850,6 +4864,10 @@
         <member name="P:Z.BulkOperations.BulkOperation.ColumnSynchronizeDeleteKeySubsetExpression">
             <summary>Gets or sets the column synchronize delete key subset expression.</summary>
             <value>The column synchronize delete key subset expression.</value>
+        </member>
+        <member name="P:Z.BulkOperations.BulkOperation.IgnoreColumnOutputExpression">
+            <summary>Gets or sets columns output to ignore using an expression.</summary>
+            <value>The columns output to ignore using an expression.</value>
         </member>
         <member name="P:Z.BulkOperations.BulkOperation.IgnoreOnInsertExpression">
             <summary>Gets or sets the ignore on insert expression.</summary>
@@ -5085,6 +5103,12 @@
             Gets or sets a value indicating whether the dot check for escape table name is disabled.
             </summary>
             <value>True if disable dot check for escape table name, false if not.</value>
+        </member>
+        <member name="P:Z.BulkOperations.BulkOperation.UseLegacyBatchOperation">
+            <summary>
+            Gets or sets a value indicating whether this object use legacy batch operation (Logic used before v6.x)
+            </summary>
+            <value>True if use legacy batch operation (Logic used before v6.x), false if not.</value>
         </member>
         <member name="P:Z.BulkOperations.BulkOperation.ErrorMode">
             <summary>Gets or sets the error mode.</summary>
@@ -5566,6 +5590,10 @@
         <member name="P:Z.BulkOperations.BulkOperation`1.IgnoreOnInsertExpression">
             <summary>Gets or sets the ignore on insert expression.</summary>
             <value>The ignore on insert expression.</value>
+        </member>
+        <member name="P:Z.BulkOperations.BulkOperation`1.IgnoreColumnOutputExpression">
+            <summary>Gets or sets columns output to ignore using an expression.</summary>
+            <value>The columns output to ignore using an expression.</value>
         </member>
         <member name="P:Z.BulkOperations.BulkOperation`1.IgnoreOnUpdateExpression">
             <summary>Gets or sets the ignore on update expression.</summary>

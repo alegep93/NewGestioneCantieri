@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish\GestioneCantieri</_PublishTargetUrl>
-    <History>True|2021-10-30T10:31:33.0341014Z;True|2021-10-30T11:32:15.5125290+02:00;True|2021-10-18T08:29:33.9622156+02:00;True|2021-09-02T11:03:13.5402012+02:00;True|2021-08-08T12:29:53.8261497+02:00;True|2021-08-08T12:24:41.1100078+02:00;True|2021-04-11T11:15:32.2334625+02:00;True|2021-04-08T18:05:47.5669861+02:00;True|2021-04-04T11:59:17.0707690+02:00;True|2021-04-01T18:56:39.0601952+02:00;</History>
+    <History>True|2022-01-24T18:56:17.3581006Z;True|2022-01-23T10:42:01.6024050+01:00;True|2022-01-22T19:41:08.4976275+01:00;True|2021-10-30T12:31:33.0341014+02:00;True|2021-10-30T11:32:15.5125290+02:00;True|2021-10-18T08:29:33.9622156+02:00;True|2021-09-02T11:03:13.5402012+02:00;True|2021-08-08T12:29:53.8261497+02:00;True|2021-08-08T12:24:41.1100078+02:00;True|2021-04-11T11:15:32.2334625+02:00;True|2021-04-08T18:05:47.5669861+02:00;True|2021-04-04T11:59:17.0707690+02:00;True|2021-04-01T18:56:39.0601952+02:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Acconti/AccontiOperaio.aspx">
@@ -45,13 +45,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/29/2021 11:22:54</publishTime>
     </File>
     <File Include="bin/Database.dll">
-      <publishTime>10/30/2021 11:32:12</publishTime>
+      <publishTime>01/24/2022 19:56:15</publishTime>
     </File>
     <File Include="bin/Database.dll.config">
-      <publishTime>10/17/2021 11:50:15</publishTime>
+      <publishTime>01/23/2022 10:46:10</publishTime>
     </File>
     <File Include="bin/Database.pdb">
-      <publishTime>10/30/2021 11:32:12</publishTime>
+      <publishTime>01/24/2022 19:56:15</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>02/24/2021 22:56:40</publishTime>
@@ -60,10 +60,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/10/2020 08:42:28</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>10/30/2021 12:31:32</publishTime>
+      <publishTime>01/24/2022 19:56:16</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>10/30/2021 12:31:32</publishTime>
+      <publishTime>01/24/2022 19:56:16</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>03/04/2021 17:31:44</publishTime>
@@ -102,7 +102,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/19/2020 18:50:12</publishTime>
     </File>
     <File Include="bin/Z.Dapper.Plus.dll">
-      <publishTime>10/13/2021 14:53:40</publishTime>
+      <publishTime>01/18/2022 16:03:30</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.css">
       <publishTime>03/05/2021 14:09:21</publishTime>
@@ -288,7 +288,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/05/2021 12:16:44</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>10/17/2021 11:49:36</publishTime>
+      <publishTime>01/23/2022 10:44:09</publishTime>
     </File>
     <File Include="Preventivi.aspx">
       <publishTime>02/05/2021 12:16:44</publishTime>
@@ -663,7 +663,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/17/2021 10:37:36</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/18/2021 08:29:32</publishTime>
+      <publishTime>01/23/2022 10:46:40</publishTime>
     </File>
   </ItemGroup>
 </Project>

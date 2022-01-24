@@ -25,8 +25,6 @@ C:\Users\Alessandro\Documents\NewGestioneCantieri\GestioneCantieri\obj\Debug\Ges
 C:\Users\Alessandro\Documents\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CopyComplete
 C:\Users\Alessandro\Documents\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.dll
 C:\Users\Alessandro\Documents\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.pdb
-C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.AssemblyReference.cache
-C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CoreCompileInputs.cache
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\GestioneCantieri.dll.config
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\GestioneCantieri.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\GestioneCantieri.pdb
@@ -72,6 +70,8 @@ C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itext.svg.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\itextsharp.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\System.IO.Packaging.xml
 C:\Git\NewGestioneCantieri\GestioneCantieri\bin\Z.Dapper.Plus.xml
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.AssemblyReference.cache
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CoreCompileInputs.cache
+C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CopyComplete
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.dll
 C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.pdb
-C:\Git\NewGestioneCantieri\GestioneCantieri\obj\Debug\GestioneCantieri.csproj.CopyComplete

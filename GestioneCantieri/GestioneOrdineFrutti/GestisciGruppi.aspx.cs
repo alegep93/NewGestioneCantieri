@@ -97,6 +97,10 @@ namespace GestioneCantieri
                     (Master as layout).SetAlert("alert-success", $"Gruppo {txtNomeGruppo.Text} inserito con successo");
                     BindGrid();
                 }
+                else
+                {
+                    (Master as layout).SetAlert("alert-warning", $"Gruppo NON inserito, perchè il nome '{txtNomeGruppo.Text}' è già presente");
+                }
             }
             catch (Exception ex)
             {

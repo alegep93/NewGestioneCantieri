@@ -241,8 +241,7 @@ namespace GestioneCantieri
             ddlScegliGruppo.Items.Add(new ListItem("", "-1"));
             foreach (GruppiFrutti gf in listGruppiFrutti)
             {
-                string nomeDescrGruppo = gf.NomeGruppo + " - " + gf.Descrizione;
-                ddlScegliGruppo.Items.Add(new ListItem(nomeDescrGruppo, gf.Id.ToString()));
+                ddlScegliGruppo.Items.Add(new ListItem(gf.NomeGruppo, gf.Id.ToString()));
             }
         }
         protected void FillDdlFrutti()
@@ -251,7 +250,7 @@ namespace GestioneCantieri
             ddlScegliFrutto.Items.Add(new ListItem("", "-1"));
             DropDownListManager.FillDdlFrutti(FruttiDAO.GetFrutti(txtFiltroFrutto1.Text, txtFiltroFrutto2.Text, txtFiltroFrutto3.Text), ref ddlScegliFrutto);
         }
-        
+
         //protected void FillNomiGruppoOrdine()
         //{
         //    ddlScegliGruppoOrdine.Items.Clear();
