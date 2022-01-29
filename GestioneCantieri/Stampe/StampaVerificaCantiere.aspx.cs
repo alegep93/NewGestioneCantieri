@@ -71,9 +71,9 @@ namespace GestioneCantieri
             lblTotGuadagno.Text = $"<strong>Totale Guadagno</strong>: {totGuadagno:n}";
             lblTotManodop.Text = $"<strong>Tot. Manodopera</strong>: {totManodop:n}";
 
-            decimal totGuadConManodop = totGuadagno + totManodop;
-            lblTotGuadagnoConManodop.Text = $"<strong>Tot. Guadagno Con Manodopopera</strong>: {totGuadConManodop}";
-            lblTotGuadagnoOrarioManodop.Text = $"<strong>Tot. Guadagno Orario Manodopopera</strong>: {totGuadConManodop / (totOreManodop == 0 ? 1 : totOreManodop):n}";
+            //decimal totGuadConManodop = totGuadagno + totManodop;
+            //lblTotGuadagnoConManodop.Text = $"<strong>Tot. Guadagno Con Manodopopera</strong>: {totGuadConManodop}";
+            //lblTotGuadagnoOrarioManodop.Text = $"<strong>Tot. Guadagno Orario Manodopopera</strong>: {totGuadConManodop / (totOreManodop == 0 ? 1 : totOreManodop):n}";
         }
         #endregion
 
