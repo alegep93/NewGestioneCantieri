@@ -222,6 +222,24 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Label lblTotManodop;
 
         /// <summary>
+        /// lblTotGuadagnoConManodop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotGuadagnoConManodop;
+
+        /// <summary>
+        /// lblTotGuadagnoOrarioManodop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotGuadagnoOrarioManodop;
+
+        /// <summary>
         /// grdStampaVerificaCant control.
         /// </summary>
         /// <remarks>

@@ -100,15 +100,15 @@
         <div class="row mb-3 d-flex justify-content-center align-items-center">
             <div class="col text-center">
                 <div class="row mt-3 d-flex justify-content-center align-items-center">
-                    <div class="col text-center">
+                    <div class="col">
                         <asp:Label ID="lblTotManodop" runat="server" CssClass="lblIntestazione" Text=""></asp:Label>
                     </div>
-                    <%--<div class="col">
+                    <div class="col">
                         <asp:Label ID="lblTotGuadagnoConManodop" runat="server" CssClass="lblIntestazione" Text=""></asp:Label>
                     </div>
                     <div class="col">
                         <asp:Label ID="lblTotGuadagnoOrarioManodop" runat="server" CssClass="lblIntestazione" Text=""></asp:Label>
-                    </div>--%>
+                    </div>
                 </div>
             </div>
         </div>

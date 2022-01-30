@@ -66,14 +66,14 @@ namespace GestioneCantieri
 
             decimal sommaTotPerTipol = totMate + totRientro + totOper;
             decimal contoFinCli = Convert.ToDecimal(lblTotContoCliente.Text.Split(':')[1].Trim());
-            decimal totGuadagno = Convert.ToDecimal($"{contoFinCli - sommaTotPerTipol - totManodop + totArrot + totChiam:n}");
+            decimal totGuadagno = Convert.ToDecimal($"{contoFinCli - sommaTotPerTipol - totManodop - totSpese + totArrot + totChiam:n}");
 
             lblTotGuadagno.Text = $"<strong>Totale Guadagno</strong>: {totGuadagno:n}";
             lblTotManodop.Text = $"<strong>Tot. Manodopera</strong>: {totManodop:n}";
 
-            //decimal totGuadConManodop = totGuadagno + totManodop;
-            //lblTotGuadagnoConManodop.Text = $"<strong>Tot. Guadagno Con Manodopopera</strong>: {totGuadConManodop}";
-            //lblTotGuadagnoOrarioManodop.Text = $"<strong>Tot. Guadagno Orario Manodopopera</strong>: {totGuadConManodop / (totOreManodop == 0 ? 1 : totOreManodop):n}";
+            decimal totGuadConManodop = totGuadagno + totManodop;
+            lblTotGuadagnoConManodop.Text = $"<strong>Tot. Guadagno Con Manodopopera</strong>: {totGuadConManodop}";
+            lblTotGuadagnoOrarioManodop.Text = $"<strong>Tot. Guadagno Orario Manodopopera</strong>: {totGuadConManodop / (totOreManodop == 0 ? 1 : totOreManodop):n}";
         }
         #endregion
 
