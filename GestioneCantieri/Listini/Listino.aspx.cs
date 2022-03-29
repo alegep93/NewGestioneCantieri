@@ -130,36 +130,23 @@ namespace GestioneCantieri
                         continue;
                     }
 
+                    string codArt = line.Substring(0, 20).Trim();  // AA_COD
+                    string desc = line.Substring(40, 40).Trim();  // AA_DES
+                    string pezzo = line.Substring(83, 5).Trim(); // AA_PZ
+                    string prezzoListinoIntero = line.Substring(104, 8).Replace("-", "").Trim(); // AA_PRZ parte intera
+                    string prezzoListinoDecimale = line.Substring(112, 5).Replace("-", "").Trim(); // AA_PRZ decimali
+                    string prezzoNettoIntero = line.Substring(185, 8).Replace("-", "").Trim(); // AA_PRZ1 parte intera
+                    string prezzoNettoDecimale = line.Substring(193, 5).Replace("-", "").Trim(); // AA_PRZ1 decimali
+
                     //lineCheck = line;
-                    Mamg0 mamgo = new Mamg0();
-                    mamgo.CodArt = line.Substring(0, 19).Trim() == "" ? "" : line.Substring(0, 19).Trim();
-                    mamgo.Desc = line.Substring(32, 43).Trim() == "" ? "" : line.Substring(32, 43).Trim();
-                    mamgo.Pezzo = line.Substring(75, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(75, 5).Trim());
-                    mamgo.PrezzoListino = line.Substring(97, 11).Replace("-", "").Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(97, 9).Replace("-", "").Trim())},{Convert.ToInt32(line.Substring(106, 2).Replace("-", "").Trim())}");
-                    mamgo.PrezzoNetto = line.Substring(108, 11).Replace("-", "").Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(108, 9).Replace("-", "").Trim())},{Convert.ToInt32(line.Substring(117, 2).Replace("-", "").Trim())}");
-                    //mamgo.AA_CODF = line.Substring(0, 16).Trim() == "" ? "" : line.Substring(0, 16).Trim(); // OLD
-                    //mamgo.AA_IVA = line.Substring(3, 16).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(3, 16).Trim());
-                    //mamgo.AA_IVA = line.Substring(19, 13).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(19, 13).Trim());
-                    //mamgo.AA_DES = line.Substring(32, 43).Trim() == "" ? "" : line.Substring(32, 43).Trim(); // OLD
-                    //mamgo.AA_PZ = line.Substring(75, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(75, 5).Trim()); //OLD
-                    //mamgo.AA_IVA = line.Substring(80, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(80, 5).Trim());
-                    //mamgo.AA_IVA = line.Substring(85, 5).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(85, 5).Trim());
-                    //mamgo.AA_IVA = line.Substring(90, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(90, 6).Trim());
-                    //mamgo.AA_IVA = line.Substring(96, 1).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(96, 1).Trim());
-                    //mamgo.AA_PRZ1 = line.Substring(97, 11).Trim() == "" ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(97, 9).Trim())},{Convert.ToInt32(line.Substring(106, 2).Trim())}"); // OLD
-                    //mamgo.AA_PRZ = line.Substring(108, 11).Trim() == "" ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(108, 9).Trim())},{Convert.ToInt32(line.Substring(117, 2).Trim())}"); // OLD
-                    //mamgo.AA_IVA = line.Substring(119, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(119, 6).Trim());
-                    //mamgo.AA_IVA = line.Substring(125, 3).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(125, 3).Trim());
-                    //mamgo.AA_IVA = line.Substring(128, 3).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(128, 3).Trim());
-                    //mamgo.AA_IVA = line.Substring(131, 1).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(131, 1).Trim());
-                    //mamgo.AA_IVA = line.Substring(132, 1).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(132, 1).Trim());
-                    //mamgo.AA_IVA = line.Substring(133, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(133, 8).Trim());
-                    //mamgo.AA_IVA = line.Substring(141, 18).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(141, 18).Trim());
-                    //mamgo.AA_IVA = line.Substring(159, 18).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(159, 18).Trim());
-                    //mamgo.AA_IVA = line.Substring(177, 21).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(177, 21).Trim());
-                    //mamgo.AA_IVA = line.Substring(198, 7).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(198, 7).Trim());
-                    //mamgo.AA_IVA = line.Substring(205, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(205, 4).Trim());
-                    //mamgo.AA_IVA = line.Substring(209, 11).Trim() == "" ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(209, 8).Trim())},{Convert.ToInt32(line.Substring(217, 3).Trim())}");
+                    Mamg0 mamgo = new Mamg0
+                    {
+                        CodArt = codArt == "" ? "" : line.Substring(0, 20).Trim(),
+                        Desc = desc == "" ? "" : line.Substring(39, 40).Trim(),
+                        Pezzo = pezzo == "" ? 0 : Convert.ToInt32(pezzo),
+                        PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(prezzoListinoIntero)},{Convert.ToInt32(prezzoListinoDecimale)}"),
+                        PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(prezzoNettoIntero)},{Convert.ToInt32(prezzoNettoDecimale)}")
+                    };
                     mamgoList.Add(mamgo);
                 }
             }

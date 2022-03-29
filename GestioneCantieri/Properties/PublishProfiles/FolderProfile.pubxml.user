@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish</_PublishTargetUrl>
-    <History>True|2022-01-25T17:59:30.4477876Z;</History>
+    <History>True|2022-01-30T10:29:11.1554375Z;True|2022-01-25T18:59:30.4477876+01:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Acconti/AccontiOperaio.aspx">
@@ -39,13 +39,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:47</publishTime>
     </File>
     <File Include="bin/Database.dll">
-      <publishTime>01/25/2022 18:59:24</publishTime>
+      <publishTime>01/30/2022 11:29:09</publishTime>
     </File>
     <File Include="bin/Database.dll.config">
       <publishTime>01/25/2022 18:52:42</publishTime>
     </File>
     <File Include="bin/Database.pdb">
-      <publishTime>01/25/2022 18:59:24</publishTime>
+      <publishTime>01/30/2022 11:29:09</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>01/25/2022 18:52:47</publishTime>
@@ -54,10 +54,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:47</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>01/25/2022 18:59:25</publishTime>
+      <publishTime>01/30/2022 11:29:09</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>01/25/2022 18:59:25</publishTime>
+      <publishTime>01/30/2022 11:29:09</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>01/25/2022 18:52:49</publishTime>
@@ -627,7 +627,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:44</publishTime>
     </File>
     <File Include="Stampe/StampaVerificaCantiere.aspx">
-      <publishTime>01/25/2022 18:52:44</publishTime>
+      <publishTime>01/30/2022 11:27:58</publishTime>
     </File>
     <File Include="Stampe/StampeVarie.aspx">
       <publishTime>01/25/2022 18:52:44</publishTime>
@@ -636,7 +636,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/25/2022 18:59:26</publishTime>
+      <publishTime>01/30/2022 11:29:10</publishTime>
     </File>
   </ItemGroup>
 </Project>
