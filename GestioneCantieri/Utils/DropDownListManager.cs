@@ -64,7 +64,16 @@ namespace GestioneCantieri.Utils
         {
             foreach (DDTMef item in items)
             {
-                string show = $"{item.Data.ToString().Split(' ')[0]} - {item.N_DDT}";
+                string show = $"{item.Data.ToString("dd/MM/yyyy").Replace("-", "/")} - {item.N_DDT}";
+                ddl.Items.Add(new ListItem(show, item.IdDDTMef.ToString()));
+            }
+        }
+
+        public static void FillDdlDdtForGestCant(List<DDTMef> items, ref DropDownList ddl)
+        {
+            foreach (DDTMef item in items)
+            {
+                string show = $"{item.CodArt} - {item.DescriCodArt} - {item.PrezzoUnitario}";
                 ddl.Items.Add(new ListItem(show, item.IdDDTMef.ToString()));
             }
         }

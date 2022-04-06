@@ -438,6 +438,15 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Button btnMatCantAltriFornitori;
 
         /// <summary>
+        /// btnMatCantAltriFornitoriDdt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMatCantAltriFornitoriDdt;
+
+        /// <summary>
         /// btnRientro control.
         /// </summary>
         /// <remarks>
@@ -591,6 +600,15 @@ namespace GestioneCantieri
         protected global::System.Web.UI.WebControls.Panel pnlMascheraGestCant;
 
         /// <summary>
+        /// pnlMateCantFilters control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMateCantFilters;
+
+        /// <summary>
         /// lblFiltroCod_FSS control.
         /// </summary>
         /// <remarks>
@@ -697,6 +715,114 @@ namespace GestioneCantieri
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScegliMatCant;
+
+        /// <summary>
+        /// pnlMateAltriFornitoriDaDdt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMateAltriFornitoriDaDdt;
+
+        /// <summary>
+        /// lblFiltroMateDaDdtAnnoInizio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroMateDaDdtAnnoInizio;
+
+        /// <summary>
+        /// txtFiltroMateDaDdtAnnoInizio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMateDaDdtAnnoInizio;
+
+        /// <summary>
+        /// lblFiltroMateDaDdtAnnoFine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroMateDaDdtAnnoFine;
+
+        /// <summary>
+        /// txtFiltroMateDaDdtAnnoFine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMateDaDdtAnnoFine;
+
+        /// <summary>
+        /// lblFiltroMateDaDdtCodArt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroMateDaDdtCodArt;
+
+        /// <summary>
+        /// txtFiltroMateDaDdtCodArt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMateDaDdtCodArt;
+
+        /// <summary>
+        /// lblFiltroMateDaDdtDescr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiltroMateDaDdtDescr;
+
+        /// <summary>
+        /// txtFiltroMateDaDdtDescr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMateDaDdtDescr;
+
+        /// <summary>
+        /// lblScegliMateDaDdt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblScegliMateDaDdt;
+
+        /// <summary>
+        /// ddlScegliMateDaDdt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScegliMateDaDdt;
+
+        /// <summary>
+        /// lblMediaPrezziUnitari control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMediaPrezziUnitari;
 
         /// <summary>
         /// lblCodArt control.

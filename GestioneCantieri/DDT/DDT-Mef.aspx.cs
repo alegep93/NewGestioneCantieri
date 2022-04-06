@@ -119,42 +119,22 @@ namespace GestioneCantieri
                 foreach (string line in lines)
                 {
                     DDTMef ddt = new DDTMef();
-                    int qta = line.Substring(174, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(174, 8).Trim());
-                    decimal importo = line.Substring(185, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(185, 12).Trim())},{Convert.ToInt32(line.Substring(197, 3).Trim())}");
-                    string sigf = line.Substring(41, 3).Trim();
-                    string codf = line.Substring(44, 16).Trim();
-
-                    DateTime data = GetDateFromString(line.Substring(4, 8).Trim()).Value;
-                    DateTime data2 = GetDateFromString(line.Substring(200, 8).Trim()) ?? data;
-                    DateTime data3 = GetDateFromString(line.Substring(219, 8).Trim()) ?? data;
+                    int qta = line.Substring(215, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(215, 8).Trim());
+                    decimal importo = line.Substring(226, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(226, 12).Trim())},{Convert.ToInt32(line.Substring(238, 3).Trim())}");
+                    string codArt = line.Substring(65, 35).Trim();
 
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
-                    ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : data;
-                    ddt.N_DDT = line.Substring(12, 6).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 6).Trim());
-                    ddt.FTVRF0 = line.Substring(18, 15).Trim();
-                    ddt.FTDT30 = line.Substring(33, 41).Trim();
-                    ddt.CodArt = line.Substring(41, 19).Trim();
-                    ddt.FTAIN = line.Substring(60, 17).Trim();
-                    ddt.DescriCodArt = line.Substring(77, 40).Trim();
-                    ddt.DescrizioneArticolo2 = line.Substring(117, 40).Trim();
-                    ddt.Iva = line.Substring(157, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(157, 2).Trim());
-                    //ddt.PrezzoListino = line.Substring(159, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(159, 12).Trim())},{Convert.ToInt32(line.Substring(170, 3).Trim())}");
-                    ddt.PrezzoListino = Convert.ToDecimal(Mamg0DAO.GetPrezzoDiListino(sigf, codf));
+                    ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : GetDateFromString(line.Substring(4, 8).Trim()).Value;
+                    ddt.N_DDT = line.Substring(12, 10).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 10).Trim());
+                    ddt.FTVRF0 = line.Substring(22, 35).Trim();
+                    ddt.FTDT30 = line.Substring(57, 8).Trim();
+                    ddt.CodArt = codArt;
+                    ddt.DescriCodArt = line.Substring(118, 40).Trim();
+                    ddt.DescrizioneArticolo2 = line.Substring(158, 40).Trim();
+                    ddt.Iva = line.Substring(198, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(198, 2).Trim());
+                    ddt.PrezzoListino = Convert.ToDecimal(Mamg0DAO.GetPrezzoDiListino(codArt));
                     ddt.Qta = qta;
                     ddt.Importo = importo;
-                    ddt.Data2 = line.Substring(200, 8).Trim() == "" ? new DateTime() : data2;
-                    ddt.Valuta = line.Substring(208, 3).Trim();
-                    ddt.FTFOM = line.Substring(211, 1).Trim();
-                    ddt.FTCMA = line.Substring(212, 2).Trim();
-                    ddt.FTCDO = line.Substring(214, 2).Trim();
-                    ddt.FLFLAG = line.Substring(216, 1).Trim();
-                    ddt.FLFLQU = line.Substring(217, 2).Trim();
-                    ddt.Data3 = line.Substring(219, 8).Trim() == "" ? new DateTime() : data3;
-                    ddt.FTORAG = line.Substring(227, 6).Trim();
-                    ddt.FTMLT0 = line.Substring(233, 5).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(233, 5).Trim())},{Convert.ToInt32(line.Substring(238, 2).Trim())}";
-                    ddt.Importo2 = line.Substring(240, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(240, 12).Trim())},{Convert.ToInt32(line.Substring(252, 3).Trim())}");
-                    ddt.FTIMRA = line.Substring(255, 12).Trim() == "" ? "" : $"{Convert.ToInt32(line.Substring(255, 12).Trim())},{Convert.ToInt32(line.Substring(267, 3).Trim())}";
-                    ddt.AnnoN_ddt = (line.Substring(0, 4).Trim() == "" || line.Substring(12, 6).Trim() == "") ? 0 : Convert.ToInt32($"{Convert.ToInt32(line.Substring(0, 4).Trim())}{Convert.ToInt32(line.Substring(12, 6).Trim())}");
                     ddt.IdFornitore = idFornitore;
                     ddt.Acquirente = txtAcquirente.Text;
                     ddt.PrezzoUnitario = importo / (qta == 0 ? 1 : qta);

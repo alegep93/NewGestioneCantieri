@@ -121,6 +121,24 @@ namespace Database.DAO
             return ret;
         }
 
+        public static double GetPrezzoDiListino(string codArt)
+        {
+            double ret = 0;
+            StringBuilder sql = new StringBuilder($"SELECT PrezzoListino FROM TblListinoMef WHERE CodArt = @codArt");
+            try
+            {
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<double>(sql.ToString(), new { codArt }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetPrezzoDiListino in TblListinoMef", ex);
+            }
+            return ret;
+        }
+
         //public static void GetDataFromExcelAndInsertBulkCopy(string filePath, DBTransaction tr)
         //{
         //    try

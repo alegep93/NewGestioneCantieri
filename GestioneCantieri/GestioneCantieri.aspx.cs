@@ -249,7 +249,7 @@ namespace GestioneCantieri
             ddlScegliSpesa.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
             DropDownListManager.FillDdlSpese(SpeseDAO.GetAll(), ref ddlScegliSpesa);
         }
-        protected void ShowPanels(bool pnlMatDaDDT, bool pnlMatCant, bool pnlManodop, bool pnlOper, bool pnlArrotond, bool pnlSpese, bool pnlChiam, bool pnlAccrediti)
+        protected void ShowPanels(bool pnlMatDaDDT, bool pnlMatCant, bool pnlManodop, bool pnlOper, bool pnlArrotond, bool pnlSpese, bool pnlChiam, bool pnlAccrediti, bool pnlAltriFornitoriDaDdt = false)
         {
             pnlMascheraMaterialiDaDDT.Visible = pnlMatDaDDT;
             pnlMascheraGestCant.Visible = pnlMatCant;
@@ -259,6 +259,7 @@ namespace GestioneCantieri
             pnlGestSpese.Visible = pnlSpese;
             pnlGestChiamata.Visible = pnlChiam;
             pnlMascheraAccrediti.Visible = pnlAccrediti;
+            pnlMateAltriFornitoriDaDdt.Visible = pnlAltriFornitoriDaDdt;
         }
         protected bool IsIntestazioneCompilata()
         {
@@ -615,7 +616,11 @@ namespace GestioneCantieri
         {
             SetMatCantFieldsAndPanels("Inserisci Materiali Cantieri Altri Fornitori", "Magazzino");
         }
-        public void SetMatCantFieldsAndPanels(string title, string fornitore)
+        protected void btnMatCantAltriFornitoriDdt_Click(object sender, EventArgs e)
+        {
+            SetMatCantFieldsAndPanels("Inserisci Materiali Cantieri Altri Fornitori da DDT", "Magazzino", true);
+        }
+        public void SetMatCantFieldsAndPanels(string title, string fornitore, bool showDdtPanel = false)
         {
             lblTitoloMaschera.Text = title;
             txtTipDatCant.Text = "MATERIALE";
@@ -630,6 +635,9 @@ namespace GestioneCantieri
             {
                 ddlScegliDDTMef.SelectedIndex = 0;
             }
+
+            pnlMateCantFilters.Visible = !showDdtPanel;
+            pnlMateAltriFornitoriDaDdt.Visible = showDdtPanel;
 
             BindGridMatCant();
             EnableDisableControls(true, pnlMascheraGestCant);
@@ -823,6 +831,32 @@ namespace GestioneCantieri
             {
                 (Master as layout).SetModal($"Quantità e/o Prezzo Unitario devono essere maggiori di 0");
             }
+        }
+        #endregion
+
+        #region Mate altri fornitori da DDT
+        protected void MateDaDdtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            DDTMefObject ddt = new DDTMefObject();
+            ddt.AnnoInizio = txtFiltroMateDaDdtAnnoInizio.Text;
+            ddt.AnnoFine = txtFiltroMateDaDdtAnnoFine.Text;
+            ddt.CodArt1 = txtFiltroMateDaDdtCodArt.Text;
+            ddt.DescriCodArt1 = txtFiltroMateDaDdtDescr.Text;
+            List<DDTMef> items = DDTMefDAO.GetDdt(ddt);
+            FillDdlAltriFornitoriDaDdt(items);
+        }
+
+        public void FillDdlAltriFornitoriDaDdt(List<DDTMef> items)
+        {
+            ddlScegliMateDaDdt.Items.Clear();
+            ddlScegliMateDaDdt.Items.Add(new System.Web.UI.WebControls.ListItem("", "-1"));
+            DropDownListManager.FillDdlDdtForGestCant(items, ref ddlScegliMateDaDdt);
+            lblMediaPrezziUnitari.Text = "Media Prezzi Unitari: " + (items.Sum(s => s.PrezzoUnitario) / (items.Count() == 0 ? 1 : items.Count())).ToString("0.00") + " €";
+        }
+
+        protected void ddlScegliMateDaDdt_TextChanged(object sender, EventArgs e)
+        {
+
         }
         #endregion
 

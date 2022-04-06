@@ -118,8 +118,6 @@ namespace GestioneCantieri
         private List<Mamg0> ReadDataFromTextFile()
         {
             List<Mamg0> mamgoList = new List<Mamg0>();
-            //Mamg0 mamgo = new Mamg0();
-            //string lineCheck = "";
             try
             {
                 string[] lines = File.ReadAllLines(filePathTxt);
@@ -138,11 +136,13 @@ namespace GestioneCantieri
                     string prezzoNettoIntero = line.Substring(185, 8).Replace("-", "").Trim(); // AA_PRZ1 parte intera
                     string prezzoNettoDecimale = line.Substring(193, 5).Replace("-", "").Trim(); // AA_PRZ1 decimali
 
+                    // TODO - Aggiungere Sconto1,2,3 ; Codice Interno SAP (nuovo) ; Codice intermo MEF (nuovo)
+
                     //lineCheck = line;
                     Mamg0 mamgo = new Mamg0
                     {
-                        CodArt = codArt == "" ? "" : line.Substring(0, 20).Trim(),
-                        Desc = desc == "" ? "" : line.Substring(39, 40).Trim(),
+                        CodArt = codArt == "" ? "" : codArt,
+                        Desc = desc == "" ? "" : desc,
                         Pezzo = pezzo == "" ? 0 : Convert.ToInt32(pezzo),
                         PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(prezzoListinoIntero)},{Convert.ToInt32(prezzoListinoDecimale)}"),
                         PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(prezzoNettoIntero)},{Convert.ToInt32(prezzoNettoDecimale)}")
@@ -152,8 +152,6 @@ namespace GestioneCantieri
             }
             catch (Exception ex)
             {
-                //var x = mamgo;
-                //var y = lineCheck;
                 throw new Exception("Errore durante il popolamento dei listini Mef da ddt.txt", ex);
             }
             return mamgoList;
