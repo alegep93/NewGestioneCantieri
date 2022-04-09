@@ -73,7 +73,7 @@ namespace GestioneCantieri.Utils
         {
             foreach (DDTMef item in items)
             {
-                string show = $"{item.CodArt} - {item.DescriCodArt} - {item.PrezzoUnitario}";
+                string show = $"{item.CodArt} | {item.DescriCodArt} | {item.PrezzoUnitario}";
                 ddl.Items.Add(new ListItem(show, item.IdDDTMef.ToString()));
             }
         }

@@ -91,7 +91,7 @@ namespace Database.DAO
             queryFilters.AppendLine($"AND DescriCodArt LIKE '%{ddt.DescriCodArt1}%' AND DescriCodArt LIKE '%{ddt.DescriCodArt2}%' AND DescriCodArt LIKE '%{ddt.DescriCodArt3}%'");
 
             sql.AppendLine($"SELECT IdDDTMef, Anno, Data, N_DDT, CodArt,");
-            sql.AppendLine($"DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT");
+            sql.AppendLine($"DescriCodArt, Qta, Importo, Acquirente, PrezzoUnitario, AnnoN_DDT, prezzo_listino");
             sql.AppendLine($"FROM TblDDTMef");
 
             // Controllo i casi in cui entrambi gli anni o le date siano state valorizzate
@@ -342,7 +342,7 @@ namespace Database.DAO
             sql.AppendLine($"SET A.Importo = B.Importo, A.PrezzoUnitario = B.PrezzoUnitario, A.prezzo_listino = B.prezzo_listino");
             sql.AppendLine($"FROM TblDDTMef AS A");
             sql.AppendLine($"INNER JOIN TblDDTMefTemp AS B ON A.Anno = B.Anno AND A.N_DDT = B.N_DDT AND A.CodArt = B.CodArt");
-            sql.AppendLine($"WHERE A.Qta = B.Qta AND A.Importo != B.Importo");
+            sql.AppendLine($"WHERE A.Qta = B.Qta AND (A.Importo != B.Importo OR A.prezzo_listino != B.prezzo_listino)");
             try
             {
                 using (SqlConnection cn = GetConnection())

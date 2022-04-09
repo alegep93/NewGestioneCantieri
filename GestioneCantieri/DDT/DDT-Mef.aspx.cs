@@ -3,6 +3,7 @@ using Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -119,25 +120,25 @@ namespace GestioneCantieri
                 foreach (string line in lines)
                 {
                     DDTMef ddt = new DDTMef();
+                    CultureInfo cultures = new CultureInfo("en-US");
                     int qta = line.Substring(215, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(215, 8).Trim());
-                    decimal importo = line.Substring(226, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(line.Substring(226, 12).Trim())},{Convert.ToInt32(line.Substring(238, 3).Trim())}");
-                    string codArt = line.Substring(65, 35).Trim();
+                    decimal unitarioNetto = line.Substring(226, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(226, 12).Trim()}.{line.Substring(238, 3).Trim()}", cultures);
 
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
                     ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : GetDateFromString(line.Substring(4, 8).Trim()).Value;
                     ddt.N_DDT = line.Substring(12, 10).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 10).Trim());
                     ddt.FTVRF0 = line.Substring(22, 35).Trim();
                     ddt.FTDT30 = line.Substring(57, 8).Trim();
-                    ddt.CodArt = codArt;
+                    ddt.CodArt = line.Substring(65, 35).Trim();
                     ddt.DescriCodArt = line.Substring(118, 40).Trim();
                     ddt.DescrizioneArticolo2 = line.Substring(158, 40).Trim();
                     ddt.Iva = line.Substring(198, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(198, 2).Trim());
-                    ddt.PrezzoListino = Convert.ToDecimal(Mamg0DAO.GetPrezzoDiListino(codArt));
+                    ddt.PrezzoListino = line.Substring(200, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(200, 12).Trim()}.{line.Substring(212, 3).Trim()}", cultures); // Prezzo Lordo
                     ddt.Qta = qta;
-                    ddt.Importo = importo;
+                    ddt.Importo = unitarioNetto * (qta == 0 ? 1 : qta);
                     ddt.IdFornitore = idFornitore;
                     ddt.Acquirente = txtAcquirente.Text;
-                    ddt.PrezzoUnitario = importo / (qta == 0 ? 1 : qta);
+                    ddt.PrezzoUnitario = unitarioNetto;
                     ddts.Add(ddt);
                 }
             }

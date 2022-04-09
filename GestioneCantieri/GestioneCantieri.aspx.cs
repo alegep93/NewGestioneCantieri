@@ -856,7 +856,22 @@ namespace GestioneCantieri
 
         protected void ddlScegliMateDaDdt_TextChanged(object sender, EventArgs e)
         {
+            if (ddlScegliMateDaDdt.SelectedIndex != 0)
+            {
+                string[] partiListino = ddlScegliMateDaDdt.SelectedItem.Text.Split('|');
+                txtCodArt.Text = partiListino[0].Trim();
+                txtDescriCodArt.Text = partiListino[1].Trim();
+                txtPzzoNettoMef.Text = partiListino[2].Trim();
+                txtPzzoUnit.Text = "0.00";
+            }
+            else
+            {
+                txtCodArt.Text = txtDescriCodArt.Text = txtPzzoNettoMef.Text = "";
+                txtPzzoUnit.Text = "0.00";
+            }
 
+            HideMessageLabels();
+            txtQta.Focus();
         }
         #endregion
 
