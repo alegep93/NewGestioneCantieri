@@ -123,6 +123,7 @@
                     <asp:Button ID="btnMatCantFromDDT" runat="server" OnClick="btnMatCantFromDDT_Click" CssClass="btn btn-lg btn-dark" Text="Materiali da DDT" />
                     <asp:Button ID="btnMatCant" runat="server" OnClick="btnMatCant_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri" />
                     <asp:Button ID="btnMatCantAltriFornitori" runat="server" OnClick="btnMatCantAltriFornitori_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri Altri Fornitori" />
+                    <asp:Button ID="btnMatCantAltriFornitoriDdt" runat="server" OnClick="btnMatCantAltriFornitoriDdt_Click" CssClass="btn btn-lg btn-dark" Text="Materiali Cantieri Altri Fornitori DDT" />
                     <asp:Button ID="btnRientro" runat="server" OnClick="btnRientro_Click" CssClass="btn btn-lg btn-dark" Text="Rientro Materiali" />
                     <asp:Button ID="btnAccrediti" runat="server" OnClick="btnAccrediti_Click" CssClass="btn btn-lg btn-dark" Text="Accrediti" />
                     <asp:Button ID="btnManodop" runat="server" OnClick="btnManodop_Click" CssClass="btn btn-lg btn-dark" Text="Manodopera" />
@@ -146,12 +147,13 @@
     <!-- Maschera gestione materiali da DDT -->
     <div class="row d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlMascheraMaterialiDaDDT" CssClass="col text-center" runat="server">
-            <div class="row d-flex justify-content-center align-items-center">
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <div class="col-8">
                     <asp:Button ID="btnSelezionaTuttoTOP" CssClass="btn btn-lg btn-dark" OnClick="btnSelezionaTutto_Click" Text="Seleziona Tutto" runat="server" />
                     <asp:Button ID="btnDeselezionaTuttoTOP" CssClass="btn btn-lg btn-dark" OnClick="btnDeselezionaTutto_Click" Text="Deseleziona Tutto" runat="server" />
                 </div>
             </div>
+
             <div class="row mt-3 d-flex justify-content-center align-items-center">
                 <asp:GridView ID="grdMostraDDTDaInserire" ItemType="Database.Models.DDTMef" AutoGenerateColumns="false"
                     CssClass="table table-dark table-striped text-center scrollable-table" runat="server">
@@ -183,7 +185,7 @@
     <!-- Maschera gestione materiali cantieri e Rientro -->
     <div class="row d-flex justify-content-center align-items-center">
         <asp:Panel ID="pnlMascheraGestCant" CssClass="col text-center" runat="server">
-            <div class="row d-flex justify-content-center align-items-center">
+            <asp:Panel ID="pnlMateCantFilters" class="row d-flex justify-content-center align-items-center" runat="server">
                 <div class="col-10">
                     <div class="row d-flex justify-content-center align-items-center">
                         <div class="col-2">
@@ -219,7 +221,40 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </asp:Panel>
+
+            <asp:Panel ID="pnlMateAltriFornitoriDaDdt" class="row d-flex justify-content-center align-items-center" runat="server">
+                <div class="col-12">
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-2">
+                            <asp:Label ID="lblFiltroMateDaDdtAnnoInizio" Text="Anno Inizio" runat="server" />
+                            <asp:TextBox ID="txtFiltroMateDaDdtAnnoInizio" placeholder="Filtro Anno Iniziale" AutoPostBack="true" OnTextChanged="MateDaDdtFiltro_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-2">
+                            <asp:Label ID="lblFiltroMateDaDdtAnnoFine" Text="Filtro Anno Fine" runat="server" />
+                            <asp:TextBox ID="txtFiltroMateDaDdtAnnoFine" placeholder="Filtro Anno Fine" AutoPostBack="true" OnTextChanged="MateDaDdtFiltro_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-2">
+                            <asp:Label ID="lblFiltroMateDaDdtCodArt" Text="Filtro Codice Articolo" runat="server" />
+                            <asp:TextBox ID="txtFiltroMateDaDdtCodArt" placeholder="Filtro Codice Articolo" AutoPostBack="true" OnTextChanged="MateDaDdtFiltro_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-2">
+                            <asp:Label ID="lblFiltroMateDaDdtDescr" Text="Filtro Descrizione" runat="server" />
+                            <asp:TextBox ID="txtFiltroMateDaDdtDescr" placeholder="Filtro Descrizione" AutoPostBack="true" OnTextChanged="MateDaDdtFiltro_TextChanged" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-6">
+                            <asp:Label ID="lblScegliMateDaDdt" Text="Scegli DDT" runat="server" />
+                            <asp:DropDownList ID="ddlScegliMateDaDdt" AutoPostBack="true" OnTextChanged="ddlScegliMateDaDdt_TextChanged" CssClass="form-control" runat="server" />
+                        </div>
+                        <div class="col-3">
+                            <strong><asp:Label ID="lblMediaPrezziUnitari" Text="Media Prezzi Unitari" runat="server" /></strong>
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
+
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col">
                     <asp:Label ID="lblCodArt" Text="Codice Articolo" runat="server" />

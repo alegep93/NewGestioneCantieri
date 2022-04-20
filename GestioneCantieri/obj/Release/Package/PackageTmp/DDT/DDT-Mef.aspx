@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <%-- Importazione DBF --%>
+    <%-- Importazione Bolle --%>
     <div class="row">
         <div class="offset-3 col-6 text-center">
             <div class="row d-flex justify-content-center align-items-center">
@@ -25,7 +25,7 @@
                     <asp:DropDownList ID="ddlFornitore" CssClass="form-control" runat="server"></asp:DropDownList>
                 </div>
                 <div class="col-4 text-left">
-                    <asp:Button ID="btn_GeneraDdtDaDbf" class="btn btn-lg btn-primary" OnClick="btn_GeneraDdtDaDbf_Click" OnClientClick="javascript:ShowHideLoader()" Text="Importa DBF" runat="server" />
+                    <asp:Button ID="btn_GeneraDdtDaDbf" class="btn btn-lg btn-primary" OnClick="btn_GeneraDdtDaDbf_Click" OnClientClick="javascript:ShowHideLoader()" Text="Importa Bolle" runat="server" />
                 </div>
             </div>
         </div>
@@ -167,16 +167,17 @@
             <asp:GridView ID="grdListaDDTMef" HeaderStyle-CssClass="border-bottom-bold" runat="server" ItemType="Database.Models.DDTMef" 
                 AutoGenerateColumns="False" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
-                    <asp:BoundField DataField="Anno" HeaderText="Anno" />
+                    <%--<asp:BoundField DataField="Anno" HeaderText="Anno" />--%>
                     <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:d}" ApplyFormatInEditMode="True" />
                     <asp:BoundField DataField="N_ddt" HeaderText="N_DDT" />
                     <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
                     <asp:BoundField DataField="DescriCodArt" HeaderText="Descrizione Codice Articolo" />
                     <asp:BoundField DataField="Qta" HeaderText="Quantità" />
-                    <asp:BoundField DataField="Importo" HeaderText="Importo" DataFormatString="{0:0.00} €" />
-                    <asp:BoundField DataField="Acquirente" HeaderText="Acquirente" />
                     <asp:BoundField DataField="PrezzoUnitario" HeaderText="Prezzo Unitario" DataFormatString="{0:0.00} €" />
-                    <asp:BoundField DataField="AnnoN_ddt" HeaderText="Anno N_DDT" />
+                    <asp:BoundField DataField="PrezzoListino" HeaderText="Prezzo Listino" DataFormatString="{0:0.00} €" />
+                    <asp:BoundField DataField="Importo" HeaderText="Importo" DataFormatString="{0:0.00} €" />
+                    <%--<asp:BoundField DataField="Acquirente" HeaderText="Acquirente" />--%>
+                    <%--<asp:BoundField DataField="AnnoN_ddt" HeaderText="Anno N_DDT" />--%>
                 </Columns>
             </asp:GridView>
         </div>

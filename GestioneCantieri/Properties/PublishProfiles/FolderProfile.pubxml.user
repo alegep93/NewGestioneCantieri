@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish</_PublishTargetUrl>
-    <History>True|2022-01-30T10:29:11.1554375Z;True|2022-01-25T18:59:30.4477876+01:00;</History>
+    <History>True|2022-04-20T12:33:36.7921897Z;True|2022-01-30T11:29:11.1554375+01:00;True|2022-01-25T18:59:30.4477876+01:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Acconti/AccontiOperaio.aspx">
@@ -39,13 +39,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:47</publishTime>
     </File>
     <File Include="bin/Database.dll">
-      <publishTime>01/30/2022 11:29:09</publishTime>
+      <publishTime>04/20/2022 14:33:34</publishTime>
     </File>
     <File Include="bin/Database.dll.config">
       <publishTime>01/25/2022 18:52:42</publishTime>
     </File>
     <File Include="bin/Database.pdb">
-      <publishTime>01/30/2022 11:29:09</publishTime>
+      <publishTime>04/20/2022 14:33:34</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>01/25/2022 18:52:47</publishTime>
@@ -54,10 +54,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:47</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>01/30/2022 11:29:09</publishTime>
+      <publishTime>04/20/2022 14:33:34</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>01/30/2022 11:29:09</publishTime>
+      <publishTime>04/20/2022 14:33:34</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>01/25/2022 18:52:49</publishTime>
@@ -195,7 +195,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:43</publishTime>
     </File>
     <File Include="DDT/DDT-Mef.aspx">
-      <publishTime>01/25/2022 18:52:43</publishTime>
+      <publishTime>04/09/2022 12:41:12</publishTime>
     </File>
     <File Include="Default.aspx">
       <publishTime>01/25/2022 18:52:43</publishTime>
@@ -216,7 +216,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:44</publishTime>
     </File>
     <File Include="GestioneCantieri.aspx">
-      <publishTime>01/25/2022 18:52:44</publishTime>
+      <publishTime>02/04/2022 12:36:49</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/AssociaSerie.aspx">
       <publishTime>01/25/2022 18:52:44</publishTime>
@@ -636,7 +636,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/30/2022 11:29:10</publishTime>
+      <publishTime>04/09/2022 12:41:29</publishTime>
     </File>
   </ItemGroup>
 </Project>

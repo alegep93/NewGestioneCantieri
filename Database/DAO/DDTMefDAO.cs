@@ -134,7 +134,7 @@ namespace Database.DAO
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"SELECT A.*");
             sql.AppendLine($"FROM TblDDTMefTemp AS A");
-            sql.AppendLine($"LEFT JOIN TblDDTMef AS B ON A.AnnoN_DDT = B.AnnoN_DDT");
+            sql.AppendLine($"LEFT JOIN TblDDTMef AS B ON A.Anno = B.Anno AND A.N_DDT = B.N_DDT");
             sql.AppendLine($"WHERE B.IdDDTMef IS NULL");
             try
             {
