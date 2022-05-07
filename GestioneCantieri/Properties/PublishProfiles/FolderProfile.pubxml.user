@@ -39,13 +39,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:47</publishTime>
     </File>
     <File Include="bin/Database.dll">
-      <publishTime>04/20/2022 14:33:34</publishTime>
+      <publishTime>05/04/2022 18:19:05</publishTime>
     </File>
     <File Include="bin/Database.dll.config">
       <publishTime>01/25/2022 18:52:42</publishTime>
     </File>
     <File Include="bin/Database.pdb">
-      <publishTime>04/20/2022 14:33:34</publishTime>
+      <publishTime>05/04/2022 18:19:05</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>01/25/2022 18:52:47</publishTime>
@@ -54,10 +54,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:47</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>04/20/2022 14:33:34</publishTime>
+      <publishTime>05/04/2022 18:19:05</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>04/20/2022 14:33:34</publishTime>
+      <publishTime>05/04/2022 18:19:05</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>01/25/2022 18:52:49</publishTime>
@@ -216,7 +216,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/25/2022 18:52:44</publishTime>
     </File>
     <File Include="GestioneCantieri.aspx">
-      <publishTime>02/04/2022 12:36:49</publishTime>
+      <publishTime>04/02/2022 12:36:49</publishTime>
     </File>
     <File Include="GestioneOrdineFrutti/AssociaSerie.aspx">
       <publishTime>01/25/2022 18:52:44</publishTime>

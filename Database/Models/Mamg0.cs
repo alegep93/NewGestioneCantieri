@@ -14,5 +14,6 @@ namespace Database.Models
         public string Desc { get; set; } = "";
         public string UnitMis { get; set; } = "";
         public string CodiceListinoUnivoco { get; set; } = "";
+        public string CodiceFornitore { get; set; } = "";
     }
 }

@@ -122,7 +122,7 @@ namespace GestioneCantieri
                     DDTMef ddt = new DDTMef();
                     CultureInfo cultures = new CultureInfo("en-US");
                     int qta = line.Substring(215, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(215, 8).Trim());
-                    decimal unitarioNetto = line.Substring(226, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(226, 12).Trim()}.{line.Substring(238, 3).Trim()}", cultures);
+                    decimal unitarioNetto = line.Substring(226, 13).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(226, 13).Trim()}.{line.Substring(239, 2).Trim()}", cultures);
 
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
                     ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : GetDateFromString(line.Substring(4, 8).Trim()).Value;

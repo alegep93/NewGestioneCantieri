@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Web.UI;
 using Utils;
@@ -115,11 +116,14 @@ namespace GestioneCantieri
             txtDescriCodArt3.Text = "";
             BindGrid();
         }
+
         private List<Mamg0> ReadDataFromTextFile()
         {
             List<Mamg0> mamgoList = new List<Mamg0>();
             try
             {
+                List<string> codiciMefDaImportare = CodiciMefDAO.GetAll();
+                CultureInfo cultures = new CultureInfo("en-US");
                 string[] lines = File.ReadAllLines(filePathTxt);
                 foreach (string line in lines)
                 {
@@ -128,26 +132,31 @@ namespace GestioneCantieri
                         continue;
                     }
 
-                    string codArt = line.Substring(0, 20).Trim();  // AA_COD
-                    string desc = line.Substring(40, 40).Trim();  // AA_DES
-                    string pezzo = line.Substring(83, 5).Trim(); // AA_PZ
-                    string prezzoListinoIntero = line.Substring(104, 8).Replace("-", "").Trim(); // AA_PRZ parte intera
-                    string prezzoListinoDecimale = line.Substring(112, 5).Replace("-", "").Trim(); // AA_PRZ decimali
-                    string prezzoNettoIntero = line.Substring(185, 8).Replace("-", "").Trim(); // AA_PRZ1 parte intera
-                    string prezzoNettoDecimale = line.Substring(193, 5).Replace("-", "").Trim(); // AA_PRZ1 decimali
-
-                    // TODO - Aggiungere Sconto1,2,3 ; Codice Interno SAP (nuovo) ; Codice intermo MEF (nuovo)
-
-                    //lineCheck = line;
-                    Mamg0 mamgo = new Mamg0
+                    // Verifico che il codice che sto leggendo esista nella tabella dei codici da importare, altrimenti passo alla linea successiva
+                    string codiceMef = line.Substring(0, 4); // (Sigla marchio)
+                    if (codiciMefDaImportare.IndexOf(codiceMef) >= 0)
                     {
-                        CodArt = codArt == "" ? "" : codArt,
-                        Desc = desc == "" ? "" : desc,
-                        Pezzo = pezzo == "" ? 0 : Convert.ToInt32(pezzo),
-                        PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(prezzoListinoIntero)},{Convert.ToInt32(prezzoListinoDecimale)}"),
-                        PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{Convert.ToInt32(prezzoNettoIntero)},{Convert.ToInt32(prezzoNettoDecimale)}")
-                    };
-                    mamgoList.Add(mamgo);
+                        string codArt = line.Substring(0, 20).Replace(" ", "").Trim(); // AA_SIGF + AA_CODF (Sigla marchio + Codice Prodotto Produttore)
+                        string desc = line.Substring(33, 43).Trim(); // AA_DES (Descrizione prodotto)
+                        string prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
+                        string prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
+                        string prezzoNettoIntero = line.Substring(98, 9).Replace("-", "").Trim(); // AA_PRZ1 parte intera (Prezzo al grossista)
+                        string prezzoNettoDecimale = line.Substring(107, 2).Replace("-", "").Trim(); // AA_PRZ1 decimali (Prezzo al grossista)
+                        Mamg0 mamgo = new Mamg0
+                        {
+                            CodArt = codArt == "" ? "" : codArt,
+                            Desc = desc == "" ? "" : desc,
+                            Pezzo = 0,
+                            PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures),
+                            PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures),
+                            CodiceFornitore = codiceMef
+                        };
+                        mamgoList.Add(mamgo);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
             catch (Exception ex)

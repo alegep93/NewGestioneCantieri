@@ -61,7 +61,7 @@ namespace Database.DAO
         {
             List<Mamg0> ret = new List<Mamg0>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT {(limitResults ? "TOP 500" : "")} IdListinoMef, CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto");
+            sql.AppendLine($"SELECT {(limitResults ? "TOP 500" : "")} *");
             sql.AppendLine($"FROM TblListinoMef");
             sql.AppendLine($"WHERE CodArt LIKE '%{codArt1}%' AND CodArt LIKE '%{codArt2}%' AND CodArt LIKE '%{codArt3}%'");
             sql.AppendLine($"AND [Desc] LIKE '%{desc1}%' AND [Desc] LIKE '%{desc2}%' AND [Desc] LIKE '%{desc3}%'");
@@ -239,22 +239,24 @@ namespace Database.DAO
         public static void InsertListino(List<Mamg0> items, DBTransaction tr)
         {
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"INSERT INTO TblListinoMef (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto)");
-            sql.AppendLine($"VALUES (@CodArt, @Desc, @Pezzo, @PrezzoListino, @PrezzoNetto)");
+            sql.AppendLine($"INSERT INTO TblListinoMef (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto, CodiceFornitore)");
+            sql.AppendLine($"VALUES (@CodArt, @Desc, @Pezzo, @PrezzoListino, @PrezzoNetto, @CodiceFornitore)");
             try
             {
-                DapperPlusManager.Entity<Mamg0>().Table("TblListinoMef")
-                                                 .Map(item => item.CodArt, "CodArt")
-                                                 .Map(item => item.Desc, "Desc")
-                                                 .Map(item => item.Pezzo, "Pezzo")
-                                                 .Map(item => item.PrezzoListino, "PrezzoListino")
-                                                 .Map(item => item.PrezzoNetto, "PrezzoNetto")
-                                                 .Ignore(item => item.Sconto1)
-                                                 .Ignore(item => item.Sconto2)
-                                                 .Ignore(item => item.Sconto3)
-                                                 .Ignore(item => item.UnitMis)
-                                                 .Ignore(item => item.CodiceListinoUnivoco);
-                tr.Connection.UseBulkOptions(opt => opt.Transaction = tr.Transaction).BulkInsert(items);
+                //DapperPlusManager.Entity<Mamg0>().Table("TblListinoMef")
+                //                                 .Map(item => item.CodArt, "CodArt")
+                //                                 .Map(item => item.Desc, "Desc")
+                //                                 .Map(item => item.Pezzo, "Pezzo")
+                //                                 .Map(item => item.PrezzoListino, "PrezzoListino")
+                //                                 .Map(item => item.PrezzoNetto, "PrezzoNetto")
+                //                                 .Map(item => item.CodiceFornitore, "CodiceFornitore")
+                //                                 .Ignore(item => item.Sconto1)
+                //                                 .Ignore(item => item.Sconto2)
+                //                                 .Ignore(item => item.Sconto3)
+                //                                 .Ignore(item => item.UnitMis)
+                //                                 .Ignore(item => item.CodiceListinoUnivoco);
+                //tr.Connection.UseBulkOptions(opt => opt.Transaction = tr.Transaction).BulkInsert(items);
+                tr.Connection.Execute(sql.ToString(), items, tr.Transaction);
             }
             catch (Exception ex)
             {

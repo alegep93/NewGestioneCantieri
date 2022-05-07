@@ -25,14 +25,16 @@
         <div class="col-4 text-center table-overflow tableContainer">
             <asp:GridView ID="grdCodiciMef" runat="server" AutoGenerateColumns="false" ItemType="System.String" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
-                    <asp:TemplateField>
+                    <%--<asp:TemplateField>
                         <HeaderTemplate>
                             <asp:Label ID="lblCodiceMefHeader" Text="Codice Mef" runat="server"></asp:Label>
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:Label ID="lblCodiceMef" Text="<%# Item %>" runat="server"></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField>--%>
+                    <asp:BoundField HeaderText="Anno" DataField="Anno" />
+                    <asp:BoundField HeaderText="Codice" DataField="CodArt" />
                 </Columns>
             </asp:GridView>
         </div>

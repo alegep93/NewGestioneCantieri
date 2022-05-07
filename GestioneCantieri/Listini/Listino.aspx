@@ -104,14 +104,10 @@
             <asp:GridView ID="grdListino" runat="server" ItemType="Database.Models.Mamg0" AutoGenerateColumns="False"
                 HeaderStyle-CssClass="border-bottom-bold" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
+                    <asp:BoundField DataField="CodiceFornitore" HeaderText="Codice Fornitore" />
                     <asp:BoundField DataField="CodArt" HeaderText="Codice Articolo" />
                     <asp:BoundField DataField="Desc" HeaderText="Descrizione" />
-                    <%--<asp:BoundField DataField="UnitMis" HeaderText="Unità di Misura" />--%>
-                    <asp:BoundField DataField="Pezzo" HeaderText="Pezzo" />
                     <asp:BoundField DataField="PrezzoListino" HeaderText="Prezzo Listino" />
-                    <%--<asp:BoundField DataField="Sconto1" HeaderText="Sconto 1" />
-                    <asp:BoundField DataField="Sconto2" HeaderText="Sconto2" />
-                    <asp:BoundField DataField="Sconto3" HeaderText="Sconto3" />--%>
                     <asp:BoundField DataField="PrezzoNetto" HeaderText="Prezzo Netto" />
                 </Columns>
             </asp:GridView>
