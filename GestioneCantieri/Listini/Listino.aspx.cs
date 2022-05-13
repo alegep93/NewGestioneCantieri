@@ -64,18 +64,9 @@ namespace GestioneCantieri
             tr.Begin();
             try
             {
-                //// Elimino il listino
-                //Mamg0DAO.EliminaListino(tr);
-
-                //// Reinserisco tutto il listino Mamg0, recuperando i dati da un file excel nominato Mamg0.xlsx
-                //Mamg0DAO.GetDataFromExcelAndInsertBulkCopy(filePath, tr);
-
-                // Nuovo metodo, con txt
-                // Elimino il listino
+                // Leggo il file .txt e aggiorno il listino con una "merge" per inserire cosa non c'è e aggiornare cosa è già presente
                 List<Mamg0> items = ReadDataFromTextFile();
-                Mamg0DAO.DeleteListino(tr);
-                Mamg0DAO.InsertListino(items, tr);
-
+                Mamg0DAO.MergeListino(items, tr);
                 tr.Commit();
                 lblImportMsg.Text = "Importazione del listino avvenuta con successo";
                 lblImportMsg.ForeColor = Color.Blue;
@@ -138,17 +129,18 @@ namespace GestioneCantieri
                     {
                         string codArt = line.Substring(0, 20).Replace(" ", "").Trim(); // AA_SIGF + AA_CODF (Sigla marchio + Codice Prodotto Produttore)
                         string desc = line.Substring(33, 43).Trim(); // AA_DES (Descrizione prodotto)
-                        string prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
-                        string prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
                         string prezzoNettoIntero = line.Substring(98, 9).Replace("-", "").Trim(); // AA_PRZ1 parte intera (Prezzo al grossista)
                         string prezzoNettoDecimale = line.Substring(107, 2).Replace("-", "").Trim(); // AA_PRZ1 decimali (Prezzo al grossista)
+                        string prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
+                        string prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
+                        decimal moltiplicatore = Convert.ToDecimal(line.Substring(120, 6).Trim());
                         Mamg0 mamgo = new Mamg0
                         {
                             CodArt = codArt == "" ? "" : codArt,
                             Desc = desc == "" ? "" : desc,
                             Pezzo = 0,
-                            PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures),
-                            PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures),
+                            PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures) / moltiplicatore,
+                            PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures) / moltiplicatore,
                             CodiceFornitore = codiceMef
                         };
                         mamgoList.Add(mamgo);

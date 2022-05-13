@@ -133,7 +133,7 @@ namespace GestioneCantieri
                     ddt.DescriCodArt = line.Substring(118, 40).Trim();
                     ddt.DescrizioneArticolo2 = line.Substring(158, 40).Trim();
                     ddt.Iva = line.Substring(198, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(198, 2).Trim());
-                    ddt.PrezzoListino = line.Substring(200, 12).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(200, 12).Trim()}.{line.Substring(212, 3).Trim()}", cultures); // Prezzo Lordo
+                    ddt.PrezzoListino = line.Substring(200, 13).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(200, 13).Trim()}.{line.Substring(213, 2).Trim()}", cultures); // Prezzo Lordo
                     ddt.Qta = qta;
                     ddt.Importo = unitarioNetto * (qta == 0 ? 1 : qta);
                     ddt.IdFornitore = idFornitore;

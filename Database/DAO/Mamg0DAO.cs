@@ -339,6 +339,26 @@ namespace Database.DAO
         //    }
         //}
 
+        public static void MergeListino(List<Mamg0> items, DBTransaction tr)
+        {
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                sql.AppendLine($"MERGE TblListinoMef as prod");
+                sql.AppendLine($"USING (SELECT @CodArt as CodArt, @CodiceFornitore as CodiceFornitore) AS Source");
+                sql.AppendLine($"ON prod.CodArt = Source.CodArt AND prod.CodiceFornitore = Source.CodiceFornitore");
+                sql.AppendLine($"WHEN MATCHED THEN");
+                sql.AppendLine($"   UPDATE SET CodArt = @CodArt, [Desc] = @Desc, PrezzoListino = @PrezzoListino, PrezzoNetto = @PrezzoNetto, CodiceFornitore = @CodiceFornitore");
+                sql.AppendLine($"WHEN NOT MATCHED THEN");
+                sql.AppendLine($"   INSERT(CodArt, [Desc], PrezzoListino, PrezzoNetto, CodiceFornitore) VALUES (@CodArt, @Desc, @PrezzoListino, @PrezzoNetto, @CodiceFornitore);");
+                tr.Connection.Execute(sql.ToString(), items, tr.Transaction);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'eliminazione del listino 'nuovo'", ex);
+            }
+        }
+
         // DELETE
 
         public static void DeleteListino(DBTransaction tr)
