@@ -122,7 +122,8 @@ namespace GestioneCantieri
                     DDTMef ddt = new DDTMef();
                     CultureInfo cultures = new CultureInfo("en-US");
                     int qta = line.Substring(215, 8).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(215, 8).Trim());
-                    decimal unitarioNetto = line.Substring(226, 13).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(226, 13).Trim()}.{line.Substring(239, 2).Trim()}", cultures);
+                    int moltiplicatore = line.Substring(278, 7).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(278, 7).Trim());
+                    decimal unitarioNetto = line.Substring(226, 13).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(226, 13).Trim()}.{line.Substring(239, 2).Trim()}", cultures) / moltiplicatore;
 
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
                     ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : GetDateFromString(line.Substring(4, 8).Trim()).Value;
@@ -133,7 +134,7 @@ namespace GestioneCantieri
                     ddt.DescriCodArt = line.Substring(118, 40).Trim();
                     ddt.DescrizioneArticolo2 = line.Substring(158, 40).Trim();
                     ddt.Iva = line.Substring(198, 2).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(198, 2).Trim());
-                    ddt.PrezzoListino = line.Substring(200, 13).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(200, 13).Trim()}.{line.Substring(213, 2).Trim()}", cultures); // Prezzo Lordo
+                    ddt.PrezzoListino = line.Substring(200, 13).Trim() == "" ? 0 : Convert.ToDecimal($"{line.Substring(200, 13).Trim()}.{line.Substring(213, 2).Trim()}", cultures) / moltiplicatore; // Prezzo Lordo
                     ddt.Qta = qta;
                     ddt.Importo = unitarioNetto * (qta == 0 ? 1 : qta);
                     ddt.IdFornitore = idFornitore;

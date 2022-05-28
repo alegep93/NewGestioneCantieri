@@ -111,6 +111,13 @@ namespace GestioneCantieri
         private List<Mamg0> ReadDataFromTextFile()
         {
             List<Mamg0> mamgoList = new List<Mamg0>();
+            string codArt = "";
+            string desc = "";
+            string prezzoNettoIntero = "";
+            string prezzoNettoDecimale = "";
+            string prezzoListinoIntero = "";
+            string prezzoListinoDecimale = "";
+
             try
             {
                 List<string> codiciMefDaImportare = CodiciMefDAO.GetAll();
@@ -127,23 +134,27 @@ namespace GestioneCantieri
                     string codiceMef = line.Substring(0, 4); // (Sigla marchio)
                     if (codiciMefDaImportare.IndexOf(codiceMef) >= 0)
                     {
-                        string codArt = line.Substring(0, 20).Replace(" ", "").Trim(); // AA_SIGF + AA_CODF (Sigla marchio + Codice Prodotto Produttore)
-                        string desc = line.Substring(33, 43).Trim(); // AA_DES (Descrizione prodotto)
-                        string prezzoNettoIntero = line.Substring(98, 9).Replace("-", "").Trim(); // AA_PRZ1 parte intera (Prezzo al grossista)
-                        string prezzoNettoDecimale = line.Substring(107, 2).Replace("-", "").Trim(); // AA_PRZ1 decimali (Prezzo al grossista)
-                        string prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
-                        string prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
-                        decimal moltiplicatore = Convert.ToDecimal(line.Substring(120, 6).Trim());
-                        Mamg0 mamgo = new Mamg0
+                        try
                         {
-                            CodArt = codArt == "" ? "" : codArt,
-                            Desc = desc == "" ? "" : desc,
-                            Pezzo = 0,
-                            PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures) / moltiplicatore,
-                            PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures) / moltiplicatore,
-                            CodiceFornitore = codiceMef
-                        };
-                        mamgoList.Add(mamgo);
+                            codArt = line.Substring(0, 20).Replace(" ", "").Trim(); // AA_SIGF + AA_CODF (Sigla marchio + Codice Prodotto Produttore)
+                            desc = line.Substring(33, 43).Trim(); // AA_DES (Descrizione prodotto)
+                            prezzoNettoIntero = line.Substring(98, 9).Replace("-", "").Trim(); // AA_PRZ1 parte intera (Prezzo al grossista)
+                            prezzoNettoDecimale = line.Substring(107, 2).Replace("-", "").Trim(); // AA_PRZ1 decimali (Prezzo al grossista)
+                            prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
+                            prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
+                            decimal moltiplicatore = Convert.ToDecimal(line.Substring(120, 6).Trim());
+                            Mamg0 mamgo = new Mamg0
+                            {
+                                CodArt = codArt == "" ? "" : codArt,
+                                Desc = desc == "" ? "" : desc,
+                                Pezzo = 0,
+                                PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures) / moltiplicatore,
+                                PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures) / moltiplicatore,
+                                CodiceFornitore = codiceMef
+                            };
+                            mamgoList.Add(mamgo);
+                        }
+                        catch { continue; }
                     }
                     else
                     {
