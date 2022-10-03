@@ -57,6 +57,25 @@ namespace Database.DAO
         //    return ret;
         //}
 
+        public static List<Mamg0> GetAll()
+        {
+            List<Mamg0> ret = new List<Mamg0>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                sql.AppendLine($"SELECT * FROM TblListinoMef");
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Mamg0>(sql.ToString()).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll del listino", ex);
+            }
+            return ret;
+        }
+
         public static List<Mamg0> GetListino(string codArt1, string codArt2, string codArt3, string desc1, string desc2, string desc3, bool limitResults = true)
         {
             List<Mamg0> ret = new List<Mamg0>();
@@ -236,7 +255,7 @@ namespace Database.DAO
         //    }
         //}
 
-        public static void InsertListino(List<Mamg0> items, DBTransaction tr)
+        public static void Insert(List<Mamg0> items, DBTransaction tr)
         {
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"INSERT INTO TblListinoMef (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto, CodiceFornitore)");
@@ -261,6 +280,22 @@ namespace Database.DAO
             catch (Exception ex)
             {
                 throw new Exception("Errore durante l'inserimento del listino 'nuovo'", ex);
+            }
+        }
+
+        public static void Update(List<Mamg0> items, DBTransaction tr)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine($"UPDATE TblListinoMef");
+            sql.AppendLine($"SET CodArt = @CodArt, [Desc] = @Desc, PrezzoListino = @PrezzoListino, PrezzoNetto = @PrezzoNetto, CodiceFornitore = @CodiceFornitore, Pezzo = 0");
+            sql.AppendLine($"WHERE IdListinoMef = @IdListinoMef");
+            try
+            {
+                tr.Connection.Execute(sql.ToString(), items, tr.Transaction);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante l'aggiornamento del listino", ex);
             }
         }
 
@@ -348,10 +383,10 @@ namespace Database.DAO
                 sql.AppendLine($"USING (SELECT @CodArt as CodArt, @CodiceFornitore as CodiceFornitore) AS Source");
                 sql.AppendLine($"ON prod.CodArt = Source.CodArt AND prod.CodiceFornitore = Source.CodiceFornitore");
                 sql.AppendLine($"WHEN MATCHED THEN");
-                sql.AppendLine($"   UPDATE SET CodArt = @CodArt, [Desc] = @Desc, PrezzoListino = @PrezzoListino, PrezzoNetto = @PrezzoNetto, CodiceFornitore = @CodiceFornitore");
+                sql.AppendLine($"   UPDATE SET CodArt = @CodArt, [Desc] = @Desc, PrezzoListino = @PrezzoListino, PrezzoNetto = @PrezzoNetto, CodiceFornitore = @CodiceFornitore, Pezzo = 0");
                 sql.AppendLine($"WHEN NOT MATCHED THEN");
-                sql.AppendLine($"   INSERT(CodArt, [Desc], PrezzoListino, PrezzoNetto, CodiceFornitore) VALUES (@CodArt, @Desc, @PrezzoListino, @PrezzoNetto, @CodiceFornitore);");
-                tr.Connection.Execute(sql.ToString(), items, tr.Transaction);
+                sql.AppendLine($"   INSERT(CodArt, [Desc], PrezzoListino, PrezzoNetto, CodiceFornitore, Pezzo) VALUES (@CodArt, @Desc, @PrezzoListino, @PrezzoNetto, @CodiceFornitore, 0);");
+                tr.Connection.Execute(sql.ToString(), items, tr.Transaction, commandTimeout: 60 * 60 * 60);
             }
             catch (Exception ex)
             {

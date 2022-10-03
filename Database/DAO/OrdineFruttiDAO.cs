@@ -331,7 +331,7 @@ namespace Database.DAO
                 sql.AppendLine($"   LEFT JOIN TblListinoMef M ON FS.CodiceListinoUnivoco = M.IdListinoMef");
                 sql.AppendLine($"   WHERE MOF.IdCantiere = @idCant {(idLocaliList != "" ? $"AND MOF.IdLocale IN ({idLocaliList})" : "")}");
                 sql.AppendLine($"   GROUP BY F.descr001, S.NomeSerie, M.CodArt, M.[Desc], M.PrezzoNetto");
-                sql.AppendLine($"   UNION");
+                sql.AppendLine($"   UNION ALL");
                 sql.AppendLine($"   SELECT F.descr001, SUM(MOF.QtaFrutti) As Qta, S.NomeSerie, M.CodArt AS ArticoloSerie, M.[Desc] AS DescrizioneSerie, M.PrezzoNetto AS PrezzoNetto, SUM(MOF.QtaFrutti * M.PrezzoNetto) AS Valore");
                 sql.AppendLine($"   FROM TblMatOrdFrut AS MOF");
                 sql.AppendLine($"   LEFT JOIN TblFrutti AS F ON MOF.IdFrutto = F.ID1");

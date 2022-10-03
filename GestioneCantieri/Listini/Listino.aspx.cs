@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Web.UI;
 using Utils;
 
@@ -58,6 +59,7 @@ namespace GestioneCantieri
             }
             Response.Redirect("~/Listino.aspx");
         }
+
         protected void btn_ImportaListino_Click(object sender, EventArgs e)
         {
             DBTransaction tr = new DBTransaction();
@@ -67,6 +69,14 @@ namespace GestioneCantieri
                 // Leggo il file .txt e aggiorno il listino con una "merge" per inserire cosa non c'è e aggiornare cosa è già presente
                 List<Mamg0> items = ReadDataFromTextFile();
                 Mamg0DAO.MergeListino(items, tr);
+                //int i = 0;
+                //List<List<Mamg0>> chunks = ChunkBy(items, 500);
+                //foreach (List<Mamg0> chunk in chunks)
+                //{
+                //    Mamg0DAO.MergeListino(chunk, tr);
+                //    i++;
+                //}
+
                 tr.Commit();
                 lblImportMsg.Text = "Importazione del listino avvenuta con successo";
                 lblImportMsg.ForeColor = Color.Blue;
@@ -83,6 +93,15 @@ namespace GestioneCantieri
         }
 
         /* HELPERS */
+        protected List<List<Mamg0>> ChunkBy(List<Mamg0> source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+        }
+
         protected void BindGrid()
         {
             List<Mamg0> listaDDT = new List<Mamg0>();
@@ -122,7 +141,10 @@ namespace GestioneCantieri
             {
                 List<string> codiciMefDaImportare = CodiciMefDAO.GetAll();
                 CultureInfo cultures = new CultureInfo("en-US");
-                string[] lines = File.ReadAllLines(filePathTxt);
+                List<string> lines = File.ReadAllLines(filePathTxt).ToList();
+
+                // Prendo solamente le righe che hanno un codice esistente nella tabella dei codici da importare
+                lines = lines.Where(w => codiciMefDaImportare.Any(a => a.Contains(w.Substring(0, 4)))).ToList();
                 foreach (string line in lines)
                 {
                     if (line.Trim().StartsWith("LISTINO"))
@@ -130,36 +152,28 @@ namespace GestioneCantieri
                         continue;
                     }
 
-                    // Verifico che il codice che sto leggendo esista nella tabella dei codici da importare, altrimenti passo alla linea successiva
                     string codiceMef = line.Substring(0, 4); // (Sigla marchio)
-                    if (codiciMefDaImportare.IndexOf(codiceMef) >= 0)
+                    try
                     {
-                        try
+                        codArt = line.Substring(0, 20).Replace(" ", "").Trim(); // AA_SIGF + AA_CODF (Sigla marchio + Codice Prodotto Produttore)
+                        desc = line.Substring(33, 43).Trim(); // AA_DES (Descrizione prodotto)
+                        prezzoNettoIntero = line.Substring(98, 9).Replace("-", "").Trim(); // AA_PRZ1 parte intera (Prezzo al grossista)
+                        prezzoNettoDecimale = line.Substring(107, 2).Replace("-", "").Trim(); // AA_PRZ1 decimali (Prezzo al grossista)
+                        prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
+                        prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
+                        decimal moltiplicatore = Convert.ToDecimal(line.Substring(120, 6).Trim());
+                        Mamg0 mamgo = new Mamg0
                         {
-                            codArt = line.Substring(0, 20).Replace(" ", "").Trim(); // AA_SIGF + AA_CODF (Sigla marchio + Codice Prodotto Produttore)
-                            desc = line.Substring(33, 43).Trim(); // AA_DES (Descrizione prodotto)
-                            prezzoNettoIntero = line.Substring(98, 9).Replace("-", "").Trim(); // AA_PRZ1 parte intera (Prezzo al grossista)
-                            prezzoNettoDecimale = line.Substring(107, 2).Replace("-", "").Trim(); // AA_PRZ1 decimali (Prezzo al grossista)
-                            prezzoListinoIntero = line.Substring(109, 9).Replace("-", "").Trim(); // AA_PRZ parte intera (Prezzo al pubblico)
-                            prezzoListinoDecimale = line.Substring(118, 2).Replace("-", "").Trim(); // AA_PRZ decimali (Prezzo al pubblico)
-                            decimal moltiplicatore = Convert.ToDecimal(line.Substring(120, 6).Trim());
-                            Mamg0 mamgo = new Mamg0
-                            {
-                                CodArt = codArt == "" ? "" : codArt,
-                                Desc = desc == "" ? "" : desc,
-                                Pezzo = 0,
-                                PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures) / moltiplicatore,
-                                PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures) / moltiplicatore,
-                                CodiceFornitore = codiceMef
-                            };
-                            mamgoList.Add(mamgo);
-                        }
-                        catch { continue; }
+                            CodArt = codArt == "" ? "" : codArt,
+                            Desc = desc == "" ? "" : desc,
+                            Pezzo = 0,
+                            PrezzoListino = prezzoListinoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoListinoIntero}.{(prezzoListinoDecimale == "" ? "0" : prezzoListinoDecimale)}", cultures) / moltiplicatore,
+                            PrezzoNetto = prezzoNettoIntero == "" ? 0 : Convert.ToDecimal($"{prezzoNettoIntero}.{(prezzoNettoDecimale == "" ? "0" : prezzoNettoDecimale)}", cultures) / moltiplicatore,
+                            CodiceFornitore = codiceMef
+                        };
+                        mamgoList.Add(mamgo);
                     }
-                    else
-                    {
-                        continue;
-                    }
+                    catch { continue; }
                 }
             }
             catch (Exception ex)

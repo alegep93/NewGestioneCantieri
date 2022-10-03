@@ -1,4 +1,6 @@
-﻿using System;
+﻿using log4net;
+using log4net.Repository.Hierarchy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +13,8 @@ namespace GestioneCantieri
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            log4net.Config.XmlConfigurator.Configure();
+            LogManager.GetLogger("FileLog").Info("*** Applicazione avviata ***");
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
 

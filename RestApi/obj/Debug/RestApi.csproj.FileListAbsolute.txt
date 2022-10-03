@@ -197,7 +197,6 @@ F:\Git\NewGestioneCantieri\RestApi\bin\System.Web.WebPages.dll
 F:\Git\NewGestioneCantieri\RestApi\bin\System.Web.WebPages.Razor.dll
 F:\Git\NewGestioneCantieri\RestApi\bin\WebActivatorEx.dll
 F:\Git\NewGestioneCantieri\RestApi\bin\WebGrease.dll
-F:\Git\NewGestioneCantieri\RestApi\bin\Z.Dapper.Plus.dll
 F:\Git\NewGestioneCantieri\RestApi\bin\Database.pdb
 F:\Git\NewGestioneCantieri\RestApi\bin\Database.dll.config
 F:\Git\NewGestioneCantieri\RestApi\bin\Antlr3.Runtime.pdb
@@ -238,7 +237,6 @@ F:\Git\NewGestioneCantieri\RestApi\bin\System.Web.WebPages.Razor.xml
 F:\Git\NewGestioneCantieri\RestApi\bin\System.Net.Http.Formatting.xml
 F:\Git\NewGestioneCantieri\RestApi\bin\System.Web.Http.xml
 F:\Git\NewGestioneCantieri\RestApi\bin\System.Web.Http.WebHost.xml
-F:\Git\NewGestioneCantieri\RestApi\bin\Z.Dapper.Plus.xml
 F:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csproj.AssemblyReference.cache
 F:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csproj.CoreCompileInputs.cache
 F:\Git\NewGestioneCantieri\RestApi\obj\Debug\RestApi.csproj.CopyComplete

@@ -98,3 +98,5 @@ F:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.
 F:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.csproj.CopyComplete
 F:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.dll
 F:\Git\NewGestioneCantieri\GestioneCantieri\obj\Release\GestioneCantieri.pdb
+F:\Git\NewGestioneCantieri\GestioneCantieri\bin\log4net.dll
+F:\Git\NewGestioneCantieri\GestioneCantieri\bin\log4net.xml
