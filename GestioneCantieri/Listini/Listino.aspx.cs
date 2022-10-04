@@ -2,6 +2,7 @@
 using Database.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
@@ -45,51 +46,101 @@ namespace GestioneCantieri
         }
         protected void btnEliminaListino_Click(object sender, EventArgs e)
         {
-            DBTransaction tr = new DBTransaction();
-            tr.Begin();
-            try
-            {
-                Mamg0DAO.DeleteListino(tr);
-                tr.Commit();
-            }
-            catch (Exception ex)
-            {
-                tr.Rollback();
-                throw new Exception("Errore durante l'eliminazione del listino MEF", ex);
-            }
-            Response.Redirect("~/Listino.aspx");
+            //DBTransaction tr = new DBTransaction();
+            //tr.Begin();
+            //try
+            //{
+            //    Mamg0DAO.DeleteListino(tr);
+            //    tr.Commit();
+            //}
+            //catch (Exception ex)
+            //{
+            //    tr.Rollback();
+            //    throw new Exception("Errore durante l'eliminazione del listino MEF", ex);
+            //}
+            //Response.Redirect("~/Listino.aspx");
         }
 
         protected void btn_ImportaListino_Click(object sender, EventArgs e)
         {
-            DBTransaction tr = new DBTransaction();
-            tr.Begin();
+            //DBTransaction tr = new DBTransaction();
+            //tr.Begin();
             try
             {
                 // Leggo il file .txt e aggiorno il listino con una "merge" per inserire cosa non c'è e aggiornare cosa è già presente
-                List<Mamg0> items = ReadDataFromTextFile();
-                Mamg0DAO.MergeListino(items, tr);
-                //int i = 0;
-                //List<List<Mamg0>> chunks = ChunkBy(items, 500);
-                //foreach (List<Mamg0> chunk in chunks)
-                //{
-                //    Mamg0DAO.MergeListino(chunk, tr);
-                //    i++;
-                //}
+                DataTable dt = ToDataTable(ReadDataFromTextFile());
 
-                tr.Commit();
+                using (SqlConnection cn = BaseDAO.GetConnection())
+                {
+                    // Svuoto e re-inserisco nella tabella Tmp
+                    Mamg0DAO.DeleteListino(true, cn);
+                    SqlBulkCopyMethod(dt, cn);
+                    //Mamg0DAO.Insert(items, true, cn);
+
+                    // Controllo le differenze dalla tabella finale
+                    List<Mamg0> diffList = Mamg0DAO.GetDifferencesFromTmp(cn);
+
+                    // Inserisco solo i nuovi elementi
+                    Mamg0DAO.Insert(diffList, false, cn);
+                }
+
+                //tr.Commit();
                 lblImportMsg.Text = "Importazione del listino avvenuta con successo";
                 lblImportMsg.ForeColor = Color.Blue;
             }
             catch (Exception ex)
             {
-                tr.Rollback();
+                //tr.Rollback();
                 lblImportMsg.Text = "Errore durante l'importazione del listino. <br />" + ex;
                 lblImportMsg.ForeColor = Color.Red;
             }
 
             // Aggiorno la tabella di visualizzazione risultati
             BindGrid();
+        }
+
+        private void SqlBulkCopyMethod(DataTable dt, SqlConnection cn)
+        {
+            // make sure to enable triggers
+            // more on triggers in next post
+            SqlBulkCopy bulkCopy = new SqlBulkCopy(cn,
+                SqlBulkCopyOptions.TableLock |
+                SqlBulkCopyOptions.FireTriggers |
+                SqlBulkCopyOptions.UseInternalTransaction,
+                null
+                );
+
+            bulkCopy.ColumnMappings.Add("CodArt", "CodArt");
+            bulkCopy.ColumnMappings.Add("Desc", "Desc");
+            bulkCopy.ColumnMappings.Add("Pezzo", "Pezzo");
+            bulkCopy.ColumnMappings.Add("PrezzoListino", "PrezzoListino");
+            bulkCopy.ColumnMappings.Add("PrezzoNetto", "PrezzoNetto");
+            bulkCopy.ColumnMappings.Add("CodiceFornitore", "CodiceFornitore");
+
+            // set the destination table name
+            bulkCopy.DestinationTableName = "dbo.TblListinoMefTmp";
+
+            // write the data in the "dataTable"
+            bulkCopy.WriteToServer(dt);
+        }
+
+        public static DataTable ToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+            {
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                table.Rows.Add(row);
+            }
+            return table;
         }
 
         /* HELPERS */

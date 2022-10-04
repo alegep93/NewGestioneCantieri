@@ -255,10 +255,10 @@ namespace Database.DAO
         //    }
         //}
 
-        public static void Insert(List<Mamg0> items, DBTransaction tr)
+        public static void Insert(List<Mamg0> items, bool isForTmp, SqlConnection cn)
         {
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"INSERT INTO TblListinoMef (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto, CodiceFornitore)");
+            sql.AppendLine($"INSERT INTO TblListinoMef{(isForTmp ? "Tmp" : "")} (CodArt, [Desc], Pezzo, PrezzoListino, PrezzoNetto, CodiceFornitore)");
             sql.AppendLine($"VALUES (@CodArt, @Desc, @Pezzo, @PrezzoListino, @PrezzoNetto, @CodiceFornitore)");
             try
             {
@@ -275,7 +275,7 @@ namespace Database.DAO
                 //                                 .Ignore(item => item.UnitMis)
                 //                                 .Ignore(item => item.CodiceListinoUnivoco);
                 //tr.Connection.UseBulkOptions(opt => opt.Transaction = tr.Transaction).BulkInsert(items);
-                tr.Connection.Execute(sql.ToString(), items, tr.Transaction);
+                cn.Execute(sql.ToString(), items);
             }
             catch (Exception ex)
             {
@@ -390,18 +390,36 @@ namespace Database.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Errore durante l'eliminazione del listino 'nuovo'", ex);
+                throw new Exception("Errore durante la MergeListino in Mamg0DAO", ex);
             }
+        }
+
+        public static List<Mamg0> GetDifferencesFromTmp(SqlConnection cn)
+        {
+            List<Mamg0> ret = new List<Mamg0>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                sql.AppendLine($"SELECT CodArt FROM TblListinoMefTmp");
+                sql.AppendLine($"EXCEPT");
+                sql.AppendLine($"SELECT CodArt FROM TblListinoMef");
+                ret = cn.Query<Mamg0>(sql.ToString()).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetDifferencesFromTmp in Mamg0DAO", ex);
+            }
+            return ret;
         }
 
         // DELETE
 
-        public static void DeleteListino(DBTransaction tr)
+        public static void DeleteListino(bool isForTmp, SqlConnection cn)
         {
-            StringBuilder sql = new StringBuilder("DELETE FROM TblListinoMef");
+            StringBuilder sql = new StringBuilder($"DELETE FROM TblListinoMef{(isForTmp ? "Tmp" : "")}");
             try
             {
-                tr.Connection.Execute(sql.ToString(), transaction: tr.Transaction);
+                cn.Execute(sql.ToString());
             }
             catch (Exception ex)
             {

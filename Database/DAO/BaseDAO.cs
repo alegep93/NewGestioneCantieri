@@ -47,7 +47,7 @@ namespace Database.DAO
 
             return connectionString;
         }
-        protected static SqlConnection GetConnection()
+        public static SqlConnection GetConnection()
         {
             SqlConnection cn = null;
             try

@@ -42,7 +42,7 @@
     <div class="row mt-3 d-flex justify-content-center align-items-center">
         <div class="col text-center">
             <asp:Button ID="btn_ImportaListino" class="btn btn-info btn-lg" OnClick="btn_ImportaListino_Click" OnClientClick="javascript:ShowLoader();return confirm('Vuoi importare il nuovo listino?');" Text="Importa Listino da TXT" runat="server" />
-            <asp:Button ID="btnEliminaListino" runat="server" OnClick="btnEliminaListino_Click" Text="ELIMINA LISTINO" CssClass="btn btn-danger btn-lg" OnClientClick="return confirm('Vuoi veramente eliminare TUTTO il listino?');" />
+            <%--<asp:Button ID="btnEliminaListino" runat="server" OnClick="btnEliminaListino_Click" Text="ELIMINA LISTINO" CssClass="btn btn-danger btn-lg" OnClientClick="return confirm('Vuoi veramente eliminare TUTTO il listino?');" />--%>
             <br />
             <asp:Label ID="lblImportMsg" runat="server"></asp:Label>
         </div>
