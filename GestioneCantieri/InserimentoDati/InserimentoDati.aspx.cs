@@ -607,10 +607,11 @@ namespace GestioneCantieri
             }
 
             Cantieri cant = CantieriDAO.GetSingle(idCant);
+            Preventivo preventivo = PreventiviDAO.GetSingle(cant.IdPreventivo);
 
             // Seleziono il cliente con la Ragione Sociale associata al cantiere di riferimento
             ddlScegliClientePerCantiere.SelectedValue = ddlScegliClientePerCantiere.Items.FindByText(cant.RagSocCli).Value;
-            ddlScegliPreventivoCant.SelectedValue = "-1";
+            ddlScegliPreventivoCant.SelectedValue = preventivo?.Id.ToString() ?? "-1";
 
             //Popolo i textbox
             txtDataInserCant.Text = cant.Data.ToString("yyyy-MM-dd");

@@ -39,3 +39,4 @@ F:\Git\NewGestioneCantieri\Database\obj\Debug\Database.csproj.CoreCompileInputs.
 F:\Git\NewGestioneCantieri\Database\obj\Debug\Database.csproj.CopyComplete
 F:\Git\NewGestioneCantieri\Database\obj\Debug\Database.dll
 F:\Git\NewGestioneCantieri\Database\obj\Debug\Database.pdb
+C:\GIT\NewGestioneCantieri\Database\obj\Debug\Database.csproj.AssemblyReference.cache
