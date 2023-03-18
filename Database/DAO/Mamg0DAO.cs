@@ -76,6 +76,25 @@ namespace Database.DAO
             return ret;
         }
 
+        public static List<Mamg0> GetFromTmpByCodArtList(string codArtList)
+        {
+            List<Mamg0> ret = new List<Mamg0>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                sql.AppendLine($"SELECT * FROM TblListinoMefTmp WHERE CodArt IN ({codArtList}) ");
+                using (SqlConnection cn = GetConnection())
+                {
+                    ret = cn.Query<Mamg0>(sql.ToString(), new { codArtList }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante la GetAll del listino", ex);
+            }
+            return ret;
+        }
+
         public static List<Mamg0> GetListino(string codArt1, string codArt2, string codArt3, string desc1, string desc2, string desc3, bool limitResults = true)
         {
             List<Mamg0> ret = new List<Mamg0>();
@@ -374,7 +393,7 @@ namespace Database.DAO
         //    }
         //}
 
-        public static void MergeListino(List<Mamg0> items, DBTransaction tr)
+        public static void MergeListino(List<Mamg0> items, DBTransaction tr = null, SqlConnection cn = null)
         {
             StringBuilder sql = new StringBuilder();
             try
@@ -386,7 +405,15 @@ namespace Database.DAO
                 sql.AppendLine($"   UPDATE SET CodArt = @CodArt, [Desc] = @Desc, PrezzoListino = @PrezzoListino, PrezzoNetto = @PrezzoNetto, CodiceFornitore = @CodiceFornitore, Pezzo = 0");
                 sql.AppendLine($"WHEN NOT MATCHED THEN");
                 sql.AppendLine($"   INSERT(CodArt, [Desc], PrezzoListino, PrezzoNetto, CodiceFornitore, Pezzo) VALUES (@CodArt, @Desc, @PrezzoListino, @PrezzoNetto, @CodiceFornitore, 0);");
-                tr.Connection.Execute(sql.ToString(), items, tr.Transaction, commandTimeout: 60 * 60 * 60);
+
+                if (tr != null)
+                {
+                    tr.Connection.Execute(sql.ToString(), items, tr.Transaction, commandTimeout: 60 * 60 * 60);
+                }
+                else
+                {
+                    cn.Execute(sql.ToString(), items, commandTimeout: 60 * 60 * 60);
+                }
             }
             catch (Exception ex)
             {
@@ -394,16 +421,16 @@ namespace Database.DAO
             }
         }
 
-        public static List<Mamg0> GetDifferencesFromTmp(SqlConnection cn)
+        public static List<string> GetDifferencesFromTmp(SqlConnection cn)
         {
-            List<Mamg0> ret = new List<Mamg0>();
+            List<string> ret = new List<string>();
             StringBuilder sql = new StringBuilder();
             try
             {
                 sql.AppendLine($"SELECT CodArt FROM TblListinoMefTmp");
                 sql.AppendLine($"EXCEPT");
                 sql.AppendLine($"SELECT CodArt FROM TblListinoMef");
-                ret = cn.Query<Mamg0>(sql.ToString()).ToList();
+                ret = cn.Query<string>(sql.ToString()).ToList();
             }
             catch (Exception ex)
             {

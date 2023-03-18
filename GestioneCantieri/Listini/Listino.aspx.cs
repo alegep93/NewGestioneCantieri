@@ -77,11 +77,15 @@ namespace GestioneCantieri
                     SqlBulkCopyMethod(dt, cn);
                     //Mamg0DAO.Insert(items, true, cn);
 
-                    // Controllo le differenze dalla tabella finale
-                    List<Mamg0> diffList = Mamg0DAO.GetDifferencesFromTmp(cn);
+                    // Controllo le differenze nei CodArt dalla tabella finale
+                    List<string> codArtToInsert = Mamg0DAO.GetDifferencesFromTmp(cn);
+
+                    // Recupero la lista degli elementi da inserire basandomi sulla query precedente
+                    List<Mamg0> diffList = Mamg0DAO.GetFromTmpByCodArtList(GetStringFromListForQuery(codArtToInsert));
 
                     // Inserisco solo i nuovi elementi
                     Mamg0DAO.Insert(diffList, false, cn);
+                    //Mamg0DAO.MergeListino(diffList, cn: cn);
                 }
 
                 //tr.Commit();
@@ -97,6 +101,17 @@ namespace GestioneCantieri
 
             // Aggiorno la tabella di visualizzazione risultati
             BindGrid();
+        }
+
+        private static string GetStringFromListForQuery(List<string> list)
+        {
+            // Converte una lista di int in una stringa formattata per fare una query
+            string ret = "";
+            foreach (string item in list)
+            {
+                ret += ret == "" ? $"'{item}'" : $", '{item}'";
+            }
+            return ret;
         }
 
         private void SqlBulkCopyMethod(DataTable dt, SqlConnection cn)

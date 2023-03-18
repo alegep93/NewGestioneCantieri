@@ -40,13 +40,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2023 15:29:12</publishTime>
     </File>
     <File Include="bin/Database.dll">
-      <publishTime>01/28/2023 15:47:16</publishTime>
+      <publishTime>03/18/2023 11:04:21</publishTime>
     </File>
     <File Include="bin/Database.dll.config">
       <publishTime>01/28/2023 15:29:10</publishTime>
     </File>
     <File Include="bin/Database.pdb">
-      <publishTime>01/28/2023 15:47:16</publishTime>
+      <publishTime>03/18/2023 11:04:21</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>01/28/2023 15:29:12</publishTime>
@@ -55,10 +55,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2023 15:29:13</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.dll">
-      <publishTime>01/28/2023 15:47:16</publishTime>
+      <publishTime>03/18/2023 11:04:21</publishTime>
     </File>
     <File Include="bin/GestioneCantieri.pdb">
-      <publishTime>01/28/2023 15:47:16</publishTime>
+      <publishTime>03/18/2023 11:04:21</publishTime>
     </File>
     <File Include="bin/itext.barcodes.dll">
       <publishTime>01/28/2023 15:29:14</publishTime>
