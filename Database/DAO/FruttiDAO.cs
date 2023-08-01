@@ -13,10 +13,10 @@ namespace Database.DAO
         public static List<Frutto> GetFrutti(string filtroDescr1 = "", string filtroDescr2 = "", string filtroDescr3 = "")
         {
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT ID1, descr001");
+            sql.AppendLine($"SELECT IdFrutti, Nome");
             sql.AppendLine($"FROM TblFrutti");
-            sql.AppendLine($"WHERE descr001 LIKE '%{filtroDescr1}%' AND descr001 LIKE '%{filtroDescr2}%' AND descr001 LIKE '%{filtroDescr3}%'");
-            sql.AppendLine($"ORDER BY descr001 ASC");
+            sql.AppendLine($"WHERE Nome LIKE '%{filtroDescr1}%' AND Nome LIKE '%{filtroDescr2}%' AND Nome LIKE '%{filtroDescr3}%'");
+            sql.AppendLine($"ORDER BY Nome ASC");
 
             try
             {
@@ -33,7 +33,7 @@ namespace Database.DAO
 
         public static Frutto GetSingle(int idFrutto)
         {
-            StringBuilder sql = new StringBuilder($"SELECT * FROM TblFrutti WHERE ID1 = @idFrutto");
+            StringBuilder sql = new StringBuilder($"SELECT * FROM TblFrutti WHERE IdFrutti = @idFrutto");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -51,8 +51,8 @@ namespace Database.DAO
         {
             bool ret = false;
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("IF NOT EXISTS (SELECT descr001 FROM TblFrutti WHERE descr001 = @nomeFrutto)");
-            sql.AppendLine("INSERT INTO TblFrutti(descr001) VALUES (@nomeFrutto)");
+            sql.AppendLine("IF NOT EXISTS (SELECT Nome FROM TblFrutti WHERE Nome = @nomeFrutto)");
+            sql.AppendLine("INSERT INTO TblFrutti(Nome) VALUES (@nomeFrutto)");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -70,7 +70,7 @@ namespace Database.DAO
         public static bool UpdateFrutto(Frutto item)
         {
             bool ret = false;
-            StringBuilder sql = new StringBuilder("UPDATE TblFrutti SET descr001 = @Descr001 WHERE ID1 = @Id1");
+            StringBuilder sql = new StringBuilder("UPDATE TblFrutti SET Nome = @Nome WHERE IdFrutti = @IdFrutti");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -90,7 +90,7 @@ namespace Database.DAO
             bool ret = false;
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("IF NOT EXISTS(SELECT Id FROM TblCompGruppoFrut WHERE IdTblFrutto = @idFrutto)");
-            sql.AppendLine("DELETE FROM TblFrutti WHERE ID1 = @idFrutto ");
+            sql.AppendLine("DELETE FROM TblFrutti WHERE IdFrutti = @idFrutto ");
             try
             {
                 using (SqlConnection cn = GetConnection())

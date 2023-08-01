@@ -82,7 +82,7 @@ namespace GestioneCantieri.Utils
         {
             foreach (Mamg0 item in items)
             {
-                string show = string.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8} | {4,-3} | {5,-3} | {6,-3}",
+                string show = string.Format("{0,-18} | {1,-30} | {2,-8} | {3,-8}", //| {4,-3} | {5,-3} | {6,-3}
                     item.CodArt, item.Desc, item.PrezzoNetto, item.PrezzoListino/*, item.Sconto1, item.Sconto2, item.Sconto3*/);
                 ddl.Items.Add(new ListItem(show, item.CodArt.ToString()));
             }
@@ -127,7 +127,7 @@ namespace GestioneCantieri.Utils
         {
             foreach (Frutto item in items)
             {
-                ddl.Items.Add(new ListItem(item.Descr001, item.Id1.ToString()));
+                ddl.Items.Add(new ListItem(item.Nome, item.IdFrutti.ToString()));
             }
         }
 

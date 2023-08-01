@@ -17,9 +17,9 @@ namespace Database.DAO
         {
             CompGruppoFrut ret = new CompGruppoFrut();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto, Qta");
+            sql.AppendLine("SELECT CGF.Id, F.Nome 'NomeFrutto', CGF.IdTblFrutto, Qta");
             sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
-            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.IdFrutti");
             sql.AppendLine("WHERE Id = @idCompGruppoFrutto");
             sql.AppendLine("ORDER BY CGF.Id ASC");
             try
@@ -40,9 +40,9 @@ namespace Database.DAO
         {
             List<CompGruppoFrut> ret = new List<CompGruppoFrut>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto, Qta");
+            sql.AppendLine("SELECT CGF.Id, F.Nome 'NomeFrutto', CGF.IdTblFrutto, Qta");
             sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
-            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.IdFrutti");
             sql.AppendLine("WHERE IdTblGruppo = @idGruppo");
             sql.AppendLine("ORDER BY CGF.Id ASC");
             try
@@ -63,9 +63,9 @@ namespace Database.DAO
         {
             List<CompGruppoFrut> ret = new List<CompGruppoFrut>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT CGF.Id, F.descr001 'NomeFrutto', CGF.IdTblFrutto, Qta");
+            sql.AppendLine("SELECT CGF.Id, F.Nome 'NomeFrutto', CGF.IdTblFrutto, Qta");
             sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
-            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.IdFrutti");
             sql.AppendLine("WHERE IdTblGruppo = @idGruppo");
             sql.AppendLine("ORDER BY CGF.Id ASC");
             try
@@ -83,12 +83,12 @@ namespace Database.DAO
         {
             List<StampaFruttiPerGruppi> ret = new List<StampaFruttiPerGruppi>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT GF.NomeGruppo, F.descr001 'NomeFrutto', CGF.Qta");
+            sql.AppendLine("SELECT GF.NomeGruppo, F.Nome 'NomeFrutto', CGF.Qta");
             sql.AppendLine("FROM TblCompGruppoFrut AS CGF");
             sql.AppendLine("INNER JOIN TblGruppiFrutti AS GF ON CGF.IdTblGruppo = GF.Id");
-            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+            sql.AppendLine("INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.IdFrutti");
             sql.AppendLine(idGruppo != "-1" && idGruppo != "" ? "WHERE Gf.Id = @idGruppo" : "");
-            sql.AppendLine("GROUP BY GF.NomeGruppo, F.descr001, CGF.Qta");
+            sql.AppendLine("GROUP BY GF.NomeGruppo, F.Nome, CGF.Qta");
             sql.AppendLine("ORDER BY GF.NomeGruppo");
             try
             {

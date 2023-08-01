@@ -14,11 +14,11 @@ namespace Database.DAO
         {
             List<DefaultMatOrdFrut> ret = new List<DefaultMatOrdFrut>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine($"SELECT C.NomeGruppo, C.Descrizione, B.NomeLocale, D.descr001 AS NomeFrutto, A.QtaFrutti, E.NomeSerie");
+            sql.AppendLine($"SELECT C.NomeGruppo, C.Descrizione, B.NomeLocale, D.Nome AS NomeFrutto, A.QtaFrutti, E.NomeSerie");
             sql.AppendLine($"FROM TblDefaultMatOrdFrut A");
             sql.AppendLine($"LEFT JOIN TblLocali B ON A.IdLocale = B.IdLocali");
             sql.AppendLine($"LEFT JOIN TblGruppiFrutti C ON A.IdGruppiFrutti = C.Id");
-            sql.AppendLine($"LEFT JOIN TblFrutti D ON A.IdFrutto = D.ID1");
+            sql.AppendLine($"LEFT JOIN TblFrutti D ON A.IdFrutto = D.IdFrutti");
             sql.AppendLine($"LEFT JOIN TblSerie E ON A.IdSerie = E.IdSerie");
             sql.AppendLine($"WHERE IdLocale = @idLocale");
             try

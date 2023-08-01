@@ -42,7 +42,7 @@ namespace GestioneCantieri
             // Per ogni frutto non appartenente ad un gruppo
             foreach (StampaOrdFrutCantLoc fruttoNonInGruppo in listFruttiNonInGruppo)
             {
-                StampaOrdFrutCantLoc frutto = listFrutti.Where(w => w.Descr001 == fruttoNonInGruppo.Descr001).FirstOrDefault();
+                StampaOrdFrutCantLoc frutto = listFrutti.Where(w => w.Nome == fruttoNonInGruppo.Nome).FirstOrDefault();
 
                 // Verifico che esista nella lista dei Frutti
                 if (frutto != null)

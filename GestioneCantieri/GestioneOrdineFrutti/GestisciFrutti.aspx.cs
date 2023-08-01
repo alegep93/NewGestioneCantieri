@@ -54,7 +54,7 @@ namespace GestioneCantieri
         {
             if (txtNomeFrutto.Text != "")
             {
-                bool isSaved = FruttiDAO.UpdateFrutto(new Frutto { Id1 = Convert.ToInt32(hfIdFrutto.Value), Descr001 = txtNomeFrutto.Text });
+                bool isSaved = FruttiDAO.UpdateFrutto(new Frutto { IdFrutti = Convert.ToInt32(hfIdFrutto.Value), Nome = txtNomeFrutto.Text });
                 if (isSaved)
                 {
                     lblMsg.Text = $"Frutto modificato con successo in '{txtNomeFrutto.Text}'";
@@ -101,8 +101,8 @@ namespace GestioneCantieri
                 if (e.CommandName == "Modifica")
                 {
                     Frutto frutto = FruttiDAO.GetSingle(idFrutto);
-                    txtNomeFrutto.Text = frutto.Descr001;
-                    hfIdFrutto.Value = frutto.Id1.ToString();
+                    txtNomeFrutto.Text = frutto.Nome;
+                    hfIdFrutto.Value = frutto.IdFrutti.ToString();
                     btnInsFrutto.Visible = false;
                     btnSaveModFrutto.Visible = !btnInsFrutto.Visible;
                 }

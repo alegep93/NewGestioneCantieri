@@ -123,12 +123,12 @@ namespace Database.DAO
         {
             List<MatOrdFrut> ret = new List<MatOrdFrut>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT F.descr001, SUM(MOF.QtaFrutti)");
+            sql.AppendLine("SELECT F.Nome, SUM(MOF.QtaFrutti)");
             sql.AppendLine("FROM TblMatOrdFrut AS MOF");
-            sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1)");
+            sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.IdFrutti)");
             sql.AppendLine("WHERE IdCantiere = @idCant AND IdLocale = @idLocale AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
-            sql.AppendLine("GROUP BY F.descr001");
-            sql.AppendLine("ORDER BY F.descr001 ASC");
+            sql.AppendLine("GROUP BY F.Nome");
+            sql.AppendLine("ORDER BY F.Nome ASC");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -230,15 +230,15 @@ namespace Database.DAO
         {
             List<StampaOrdFrutCantLoc> ret = new List<StampaOrdFrutCantLoc>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT F.descr001 AS 'Descr001', SUM(CGF.Qta) AS Qta");
+            sql.AppendLine("SELECT F.Nome AS 'Nome', SUM(CGF.Qta) AS Qta");
             sql.AppendLine("FROM TblMatOrdFrut AS MOF");
             sql.AppendLine("JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali)");
             sql.AppendLine("JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id)");
             sql.AppendLine("JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id)");
-            sql.AppendLine("JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1)");
+            sql.AppendLine("JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.IdFrutti)");
             sql.AppendLine("WHERE IdCantiere = @idCant");
-            sql.AppendLine("GROUP BY F.descr001");
-            sql.AppendLine("ORDER BY F.descr001 ASC");
+            sql.AppendLine("GROUP BY F.Nome");
+            sql.AppendLine("ORDER BY F.Nome ASC");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -257,15 +257,15 @@ namespace Database.DAO
         {
             DataTable table = new DataTable();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT F.descr001, SUM(CGF.Qta) AS Qta");
+            sql.AppendLine("SELECT F.Nome, SUM(CGF.Qta) AS Qta");
             sql.AppendLine("FROM TblMatOrdFrut AS MOF");
             sql.AppendLine("JOIN TblLocali AS L ON(MOF.IdLocale = L.IdLocali)");
             sql.AppendLine("JOIN TblGruppiFrutti AS GF ON(MOF.IdGruppiFrutti = GF.Id)");
             sql.AppendLine("JOIN TblCompGruppoFrut AS CGF ON(CGF.IdTblGruppo = GF.Id)");
-            sql.AppendLine("JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.ID1)");
+            sql.AppendLine("JOIN TblFrutti AS F ON(CGF.IdTblFrutto = F.IdFrutti)");
             sql.AppendLine("WHERE IdCantiere = @idCant");
-            sql.AppendLine("GROUP BY F.descr001");
-            sql.AppendLine("ORDER BY F.descr001 ASC");
+            sql.AppendLine("GROUP BY F.Nome");
+            sql.AppendLine("ORDER BY F.Nome ASC");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -293,12 +293,12 @@ namespace Database.DAO
         {
             List<StampaOrdFrutCantLoc> ret = new List<StampaOrdFrutCantLoc>();
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("SELECT F.descr001 AS 'Descr001', SUM(MOF.QtaFrutti) AS Qta");
+            sql.AppendLine("SELECT F.Nome AS 'Nome', SUM(MOF.QtaFrutti) AS Qta");
             sql.AppendLine("FROM TblMatOrdFrut AS MOF");
-            sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.ID1)");
+            sql.AppendLine("LEFT JOIN TblFrutti AS F ON(MOF.IdFrutto = F.IdFrutti)");
             sql.AppendLine("where IdCantiere = @idCant AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL");
-            sql.AppendLine("GROUP BY F.descr001");
-            sql.AppendLine("ORDER BY F.descr001 ASC");
+            sql.AppendLine("GROUP BY F.Nome");
+            sql.AppendLine("ORDER BY F.Nome ASC");
             try
             {
                 using (SqlConnection cn = GetConnection())
@@ -319,29 +319,29 @@ namespace Database.DAO
             StringBuilder sql = new StringBuilder();
             try
             {
-                sql.AppendLine($"SELECT descr001, SUM(Qta) Qta, NomeSerie, ArticoloSerie, DescrizioneSerie, MIN(PrezzoNetto) PrezzoNetto, SUM(Valore) Valore FROM (");
-                sql.AppendLine($"   SELECT F.descr001, SUM(CGF.Qta) As Qta, S.NomeSerie, M.CodArt AS ArticoloSerie, M.[Desc] AS DescrizioneSerie, M.PrezzoNetto AS PrezzoNetto, SUM(CGF.Qta * M.PrezzoNetto) AS Valore");
+                sql.AppendLine($"SELECT Nome, SUM(Qta) Qta, NomeSerie, ArticoloSerie, DescrizioneSerie, MIN(PrezzoNetto) PrezzoNetto, SUM(Valore) Valore FROM (");
+                sql.AppendLine($"   SELECT F.Nome, SUM(CGF.Qta) As Qta, S.NomeSerie, M.CodArt AS ArticoloSerie, M.[Desc] AS DescrizioneSerie, M.PrezzoNetto AS PrezzoNetto, SUM(CGF.Qta * M.PrezzoNetto) AS Valore");
                 sql.AppendLine($"   FROM TblMatOrdFrut AS MOF");
                 sql.AppendLine($"   INNER JOIN TblLocali AS L ON MOF.IdLocale = L.IdLocali");
                 sql.AppendLine($"   INNER JOIN TblGruppiFrutti AS GF ON MOF.IdGruppiFrutti = GF.Id");
                 sql.AppendLine($"   INNER JOIN TblCompGruppoFrut AS CGF ON CGF.IdTblGruppo = GF.Id");
-                sql.AppendLine($"   INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.ID1");
+                sql.AppendLine($"   INNER JOIN TblFrutti AS F ON CGF.IdTblFrutto = F.IdFrutti");
                 sql.AppendLine($"   LEFT JOIN TblSerie S ON MOF.IdSerie = S.IdSerie");
                 sql.AppendLine($"   LEFT JOIN TblFruttiSerie FS ON CGF.IdTblFrutto = FS.IdFrutto AND S.IdSerie = FS.IdSerie");
                 sql.AppendLine($"   LEFT JOIN TblListinoMef M ON FS.CodiceListinoUnivoco = M.IdListinoMef");
                 sql.AppendLine($"   WHERE MOF.IdCantiere = @idCant {(idLocaliList != "" ? $"AND MOF.IdLocale IN ({idLocaliList})" : "")}");
-                sql.AppendLine($"   GROUP BY F.descr001, S.NomeSerie, M.CodArt, M.[Desc], M.PrezzoNetto");
+                sql.AppendLine($"   GROUP BY F.Nome, S.NomeSerie, M.CodArt, M.[Desc], M.PrezzoNetto");
                 sql.AppendLine($"   UNION ALL");
-                sql.AppendLine($"   SELECT F.descr001, SUM(MOF.QtaFrutti) As Qta, S.NomeSerie, M.CodArt AS ArticoloSerie, M.[Desc] AS DescrizioneSerie, M.PrezzoNetto AS PrezzoNetto, SUM(MOF.QtaFrutti * M.PrezzoNetto) AS Valore");
+                sql.AppendLine($"   SELECT F.Nome, SUM(MOF.QtaFrutti) As Qta, S.NomeSerie, M.CodArt AS ArticoloSerie, M.[Desc] AS DescrizioneSerie, M.PrezzoNetto AS PrezzoNetto, SUM(MOF.QtaFrutti * M.PrezzoNetto) AS Valore");
                 sql.AppendLine($"   FROM TblMatOrdFrut AS MOF");
-                sql.AppendLine($"   LEFT JOIN TblFrutti AS F ON MOF.IdFrutto = F.ID1");
-                sql.AppendLine($"   LEFT JOIN TblFruttiSerie FS ON F.ID1 = FS.IdFrutto AND MOF.IdSerie = FS.IdSerie");
+                sql.AppendLine($"   LEFT JOIN TblFrutti AS F ON MOF.IdFrutto = F.IdFrutti");
+                sql.AppendLine($"   LEFT JOIN TblFruttiSerie FS ON F.IdFrutti = FS.IdFrutto AND MOF.IdSerie = FS.IdSerie");
                 sql.AppendLine($"   LEFT JOIN TblSerie S ON FS.IdSerie = S.IdSerie");
                 sql.AppendLine($"   LEFT JOIN TblListinoMef M ON FS.CodiceListinoUnivoco = M.IdListinoMef");
                 sql.AppendLine($"   WHERE IdCantiere = @idCant AND MOF.idFrutto IS NOT NULL AND MOF.QtaFrutti IS NOT NULL {(idLocaliList != "" ? $"AND MOF.IdLocale IN ({idLocaliList})" : "")}");
-                sql.AppendLine($"   GROUP BY F.descr001, S.NomeSerie, M.CodArt, M.[Desc], M.PrezzoNetto");
+                sql.AppendLine($"   GROUP BY F.Nome, S.NomeSerie, M.CodArt, M.[Desc], M.PrezzoNetto");
                 sql.AppendLine($") AS A");
-                sql.AppendLine($"GROUP BY descr001,NomeSerie,ArticoloSerie,DescrizioneSerie");
+                sql.AppendLine($"GROUP BY Nome,NomeSerie,ArticoloSerie,DescrizioneSerie");
                 sql.AppendLine($"ORDER BY ArticoloSerie, DescrizioneSerie");
                 using (SqlConnection cn = GetConnection())
                 {
@@ -360,12 +360,12 @@ namespace Database.DAO
             List<MatOrdFrut> ret = new List<MatOrdFrut>();
             StringBuilder sql = new StringBuilder();
             sql.AppendLine($"SELECT A.id, B.DescriCodCAnt 'DescrCant', C.NomeLocale 'Appartamento', D.NomeGruppo,");
-            sql.AppendLine($"       E.descr001 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine, G.NomeSerie");
+            sql.AppendLine($"       E.Nome 'NomeFrutto', A.QtaFrutti, F.Descrizione AS DescrizioneGruppoOrdine, G.NomeSerie");
             sql.AppendLine($"FROM TblMatOrdFrut AS A");
             sql.AppendLine($"LEFT JOIN TblCantieri AS B ON A.IdCantiere = B.IdCantieri");
             sql.AppendLine($"LEFT JOIN TblLocali AS C ON A.IdLocale = C.IdLocali");
             sql.AppendLine($"LEFT JOIN TblGruppiFrutti AS D ON A.IdGruppiFrutti = D.Id");
-            sql.AppendLine($"LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.ID1");
+            sql.AppendLine($"LEFT JOIN TblFrutti AS E ON A.IdFrutto = E.IdFrutti");
             sql.AppendLine($"LEFT JOIN TblMatOrdFrutGroup AS F ON A.IdTblMatOrdFrutGroup = F.IdMatOrdFrutGroup");
             sql.AppendLine($"LEFT JOIN TblSerie G ON A.IdSerie = G.IdSerie");
             sql.AppendLine($"WHERE B.IdCantieri = @idCant AND C.IdLocali = @idLocale");
