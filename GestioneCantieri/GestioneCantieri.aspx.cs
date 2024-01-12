@@ -416,7 +416,7 @@ namespace GestioneCantieri
         {
             if (ddlScegliDDTMef.SelectedItem != null && ddlScegliDDTMef.SelectedItem.Text != "" && ddlScegliDDTMef.SelectedIndex != 0)
             {
-                int nDDT = Convert.ToInt32(ddlScegliDDTMef.SelectedItem.Text.Split('-')[1].Trim());
+                long nDDT = Convert.ToInt64(ddlScegliDDTMef.SelectedItem.Text.Split('-')[1].Trim());
                 List<DDTMef> ddtList = DDTMefDAO.GetAll().Where(w => w.N_DDT == nDDT).ToList();
                 grdMostraDDTDaInserire.DataSource = ddtList;
                 grdMostraDDTDaInserire.DataBind();
