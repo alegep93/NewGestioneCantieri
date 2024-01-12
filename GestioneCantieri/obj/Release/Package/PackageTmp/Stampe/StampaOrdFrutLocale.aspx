@@ -49,7 +49,7 @@
             <asp:GridView ID="grdFruttiInLocale" AutoGenerateColumns="false" ItemType="Database.Models.StampaCantiere" 
                 runat="server" CssClass="table table-dark table-striped scrollable-table">
                 <Columns>
-                    <asp:BoundField HeaderText="Descrizione Frutto" DataField="Descr001" />
+                    <asp:BoundField HeaderText="Descrizione Frutto" DataField="Nome" />
                     <asp:BoundField HeaderText="Quantità (tot.)" DataField="Qta" />
                 </Columns>
             </asp:GridView>

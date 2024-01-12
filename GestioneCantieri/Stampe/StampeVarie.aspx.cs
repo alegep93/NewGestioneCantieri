@@ -113,7 +113,7 @@ namespace GestioneCantieri
         {
             decimal totale = 0m;
             decimal totaleFinale = 0m;
-            int numDdtAttuale = 0;
+            long numDdtAttuale = 0;
             List<DDTMef> ddtList = DDTMefDAO.GetDDTForPDF(txtDataDa.Text, txtDataA.Text, ddlScegliAcquirente.SelectedItem.Text, txtNumDDT.Text);
 
             //Apro lo stream verso il file PDF
@@ -157,7 +157,7 @@ namespace GestioneCantieri
             Response.Write(pdfDoc);
             Response.End();
         }
-        protected void GeneraPDFPerNumDDT(Document pdfDoc, List<DDTMef> ddtList, PdfPTable table, decimal totale, int numDdtAttuale, decimal totFin)
+        protected void GeneraPDFPerNumDDT(Document pdfDoc, List<DDTMef> ddtList, PdfPTable table, decimal totale, long numDdtAttuale, decimal totFin)
         {
             PdfPTable tblTotali;
             for (int k = 0; k < ddtList.Count; k++)

@@ -57,17 +57,17 @@
         <div class="col-6 text-center table-container">
             <asp:GridView ID="grdFrutti" ItemType="Database.Models.Frutto" OnRowCommand="grdFrutti_RowCommand" CssClass="table table-dark table-striped scrollable-table" AutoGenerateColumns="false" runat="server">
                 <Columns>
-                    <asp:BoundField HeaderText="Nome Frutto" DataField="Descr001" />
+                    <asp:BoundField HeaderText="Nome Frutto" DataField="Nome" />
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnModifica" CommandName="Modifica" CommandArgument="<%# BindItem.Id1 %>" runat="server">
+                            <asp:LinkButton ID="btnModifica" CommandName="Modifica" CommandArgument="<%# BindItem.IdFrutti %>" runat="server">
                                     <i class="fas fa-pencil-alt" style="color: darkorange;"></i>
                             </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.Id1 %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo frutto?');">
+                            <asp:LinkButton ID="btnElimina" CommandName="Elimina" CommandArgument="<%# BindItem.IdFrutti %>" runat="server" OnClientClick="return confirm('Vuoi veramente eliminare questo frutto?');">
                                     <i class="fas fa-times" style="color: red;"></i>
                             </asp:LinkButton>
                         </ItemTemplate>

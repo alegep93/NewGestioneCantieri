@@ -7,7 +7,7 @@ namespace Database.Models
         public int IdDDTMef { get; set; } = 0;
         public int Anno { get; set; } = 0;
         public DateTime Data { get; set; } = DateTime.Now;
-        public int N_DDT { get; set; } = 0;
+        public long N_DDT { get; set; } = 0;
         public string CodArt { get; set; } = "";
         public string DescriCodArt { get; set; } = "";
         public int Qta { get; set; } = 0;

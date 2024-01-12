@@ -127,7 +127,7 @@ namespace GestioneCantieri
 
                     ddt.Anno = line.Substring(0, 4).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(0, 4).Trim());
                     ddt.Data = line.Substring(4, 8).Trim() == "" ? new DateTime() : GetDateFromString(line.Substring(4, 8).Trim()).Value;
-                    ddt.N_DDT = line.Substring(12, 10).Trim() == "" ? 0 : Convert.ToInt32(line.Substring(12, 10).Trim());
+                    ddt.N_DDT = line.Substring(12, 10).Trim() == "" ? 0 : Convert.ToInt64(line.Substring(12, 10).Trim());
                     ddt.FTVRF0 = line.Substring(22, 35).Trim();
                     ddt.FTDT30 = line.Substring(57, 8).Trim();
                     ddt.CodArt = line.Substring(65, 35).Trim();
